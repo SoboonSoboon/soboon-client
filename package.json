@@ -14,8 +14,7 @@
     "lint": "eslint",
     "test": "jest",
     "test:changed": "jest --onlyChanged",
-    "prepare": "husky",
-    "commitlint": "echo '커밋 메시지 검증 중...'"
+    "prepare": "husky"
   },
   "dependencies": {
     "@tanstack/react-query": "^5.90.1",
