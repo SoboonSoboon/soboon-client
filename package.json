@@ -13,6 +13,7 @@
     "start": "next start",
     "lint": "eslint",
     "test": "jest",
+    "typecheck": "tsc --noEmit --incremental",
     "test:changed": "jest --onlyChanged",
     "prepare": "husky"
   },
