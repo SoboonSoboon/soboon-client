@@ -122,7 +122,16 @@ describe("폼 입력값 유효성 검사", () => {
 
 			const result = isValidPhoneNumber(phoneNumber);
 
-      expect(result).toBe(true);
+      expect(result).toBe(false);
+		});
+
+		test("아무것도 없으면 false", () => {
+
+			const phoneNumber = "";
+
+			const result = isValidPhoneNumber(phoneNumber);
+
+      expect(result).toBe(false);
 		});
   });
 });
