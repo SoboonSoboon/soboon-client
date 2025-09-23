@@ -118,7 +118,7 @@ describe("폼 입력값 유효성 검사", () => {
 
 		test("전화번호가 없으면 false", () => {
 
-			const phoneNumber = "";
+			const phoneNumber = "ss";
 
 			const result = isValidPhoneNumber(phoneNumber);
 
