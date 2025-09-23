@@ -1,0 +1,65 @@
+name: CI
+on:
+  pull_request:
+    branches: ['**']
+    paths:
+      - 'src/**'
+
+# 같은 브랜치에서 여러 번 푸시되면 이전 실행 취소 
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  lint:
+    name: lint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+      - run: npm ci
+      - run: npm run lint # lint 스크립트 실행
+
+  typecheck:
+    name: typecheck
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+      - run: npm ci
+        
+      - run: npm run typecheck  # typecheck 스크립트 실행
+ 
+
+  test:
+    name: test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+      - run: npm ci
+        if: ${{ hashFiles('**/*.test.ts*') != '' }}
+      - run: npm test -- --ci --coverage # jest  실행
+        if: ${{ hashFiles('**/*.test.ts*') != '' }}
+
+  build:                                 # build: 실제 빌드가 가능한지 검증
+    name: build
+    runs-on: ubuntu-latest
+    needs: [lint, typecheck, test]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+      - run: npm ci
+      - run: npm run build # bulid 확인
