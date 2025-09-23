@@ -1,11 +1,11 @@
 # 함께 사서, 알뜰하게 나누는 소비, 소분소분
 
 ## ⚙️ 기술 스택
-- 코어: TypeScript, Next.js
-- 스타일링: Tailwind CSS
-- 상태 관리: Redux
-- 테스트: Jest-ts
-- CI/CD: GitHub Actions, Husky, lint-staged
+- 코어: `TypeScript`, `Next.js`
+- 스타일링: `Tailwind CSS`
+- 상태 관리: `Redux`
+- 테스트: `Jest-ts`
+- CI/CD: `GitHub Actions`, `Husky`, `lint-staged`
 
 ## 🌿 Git Convention
 
