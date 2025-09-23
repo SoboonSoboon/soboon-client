@@ -115,5 +115,14 @@ describe("폼 입력값 유효성 검사", () => {
 
       expect(result).toBe(false);
 		});
+
+		test("전화번호가 없으면 false", () => {
+
+			const phoneNumber = "";
+
+			const result = isValidPhoneNumber(phoneNumber);
+
+      expect(result).toBe(false);
+		});
   });
 });
