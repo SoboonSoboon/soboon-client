@@ -13,7 +13,9 @@
     "build": "next build --turbopack",
     "start": "next start",
     "lint": "eslint",
-    "test": "jest"
+    "test": "jest",
+    "test:changed": "jest --onlyChanged",
+    "prepare": "husky"
   },
   "dependencies": {
     "@tanstack/react-query": "^5.90.1",
