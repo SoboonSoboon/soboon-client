@@ -13,7 +13,8 @@
     "build": "next build --turbopack",
     "start": "next start",
     "lint": "eslint",
-    "test": "jest"
+    "test": "jest",
+    "typecheck": "tsc --noEmit --incremental"
   },
   "dependencies": {
     "@tanstack/react-query": "^5.90.1",
