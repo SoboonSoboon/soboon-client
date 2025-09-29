@@ -2,7 +2,7 @@
 . "$(dirname -- "$0")/_/husky.sh"
 
 # 커밋 메시지 패턴 검증
-commit_regex='^(feat|fix|docs|style|refactor|test|chore|remove)([/:].*)?: .+'
+commit_regex='^(feat|fix|docs|style|refactor|test|chore|remove|setting)([/:].*)?: .+'
 
 if ! grep -qE "$commit_regex" "$1"; then
     echo "❌ 커밋 메시지 형식이 올바르지 않습니다!"
