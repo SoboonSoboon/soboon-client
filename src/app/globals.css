@@ -1,0 +1,95 @@
+@import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css');
+
+@font-face {
+  font-family: 'memomentKkukkkuk';
+  src: url('/font/memomentKkukkkuk.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  --GrayScale-Gray5: #f5f5f5;
+  --GrayScale-Gray10: #e0e0e0;
+  --GrayScale-Gray20: #c8c8c8;
+  --GrayScale-Gray30: #bcbcbc;
+  --GrayScale-Gray40: #adadad;
+  --GrayScale-Gray50: #999999;
+  --GrayScale-Gray60: #7c7c7c;
+  --GrayScale-Gray70: #666666;
+  --GrayScale-Gray80: #4e4e4e;
+  --GrayScale-Gray90: #333333;
+  --GrayScale-Gray95: #1a1a1a;
+  --GrayScale-Black: #000000;
+  --GrayScale-White: #ffffff;
+  --OrangeScale-Orange1: #fff4f1;
+  --OrangeScale-Orange5: #ffe7e2;
+  --OrangeScale-Orange10: #ffd6cc;
+  --OrangeScale-Orange20: #ffbaa9;
+  --OrangeScale-Orange30: #ff957b;
+  --OrangeScale-Orange40: #ff724e;
+  --OrangeScale-Orange50: #ff4805;
+  --OrangeScale-Orange60: #e83600;
+  --OrangeScale-Orange70: #d03800;
+  --OrangeScale-Orange80: #b93100;
+  --OrangeScale-Orange90: #9a2900;
+  --OrangeScale-Orange95: #561700;
+  --OrangeScale-Orange100: #210a02;
+  --System-warning_alt: #ffd9d9;
+  --System-warning: #ff4040;
+  --System-safe_alt: #e0f8e8;
+  --System-safe: #46c470;
+  --System-dim: rgba(0, 0, 0, 0.3);
+  --System-background: #fcfbfa;
+  --text-reversed-main: var(--GrayScale-White);
+  --text-reversed-sub1: var(--GrayScale-Gray5);
+  --text-line1: var(--GrayScale-Gray10);
+  --text-reversed-sub2: var(--GrayScale-Gray20);
+  --text-inactive: var(--GrayScale-Gray30);
+  --text-line2: var(--GrayScale-Gray30);
+  --text-sub2: var(--GrayScale-Gray60);
+  --text-sub1: var(--GrayScale-Gray80);
+  --text-main: var(--GrayScale-Gray95);
+  --Keycolor-primary: var(--OrangeScale-Orange50);
+  --Keycolor-secondary: var(--OrangeScale-Orange10);
+  --Keycolor-tertiary: var(--OrangeScale-Orange95);
+  --Keycolor-quaternary: var(--GrayScale-Black);
+  --System-background_inactive: var(--GrayScale-Gray5);
+  --System-background_alt: var(--GrayScale-White);
+}
+
+@layer utilities {
+  .text-xs {
+    font-size: 12px;
+    line-height: 16px;
+  }
+  .text-sm {
+    font-size: 14px;
+    line-height: 20px;
+  }
+  .text-base {
+    font-size: 16px;
+    line-height: 24px;
+  }
+  .text-lg {
+    font-size: 18px;
+    line-height: 28px;
+  }
+  .text-xl {
+    font-size: 20px;
+    line-height: 28px;
+  }
+
+  .text-2xl {
+    font-size: 24px;
+    line-height: 32px;
+  }
+  .text-3xl {
+    font-size: 30px;
+    line-height: 36px;
+  }
+}
+
+* {
+  font-family: 'Pretendard', sans-serif !important;
+}
