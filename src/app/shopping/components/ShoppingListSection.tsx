@@ -1,3 +1,5 @@
+'use client';
+
 import {
   Card,
   CardContent,
@@ -6,6 +8,7 @@ import {
   CardTitle,
   LikeButton,
 } from '@/components';
+import { useRouter } from 'next/navigation';
 
 const LocationIcon = () => {
   return (
@@ -25,10 +28,22 @@ const LocationIcon = () => {
 };
 
 export const ShoppingListSection = () => {
+  const router = useRouter();
+
+  const onClickCard = (id: string) => {
+    router.push(`/shopping/${id}`);
+  };
+
   return (
     <div className="grid grid-cols-4 gap-8">
       {Array.from({ length: 10 }).map((_, index) => (
-        <Card className="" height="auto" width="auto" key={index}>
+        <Card
+          className="cursor-pointer"
+          height="auto"
+          width="auto"
+          key={index}
+          onClick={() => onClickCard((index + 1).toString())}
+        >
           <CardContent>
             <LikeButton />
             <CardImage
