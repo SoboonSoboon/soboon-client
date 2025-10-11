@@ -11,6 +11,7 @@ interface cardContentProps {
 export interface cardProps extends cardContentProps {
   width?: string;
   height?: string;
+  onClick?: () => void;
 }
 
 interface cardImageProps {
@@ -66,11 +67,13 @@ export const Card = ({
   children,
   width = '306px',
   height = '376px',
+  onClick,
 }: cardProps) => {
   return (
     <div
       className={`${className} select-none`}
       style={{ width: `${width}`, height: `${height}` }}
+      onClick={onClick}
     >
       {children}
     </div>
