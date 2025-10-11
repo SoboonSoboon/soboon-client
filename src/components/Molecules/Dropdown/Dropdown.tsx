@@ -75,7 +75,7 @@ export const Dropdown = ({
           {selectedOption ? selectedOption.label : placeholder}
         </span>
         <svg
-          className={`h-4 w-4 transition-transform duration-200 ${
+          className={`size-4 transition-transform duration-200 ${
             isOpen ? 'rotate-180' : ''
           }`}
           fill="none"
