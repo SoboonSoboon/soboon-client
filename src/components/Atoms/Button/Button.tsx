@@ -4,6 +4,7 @@ export interface ButtonProps {
   size?: 'small' | 'medium' | 'large';
   label: string;
   onClick?: () => void;
+  className?: string;
 }
 
 export const Button = ({
@@ -11,9 +12,11 @@ export const Button = ({
   size = 'medium',
   backgroundColor,
   label,
+  className,
   ...props
 }: ButtonProps) => {
-  const baseStyles = 'inline-block cursor-pointer border-1 rounded-[8px] leading-none';
+  const baseStyles =
+    'inline-block cursor-pointer border-1 rounded-[8px] leading-none';
 
   // Primary/Secondary styles
   const modeStyles = primary
@@ -30,7 +33,7 @@ export const Button = ({
   return (
     <button
       type="button"
-      className={`${baseStyles} ${modeStyles} ${sizeStyles[size]}`}
+      className={`${baseStyles} ${modeStyles} ${sizeStyles[size]} ${className}`}
       style={backgroundColor ? { backgroundColor } : undefined}
       {...props}
     >
