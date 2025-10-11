@@ -1,3 +1,5 @@
+'use client';
+
 import { memo, useState } from 'react';
 import Image from 'next/image';
 
@@ -81,16 +83,16 @@ export const CardImage = ({ className, src, alt }: cardImageProps) => {
     <Image
       src={src}
       alt={alt}
-      width={400}
+      width={276}
       height={200}
-      className={`${className} mb-5 h-[200px] w-full rounded-lg object-cover`}
+      className={`${className} mb-3 h-[200px] w-full rounded-lg object-cover`}
     />
   );
 };
 
 export const CardTitle = ({ className, children }: cardContentProps) => {
   return (
-    <h3 className={`${className} mb-3 text-2xl text-[#1a1a1a]`}>{children}</h3>
+    <h3 className={`${className} mb-2 text-2xl text-[#1a1a1a]`}>{children}</h3>
   );
 };
 

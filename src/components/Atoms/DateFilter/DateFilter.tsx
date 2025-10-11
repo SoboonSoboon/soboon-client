@@ -1,3 +1,5 @@
+'use client';
+
 import { useState, useCallback, memo } from 'react';
 
 export interface DateFilterProps {

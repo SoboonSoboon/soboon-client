@@ -1,4 +1,6 @@
-import { useState, useRef, useEffect } from "react";
+'use client';
+
+import { useState, useRef, useEffect } from 'react';
 
 export interface DropdownOption {
   value: string;
@@ -15,7 +17,7 @@ export interface DropdownProps {
 
 export const Dropdown = ({
   options,
-  placeholder = "선택하세요",
+  placeholder = '선택하세요',
   value,
   onChange,
   disabled = false,
@@ -36,9 +38,9 @@ export const Dropdown = ({
       }
     };
 
-    document.addEventListener("mousedown", handleClickOutside);
+    document.addEventListener('mousedown', handleClickOutside);
     return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener('mousedown', handleClickOutside);
     };
   }, []);
 
@@ -57,30 +59,24 @@ export const Dropdown = ({
     <div className="relative w-full" ref={dropdownRef} {...props}>
       <button
         type="button"
-        className={`
-          flex items-center justify-between w-full gap-2.5 border-2 border-transparent rounded-xl py-2.5 px-4 
-          bg-[var(--GrayScale-Gray5)] text-[var(--GrayScale-Gray40)] 
-          focus:outline-none
-          ${
-            disabled
-              ? "opacity-50 cursor-not-allowed"
-              : "cursor-pointer hover:bg-[var(--GrayScale-Gray10)]"
-          }
-          ${isOpen ? "border-[var(--OrangeScale-Orange50)]" : ""}
-        `}
+        className={`flex w-full items-center justify-between gap-2.5 rounded-xl border-2 border-transparent bg-[var(--GrayScale-Gray5)] px-4 py-2.5 text-[var(--GrayScale-Gray40)] focus:outline-none ${
+          disabled
+            ? 'cursor-not-allowed opacity-50'
+            : 'cursor-pointer hover:bg-[var(--GrayScale-Gray10)]'
+        } ${isOpen ? 'border-[var(--OrangeScale-Orange50)]' : ''} `}
         onClick={handleToggle}
         disabled={disabled}
       >
         <span
           className={` ${
-            selectedOption ? "text-[var(--GrayScale-Gray80)]" : placeholder
+            selectedOption ? 'text-[var(--GrayScale-Gray80)]' : placeholder
           }`}
         >
           {selectedOption ? selectedOption.label : placeholder}
         </span>
         <svg
-          className={`w-4 h-4 transition-transform duration-200 ${
-            isOpen ? "rotate-180" : ""
+          className={`size-4 transition-transform duration-200 ${
+            isOpen ? 'rotate-180' : ''
           }`}
           fill="none"
           stroke="currentColor"
@@ -96,21 +92,16 @@ export const Dropdown = ({
       </button>
 
       {isOpen && options.length > 0 && (
-        <div className="absolute z-50 w-full mt-1 bg-[var(--GrayScale-White)] border border-[var(--GrayScale-Gray20)] rounded-xl shadow-lg max-h-60 overflow-y-auto">
+        <div className="absolute z-50 mt-1 max-h-60 w-full overflow-y-auto rounded-xl border border-[var(--GrayScale-Gray20)] bg-[var(--GrayScale-White)] shadow-lg">
           {options.map((option) => (
             <button
               key={option.value}
               type="button"
-              className={`
-                w-full px-4 py-2 text-left hover:bg-[var(--GrayScale-Gray5)] 
-                focus:bg-[var(--GrayScale-Gray5)] focus:outline-none
-                first:rounded-t-xl last:rounded-b-xl
-                ${
-                  value === option.value
-                    ? "bg-[var(--OrangeScale-Orange5)] text-[var(--OrangeScale-Orange50)]"
-                    : "text-[var(--GrayScale-Gray80)]"
-                }
-              `}
+              className={`w-full px-4 py-2 text-left first:rounded-t-xl last:rounded-b-xl hover:bg-[var(--GrayScale-Gray5)] focus:bg-[var(--GrayScale-Gray5)] focus:outline-none ${
+                value === option.value
+                  ? 'bg-[var(--OrangeScale-Orange5)] text-[var(--OrangeScale-Orange50)]'
+                  : 'text-[var(--GrayScale-Gray80)]'
+              } `}
               onClick={() => handleSelect(option)}
             >
               {option.label}
