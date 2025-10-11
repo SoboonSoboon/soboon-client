@@ -12,3 +12,4 @@ export {
 } from './Card';
 export { Dropdown, type DropdownProps } from './Dropdown';
 export { Header } from './Header';
+export { SideButtonSection } from './SideButtonSection';

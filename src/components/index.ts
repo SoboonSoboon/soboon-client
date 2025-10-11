@@ -25,4 +25,5 @@ export {
   Dropdown,
   type DropdownProps,
   Header,
+  SideButtonSection,
 } from './Molecules';
