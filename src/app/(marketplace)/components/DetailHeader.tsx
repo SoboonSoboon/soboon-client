@@ -2,7 +2,7 @@
 
 import { useRouter } from 'next/navigation';
 
-export const ShoppingDetailHeader = () => {
+export const DetailHeader = () => {
   const router = useRouter();
   return (
     <div className="px-4 py-3">

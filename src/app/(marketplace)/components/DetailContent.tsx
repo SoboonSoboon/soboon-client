@@ -1,4 +1,4 @@
-export const ShoppingDetailContent = () => {
+export const DetailContent = () => {
   return (
     <div className="flex w-full flex-col gap-8 break-words">
       <p>

@@ -1,6 +1,6 @@
-import { CommentCountContainer } from './commentSection/CommentCountContainer';
-import { CommentInputContainer } from './commentSection/CommentInputContainer';
-import { CommentListContainer } from './commentSection/CommentListContainer';
+import { CommentCountContainer } from './comment/CommentCountContainer';
+import { CommentInputContainer } from './comment/CommentInputContainer';
+import { CommentListContainer } from './comment/CommentListContainer';
 
 // 댓글 데이터 타입 정의
 export interface replyInterface {
@@ -97,7 +97,7 @@ const dummyComments: CommentInterface[] = [
   },
 ];
 
-export const ShoppingComment = () => {
+export const CommentSection = () => {
   return (
     <div className="mt-8 w-full">
       {/* 댓글 헤더 */}

@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import { Button } from '@/components';
 
-export const ShoppingDetailAside = () => {
+export const DetailAside = () => {
   return (
     <aside className="w-[430px]">
       <div className="flex w-full justify-between">

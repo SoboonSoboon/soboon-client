@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import { CommentInterface, replyInterface } from '../ShoppingComment';
+import { CommentInterface, replyInterface } from '../CommentSection';
 
 export const CommentItem = ({
   comment,

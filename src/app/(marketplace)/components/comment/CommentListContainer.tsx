@@ -1,5 +1,5 @@
 import { CommentItem } from './CommentItem';
-import { CommentInterface } from '../ShoppingComment';
+import { CommentInterface } from '../CommentSection';
 
 export const CommentListContainer = ({
   commentList,
