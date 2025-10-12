@@ -5,8 +5,15 @@ interface ChipProps {
   size?: 'sm' | 'lg';
   isActive: boolean;
   onClick: () => void;
+  className?: string;
 }
-export const Chip = ({ children, size = 'lg', isActive, onClick }: ChipProps) => {
+export const Chip = ({
+  children,
+  size = 'lg',
+  isActive,
+  onClick,
+  className,
+}: ChipProps) => {
   return (
     <div
       role="button"
@@ -19,6 +26,7 @@ export const Chip = ({ children, size = 'lg', isActive, onClick }: ChipProps) =>
         isActive
           ? 'pointer-events-none bg-gray-900 text-white'
           : 'cursor-pointer bg-gray-50 text-black',
+        className,
       )}
     >
       {children}
