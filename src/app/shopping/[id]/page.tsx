@@ -3,6 +3,7 @@ import { ShoppingDetailHeader } from './components/ShoppingDetailHeader';
 import { ShoppingDetailAside } from './components/ShoppingDetailAside';
 import { ShoppingDetailContentFooter } from './components/ShoppingDetailContentFooter';
 import { ShoppingDetailContent } from './components/ShoppingDetailContent';
+import { ShoppingComment } from './components/ShoppingComment';
 
 const carouselImages = [
   'https://www.dummyimage.com/700x600/FF6B6B/fff',
@@ -21,9 +22,14 @@ export default function ShoppingDetailPage() {
           <Carousel carouselImages={carouselImages} className="mb-8" />
           <ShoppingDetailContent />
           <ShoppingDetailContentFooter />
+
+          {/* 댓글 영역 */}
+          <ShoppingComment />
         </article>
 
-        <ShoppingDetailAside />
+        <div className="sticky top-6 h-[95vh]">
+          <ShoppingDetailAside />
+        </div>
       </div>
     </section>
   );
