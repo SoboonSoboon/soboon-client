@@ -1,9 +1,9 @@
 import { Carousel } from '@/components/Atoms/Carousel/Carousel';
-import { ShoppingDetailHeader } from './components/ShoppingDetailHeader';
-import { ShoppingDetailAside } from './components/ShoppingDetailAside';
-import { ShoppingDetailContentFooter } from './components/ShoppingDetailContentFooter';
-import { ShoppingDetailContent } from './components/ShoppingDetailContent';
-import { ShoppingComment } from './components/ShoppingComment';
+import { DetailHeader } from '../../components/DetailHeader';
+import { DetailContent } from '../../components/DetailContent';
+import { DetailContentFooter } from '../../components/DetailContentFooter';
+import { CommentSection } from '../../components/CommentSection';
+import { DetailAside } from '../../components/DetailAside';
 
 const carouselImages = [
   'https://www.dummyimage.com/700x600/FF6B6B/fff',
@@ -16,19 +16,19 @@ const carouselImages = [
 export default function ShoppingDetailPage() {
   return (
     <section>
-      <ShoppingDetailHeader />
+      <DetailHeader />
       <div className="flex gap-10">
         <article className="w-[730px]">
           <Carousel carouselImages={carouselImages} className="mb-8" />
-          <ShoppingDetailContent />
-          <ShoppingDetailContentFooter />
+          <DetailContent />
+          <DetailContentFooter />
 
           {/* 댓글 영역 */}
-          <ShoppingComment />
+          <CommentSection />
         </article>
 
         <div className="sticky top-6 h-[95vh]">
-          <ShoppingDetailAside />
+          <DetailAside />
         </div>
       </div>
     </section>
