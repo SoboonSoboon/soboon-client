@@ -1,13 +1,18 @@
 import Image from 'next/image';
 
-export function ProfileImg({ profile = '' }: { profile: string }) {
+interface ProfileImgProps {
+  profile: string;
+  size?: number;
+}
+
+export function ProfileImg({ profile = '', size = 100 }: ProfileImgProps) {
   return (
     <Image
       src={profile}
       alt="profileImage"
       className="h-full w-full object-cover"
-      width={100}
-      height={100}
+      width={size}
+      height={size}
     />
   );
 }
