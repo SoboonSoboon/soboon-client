@@ -21,14 +21,20 @@ export const Header = ({
   onCreateGather,
 }: HeaderProps) => (
   <header className="border-gray-10 h-15 border-b bg-white dark:bg-black">
-    <div className="text-text-main mx-auto flex h-full max-w-[1344px] items-center justify-between bg-white px-12 dark:bg-black dark:text-white">
+    <div className="text-text-main mx-auto flex h-full max-w-[1200px] items-center justify-between bg-white dark:bg-black dark:text-white">
       <div className="flex items-center gap-6">
         <Logo width={75} height={28} />
         <nav className="flex items-center gap-6 text-base font-normal">
-          <a href="#" className="font-memomentKkukkkuk hover:text-primary whitespace-nowrap">
+          <a
+            href="#"
+            className="font-memomentKkukkkuk hover:text-primary whitespace-nowrap"
+          >
             함께 장보기
           </a>
-          <a href="#" className="font-memomentKkukkkuk hover:text-primary whitespace-nowrap">
+          <a
+            href="#"
+            className="font-memomentKkukkkuk hover:text-primary whitespace-nowrap"
+          >
             함께 소분하기
           </a>
         </nav>
@@ -44,13 +50,22 @@ export const Header = ({
                 {user.name}
               </b>
             </span>
-            <Button primary size="small" onClick={onCreateGather} label="모임 만들기" />
+            <Button
+              primary
+              size="small"
+              onClick={onCreateGather}
+              label="모임 만들기"
+            />
             {/* <Button size="small" onClick={onLogout} label="로그아웃" /> */}
           </>
         ) : (
           <>
-            <Button size="small" onClick={onLogin} label="로그인" />
-            <Button primary size="small" onClick={onCreateAccount} label="회원가입" />
+            <Button
+              primary
+              size="small"
+              onClick={onCreateAccount}
+              label="시작하기"
+            />
           </>
         )}
       </div>
