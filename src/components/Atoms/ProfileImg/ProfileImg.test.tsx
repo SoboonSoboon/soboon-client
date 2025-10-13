@@ -20,11 +20,12 @@ describe('ProfileImg', () => {
     expect(image).toHaveAttribute('src', testImagePath);
   });
 
-  it('profile prop이 빈 문자열일 때에도 렌더링되어야 한다', () => {
-    render(<ProfileImg profile="" />);
+  it('profile prop이 없으면 기본 이미지가 렌더링되어야 한다', () => {
+    render(<ProfileImg />);
 
     const image = screen.getByRole('img', { name: /profileImage/i });
     expect(image).toBeInTheDocument();
+    expect(image).toHaveAttribute('src', '/images/profile_default.svg');
   });
 
   it('alt 속성이 "profileImage"로 설정되어야 한다', () => {
@@ -38,7 +39,7 @@ describe('ProfileImg', () => {
     render(<ProfileImg profile="/test.jpg" />);
 
     const image = screen.getByRole('img', { name: /profileImage/i });
-    expect(image).toHaveClass('h-full', 'w-full', 'object-cover');
+    expect(image).toHaveClass('rounded-full', 'object-cover');
   });
 
   it('size를 지정하지 않으면 기본값 100x100이 적용되어야 한다', () => {
@@ -76,5 +77,20 @@ describe('ProfileImg', () => {
     const image = screen.getByRole('img', { name: /profileImage/i });
     expect(image).toBeInTheDocument();
     expect(image).toHaveAttribute('src', defaultProfile);
+  });
+
+  it('커스텀 className이 기본 className과 함께 적용되어야 한다', () => {
+    render(<ProfileImg profile="/test.jpg" className="border-2" />);
+
+    const image = screen.getByRole('img', { name: /profileImage/i });
+    expect(image).toHaveClass('rounded-full', 'object-cover');
+    expect(image).toHaveClass('border-2');
+  });
+
+  it('className 없이도 정상 동작해야 한다', () => {
+    render(<ProfileImg profile="/test.jpg" />);
+
+    const image = screen.getByRole('img', { name: /profileImage/i });
+    expect(image).toHaveClass('rounded-full', 'object-cover');
   });
 });
