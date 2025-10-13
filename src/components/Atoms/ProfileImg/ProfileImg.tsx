@@ -1,13 +1,23 @@
 import Image from 'next/image';
 
-export function ProfileImg({ profile = '' }: { profile: string }) {
+interface ProfileImgProps {
+  profile?: string;
+  size?: number;
+  className?: string;
+}
+
+export function ProfileImg({
+  profile = '/images/profile_default.svg',
+  size = 100,
+  className,
+}: ProfileImgProps) {
   return (
     <Image
       src={profile}
       alt="profileImage"
-      className="h-full w-full object-cover"
-      width={100}
-      height={100}
+      className={`border-gray-10 rounded-full border-1 object-cover ${className || ''}`}
+      width={size}
+      height={size}
     />
   );
 }
