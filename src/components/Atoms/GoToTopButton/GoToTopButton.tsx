@@ -22,6 +22,7 @@ export const GoToTopButton = () => {
       <div
         className="text-text-line2 border-text-line2 flex h-11 w-11 items-center justify-center rounded-full border-1"
         onClick={handleClick}
+        data-testid="go-to-top-button"
       >
         <ArrowUpIcon />
       </div>
