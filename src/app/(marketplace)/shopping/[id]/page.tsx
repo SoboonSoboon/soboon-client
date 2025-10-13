@@ -1,9 +1,9 @@
 import { Carousel } from '@/components/Atoms/Carousel/Carousel';
-import { DetailHeader } from '../../components/DetailHeader';
-import { DetailContent } from '../../components/DetailContent';
-import { DetailContentFooter } from '../../components/DetailContentFooter';
-import { CommentSection } from '../../components/CommentSection';
-import { DetailAside } from '../../components/DetailAside';
+import { DetailHeader } from '@/app/(marketplace)/components/DetailHeader';
+import { DetailContent } from '@/app/(marketplace)/components/DetailContent';
+import { DetailContentFooter } from '@/app/(marketplace)/components/DetailContentFooter';
+import { CommentSection } from '@/app/(marketplace)/components/CommentSection';
+import { DetailAside } from '@/app/(marketplace)/components/DetailAside';
 
 const carouselImages = [
   'https://www.dummyimage.com/700x600/FF6B6B/fff',
