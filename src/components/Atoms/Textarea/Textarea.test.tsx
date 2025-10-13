@@ -53,12 +53,20 @@ describe('Textarea', () => {
     render(<Textarea />);
 
     const textarea = screen.getByRole('textbox');
-    expect(textarea).toHaveClass('flex');
+    expect(textarea).toHaveClass('w-full');
     expect(textarea).toHaveClass('py-2.5');
     expect(textarea).toHaveClass('px-4');
     expect(textarea).toHaveClass('rounded-xl');
-    expect(textarea).toHaveClass('w-100');
-    expect(textarea).toHaveClass('h-50');
+  });
+
+  it('커스텀 className이 추가로 적용되어야 한다', () => {
+    render(<Textarea className="border-2 border-blue-500" />);
+
+    const textarea = screen.getByRole('textbox');
+    // 기본 클래스 유지
+    expect(textarea).toHaveClass('w-full', 'rounded-xl');
+    // 커스텀 클래스 추가
+    expect(textarea).toHaveClass('border-2', 'border-blue-500');
   });
 
   it('추가 props가 올바르게 전달되어야 한다', () => {
