@@ -1,16 +1,21 @@
 # 함께 사서, 알뜰하게 나누는 소비, 소분소분
 
+## 🔗 서비스 링크
+
+- [소분소분 Storybook 바로가기](https://68eda0866f99441886bc2330-tmjtfcyxaq.chromatic.com/)
+
 ## ⚙️ 기술 스택
 
 - 코어: `TypeScript`, `Next.js`
 - 스타일링: `Tailwind CSS`
 - 상태 관리: `Redux`
 - 테스트: `Jest-ts`
+- 디자인 시스템: `Storybook`
 - CI/CD: `GitHub Actions`, `Husky`, `lint-staged`
 
 ## 🌿 Git Convention
 
-### 🌱 Commit/Issue Message Convention
+### 🌱 Commit/Issue/PR Message Convention
 
 - feat : 새로운 기능 추가
 - fix : 버그 수정
@@ -36,7 +41,7 @@
 
 3. **feature 브랜치**: 기능 단위로 개발하는 브랜치
 
-- 네이밍: `feature/이슈번호-기능명`
+- 네이밍: `feat/이슈번호-기능명`
 - 예시
-  - `feature/#11-login`
+  - `feat/#11-login`
   - `fix/#13-login`
