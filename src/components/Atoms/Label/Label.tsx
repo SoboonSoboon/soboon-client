@@ -4,7 +4,7 @@ export interface LabelProps
   required?: boolean;
 }
 
-export const Label = ({ children, required, ...props }: LabelProps) => {
+export const Label = ({ children, required = false, ...props }: LabelProps) => {
   return (
     <label className="text-[16px] text-[var(--GrayScale-Gray80)]" {...props}>
       {children}
