@@ -2,6 +2,7 @@
 
 import { memo, useState } from 'react';
 import Image from 'next/image';
+import { Heart } from 'lucide-react';
 
 interface cardContentProps {
   className?: string;
@@ -30,31 +31,20 @@ const LikeButtonComponent = memo(
   }) => {
     const [isLiked, setIsLiked] = useState(liked);
 
-    const handleLike = () => {
+    const handleLike = (e: React.MouseEvent<SVGSVGElement>) => {
+      e.stopPropagation();
       const next = !isLiked;
       setIsLiked(next);
       onChange?.(next);
     };
 
     return (
-      <svg
-        width="20"
-        height="20"
-        viewBox="0 0 24 24"
-        fill="none"
-        xmlns="http://www.w3.org/2000/svg"
-        className="absolute top-4 right-4 cursor-pointer"
-        onClick={handleLike}
-      >
-        <path
-          d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"
-          fill={isLiked ? '#FF4805' : '#4e4e4e'}
-          stroke={isLiked ? '#FF4805' : '#4e4e4e'}
-          strokeWidth="2"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        />
-      </svg>
+      <Heart
+        className="absolute top-4 right-4 size-6.5 cursor-pointer"
+        onClick={(e: React.MouseEvent<SVGSVGElement>) => handleLike(e)}
+        fill={isLiked ? '#FF4805' : 'rgba(0,0,0, .3)'}
+        stroke="none"
+      />
     );
   },
 );
@@ -123,7 +113,6 @@ interface mainCardProps {
   subtitle: string;
 }
 
-// todo: 구조 파괴시 경고 메시지 발생
 export const MainCard = ({
   classname,
   image,

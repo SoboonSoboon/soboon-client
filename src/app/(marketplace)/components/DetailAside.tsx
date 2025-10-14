@@ -1,5 +1,6 @@
 import Image from 'next/image';
 import { Button } from '@/components';
+import { EllipsisVertical, MapPin } from 'lucide-react';
 
 export const DetailAside = () => {
   return (
@@ -23,18 +24,7 @@ export const DetailAside = () => {
           </div>
         </div>
         <div>
-          {/* 추후 아이콘 라이브러리 교체 예정 */}
-          <svg
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <circle cx="12" cy="6" r="2" fill="#BCBCBC" />
-            <circle cx="12" cy="12" r="2" fill="#BCBCBC" />
-            <circle cx="12" cy="18" r="2" fill="#BCBCBC" />
-          </svg>
+          <EllipsisVertical className="text-gray-30 size-6" />
         </div>
       </div>
 
@@ -42,19 +32,7 @@ export const DetailAside = () => {
 
       <div className="mb-5 flex w-full justify-between">
         <div className="flex items-center gap-1">
-          {/* 추후 아이콘 라이브러리 교체 예정 */}
-          <svg
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"
-              fill="#000000"
-            />
-          </svg>
+          <MapPin className="size-6" />
           <p>중곡역</p>
         </div>
         <div>

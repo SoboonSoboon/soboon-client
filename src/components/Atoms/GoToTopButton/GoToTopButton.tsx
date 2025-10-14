@@ -1,16 +1,6 @@
 'use client';
 
-const ArrowUpIcon = () => (
-  <svg
-    width="24"
-    height="24"
-    viewBox="0 0 24 24"
-    fill="none"
-    xmlns="http://www.w3.org/2000/svg"
-  >
-    <path d="M12 4L4 12H8V20H16V12H20L12 4Z" fill="currentColor" />
-  </svg>
-);
+import { ArrowUp } from 'lucide-react';
 
 export const GoToTopButton = () => {
   const handleClick = () => {
@@ -24,7 +14,7 @@ export const GoToTopButton = () => {
         onClick={handleClick}
         data-testid="go-to-top-button"
       >
-        <ArrowUpIcon />
+        <ArrowUp className="text-text-line2" />
       </div>
       <p className="font-memomentKkukkkuk text-text-sub2">TOP</p>
     </div>
