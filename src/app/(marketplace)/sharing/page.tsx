@@ -56,7 +56,7 @@ export default async function SharingPage({
   console.log(sharingMettingList);
   return (
     <section className="flex gap-10">
-      <aside className="w-[200px]">
+      <aside className="sticky top-6 h-[95vh] w-[200px]">
         <FilterSection />
       </aside>
       <div className="flex-1">
