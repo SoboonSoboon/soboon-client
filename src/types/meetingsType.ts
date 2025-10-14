@@ -11,7 +11,7 @@ import {
 모임 상세
 GET /v1/meetings/{id}
 */
-type MeetingDetailType = ApiResponse<{
+type MeetingDetailType = {
   id: number;
   title: string;
   item: string;
@@ -25,7 +25,8 @@ type MeetingDetailType = ApiResponse<{
   current_member: number;
   total_member: number;
   category: string;
-}>;
+  createdAt: string;
+};
 
 /*
 모임 수정
