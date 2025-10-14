@@ -2,15 +2,46 @@
 name: 'Chromatic Deployment'
 
 # Event for the workflow
-on: push
+on:
+  pull_request:
+    branches: [dev]
+    paths:
+      - '**.stories.tsx'
+      - '.storybook/**'
+      - 'package.json'
+  push:
+    branches: [dev]
+    paths:
+      - '**.stories.tsx'
+      - '.storybook/**'
+
+permissions:
+  contents: read
+  pull-requests: write
 
 # List of jobs
 jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v1
-      - run: npm ci
-      - uses: chromaui/action@v1
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Publish to Chromatic
+        id: publish_chromatic
+        uses: chromaui/action@v1
         with:
-          projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
+          projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN  }}
+          buildScriptName: build-storybook
+          onlyChanged: true
+
+      - name: comment PR
+        uses: thollander/actions-comment-pull-request@v1
+        if: ${{ github.event_name == 'pull_request' }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          message: '🚀 **storybook**: ${{ steps.publish_chromatic.outputs.storybookUrl }}'
