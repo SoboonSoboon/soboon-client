@@ -3,14 +3,14 @@ import { cn } from '../../../utils/cn';
 interface ChipProps {
   children: React.ReactNode;
   size?: 'sm' | 'lg';
-  isActive: boolean;
-  onClick: () => void;
+  isActive?: boolean;
+  onClick?: () => void;
   className?: string;
 }
 export const Chip = ({
   children,
   size = 'lg',
-  isActive,
+  isActive = false,
   onClick,
   className,
 }: ChipProps) => {
@@ -18,7 +18,7 @@ export const Chip = ({
     <div
       role="button"
       onClick={() => {
-        if (!isActive) onClick();
+        if (!isActive) onClick?.();
       }}
       className={cn(
         'inline-flex h-9 min-w-12 items-center justify-center rounded-full font-medium transition-colors select-none',
