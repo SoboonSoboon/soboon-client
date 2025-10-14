@@ -17,7 +17,7 @@ import {
   DividingContentType,
   DividingMeetingsType,
 } from '@/types/meetingsType';
-import { memo, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 
 export const SharingListSection = ({
   sharingMettingList,
@@ -49,7 +49,12 @@ export const SharingListSection = ({
   return (
     <div className="grid grid-cols-3 gap-8">
       {mettingList?.length === 0 ? (
-        <div>모임이 없습니다.</div>
+        <div>
+          <p>
+            아직 모임이 없어요, <br />
+            지금 바로 모임을 만들어보세요
+          </p>
+        </div>
       ) : (
         mettingList?.map((metting) => (
           <Card
