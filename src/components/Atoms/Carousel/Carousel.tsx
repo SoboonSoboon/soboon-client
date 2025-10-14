@@ -1,5 +1,6 @@
 'use client';
 
+import { ChevronLeft, ChevronRight } from 'lucide-react';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
 
@@ -68,6 +69,11 @@ export const Carousel = ({
     setCurrentIndex((prev) => (prev += 1));
   };
 
+  // todo: 이미지가 없을 때 대체 이미지 사용
+  if (carouselImages.length === 0) {
+    return <div>이미지가 없습니다.</div>;
+  }
+
   // 이미지가 1장일 때
   if (carouselImages.length === 1) {
     return (
@@ -97,6 +103,7 @@ export const Carousel = ({
             isMoving ? 'transition-transform duration-300' : 'transition-none'
           }`}
           style={{ transform: `translateX(-${currentIndex * width}px)` }}
+          data-testid="carousel-container"
         >
           {newCarouselImagesArray.map((image, index) => (
             <Image
@@ -110,18 +117,20 @@ export const Carousel = ({
         </div>
       </div>
       <button
-        className="absolute top-[50%] left-0 translate-y-[-50%] bg-white p-3"
+        className="absolute top-[50%] left-0 translate-y-[-50%] bg-[rgba(0,0,0,0.1)] p-3"
         onClick={prevButton}
         disabled={isDisabled}
+        data-testid="carousel-prev-button"
       >
-        {'<'}
+        <ChevronLeft className="size-6" />
       </button>
       <button
-        className="absolute top-[50%] right-0 translate-y-[-50%] bg-white p-3"
+        className="absolute top-[50%] right-0 translate-y-[-50%] bg-[rgba(0,0,0,0.1)] p-3"
         onClick={nextButton}
         disabled={isDisabled}
+        data-testid="carousel-next-button"
       >
-        {'>'}
+        <ChevronRight className="size-6" />
       </button>
     </div>
   );
