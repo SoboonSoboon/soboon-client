@@ -1,5 +1,6 @@
 'use client';
 
+import { ArrowDown, ArrowUp } from 'lucide-react';
 import { useState, useCallback, memo } from 'react';
 
 export interface DateFilterProps {
@@ -26,42 +27,24 @@ export const DateFilter = memo(({ className, onChange }: DateFilterProps) => {
     >
       <div className="flex h-6 w-6 items-center gap-[1px]">
         <div>
-          <svg
-            width="10"
-            height="13"
-            viewBox="0 0 10 13"
-            fill="none"
-            className={`transition-all duration-200 ease-in-out ${
+          <ArrowUp
+            width="16"
+            height="18"
+            className={`relative left-0.5 transition-all duration-200 ease-in-out ${
               optionValue === 'desc' ? 'text-[#9CA3AF]' : 'text-[#111827]'
             }`}
-          >
-            <path
-              d="M1 6L5 2M5 2L9 6M5 2V12"
-              stroke="currentColor"
-              strokeWidth="1.8"
-              strokeLinecap="round"
-            />
-          </svg>
+            strokeWidth="3"
+          />
         </div>
         <div>
-          <div>
-            <svg
-              width="10"
-              height="13"
-              viewBox="0 0 10 13"
-              fill="none"
-              className={`transition-all duration-200 ease-in-out ${
-                optionValue === 'asc' ? 'text-[#9CA3AF]' : 'text-[#111827]'
-              }`}
-            >
-              <path
-                d="M1 7L5 11M5 11L9 7M5 11V1"
-                stroke="currentColor"
-                strokeWidth="1.8"
-                strokeLinecap="round"
-              />
-            </svg>
-          </div>
+          <ArrowDown
+            width="16"
+            height="18"
+            className={`relative right-0.5 transition-all duration-200 ease-in-out ${
+              optionValue === 'asc' ? 'text-[#9CA3AF]' : 'text-[#111827]'
+            }`}
+            strokeWidth="3"
+          />
         </div>
       </div>
       <span className="text-sm font-medium text-[#1F2937]">작성일</span>

@@ -1,17 +1,21 @@
 'use client';
 
+import { ChevronLeft } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 
 export const DetailHeader = () => {
   const router = useRouter();
   return (
-    <div className="px-4 py-3">
-      <span
-        className="text-text-sub2 cursor-pointer"
+    <div className="py-4">
+      <div
+        className="flex cursor-pointer items-center gap-2"
         onClick={() => router.back()}
       >
-        목록
-      </span>
+        <div>
+          <ChevronLeft className="text-text-sub2 size-6" />
+        </div>
+        <span className="text-text-sub2">목록</span>
+      </div>
     </div>
   );
 };
