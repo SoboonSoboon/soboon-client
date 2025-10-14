@@ -1,3 +1,5 @@
+'use client';
+
 import { useToast as useToastContext } from './ToastContext';
 
 export const useToast = () => {
@@ -16,7 +18,8 @@ export const useToast = () => {
     warning: (title: string, description?: string) =>
       addToast({ title, description, option: 'warning' }),
 
-    info: (title: string, description?: string) => addToast({ title, description, option: 'info' }),
+    info: (title: string, description?: string) =>
+      addToast({ title, description, option: 'info' }),
 
     remove: removeToast,
   };

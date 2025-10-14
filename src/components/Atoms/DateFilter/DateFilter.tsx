@@ -20,6 +20,7 @@ export const DateFilter = memo(({ className, onChange }: DateFilterProps) => {
 
   return (
     <div
+      data-testid="date-filter-button"
       onClick={() => handleOptionChange()}
       className={`flex h-[40px] w-[110px] cursor-pointer items-center justify-between gap-1 rounded-xl border-2 border-[#F3F4F6] px-3 py-2 select-none ${className}`}
     >
