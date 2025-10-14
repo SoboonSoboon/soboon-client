@@ -1,4 +1,7 @@
-export interface TextInputProps {
+import { cn } from '@/utils/cn';
+
+export interface TextInputProps
+  extends React.InputHTMLAttributes<HTMLInputElement> {
   placeholder?: string;
   value?: string;
   onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
@@ -14,7 +17,10 @@ export const TextInput = ({
 }: TextInputProps) => {
   return (
     <input
-      className={`flex flex-1 items-center gap-2.5 rounded-xl border-2 border-transparent bg-[var(--GrayScale-Gray5)] px-4 py-2.5 text-[var(--GrayScale-Gray80)] focus:border-[var(--OrangeScale-Orange50)] focus:outline-none ${className}`}
+      className={cn(
+        'flex w-full flex-1 items-center rounded-xl border-2 border-transparent bg-[var(--GrayScale-Gray5)] px-4 py-2.5 text-[var(--GrayScale-Gray80)] focus:border-[var(--OrangeScale-Orange50)] focus:outline-none',
+        className,
+      )}
       placeholder={placeholder}
       value={value}
       onChange={onChange}
