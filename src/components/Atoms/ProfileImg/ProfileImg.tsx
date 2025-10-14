@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import { cn } from '@/utils/cn';
 
 interface ProfileImgProps {
   profile?: string;
@@ -15,7 +16,10 @@ export function ProfileImg({
     <Image
       src={profile}
       alt="profileImage"
-      className={`border-gray-10 rounded-full border-1 object-cover ${className || ''}`}
+      className={cn(
+        'border-gray-10 rounded-full border-1 object-cover',
+        className,
+      )}
       width={size}
       height={size}
     />
