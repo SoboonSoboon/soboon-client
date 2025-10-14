@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import { KeyWordBar } from './keyWordBarCard';
+import { KeyWordBar } from './layout/KeyWordBar';
 
 export const ProfileSideBar = () => {
   const userData = {
@@ -24,6 +24,8 @@ export const ProfileSideBar = () => {
     TIME_PROMISE: '시간을 잘 지켜요',
     KIND_AND_CARING: '친절해요',
     SAME_AS_PHOTO: '사진과 같아요',
+    FAST_RESPONSE: '응답이 빨라요',
+    GOOD_DISTRIBUTION: '적절하게 잘 분배했어요',
   } as const;
   return (
     <div className="border-gray-10 w-full rounded-lg border bg-white px-10 py-5">
