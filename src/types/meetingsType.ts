@@ -48,16 +48,17 @@ interface DividingContentType {
   image: string;
   productType: ProductType;
   location: LocationType;
+  status: StatusType;
 }
 
 /*
 모임 소분 목록 조회
 GET /v1/meetings/dividing
 */
-type DividingMeetingsType = ApiResponse<{
+type DividingMeetingsType = {
   content: DividingContentType[];
   sliceInfo: SliceInfoType;
-}>;
+};
 
 /*
 장보가 content 타입
@@ -101,6 +102,7 @@ export type {
   UpdateMeetingResponseType,
   DeleteMeetingResponseType,
   DividingMeetingsType,
+  DividingContentType,
   ShoppingMeetingsType,
   ShoppingContentType,
   CreateShoppingMeetingResponseType,
