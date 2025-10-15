@@ -2,17 +2,19 @@ import Image from 'next/image';
 import { Button } from '@/components';
 import { EllipsisVertical, MapPin } from 'lucide-react';
 
+interface DetailAsideProps {
+  title: string;
+  detail_address: string;
+  current_member: number;
+  total_member: number;
+}
+
 export const DetailAside = ({
   title,
   detail_address,
   current_member,
   total_member,
-}: {
-  title: string | undefined;
-  detail_address: string | undefined;
-  current_member: number | undefined;
-  total_member: number | undefined;
-}) => {
+}: DetailAsideProps) => {
   return (
     <aside className="w-[430px]">
       <div className="flex w-full justify-between">

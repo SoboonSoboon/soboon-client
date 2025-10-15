@@ -61,8 +61,8 @@ export default async function SharingDetailPage({
         <article className="w-[730px]">
           {/* 추후에 DB에 실제 이미지가 추가되면 연동 필요 */}
           <Carousel carouselImages={carouselImages} className="mb-8" />
-          <DetailContent description={meetingDetail?.description} />
-          <DetailContentFooter createdAt={meetingDetail?.createdAt} />
+          <DetailContent description={meetingDetail!.description} />
+          <DetailContentFooter createdAt={meetingDetail!.createdAt} />
 
           {/* 댓글 영역 */}
           <CommentSection />
@@ -70,10 +70,10 @@ export default async function SharingDetailPage({
 
         <div className="sticky top-6 h-[95vh]">
           <DetailAside
-            title={meetingDetail?.title}
-            detail_address={meetingDetail?.detail_address}
-            current_member={meetingDetail?.current_member}
-            total_member={meetingDetail?.total_member}
+            title={meetingDetail!.title}
+            detail_address={meetingDetail!.detail_address}
+            current_member={meetingDetail!.current_member}
+            total_member={meetingDetail!.total_member}
           />
         </div>
       </div>
