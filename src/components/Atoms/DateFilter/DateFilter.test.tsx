@@ -13,13 +13,13 @@ describe('DateFilter', () => {
     render(<DateFilter onChange={mockOnChange} />);
     const button = screen.getByTestId('date-filter-button');
 
-    // 첫 번째 클릭 (desc -> asc)
+    // 첫 번째 클릭 (OLDEST -> RECENT)
     fireEvent.click(button);
-    expect(mockOnChange).toHaveBeenCalledWith('asc');
+    expect(mockOnChange).toHaveBeenCalledWith('OLDEST');
 
-    // 두 번째 클릭 (asc -> desc)
+    // 두 번째 클릭 (RECENT -> OLDEST)
     fireEvent.click(button);
-    expect(mockOnChange).toHaveBeenCalledWith('desc');
+    expect(mockOnChange).toHaveBeenCalledWith('RECENT');
     expect(mockOnChange).toHaveBeenCalledTimes(2);
   });
 });

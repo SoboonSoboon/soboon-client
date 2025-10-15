@@ -1,23 +1,25 @@
 'use client';
 
 import { ArrowDown, ArrowUp } from 'lucide-react';
-import { useState, useCallback, memo } from 'react';
+import { useState, memo } from 'react';
 
 export interface DateFilterProps {
   className?: string;
-  onChange?: (value: 'desc' | 'asc') => void;
+  onChange?: (value: 'RECENT' | 'OLDEST') => void;
 }
 
 export const DateFilter = memo(({ className, onChange }: DateFilterProps) => {
-  const [optionValue, setOptionValue] = useState<'desc' | 'asc'>('desc');
+  const [optionValue, setOptionValue] = useState<'RECENT' | 'OLDEST'>('RECENT');
 
-  const handleOptionChange = useCallback(() => {
+  const handleOptionChange = () => {
     setOptionValue((prev) => {
-      const newValue = prev === 'desc' ? 'asc' : 'desc';
-      onChange?.(newValue);
+      const newValue = prev === 'RECENT' ? 'OLDEST' : 'RECENT';
       return newValue;
     });
-  }, [onChange]);
+    // 상태 업데이트 후 onChange 호출
+    const newValue = optionValue === 'RECENT' ? 'OLDEST' : 'RECENT';
+    onChange?.(newValue);
+  };
 
   return (
     <div
@@ -31,7 +33,7 @@ export const DateFilter = memo(({ className, onChange }: DateFilterProps) => {
             width="16"
             height="18"
             className={`relative left-0.5 transition-all duration-200 ease-in-out ${
-              optionValue === 'desc' ? 'text-[#9CA3AF]' : 'text-[#111827]'
+              optionValue === 'RECENT' ? 'text-[#9CA3AF]' : 'text-[#111827]'
             }`}
             strokeWidth="3"
           />
@@ -41,7 +43,7 @@ export const DateFilter = memo(({ className, onChange }: DateFilterProps) => {
             width="16"
             height="18"
             className={`relative right-0.5 transition-all duration-200 ease-in-out ${
-              optionValue === 'asc' ? 'text-[#9CA3AF]' : 'text-[#111827]'
+              optionValue === 'OLDEST' ? 'text-[#9CA3AF]' : 'text-[#111827]'
             }`}
             strokeWidth="3"
           />
