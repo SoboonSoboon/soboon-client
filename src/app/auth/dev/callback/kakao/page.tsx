@@ -1,14 +1,20 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { useSearchParams, useRouter } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 
-export default function KakaoCallbackPage() {
-  const searchParams = useSearchParams();
+export default function KakaoCallbackPage({
+  searchParams,
+}: {
+  searchParams: { code?: string; error?: string };
+}) {
   const router = useRouter();
   const [status, setStatus] = useState('처리 중...');
 
   useEffect(() => {
+    const code = searchParams?.code;
+    const error = searchParams?.error;
+
     const handleKakaoCallback = async (code: string) => {
       try {
         setStatus('백엔드 처리 중...');
@@ -34,14 +40,15 @@ export default function KakaoCallbackPage() {
         console.log('응답:', data);
 
         //응답에 accessToken이 있으면 로그인, 없으면 추가 정보 입력 필요
+
         if (data.accessToken) {
           localStorage.setItem('accessToken', data.accessToken);
           console.log('Access Token 저장 완료');
-          alert('로그인 성공');
-          router.push('/sharing');
+          alert('로그인 성공'); //추후 토스트로 변경
+          setTimeout(() => router.push('/sharing'), 300);
         } else {
-          alert('추가 정보 입력이 필요합니다.');
-          router.push('/auth/addinfo');
+          alert('추가 정보 입력이 필요합니다.'); //추후 토스트로 변경
+          setTimeout(() => router.push('/auth/addinfo'), 300);
         }
       } catch (error) {
         console.error('로그인 처리 중 오류:', error);
@@ -50,9 +57,6 @@ export default function KakaoCallbackPage() {
         router.push('/');
       }
     };
-
-    const code = searchParams.get('code');
-    const error = searchParams.get('error');
 
     console.log('카카오 콜백:', { code, error });
 
