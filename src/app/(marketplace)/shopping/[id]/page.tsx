@@ -6,6 +6,7 @@ import {
   CommentSection,
   DetailAside,
 } from '@/app/(marketplace)/components';
+import { MeetingDetailType } from '@/types/meetingsType';
 
 const carouselImages = [
   'https://www.dummyimage.com/700x600/FF6B6B/fff',
@@ -15,23 +16,53 @@ const carouselImages = [
   'https://www.dummyimage.com/700x600/0000FF/fff',
 ];
 
-export default function ShoppingDetailPage() {
-  const mockData = {
-    description: '상품에 대한 자세한 설명입니다.',
-    createdAt: '2024-01-15T10:30:00Z',
-    title: '함께 장보기 모임',
-    detail_address: '서울특별시 강남구 테헤란로 123',
-    current_member: 3,
-    total_member: 5,
-  };
+async function getMettingDetail({
+  id,
+}: {
+  id: string;
+}): Promise<MeetingDetailType | null> {
+  try {
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_SOBOON_API_URL}/v1/meetings/${id}`,
+      {
+        cache: 'no-store',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${process.env.NEXT_PUBLIC_SOBOON_API_TOKEN}`,
+        },
+      },
+    );
+
+    if (!response.ok) {
+      throw new Error('소분하기 모임 상세 데이터 조회 실패');
+    }
+
+    const responseData = await response.json();
+    return responseData.data;
+  } catch (error) {
+    console.error('소분하기 모임 상세 데이터 조회 실패', error);
+    return null;
+  }
+}
+
+export default async function ShoppingDetailPage({
+  params,
+}: {
+  params: Promise<{ id: string }>;
+}) {
+  const shoppingMettingDetail = await getMettingDetail({
+    id: (await params).id,
+  });
+  console.log(shoppingMettingDetail);
+
   return (
     <section>
       <DetailHeader />
       <div className="flex gap-10">
         <article className="w-[730px]">
           <Carousel carouselImages={carouselImages} className="mb-8" />
-          <DetailContent description={mockData.description} />
-          <DetailContentFooter createdAt={mockData.createdAt} />
+          <DetailContent description={shoppingMettingDetail!.description} />
+          <DetailContentFooter createdAt={shoppingMettingDetail!.createdAt} />
 
           {/* 댓글 영역 */}
           <CommentSection />
@@ -39,10 +70,10 @@ export default function ShoppingDetailPage() {
 
         <div className="sticky top-6 h-[95vh]">
           <DetailAside
-            title={mockData.title}
-            detail_address={mockData.detail_address}
-            current_member={mockData.current_member}
-            total_member={mockData.total_member}
+            title={shoppingMettingDetail!.title}
+            detail_address={shoppingMettingDetail!.detail_address}
+            current_member={shoppingMettingDetail!.current_member}
+            total_member={shoppingMettingDetail!.total_member}
           />
         </div>
       </div>

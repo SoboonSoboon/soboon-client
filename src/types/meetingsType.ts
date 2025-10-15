@@ -77,10 +77,10 @@ interface ShoppingContentType {
 장보기 모임 목록 조회
 GET /v1/meetings/shopping
 */
-type ShoppingMeetingsType = ApiResponse<{
+type ShoppingMeetingsType = {
   content: ShoppingContentType[];
   pageInfo: PageInfoType;
-}>;
+};
 
 /*
 장보기 모임 생성

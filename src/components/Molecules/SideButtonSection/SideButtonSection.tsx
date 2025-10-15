@@ -1,3 +1,5 @@
+'use client';
+
 import { CreateButton, GoToTopButton } from '@/components/Atoms';
 
 export const SideButtonSection = () => {
