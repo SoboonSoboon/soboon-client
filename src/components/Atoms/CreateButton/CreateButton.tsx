@@ -26,7 +26,7 @@ export const CreateButton = ({ actionHandlers }: CreateButtonProps) => {
   };
 
   return (
-    <div className="flex cursor-pointer flex-col items-center gap-2.5">
+    <div className="flex cursor-pointer flex-col items-center gap-1.5">
       <div
         className={`flex flex-col gap-2.5 transition-all duration-300 ease-in-out ${
           open
@@ -63,15 +63,17 @@ export const CreateButton = ({ actionHandlers }: CreateButtonProps) => {
         ))}
       </div>
 
-      <button
-        type="button"
-        onClick={() => setOpen(!open)}
-        className="bg-primary flex size-11 cursor-pointer items-center justify-center rounded-full p-1 shadow-[0_0_4px_0_var(--Orange-Scale-Orange-20,#FFBAA9)]"
-        aria-label={open ? '메뉴 닫기' : '메뉴 열기'}
-        aria-expanded={open}
-      >
-        <Plus className="text-white" />
-      </button>
+      <div className="flex px-3 py-1">
+        <button
+          type="button"
+          onClick={() => setOpen(!open)}
+          className="border-primary bg-primary flex size-11 cursor-pointer items-center justify-center rounded-full border-1 shadow-[0_0_0.25rem_0_var(--OrangeScale-Orange20)]"
+          aria-label={open ? '메뉴 닫기' : '메뉴 열기'}
+          aria-expanded={open}
+        >
+          <Plus className="text-white" />
+        </button>
+      </div>
     </div>
   );
 };
