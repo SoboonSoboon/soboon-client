@@ -2,7 +2,7 @@
 
 import { memo, useState } from 'react';
 import Image from 'next/image';
-import { Heart } from 'lucide-react';
+import { Bookmark } from 'lucide-react';
 
 interface cardContentProps {
   className?: string;
@@ -25,9 +25,11 @@ const LikeButtonComponent = memo(
   ({
     liked = false,
     onChange,
+    className,
   }: {
     liked?: boolean;
     onChange?: (liked: boolean) => void;
+    className?: string;
   }) => {
     const [isLiked, setIsLiked] = useState(liked);
 
@@ -39,8 +41,8 @@ const LikeButtonComponent = memo(
     };
 
     return (
-      <Heart
-        className="absolute top-4 right-4 size-6.5 cursor-pointer"
+      <Bookmark
+        className={`absolute top-4 right-4 size-6.5 cursor-pointer duration-300 hover:scale-110 ${className}`}
         onClick={(e: React.MouseEvent<SVGSVGElement>) => handleLike(e)}
         fill={isLiked ? '#FF4805' : 'rgba(0,0,0, .3)'}
         stroke="none"
