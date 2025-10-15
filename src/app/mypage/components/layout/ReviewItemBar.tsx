@@ -1,17 +1,17 @@
-import { Label } from '@/components/Atoms/Label';
+import { Label } from '@/components/Atoms';
 
 interface ReviewItemBarProps {
-  max?: number;
+  maxCount: number;
   count: number;
   label?: string;
 }
 
 export const ReviewItemBar = ({
-  max = 10,
+  maxCount,
   count,
   label,
 }: ReviewItemBarProps) => {
-  const percentage = Math.min((count / max) * 100, 100);
+  const percentage = Math.min((count / maxCount) * 100, 100);
 
   return (
     <div className="flex w-full flex-col gap-1">

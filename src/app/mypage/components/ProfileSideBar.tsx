@@ -6,18 +6,11 @@ export const ProfileSideBar = () => {
     nickname: '그린데이즈',
     Image: '',
     keywords: [
-      {
-        keyword: 'TIME_PROMISE',
-        count: 8,
-      },
-      {
-        keyword: 'KIND_AND_CARING',
-        count: 7,
-      },
-      {
-        keyword: 'SAME_AS_PHOTO',
-        count: 5,
-      },
+      { keyword: 'TIME_PROMISE', count: 8 },
+      { keyword: 'KIND_AND_CARING', count: 7 },
+      { keyword: 'SAME_AS_PHOTO', count: 5 },
+      { keyword: 'FAST_RESPONSE', count: 0 },
+      { keyword: 'GOOD_DISTRIBUTION', count: 10 },
     ],
   };
 
@@ -28,6 +21,9 @@ export const ProfileSideBar = () => {
     FAST_RESPONSE: '응답이 빨라요',
     GOOD_DISTRIBUTION: '적절하게 잘 분배했어요',
   } as const;
+
+  // 리뷰 키워드 중 최대 count에 20% 여유를 더한 값 계산
+  const maxCount = Math.max(...userData.keywords.map((k) => k.count)) * 1.2;
 
   return (
     <div className="border-gray-10 w-full rounded-lg border bg-white px-10 py-5">
@@ -56,8 +52,9 @@ export const ProfileSideBar = () => {
         <div className="flex flex-col gap-4">
           {userData.keywords.map((data, index) => (
             <ReviewItemBar
-              count={data.count}
               key={index}
+              count={data.count}
+              maxCount={maxCount}
               label={
                 KEYWORD_LABELS[data.keyword as keyof typeof KEYWORD_LABELS]
               }
