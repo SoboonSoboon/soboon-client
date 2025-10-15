@@ -76,11 +76,11 @@ export const Card = ({
 export const CardImage = ({ className, src, alt }: cardImageProps) => {
   return (
     <Image
-      src={src}
+      src={src || '/images/notFound_image.png'}
       alt={alt}
       width={276}
       height={200}
-      className={`${className} mb-3 h-[200px] w-full rounded-lg object-cover`}
+      className={`${className} mb-5 h-[200px] w-full rounded-lg object-cover`}
     />
   );
 };
@@ -104,7 +104,9 @@ export const CardFooter = ({ className, children }: cardContentProps) => {
 };
 
 export const Line = ({ className }: cardContentProps) => {
-  return <div className={`${className} my-5 h-[1px] w-full bg-gray-200`}></div>;
+  return (
+    <div className={`${className} mt-3 mb-5 h-[1px] w-full bg-gray-200`}></div>
+  );
 };
 
 interface mainCardProps {

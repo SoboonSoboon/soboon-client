@@ -12,3 +12,4 @@ export { Checkbox, type CheckboxProps } from './Checkbox';
 export { GoToTopButton } from './GoToTopButton';
 export { CreateButton } from './CreateButton';
 export { Carousel } from './Carousel';
+export { StatusTag } from './StatusTag';

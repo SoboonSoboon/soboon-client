@@ -10,6 +10,7 @@ export {
   TextInput,
   Toast,
   Checkbox,
+  StatusTag,
 } from './Atoms';
 export {
   Card,

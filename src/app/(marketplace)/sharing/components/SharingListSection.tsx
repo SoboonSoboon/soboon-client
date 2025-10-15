@@ -6,64 +6,96 @@ import {
   CardContent,
   CardFooter,
   CardImage,
+  CardSubtitle,
   CardTitle,
+  Chip,
   LikeButton,
+  Line,
 } from '@/components';
+import { MapPin } from 'lucide-react';
+import {
+  DividingContentType,
+  DividingMeetingsType,
+} from '@/types/meetingsType';
+import { useEffect, useState } from 'react';
 
-const LocationIcon = () => {
-  return (
-    <svg
-      width="16"
-      height="16"
-      viewBox="0 0 24 24"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-    >
-      <path
-        d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"
-        fill="currentColor"
-      />
-    </svg>
+export const SharingListSection = ({
+  sharingMettingList,
+}: {
+  sharingMettingList: DividingMeetingsType | null;
+}) => {
+  const [mettingList, setMettingList] = useState<DividingContentType[] | null>(
+    null,
   );
-};
 
-export const SharingListSection = () => {
+  useEffect(() => {
+    setMettingList(sharingMettingList?.content || null);
+  }, [sharingMettingList]);
+
+  const router = useRouter();
+
   const onClickCard = (id: string) => {
     router.push(`/sharing/${id}`);
   };
 
-  const router = useRouter();
+  const getStatus = (metting: DividingContentType) => {
+    return metting.status === 'RECRUITING'
+      ? '모집중'
+      : metting.status === 'COMPLETED'
+        ? '완료'
+        : '취소됨';
+  };
 
   return (
     <div className="grid grid-cols-3 gap-8">
-      {Array.from({ length: 10 }).map((_, index) => (
-        <Card
-          className="cursor-pointer"
-          height="auto"
-          width="auto"
-          key={index}
-          onClick={() => onClickCard((index + 1).toString())}
-        >
-          <CardContent>
-            <LikeButton />
-            <CardImage
-              alt="기본 카드"
-              src="/images/item_dummy_image.png"
-              className="h-[200px] w-full"
-            />
-            <div className="mb-2 flex items-center gap-1 text-sm">
-              <LocationIcon />
-              <p>성수역</p>
-            </div>
-            <CardTitle className="font-memomentKkukkkuk line-clamp-1">
-              비건 집밥러 건대 이마트에서 장볼건데 무 반띵하실 분?!
-            </CardTitle>
-          </CardContent>
-          <CardFooter className="text-text-sub2 text-sm">
-            <span>빵빵이와 옥지</span> <span>1시간 전</span>
-          </CardFooter>
-        </Card>
-      ))}
+      {mettingList?.length === 0 ? (
+        <div>
+          <p>
+            아직 모임이 없어요, <br />
+            지금 바로 모임을 만들어보세요
+          </p>
+        </div>
+      ) : (
+        mettingList?.map((metting) => (
+          <Card
+            key={metting.groupId}
+            onClick={() => onClickCard(metting.groupId.toString())}
+            className="cursor-pointer"
+          >
+            <CardContent>
+              {/* 추후 미성님 컴포넌트로 수정 필요 */}
+              <Chip className="absolute top-4 left-4 px-3 py-1.5">
+                {getStatus(metting)}
+              </Chip>
+              <LikeButton />
+              <CardImage
+                alt="기본 카드"
+                src={
+                  metting.image.includes('example')
+                    ? '/images/notFound_image.png'
+                    : metting.image
+                }
+                className="h-[200px] w-full"
+              />
+
+              <CardTitle className="font-memomentKkukkkuk line-clamp-1">
+                {metting.item}
+              </CardTitle>
+              {/* 추후 백엔드 코드 수정 후 사용자 이름 추가 필요 및 타임스탬프 형식 변경 필요 */}
+              <CardSubtitle className="text-text-sub2 text-sm">
+                <span>-사용자 이름-</span> <span>1시간 전</span>
+              </CardSubtitle>
+            </CardContent>
+            <Line />
+            <CardFooter>
+              <div className="mb-2 flex items-center gap-1 text-sm">
+                <MapPin className="text-gray-40 size-4" />
+                <p>{metting.location.detail}</p>
+              </div>
+            </CardFooter>
+          </Card>
+        ))
+      )}
     </div>
   );
 };
