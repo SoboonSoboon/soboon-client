@@ -9,10 +9,13 @@ export const axiosInstance = axios.create({
   withCredentials: true,
 });
 
-// Request interceptor - 인증 토큰 추가 등 (향후 구현 예정)
+// Request interceptor - 인증 토큰 추가 등 (향후 로그인 기능 구현 시 수정 필요)
 axiosInstance.interceptors.request.use(
   (config) => {
-    // TODO: 인증 토큰 추가 로직
+    const token = process.env.NEXT_PUBLIC_SOBOON_API_TOKEN;
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
+    }
     return config;
   },
   (error) => {

@@ -2,14 +2,25 @@ import Image from 'next/image';
 import { Button } from '@/components';
 import { EllipsisVertical, MapPin } from 'lucide-react';
 
-export const DetailAside = () => {
+interface DetailAsideProps {
+  title: string;
+  detail_address: string;
+  current_member: number;
+  total_member: number;
+}
+
+export const DetailAside = ({
+  title,
+  detail_address,
+  current_member,
+  total_member,
+}: DetailAsideProps) => {
   return (
     <aside className="w-[430px]">
       <div className="flex w-full justify-between">
         <div className="w-[90%]">
           <h2 className="font-memomentKkukkkuk mb-2 line-clamp-2 text-2xl">
-            장인약과 4팩 반띵하실 분 계신가요? 글 제목 2줄 이상일 경우는 이렇게
-            내려오게 됩니다
+            {title}
           </h2>
           <div className="flex items-center gap-2">
             {/* 추후 공용 컴포넌트 수정 후 교체 예정 */}
@@ -33,11 +44,14 @@ export const DetailAside = () => {
       <div className="mb-5 flex w-full justify-between">
         <div className="flex items-center gap-1">
           <MapPin className="size-6" />
-          <p>중곡역</p>
+          <p>{detail_address}</p>
         </div>
         <div>
           <p>
-            <span className="text-primary">3/5</span>명 모집중
+            <span className="text-primary">
+              {current_member}&nbsp;/&nbsp;{total_member}
+            </span>
+            &nbsp;명 모집중
           </p>
         </div>
       </div>
