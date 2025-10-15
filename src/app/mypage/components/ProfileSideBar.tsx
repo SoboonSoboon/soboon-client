@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import { KeyWordBar } from './layout/KeyWordBar';
+import { ReviewItemBar } from './layout/ReviewItemBar';
 
 export const ProfileSideBar = () => {
   const userData = {
@@ -20,13 +20,15 @@ export const ProfileSideBar = () => {
       },
     ],
   };
-  const keywordLabels = {
+
+  const KEYWORD_LABELS = {
     TIME_PROMISE: '시간을 잘 지켜요',
     KIND_AND_CARING: '친절해요',
     SAME_AS_PHOTO: '사진과 같아요',
     FAST_RESPONSE: '응답이 빨라요',
     GOOD_DISTRIBUTION: '적절하게 잘 분배했어요',
   } as const;
+
   return (
     <div className="border-gray-10 w-full rounded-lg border bg-white px-10 py-5">
       <div className="flex flex-col gap-5">
@@ -48,13 +50,18 @@ export const ProfileSideBar = () => {
             <p>{userData.nickname}</p>
           </div>
         </div>
-        {userData.keywords.map((data, index) => (
-          <KeyWordBar
-            count={data.count}
-            key={index}
-            label={keywordLabels[data.keyword as keyof typeof keywordLabels]}
-          />
-        ))}
+
+        <div className="flex flex-col gap-4">
+          {userData.keywords.map((data, index) => (
+            <ReviewItemBar
+              count={data.count}
+              key={index}
+              label={
+                KEYWORD_LABELS[data.keyword as keyof typeof KEYWORD_LABELS]
+              }
+            />
+          ))}
+        </div>
       </div>
     </div>
   );
