@@ -1,3 +1,5 @@
+'use client';
+
 import { SideButtonSection } from '@/components';
 import { FilterSection } from './components/FilterSection';
 import { ShoppingListSection } from './components/ShoppingListSection';
