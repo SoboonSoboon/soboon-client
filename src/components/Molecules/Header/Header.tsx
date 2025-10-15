@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { Button, Logo, ProfileImg } from '../../Atoms';
-import { redirectToKakao } from '@/apis/auth/apiAuth';
+import { redirectToKakao } from '@/apis/auth/authApi';
 
 type User = {
   name: string;

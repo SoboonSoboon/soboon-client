@@ -2,7 +2,7 @@
 
 import { Button } from '@/components';
 import Image from 'next/image';
-import { redirectToKakao } from '@/apis/auth/apiAuth';
+import { redirectToKakao } from '@/apis/auth/authApi';
 
 export default function Home() {
   return (
