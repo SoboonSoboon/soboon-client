@@ -1,9 +1,9 @@
 import { useCallback } from 'react';
 import { cn } from '../../../utils/cn';
-import type { ModalProps } from './utils/Modal.types';
-import { getPositionClass, getSizeClass } from './utils/Modal.utils';
 import { useModalEscape } from './hooks/useModalEscape';
 import { useModalScrollLock } from './hooks/useModalScrollLock';
+import { ModalProps } from './utils/modalTypes';
+import { getPositionClass, getSizeClass } from './utils/modalUtils';
 
 export const Modal: React.FC<ModalProps> = ({
   isOpen,
@@ -13,7 +13,11 @@ export const Modal: React.FC<ModalProps> = ({
   showBackdrop = true,
   closeOnBackdropClick = true,
   position = 'center',
+  className,
   contentClassName,
+  showCloseButton = false,
+  closeButtonText = '닫기',
+  closeButtonClassName,
 }) => {
   useModalEscape(isOpen, onClose);
   useModalScrollLock(isOpen);
@@ -33,6 +37,7 @@ export const Modal: React.FC<ModalProps> = ({
         'fixed inset-0 flex',
         getPositionClass(position),
         showBackdrop ? 'bg-black/50' : 'bg-transparent',
+        className,
       )}
       onClick={handleBackdropClick}
     >
@@ -45,7 +50,19 @@ export const Modal: React.FC<ModalProps> = ({
         onClick={(e) => e.stopPropagation()}
       >
         {children}
-        <button onClick={onClose}>닫기</button>
+        {showCloseButton && (
+          <div className="mt-4 flex justify-end">
+            <button
+              onClick={onClose}
+              className={cn(
+                'hover:bg-gray-80 rounded bg-gray-50 px-4 py-2 text-white',
+                closeButtonClassName,
+              )}
+            >
+              {closeButtonText}
+            </button>
+          </div>
+        )}
       </div>
     </div>
   );
