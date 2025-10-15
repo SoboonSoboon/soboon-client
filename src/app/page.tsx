@@ -1,5 +1,8 @@
+'use client';
+
 import { Button } from '@/components';
 import Image from 'next/image';
+import { redirectToKakao } from '@/apis/auth/apiAuth';
 
 export default function Home() {
   return (
@@ -13,7 +16,12 @@ export default function Home() {
           <p className="weight-400 my-6">
             대용량 제품을 같이 사서, 필요한 만큼만 소분해요.
           </p>
-          <Button primary label="시작하기" className="mt-[45px]" />
+          <Button
+            primary
+            label="시작하기"
+            className="mt-[45px]"
+            onClick={redirectToKakao}
+          />
         </div>
         <Image
           className="rounded-[60px]"
