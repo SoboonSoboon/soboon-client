@@ -1,25 +1,20 @@
 import type { Meta, StoryObj } from '@storybook/nextjs-vite';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { fn } from 'storybook/test';
 
-import { Modal } from './modal';
+import { Modal, useModal } from './index';
 
-// 1. Meta 객체 정의 - 스토리북의 기본 설정
+// 1. Meta 객체 정의
 const meta = {
-  title: 'Molecules/Modal', // 스토리북 사이드바에서 보여질 경로
-  component: Modal, // 실제 컴포넌트
+  title: 'Molecules/Modal',
+  component: Modal,
   parameters: {
-    layout: 'fullscreen', // 모달은 전체 화면에서 보는 것이 좋음
+    layout: 'fullscreen',
   },
   args: {
-    onClose: fn(), // 스토리북 액션 로거용 함수
+    onClose: fn(),
   },
   argTypes: {
-    // 2. Controls 패널에서 조작할 수 있는 props 정의
-    isOpen: {
-      control: 'boolean',
-      description: '모달의 열림/닫힘 상태',
-    },
     size: {
       control: 'select',
       options: ['sm', 'md', 'lg'],
@@ -38,18 +33,42 @@ const meta = {
       options: ['center', 'top', 'bottom', 'left', 'right'],
       description: '모달의 위치',
     },
+    showCloseButton: {
+      control: 'boolean',
+      description: '내부 닫기 버튼 표시 여부',
+    },
+    closeButtonText: {
+      control: 'text',
+      description: '닫기 버튼 텍스트',
+    },
+    closeButtonClassName: {
+      control: 'text',
+      description: '닫기 버튼 커스텀 클래스',
+    },
+    className: {
+      control: 'text',
+      description: '모달 컨테이너 커스텀 클래스',
+    },
+    contentClassName: {
+      control: 'text',
+      description: '모달 콘텐츠 커스텀 클래스',
+    },
   },
 } satisfies Meta<typeof Modal>;
 
 export default meta;
 
-// 3. 상태를 가진 인터랙티브 컴포넌트 래퍼
-// 모달은 isOpen 상태가 필요하므로 useState를 사용하는 래퍼 컴포넌트 생성
+// 2. 기본 인터랙티브 래퍼
 interface InteractiveModalProps {
   size?: 'sm' | 'md' | 'lg';
   showBackdrop?: boolean;
   closeOnBackdropClick?: boolean;
   position?: 'center' | 'top' | 'bottom' | 'left' | 'right';
+  showCloseButton?: boolean;
+  closeButtonText?: string;
+  closeButtonClassName?: string;
+  className?: string;
+  contentClassName?: string;
   children?: React.ReactNode;
 }
 
@@ -71,10 +90,96 @@ const InteractiveModal = ({ children, ...props }: InteractiveModalProps) => {
   );
 };
 
-// Story 타입을 InteractiveModalProps로 변경
+//  useModal 훅 래퍼
+const UseModalWrapper = ({ children, ...props }: InteractiveModalProps) => {
+  const modal = useModal();
+
+  return (
+    <div>
+      <button
+        onClick={modal.toggle}
+        className="rounded bg-green-500 px-4 py-2 text-white hover:bg-green-600"
+      >
+        {modal.isOpen ? '모달 닫기' : '모달 열기'} {/* 🔥 글씨 변경 */}
+      </button>
+      <Modal {...props} isOpen={modal.isOpen} onClose={modal.close}>
+        {children}
+      </Modal>
+    </div>
+  );
+};
+
+//  커스텀 글씨로 toggle 버튼
+const CustomToggleModal = ({ children, ...props }: InteractiveModalProps) => {
+  const modal = useModal();
+
+  return (
+    <div>
+      <button
+        onClick={modal.toggle}
+        className="rounded bg-purple-500 px-4 py-2 text-white hover:bg-purple-600"
+      >
+        {modal.isOpen ? '닫기' : '열기'} {/* 🔥 커스텀 글씨 */}
+      </button>
+      <Modal {...props} isOpen={modal.isOpen} onClose={modal.close}>
+        {children}
+      </Modal>
+    </div>
+  );
+};
+
+//  ESC 키 테스트용 래퍼
+const EscapeTestModal = ({ children, ...props }: InteractiveModalProps) => {
+  const [isOpen, setIsOpen] = useState(false);
+  const [escapePressed, setEscapePressed] = useState(false);
+
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      console.log('🔍 키 이벤트 감지:', event.key);
+      if (event.key === 'Escape') {
+        console.log('✅ ESC 키 감지!');
+        setEscapePressed(true);
+        setTimeout(() => setEscapePressed(false), 2000);
+      }
+    };
+
+    document.addEventListener('keydown', handleKeyDown);
+    return () => document.removeEventListener('keydown', handleKeyDown);
+  }, []);
+
+  return (
+    <div>
+      <div className="mb-4 space-x-2">
+        <button
+          onClick={() => setIsOpen(true)}
+          className="rounded bg-blue-500 px-4 py-2 text-white hover:bg-blue-600"
+        >
+          모달 열기
+        </button>
+        <button
+          onClick={() => setIsOpen(false)}
+          className="rounded bg-red-500 px-4 py-2 text-white hover:bg-red-600"
+        >
+          수동으로 닫기
+        </button>
+      </div>
+
+      {escapePressed && (
+        <div className="mb-4 rounded bg-green-100 p-3 text-green-700">
+          ✅ ESC 키 감지됨! (2초 후 사라짐)
+        </div>
+      )}
+
+      <Modal {...props} isOpen={isOpen} onClose={() => setIsOpen(false)}>
+        {children}
+      </Modal>
+    </div>
+  );
+};
+
 type Story = StoryObj<InteractiveModalProps>;
 
-// 4. 기본 스토리 - 가장 일반적인 사용 사례
+// 4. 기본 스토리들
 export const Default: Story = {
   render: (args) => (
     <InteractiveModal {...args}>
@@ -82,6 +187,64 @@ export const Default: Story = {
       <p className="mb-4">이것은 기본 모달입니다.</p>
       <p>ESC 키를 누르거나 배경을 클릭하면 닫힙니다.</p>
     </InteractiveModal>
+  ),
+  args: {
+    size: 'md',
+    showBackdrop: true,
+    closeOnBackdropClick: true,
+    position: 'center',
+  },
+};
+
+//  useModal 훅 사용 (toggle 버튼 글씨 변경)
+export const WithUseModal: Story = {
+  render: (args) => (
+    <UseModalWrapper {...args}>
+      <h2 className="mb-4 text-xl font-bold">useModal 훅 사용</h2>
+      <p className="mb-4">useModal 훅의 toggle 함수를 사용합니다.</p>
+      <p>버튼을 클릭하면 모달이 토글되고 버튼 글씨가 바뀝니다.</p>
+    </UseModalWrapper>
+  ),
+  args: {
+    size: 'md',
+    showBackdrop: true,
+    closeOnBackdropClick: true,
+    position: 'center',
+  },
+};
+
+//  커스텀 글씨로 toggle 버튼 (에러 수정)
+export const CustomToggleText: Story = {
+  render: (args) => (
+    <CustomToggleModal {...args}>
+      <h2 className="mb-4 text-xl font-bold">커스텀 Toggle 버튼</h2>
+      <p className="mb-4">이 모달은 커스텀 글씨로 toggle 버튼을 사용합니다.</p>
+      <p>버튼을 클릭하면 열기 ↔ 닫기로 바뀝니다.</p>
+    </CustomToggleModal>
+  ),
+  args: {
+    size: 'md',
+    showBackdrop: true,
+    closeOnBackdropClick: true,
+    position: 'center',
+  },
+};
+
+//  ESC 키 테스트 스토리
+export const EscapeKeyTest: Story = {
+  render: (args) => (
+    <EscapeTestModal {...args}>
+      <h2 className="mb-4 text-xl font-bold">ESC 키 테스트</h2>
+      <p className="mb-4">모달을 열고 ESC 키를 눌러보세요!</p>
+      <p className="mb-4 text-sm text-gray-600">
+        개발자 도구 콘솔을 열어서 키 이벤트를 확인할 수 있습니다.
+      </p>
+      <div className="rounded bg-yellow-50 p-3">
+        <p className="text-sm text-yellow-700">
+          💡 ESC 키가 작동하지 않으면 스토리북 환경 문제일 수 있습니다.
+        </p>
+      </div>
+    </EscapeTestModal>
   ),
   args: {
     size: 'md',
@@ -122,7 +285,59 @@ export const LargeModal: Story = {
   },
 };
 
-// 6. 위치별 스토리들
+// 6. 닫기 버튼 관련 스토리들
+export const WithCloseButton: Story = {
+  render: (args) => (
+    <InteractiveModal {...args}>
+      <h2 className="mb-4 text-xl font-bold">닫기 버튼 있는 모달</h2>
+      <p className="mb-4">이 모달은 내부에 닫기 버튼이 있습니다.</p>
+      <p>닫기 버튼을 클릭하거나 ESC 키를 누르면 닫힙니다.</p>
+    </InteractiveModal>
+  ),
+  args: {
+    size: 'md',
+    showCloseButton: true,
+    closeButtonText: '닫기',
+  },
+};
+
+export const CustomCloseButton: Story = {
+  render: (args) => (
+    <InteractiveModal {...args}>
+      <h2 className="mb-4 text-xl font-bold">커스텀 닫기 버튼</h2>
+      <p className="mb-4">이 모달은 커스텀 스타일의 닫기 버튼을 가집니다.</p>
+      <p>버튼 색상과 텍스트를 커스터마이징할 수 있습니다.</p>
+    </InteractiveModal>
+  ),
+  args: {
+    size: 'md',
+    showCloseButton: true,
+    closeButtonText: '확인',
+    closeButtonClassName: 'bg-green-500 hover:bg-green-600',
+  },
+};
+
+// 7. 커스텀 스타일링 스토리들
+export const CustomStyling: Story = {
+  render: (args) => (
+    <InteractiveModal {...args}>
+      <h2 className="mb-4 text-xl font-bold text-blue-600">
+        커스텀 스타일 모달
+      </h2>
+      <p className="mb-4">이 모달은 커스텀 스타일링이 적용되어 있습니다.</p>
+      <div className="rounded bg-blue-50 p-4">
+        <p>배경과 테두리 색상이 커스터마이징되었습니다.</p>
+      </div>
+    </InteractiveModal>
+  ),
+  args: {
+    size: 'md',
+    className: 'backdrop-blur-sm',
+    contentClassName: 'border-2 border-blue-300 shadow-xl',
+  },
+};
+
+// 8. 위치별 스토리들
 export const TopModal: Story = {
   render: (args) => (
     <InteractiveModal {...args}>
@@ -149,7 +364,7 @@ export const BottomModal: Story = {
   },
 };
 
-// 7. 특수한 동작을 가진 스토리들
+// 9. 특수한 동작을 가진 스토리들
 export const NoBackdrop: Story = {
   render: (args) => (
     <InteractiveModal {...args}>
@@ -177,7 +392,7 @@ export const NoBackdropClick: Story = {
   },
 };
 
-// 8. 실제 사용 사례를 보여주는 스토리
+// 10. 실제 사용 사례를 보여주는 스토리
 export const ConfirmDialog: Story = {
   render: (args) => (
     <InteractiveModal {...args}>
@@ -240,5 +455,53 @@ export const FormModal: Story = {
   ),
   args: {
     size: 'md',
+  },
+};
+
+// 🔥 실제로 열리는 모달 스토리 (isOpen: true로 고정)
+export const AlwaysOpen: Story = {
+  render: (args) => (
+    <Modal {...args} isOpen={true} onClose={fn()}>
+      <h2 className="mb-4 text-xl font-bold">항상 열린 모달</h2>
+      <p className="mb-4">이 모달은 항상 열려있습니다.</p>
+      <p>스토리북에서 모달의 모양을 확인할 수 있습니다.</p>
+    </Modal>
+  ),
+  args: {
+    size: 'md',
+    showBackdrop: true,
+    closeOnBackdropClick: true,
+    position: 'center',
+  },
+};
+
+// 🔥 모든 props를 테스트할 수 있는 스토리
+export const AllPropsTest: Story = {
+  render: (args) => (
+    <InteractiveModal {...args}>
+      <h2 className="mb-4 text-xl font-bold">모든 Props 테스트</h2>
+      <p className="mb-4">이 모달은 모든 props를 테스트할 수 있습니다.</p>
+      <div className="space-y-2">
+        <p>• size: {args.size}</p>
+        <p>• showBackdrop: {args.showBackdrop ? 'true' : 'false'}</p>
+        <p>
+          • closeOnBackdropClick: {args.closeOnBackdropClick ? 'true' : 'false'}
+        </p>
+        <p>• position: {args.position}</p>
+        <p>• showCloseButton: {args.showCloseButton ? 'true' : 'false'}</p>
+        <p>• closeButtonText: {args.closeButtonText}</p>
+      </div>
+    </InteractiveModal>
+  ),
+  args: {
+    size: 'md',
+    showBackdrop: true,
+    closeOnBackdropClick: true,
+    position: 'center',
+    showCloseButton: true,
+    closeButtonText: '닫기',
+    closeButtonClassName: 'bg-blue-500 hover:bg-blue-600',
+    className: 'backdrop-blur-sm',
+    contentClassName: 'border-2 border-blue-300',
   },
 };
