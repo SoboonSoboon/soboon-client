@@ -1,5 +1,3 @@
-// lib/kakao-auth.ts
-
 import { axiosInstance } from '../axiosInstance';
 
 export function redirectToKakao() {
