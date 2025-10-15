@@ -50,16 +50,18 @@ export const ProfileSideBar = () => {
         </div>
 
         <div className="flex flex-col gap-4">
-          {userData.keywords.map((data, index) => (
-            <ReviewItemBar
-              key={index}
-              count={data.count}
-              maxCount={maxCount}
-              label={
-                KEYWORD_LABELS[data.keyword as keyof typeof KEYWORD_LABELS]
-              }
-            />
-          ))}
+          {userData.keywords
+            .filter((data) => data.count > 0)
+            .map((data, index) => (
+              <ReviewItemBar
+                key={index}
+                count={data.count}
+                maxCount={maxCount}
+                label={
+                  KEYWORD_LABELS[data.keyword as keyof typeof KEYWORD_LABELS]
+                }
+              />
+            ))}
         </div>
       </div>
     </div>
