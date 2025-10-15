@@ -47,7 +47,9 @@ export const ProfileSideBar = () => {
             )}
           </div>
           <div className="flex items-center text-justify">
-            <p>{userData.nickname}</p>
+            <h2 className="font-memomentKkukkkuk text-2xl">
+              {userData.nickname}
+            </h2>
           </div>
         </div>
 
