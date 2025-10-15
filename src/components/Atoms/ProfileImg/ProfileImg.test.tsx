@@ -11,16 +11,16 @@ jest.mock('next/image', () => ({
 }));
 
 describe('ProfileImg', () => {
-  it('profile prop으로 전달된 이미지 경로가 올바르게 렌더링되어야 한다', () => {
+  it('profileImageUrl prop으로 전달된 이미지 경로가 올바르게 렌더링되어야 한다', () => {
     const testImagePath = '/test-profile.jpg';
-    render(<ProfileImg profile={testImagePath} />);
+    render(<ProfileImg profileImageUrl={testImagePath} />);
 
     const image = screen.getByRole('img', { name: /profileImage/i });
     expect(image).toBeInTheDocument();
     expect(image).toHaveAttribute('src', testImagePath);
   });
 
-  it('profile prop이 없으면 기본 이미지가 렌더링되어야 한다', () => {
+  it('profileImageUrl prop이 없으면 기본 이미지가 렌더링되어야 한다', () => {
     render(<ProfileImg />);
 
     const image = screen.getByRole('img', { name: /profileImage/i });
@@ -28,51 +28,65 @@ describe('ProfileImg', () => {
     expect(image).toHaveAttribute('src', '/images/profile_default.svg');
   });
 
+  it('profileImageUrl이 빈 문자열이면 기본 이미지가 렌더링되어야 한다', () => {
+    render(<ProfileImg profileImageUrl="" />);
+
+    const image = screen.getByRole('img', { name: /profileImage/i });
+    expect(image).toBeInTheDocument();
+    expect(image).toHaveAttribute('src', '/images/profile_default.svg');
+  });
+
   it('alt 속성이 "profileImage"로 설정되어야 한다', () => {
-    render(<ProfileImg profile="/test.jpg" />);
+    render(<ProfileImg profileImageUrl="/test.jpg" />);
 
     const image = screen.getByAltText('profileImage');
     expect(image).toBeInTheDocument();
   });
 
   it('올바른 className이 적용되어야 한다', () => {
-    render(<ProfileImg profile="/test.jpg" />);
+    render(<ProfileImg profileImageUrl="/test.jpg" />);
 
     const image = screen.getByRole('img', { name: /profileImage/i });
-    expect(image).toHaveClass('rounded-full', 'object-cover');
+    expect(image).toHaveClass('object-cover');
   });
 
-  it('size를 지정하지 않으면 기본값 100x100이 적용되어야 한다', () => {
-    render(<ProfileImg profile="/test.jpg" />);
+  it('size를 지정하지 않으면 기본값 100이 적용되어야 한다', () => {
+    render(<ProfileImg profileImageUrl="/test.jpg" />);
 
-    const image = screen.getByRole('img', { name: /profileImage/i });
-    expect(image).toHaveAttribute('width', '100');
-    expect(image).toHaveAttribute('height', '100');
+    const container = screen.getByRole('img', {
+      name: /profileImage/i,
+    }).parentElement;
+    expect(container).toHaveStyle({ width: '100px', height: '100px' });
   });
 
   it('커스텀 size가 정사각형으로 올바르게 적용되어야 한다', () => {
-    render(<ProfileImg profile="/test.jpg" size={50} />);
+    render(<ProfileImg profileImageUrl="/test.jpg" size={50} />);
 
-    const image = screen.getByRole('img', { name: /profileImage/i });
-    expect(image).toHaveAttribute('width', '50');
-    expect(image).toHaveAttribute('height', '50');
+    const container = screen.getByRole('img', {
+      name: /profileImage/i,
+    }).parentElement;
+    expect(container).toHaveStyle({ width: '50px', height: '50px' });
   });
 
   it('다양한 size 값이 올바르게 적용되어야 한다', () => {
-    const { rerender } = render(<ProfileImg profile="/test.jpg" size={200} />);
-    let image = screen.getByRole('img', { name: /profileImage/i });
-    expect(image).toHaveAttribute('width', '200');
-    expect(image).toHaveAttribute('height', '200');
+    const { rerender } = render(
+      <ProfileImg profileImageUrl="/test.jpg" size={200} />,
+    );
+    let container = screen.getByRole('img', {
+      name: /profileImage/i,
+    }).parentElement;
+    expect(container).toHaveStyle({ width: '200px', height: '200px' });
 
-    rerender(<ProfileImg profile="/test.jpg" size={40} />);
-    image = screen.getByRole('img', { name: /profileImage/i });
-    expect(image).toHaveAttribute('width', '40');
-    expect(image).toHaveAttribute('height', '40');
+    rerender(<ProfileImg profileImageUrl="/test.jpg" size={40} />);
+    container = screen.getByRole('img', {
+      name: /profileImage/i,
+    }).parentElement;
+    expect(container).toHaveStyle({ width: '40px', height: '40px' });
   });
 
-  it('기본 profile 경로가 제공될 때 올바르게 렌더링되어야 한다', () => {
+  it('기본 profileImageUrl 경로가 제공될 때 올바르게 렌더링되어야 한다', () => {
     const defaultProfile = '/images/dummy_profile.png';
-    render(<ProfileImg profile={defaultProfile} />);
+    render(<ProfileImg profileImageUrl={defaultProfile} />);
 
     const image = screen.getByRole('img', { name: /profileImage/i });
     expect(image).toBeInTheDocument();
@@ -80,17 +94,26 @@ describe('ProfileImg', () => {
   });
 
   it('커스텀 className이 기본 className과 함께 적용되어야 한다', () => {
-    render(<ProfileImg profile="/test.jpg" className="border-2" />);
+    render(<ProfileImg profileImageUrl="/test.jpg" className="border-2" />);
 
-    const image = screen.getByRole('img', { name: /profileImage/i });
-    expect(image).toHaveClass('rounded-full', 'object-cover');
-    expect(image).toHaveClass('border-2');
+    const container = screen.getByRole('img', {
+      name: /profileImage/i,
+    }).parentElement;
+    expect(container).toHaveClass('border-2');
   });
 
   it('className 없이도 정상 동작해야 한다', () => {
-    render(<ProfileImg profile="/test.jpg" />);
+    render(<ProfileImg profileImageUrl="/test.jpg" />);
 
-    const image = screen.getByRole('img', { name: /profileImage/i });
-    expect(image).toHaveClass('rounded-full', 'object-cover');
+    const container = screen.getByRole('img', {
+      name: /profileImage/i,
+    }).parentElement;
+    expect(container).toHaveClass(
+      'relative',
+      'aspect-square',
+      'overflow-hidden',
+      'rounded-full',
+      'border',
+    );
   });
 });

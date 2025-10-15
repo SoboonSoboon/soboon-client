@@ -1,5 +1,6 @@
 import Image from 'next/image';
 import { ReviewItemBar } from './layout/ReviewItemBar';
+import { ProfileImg } from '@/components/Atoms';
 
 export const ProfileSideBar = () => {
   const userData = {
@@ -26,43 +27,25 @@ export const ProfileSideBar = () => {
   const maxCount = Math.max(...userData.keywords.map((k) => k.count)) * 1.2;
 
   return (
-    <div className="border-gray-10 w-full rounded-lg border bg-white px-10 py-5">
-      <div className="flex flex-col gap-5">
-        <div className="flex flex-col items-center justify-center gap-2.5">
-          <div className="h-[118px] w-[118px] overflow-hidden rounded-full border-none">
-            {userData.Image ? (
-              <Image
-                src={userData.Image}
-                alt="user"
-                width={118}
-                height={118}
-                className="h-full w-full object-cover"
-              />
-            ) : (
-              <div className="bg-gray-5 h-full w-full rounded-full" />
-            )}
-          </div>
-          <div className="flex items-center text-justify">
-            <h2 className="font-memomentKkukkkuk text-2xl">
-              {userData.nickname}
-            </h2>
-          </div>
-        </div>
+    <div className="border-gray-10 flex w-full flex-col gap-5 rounded-lg border bg-white px-8 py-15">
+      <div className="flex flex-col items-center justify-center gap-2.5">
+        <ProfileImg profileImageUrl={userData.Image} size={118} />
+        <h2 className="font-memomentKkukkkuk text-2xl">{userData.nickname}</h2>
+      </div>
 
-        <div className="flex flex-col gap-4">
-          {userData.keywords
-            .filter((data) => data.count > 0)
-            .map((data, index) => (
-              <ReviewItemBar
-                key={index}
-                count={data.count}
-                maxCount={maxCount}
-                label={
-                  KEYWORD_LABELS[data.keyword as keyof typeof KEYWORD_LABELS]
-                }
-              />
-            ))}
-        </div>
+      <div className="flex flex-col gap-4">
+        {userData.keywords
+          .filter((data) => data.count > 0)
+          .map((data, index) => (
+            <ReviewItemBar
+              key={index}
+              count={data.count}
+              maxCount={maxCount}
+              label={
+                KEYWORD_LABELS[data.keyword as keyof typeof KEYWORD_LABELS]
+              }
+            />
+          ))}
       </div>
     </div>
   );
