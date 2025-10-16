@@ -1,4 +1,4 @@
-import { ProfileSideBar } from './components/ProfileSideBar';
+import { ProfileSideBar } from './components';
 
 export default function MyPageLayout({
   children,
@@ -6,9 +6,9 @@ export default function MyPageLayout({
   children: React.ReactNode;
 }) {
   return (
-    <div className="min-h-screen pt-8">
-      <div className="mx-auto max-w-[1200px]">
-        <div className="flex gap-10">
+    <div className="h-screen pt-8">
+      <div className="mx-auto h-full max-w-[1200px]">
+        <div className="flex h-full w-full gap-10">
           {/* 왼쪽 고정 프로필 */}
           <div className="w-[429px] flex-shrink-0">
             <ProfileSideBar />

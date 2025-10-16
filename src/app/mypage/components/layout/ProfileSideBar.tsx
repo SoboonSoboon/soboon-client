@@ -1,5 +1,5 @@
-import Image from 'next/image';
-import { KeyWordBar } from './layout/KeyWordBar';
+import { ProfileImg } from '@/components';
+import { KeyWordBar } from './KeyWordBar';
 
 export const ProfileSideBar = () => {
   const userData = {
@@ -33,11 +33,9 @@ export const ProfileSideBar = () => {
         <div className="flex flex-col items-center justify-center gap-2.5">
           <div className="h-[118px] w-[118px] overflow-hidden rounded-full border-none">
             {userData.Image ? (
-              <Image
-                src={userData.Image}
-                alt="user"
-                width={118}
-                height={118}
+              <ProfileImg
+                profile={userData.Image}
+                size={118}
                 className="h-full w-full object-cover"
               />
             ) : (
