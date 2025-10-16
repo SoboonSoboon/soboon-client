@@ -6,6 +6,7 @@ import {
   CommentSection,
   DetailAside,
 } from '@/app/(marketplace)/components';
+import { MeetingDetailType } from '@/types/meetingsType';
 
 const carouselImages = [
   'https://www.dummyimage.com/700x600/FF6B6B/fff',
@@ -15,22 +16,65 @@ const carouselImages = [
   'https://www.dummyimage.com/700x600/0000FF/fff',
 ];
 
-export default function ShoppingDetailPage() {
+async function getMettingDetail({
+  id,
+}: {
+  id: string;
+}): Promise<MeetingDetailType | null> {
+  try {
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_SOBOON_API_URL}/v1/meetings/${id}`,
+      {
+        cache: 'no-store',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${process.env.NEXT_PUBLIC_SOBOON_API_TOKEN}`,
+        },
+      },
+    );
+
+    if (!response.ok) {
+      throw new Error('소분하기 모임 상세 데이터 조회 실패');
+    }
+
+    const responseData = await response.json();
+    return responseData.data;
+  } catch (error) {
+    console.error('소분하기 모임 상세 데이터 조회 실패', error);
+    return null;
+  }
+}
+
+export default async function ShoppingDetailPage({
+  params,
+}: {
+  params: Promise<{ id: string }>;
+}) {
+  const shoppingMettingDetail = await getMettingDetail({
+    id: (await params).id,
+  });
+  console.log(shoppingMettingDetail);
+
   return (
     <section>
       <DetailHeader />
       <div className="flex gap-10">
         <article className="w-[730px]">
           <Carousel carouselImages={carouselImages} className="mb-8" />
-          <DetailContent />
-          <DetailContentFooter />
+          <DetailContent description={shoppingMettingDetail!.description} />
+          <DetailContentFooter createdAt={shoppingMettingDetail!.createdAt} />
 
           {/* 댓글 영역 */}
           <CommentSection />
         </article>
 
         <div className="sticky top-6 h-[95vh]">
-          <DetailAside />
+          <DetailAside
+            title={shoppingMettingDetail!.title}
+            detail_address={shoppingMettingDetail!.detail_address}
+            current_member={shoppingMettingDetail!.current_member}
+            total_member={shoppingMettingDetail!.total_member}
+          />
         </div>
       </div>
     </section>

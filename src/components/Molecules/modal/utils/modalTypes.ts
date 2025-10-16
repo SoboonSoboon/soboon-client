@@ -11,4 +11,7 @@ export interface ModalProps {
   position?: ModalPosition;
   className?: string;
   contentClassName?: string;
+  showCloseButton?: boolean;        
+  closeButtonText?: string;         
+  closeButtonClassName?: string;
 }

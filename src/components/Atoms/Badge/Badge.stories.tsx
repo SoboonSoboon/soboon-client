@@ -13,7 +13,7 @@ const meta: Meta<typeof Badge> = {
       control: 'number',
       description: '표시할 숫자',
     },
-    max: {
+    maxCount: {
       control: 'number',
       description: '최대값. 이 값을 초과하면 "max+" 형태로 표시됩니다.',
     },
@@ -43,13 +43,13 @@ export const ShowZero: Story = {
 export const MaxExceeded: Story = {
   args: {
     count: 1000,
-    max: 999,
+    maxCount: 999,
   },
 };
 
 export const CustomMax: Story = {
   args: {
     count: 150,
-    max: 99,
+    maxCount: 99,
   },
 };

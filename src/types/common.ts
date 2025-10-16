@@ -4,20 +4,8 @@ interface ApiResponse<T> {
   data: T;
 }
 
-interface SuccessResponse<T> {
-  message: string;
-  data: T;
-}
-
-interface ErrorResponse {
-  message: string;
-  data: null | string;
-}
-
 // ===== 상태 관련 =====
-interface StatusType {
-  status: 'RECRUITING' | 'COMPLETED' | 'CLOSED';
-}
+type StatusType = 'RECRUITING' | 'COMPLETED' | 'CLOSED';
 
 type StatusString = 'RECRUITING' | 'COMPLETED' | 'CLOSED';
 
@@ -124,8 +112,6 @@ type ReviewKeyword =
 export type {
   // API 응답
   ApiResponse,
-  SuccessResponse,
-  ErrorResponse,
 
   // 상태
   StatusType,
