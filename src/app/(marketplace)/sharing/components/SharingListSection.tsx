@@ -68,10 +68,15 @@ export const SharingListSection = ({
                 {getStatus(metting)}
               </Chip>
               <LikeButton />
+              {/* 추후에 이미지 관련 로직 개발 후 수정 필요 */}
               <CardImage
                 alt="기본 카드"
                 src={
-                  metting.image.includes('example')
+                  !metting.image ||
+                  (Array.isArray(metting.image) &&
+                    metting.image.length === 0) ||
+                  (typeof metting.image === 'string' &&
+                    metting.image.includes('example'))
                     ? '/images/notFound_image.png'
                     : metting.image
                 }

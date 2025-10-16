@@ -1,5 +1,3 @@
-'use client';
-
 import { SharingListSection } from './components/SharingListSection';
 import { FilterSection } from './components/FilterSection';
 import { SideButtonSection } from '@/components';

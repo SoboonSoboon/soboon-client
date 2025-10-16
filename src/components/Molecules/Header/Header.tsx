@@ -1,4 +1,8 @@
+'use client';
+
+import Link from 'next/link';
 import { Button, Logo, ProfileImg } from '../../Atoms';
+import { redirectToKakao } from '@/apis/auth/authApi';
 
 type User = {
   name: string;
@@ -7,36 +11,34 @@ type User = {
 
 export interface HeaderProps {
   user?: User;
-  onLogin?: () => void;
   // onLogout?: () => void;
-  onCreateAccount?: () => void;
   onCreateGather?: () => void;
 }
 
 export const Header = ({
   user,
-  onLogin,
   // onLogout,
-  onCreateAccount,
   onCreateGather,
 }: HeaderProps) => (
   <header className="border-gray-10 h-15 border-b bg-white dark:bg-black">
-    <div className="text-text-main mx-auto flex h-full max-w-[1344px] items-center justify-between bg-white px-12 dark:bg-black dark:text-white">
+    <div className="text-text-main mx-auto flex h-full max-w-[1200px] items-center justify-between bg-white dark:bg-black dark:text-white">
       <div className="flex items-center gap-6">
-        <Logo width={75} height={28} />
+        <Link href="/">
+          <Logo width={75} height={28} />
+        </Link>
         <nav className="flex items-center gap-6 text-base font-normal">
-          <a
-            href="#"
+          <Link
+            href="/sharing"
             className="font-memomentKkukkkuk hover:text-primary whitespace-nowrap"
           >
             함께 장보기
-          </a>
-          <a
-            href="#"
+          </Link>
+          <Link
+            href="/shopping"
             className="font-memomentKkukkkuk hover:text-primary whitespace-nowrap"
           >
             함께 소분하기
-          </a>
+          </Link>
         </nav>
       </div>
       <div className="flex items-center gap-5">
@@ -60,12 +62,11 @@ export const Header = ({
           </>
         ) : (
           <>
-            <Button size="small" onClick={onLogin} label="로그인" />
             <Button
               primary
               size="small"
-              onClick={onCreateAccount}
-              label="회원가입"
+              onClick={redirectToKakao}
+              label="시작하기"
             />
           </>
         )}
