@@ -35,7 +35,7 @@ describe('Button 컴포넌트', () => {
     it('primary가 true일 때 primary 스타일이 적용되어야 한다', () => {
       render(<Button label="Primary" primary />);
       const button = screen.getByRole('button');
-      expect(button).toHaveClass('bg-black');
+      expect(button).toHaveClass('bg-primary');
     });
   });
 
