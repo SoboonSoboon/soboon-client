@@ -1,31 +1,13 @@
+'use client';
+
+import { CommentsType } from '@/types/commentType';
 import { CommentCountContainer } from './comment/CommentCountContainer';
 import { CommentInputContainer } from './comment/CommentInputContainer';
 import { CommentListContainer } from './comment/CommentListContainer';
-
-// 댓글 데이터 타입 정의
-export interface replyInterface {
-  replyId: number;
-  authorId: number;
-  authorNickname: string;
-  authorProfileImageUrl: string;
-  content: string;
-  secret: boolean;
-  createdAt: string;
-}
-
-export interface CommentInterface {
-  commentId: number;
-  authorId: number;
-  authorNickname: string;
-  authorProfileImageUrl: string;
-  content: string;
-  secret: boolean;
-  createdAt: string;
-  replies: replyInterface[];
-}
+import { useEffect, useState } from 'react';
 
 // 더미 데이터
-const dummyComments: CommentInterface[] = [
+const dummyComments: CommentsType['content'] = [
   {
     commentId: 1,
     authorId: 1,
@@ -97,7 +79,19 @@ const dummyComments: CommentInterface[] = [
   },
 ];
 
-export const CommentSection = () => {
+export const CommentSection = ({
+  commentsList,
+}: {
+  commentsList: CommentsType | null;
+}) => {
+  const [comments, setComments] = useState<CommentsType['content']>(
+    commentsList?.content || [],
+  );
+
+  useEffect(() => {
+    setComments(commentsList?.content || []);
+  }, [commentsList]);
+
   return (
     <div className="mt-8 w-full">
       {/* 댓글 헤더 */}
@@ -107,7 +101,7 @@ export const CommentSection = () => {
       <CommentInputContainer />
 
       {/* 댓글 리스트 영역 */}
-      <CommentListContainer commentList={dummyComments} />
+      <CommentListContainer commentList={comments} />
     </div>
   );
 };

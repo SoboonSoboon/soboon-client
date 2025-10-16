@@ -1,10 +1,10 @@
+import { CommentsType } from '@/types/commentType';
 import { CommentItem } from './CommentItem';
-import { CommentInterface } from '../CommentSection';
 
 export const CommentListContainer = ({
   commentList,
 }: {
-  commentList: CommentInterface[];
+  commentList: CommentsType['content'];
 }) => {
   return (
     <div className="space-y-4">
