@@ -142,6 +142,10 @@
   .font-memomentKkukkkuk {
     font-family: 'memomentKkukkkuk', sans-serif !important;
   }
+
+  .bg-gray-5 {
+    background-color: var(--color-gray-5);
+  }
 }
 
 * {
