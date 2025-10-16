@@ -9,7 +9,7 @@ const meta: Meta<typeof ProfileImg> = {
   },
   tags: ['autodocs'],
   argTypes: {
-    profile: {
+    profileImageUrl: {
       control: 'text',
       description: '프로필 이미지 경로',
     },
@@ -40,7 +40,7 @@ export const Default: Story = {
 };
 
 export const CustomImage: Story = {
-  args: { size: 100, profile: '/images/dummy_profile.png' },
+  args: { size: 100, profileImageUrl: '/images/dummy_profile.png' },
   parameters: {
     docs: {
       description: {
