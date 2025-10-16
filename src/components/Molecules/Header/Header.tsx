@@ -46,7 +46,7 @@ export const Header = ({
           <>
             <span className="flex items-center gap-[10px]">
               <div className="h-10 w-10 overflow-hidden rounded-full">
-                <ProfileImg profile={user.image} />
+                <ProfileImg profileImageUrl={user.image} />
               </div>
               <b className="text-text-main hidden text-base font-semibold md:block dark:text-white">
                 {user.name}
