@@ -11,6 +11,8 @@ export {
   Toast,
   Checkbox,
   StatusTag,
+  UserMenuModal,
+  type UserMenuModalProps,
 } from './Atoms';
 export {
   Card,
