@@ -68,9 +68,7 @@ export const Dropdown = ({
         name={name}
         id={id}
         className={`flex w-full items-center justify-between gap-2.5 rounded-xl border-2 border-transparent bg-[var(--GrayScale-Gray5)] px-4 py-2.5 text-[var(--GrayScale-Gray40)] focus:outline-none ${
-          disabled
-            ? 'cursor-not-allowed opacity-50'
-            : 'cursor-pointer hover:bg-[var(--GrayScale-Gray10)]'
+          disabled ? 'cursor-not-allowed opacity-50' : 'cursor-pointer'
         } ${isOpen ? 'border-[var(--OrangeScale-Orange50)]' : ''} `}
         onClick={handleToggle}
         disabled={disabled}
