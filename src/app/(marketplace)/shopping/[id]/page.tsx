@@ -7,6 +7,7 @@ import {
   DetailAside,
 } from '@/app/(marketplace)/components';
 import { MeetingDetailType } from '@/types/meetingsType';
+import { CommentsListType } from '@/types/commentType';
 
 const carouselImages = [
   'https://www.dummyimage.com/700x600/FF6B6B/fff',
@@ -45,15 +46,47 @@ async function getMettingDetail({
   }
 }
 
+// 댓글 조회
+async function getComments({
+  id,
+}: {
+  id: string;
+}): Promise<CommentsListType | null> {
+  try {
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_SOBOON_API_URL}/v1/meetings/${id}/comments`,
+      {
+        cache: 'no-store',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${process.env.NEXT_PUBLIC_SOBOON_API_TOKEN}`,
+        },
+      },
+    );
+    if (!response.ok) {
+      throw new Error('댓글 조회 실패');
+    }
+    const responseData = await response.json();
+    return responseData.data;
+  } catch (error) {
+    console.error('댓글 조회 실패', error);
+    return null;
+  }
+}
+
 export default async function ShoppingDetailPage({
   params,
 }: {
   params: Promise<{ id: string }>;
 }) {
+  const id = (await params).id;
+
   const shoppingMettingDetail = await getMettingDetail({
-    id: (await params).id,
+    id,
   });
-  console.log(shoppingMettingDetail);
+
+  // 댓글 조회
+  const commentsList = await getComments({ id });
 
   return (
     <section>
@@ -65,7 +98,7 @@ export default async function ShoppingDetailPage({
           <DetailContentFooter createdAt={shoppingMettingDetail!.createdAt} />
 
           {/* 댓글 영역 */}
-          <CommentSection />
+          <CommentSection commentsList={commentsList} />
         </article>
 
         <div className="sticky top-6 h-[95vh]">

@@ -50,6 +50,12 @@ interface DividingContentType {
   productType: ProductType;
   location: LocationType;
   status: StatusType;
+  user: {
+    userName: string;
+    userId: number;
+    profile: string;
+  };
+  createdAt: string;
 }
 
 /*
@@ -65,10 +71,15 @@ type DividingMeetingsType = {
 장보가 content 타입
 */
 interface ShoppingContentType {
-  groupId: number;
+  id: number;
   title: string;
   location: LocationType;
   status: StatusType;
+  user: {
+    userName: string;
+    userId: number;
+    profile: string;
+  };
   currentMember: number;
   createdAt: string;
 }
