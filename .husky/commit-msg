@@ -2,7 +2,7 @@
 . "$(dirname -- "$0")/_/husky.sh"
 
 # 커밋 메시지 패턴 검증
-commit_regex='^(feat|fix|docs|style|design|build|ci|perf|refactor|test|chore|rename|remove|setting|comment)([/:].*)?: .+'
+commit_regex='^(feat|fix|docs|style|design|build|ci|perf|refactor|test|chore|rename|remove|setting|comment)([/:].*)?: .+|^Merge branch .* of .* into .*$'
 
 if ! grep -qE "$commit_regex" "$1"; then
     echo "❌ 커밋 메시지 형식이 올바르지 않습니다!"
@@ -31,6 +31,9 @@ if ! grep -qE "$commit_regex" "$1"; then
     echo "  remove: 삭제"
     echo "  comment : 주석 추가 및 변경"
     echo "  setting : 프로젝트 세팅 관련 작업"
+    echo ""
+    echo "또는 자동 생성되는 merge 커밋:"
+    echo "  Merge branch 'dev' of https://github.com/SoboonSoboon/soboon-client into feat/#65-mypage-publishing"
     echo ""
     exit 1
 fi

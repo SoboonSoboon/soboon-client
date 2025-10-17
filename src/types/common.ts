@@ -89,9 +89,7 @@ interface ProductType {
     | '기타';
 }
 
-interface StorageType {
-  storage: 'NORMAL' | 'FREEZER' | 'COOL';
-}
+type StorageType = 'NORMAL' | 'FREEZER' | 'COOL';
 
 // ===== 리뷰 관련 =====
 interface ReviewOptionsType {

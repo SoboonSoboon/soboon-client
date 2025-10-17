@@ -1,6 +1,5 @@
-import Image from 'next/image';
-import { ReviewItemBar } from './layout/ReviewItemBar';
 import { ProfileImg } from '@/components/Atoms';
+import { ReviewItemBar } from './ReviewItemBar';
 
 export const ProfileSideBar = () => {
   const userData = {
