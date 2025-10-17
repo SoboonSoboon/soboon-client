@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useRef, useEffect } from 'react';
+import { cn } from '@/utils/cn';
 
 export interface DropdownOption {
   value: string;
@@ -16,6 +17,7 @@ export interface DropdownProps {
   onChange?: (value: string) => void;
   disabled?: boolean;
   required?: boolean;
+  className?: string;
 }
 
 export const Dropdown = ({
@@ -27,6 +29,7 @@ export const Dropdown = ({
   onChange,
   disabled = false,
   required = false,
+  className,
   ...props
 }: DropdownProps) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -62,7 +65,11 @@ export const Dropdown = ({
   };
 
   return (
-    <div className="relative w-full" ref={dropdownRef} {...props}>
+    <div
+      className={cn('relative w-full', className)}
+      ref={dropdownRef}
+      {...props}
+    >
       <button
         type="button"
         name={name}
