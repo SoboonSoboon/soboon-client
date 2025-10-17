@@ -1,18 +1,18 @@
 'use client';
 
-import { TextInput } from '@/components';
-import { modelProvinceOptions } from '@/constants/locations';
-import { modelCityOptions } from '@/constants/locations';
-import { modelDistrictOptions } from '@/constants/locations';
-import { Textarea } from '@/components';
-import { Button } from '@/components';
+import {
+  modelProvinceOptions,
+  modelCityOptions,
+  modelDistrictOptions,
+} from '@/constants/locations';
 import { useMemo, useState } from 'react';
 import { shoppingRegisterApi } from '@/apis/meetings/registerApi';
-import { useToast } from '@/components/Atoms';
 import { useMutation } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
 import { ApiResponse } from '@/types/common';
 import { XIcon } from 'lucide-react';
+import { TextInput, useToast, Textarea, Button } from '@/components/Atoms';
+import { Dropdown } from '@/components/Molecules';
 
 interface ShoppingRegisterFormProps {
   handleClose: () => void;
@@ -98,54 +98,34 @@ export function ShoppingRegisterForm({
               어디서 만날까요??
             </label>
             <div className="mb-3 flex items-center gap-2">
-              <select
+              <Dropdown
                 name="province"
                 id="province"
                 required
+                options={modelProvinceOptions}
                 value={formData.province}
-                className="min-w-[120px] cursor-pointer appearance-none rounded-md border-2 border-[#f3f5f6] bg-white px-3 py-2 pr-8 text-gray-700 transition-all duration-200 hover:border-gray-500 focus:border-gray-500 focus:outline-none"
-                onChange={(e) =>
-                  setFormData({ ...formData, province: e.target.value })
+                onChange={(value) =>
+                  setFormData({ ...formData, province: value })
                 }
-              >
-                {modelProvinceOptions.map((province) => (
-                  <option key={province.value} value={province.value}>
-                    {province.label}
-                  </option>
-                ))}
-              </select>
-              <select
+              />
+              <Dropdown
                 name="city"
                 id="city"
                 required
+                options={modelCityOptions}
                 value={formData.city}
-                className="min-w-[120px] cursor-pointer appearance-none rounded-md border-2 border-[#f3f5f6] bg-white px-3 py-2 pr-8 text-gray-700 transition-all duration-200 hover:border-gray-500 focus:border-gray-500 focus:outline-none"
-                onChange={(e) =>
-                  setFormData({ ...formData, city: e.target.value })
-                }
-              >
-                {modelCityOptions.map((city) => (
-                  <option key={city.value} value={city.value}>
-                    {city.label}
-                  </option>
-                ))}
-              </select>
-              <select
+                onChange={(value) => setFormData({ ...formData, city: value })}
+              />
+              <Dropdown
                 name="district"
                 id="district"
                 required
+                options={modelDistrictOptions}
                 value={formData.district}
-                className="min-w-[120px] cursor-pointer appearance-none rounded-md border-2 border-[#f3f5f6] bg-white px-3 py-2 pr-8 text-gray-700 transition-all duration-200 hover:border-gray-500 focus:border-gray-500 focus:outline-none"
-                onChange={(e) =>
-                  setFormData({ ...formData, district: e.target.value })
+                onChange={(value) =>
+                  setFormData({ ...formData, district: value })
                 }
-              >
-                {modelDistrictOptions.map((district) => (
-                  <option key={district.value} value={district.value}>
-                    {district.label}
-                  </option>
-                ))}
-              </select>
+              />
             </div>
           </div>
         </div>
