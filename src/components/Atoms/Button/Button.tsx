@@ -15,7 +15,7 @@ export const Button = ({
   ...props
 }: ButtonProps) => {
   const baseStyles =
-    'inline-block cursor-pointer border-1 rounded-[8px] leading-none';
+    'inline-block cursor-pointer border-1 rounded-[8px] leading-none flex items-center';
 
   // Primary/Secondary styles
   const modeStyles = primary
@@ -40,3 +40,5 @@ export const Button = ({
     </button>
   );
 };
+
+//cn clsx 사용해야될듯

@@ -38,7 +38,7 @@ export const TabSection = ({
             <button
               key={tab.key}
               onClick={() => (onMainTabChange(tab.key), console.log(tab.key))}
-              className={`relative pb-3 text-sm font-medium transition-colors ${
+              className={`font-memomentKkukkkuk relative transition-colors ${
                 activeMainTab === tab.key
                   ? 'text-quaternary'
                   : 'text-text-sub2 cursor-pointer'

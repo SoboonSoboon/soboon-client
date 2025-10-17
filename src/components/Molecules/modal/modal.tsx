@@ -67,3 +67,5 @@ export const Modal: React.FC<ModalProps> = ({
     </div>
   );
 };
+
+// 모달 구조를 footer header content로 구분해야될필요가 있어보임 @영록

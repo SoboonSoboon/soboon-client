@@ -7,7 +7,7 @@ interface CardListProps {
 
 export const CardList = ({ meetings }: CardListProps) => {
   return (
-    <div className="h-full overflow-y-auto">
+    <div className="h-full">
       <div className="flex flex-wrap gap-8 gap-y-6">
         {meetings.map((meeting) => (
           <MeetingCard key={meeting.groupId} meeting={meeting} />
