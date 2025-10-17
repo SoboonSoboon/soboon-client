@@ -1,13 +1,20 @@
+'use client';
+
 import { cn } from '@/utils/cn';
 import Link from 'next/link';
 import { useEffect, useRef } from 'react';
 
-export interface UserMenuProps extends React.HTMLAttributes<HTMLDivElement> {
+export interface UserMenuModalProps
+  extends React.HTMLAttributes<HTMLDivElement> {
   className?: string;
   onClose?: () => void;
 }
 
-export const UserMenu = ({ className, onClose, ...props }: UserMenuProps) => {
+export const UserMenuModal = ({
+  className,
+  onClose,
+  ...props
+}: UserMenuModalProps) => {
   const menuRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -29,7 +36,7 @@ export const UserMenu = ({ className, onClose, ...props }: UserMenuProps) => {
     <div
       ref={menuRef}
       className={cn(
-        'border-gray-10 flex w-35 flex-col rounded-xl border-1 bg-white',
+        'border-gray-10 mt-2.5 flex w-35 flex-col rounded-xl border-1 bg-white',
         className,
       )}
       {...props}
