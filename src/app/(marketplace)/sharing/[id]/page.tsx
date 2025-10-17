@@ -7,6 +7,7 @@ import {
   DetailAside,
 } from '@/app/(marketplace)/components';
 import { MeetingDetailType } from '@/types/meetingsType';
+import { CommentsListType, CommentsType } from '@/types/commentType';
 
 const carouselImages = [
   'https://www.dummyimage.com/700x600/FF6B6B/fff',
@@ -16,6 +17,7 @@ const carouselImages = [
   'https://www.dummyimage.com/700x600/0000FF/fff',
 ];
 
+// 소분하기 모임 상세 데이터 조회
 async function getSharingMettingDetail({
   id,
 }: {
@@ -45,15 +47,48 @@ async function getSharingMettingDetail({
   }
 }
 
+// 댓글 조회
+async function getComments({
+  id,
+}: {
+  id: string;
+}): Promise<CommentsListType | null> {
+  try {
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_SOBOON_API_URL}/v1/meetings/${id}/comments`,
+      {
+        cache: 'no-store',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${process.env.NEXT_PUBLIC_SOBOON_API_TOKEN}`,
+        },
+      },
+    );
+    if (!response.ok) {
+      throw new Error('댓글 조회 실패');
+    }
+    const responseData = await response.json();
+    return responseData.data;
+  } catch (error) {
+    console.error('댓글 조회 실패', error);
+    return null;
+  }
+}
+
 export default async function SharingDetailPage({
   params,
 }: {
   params: Promise<{ id: string }>;
 }) {
+  const id = (await params).id;
+  // 소분하기 모임 상세 데이터 조회
   const meetingDetail = await getSharingMettingDetail({
-    id: (await params).id,
+    id,
   });
-  console.log(meetingDetail);
+
+  // 댓글 조회
+  const commentsList = await getComments({ id });
+
   return (
     <section>
       <DetailHeader />
@@ -65,12 +100,12 @@ export default async function SharingDetailPage({
           <DetailContentFooter createdAt={meetingDetail!.createdAt} />
 
           {/* 댓글 영역 */}
-          <CommentSection />
+          <CommentSection commentsList={commentsList} />
         </article>
 
         <div className="sticky top-6 h-[95vh]">
           <DetailAside
-            title={meetingDetail!.title}
+            title={meetingDetail!.item}
             detail_address={meetingDetail!.detail_address}
             current_member={meetingDetail!.current_member}
             total_member={meetingDetail!.total_member}

@@ -14,6 +14,7 @@ import { useRouter } from 'next/navigation';
 import { ApiResponse } from '@/types/common';
 import categories from '@/constants/categories';
 import { XIcon } from 'lucide-react';
+import ImageUploadForm from './imageLoader';
 
 interface SharingRegisterFormProps {
   handleClose: () => void;
@@ -26,29 +27,27 @@ export function SharingRegisterForm({ handleClose }: SharingRegisterFormProps) {
   const [formData, setFormData] = useState({
     title: '',
     description: '',
-    itemName: '계란',
+    itemName: '',
     price: 0,
     province: '',
     city: '',
     district: '',
     detail: '',
-    capacity: 5,
+    capacity: 0,
     productType: '',
     imageUrls: [],
   });
 
   const isValid = useMemo(() => {
     return (
-      formData.title &&
+      formData.itemName &&
+      formData.productType &&
       formData.province &&
       formData.city &&
       formData.district &&
       formData.detail &&
       formData.description &&
-      formData.itemName &&
-      formData.price &&
-      formData.productType &&
-      formData.capacity
+      formData.capacity > 0
     );
   }, [formData]);
 
@@ -71,7 +70,7 @@ export function SharingRegisterForm({ handleClose }: SharingRegisterFormProps) {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-
+    console.log(formData);
     mutate();
   };
 
@@ -85,21 +84,6 @@ export function SharingRegisterForm({ handleClose }: SharingRegisterFormProps) {
       </div>
       <form onSubmit={handleSubmit}>
         <div className="mb-6">
-          <label htmlFor="title" className="mb-3 block text-[#1F2937]">
-            모임 제목
-          </label>
-          <TextInput
-            id="title"
-            required
-            placeholder="ex) 트레이더스 고양점에서 등심 고기 사실 분?"
-            value={formData.title}
-            onChange={(e) =>
-              setFormData({ ...formData, title: e.target.value })
-            }
-          />
-        </div>
-
-        <div className="mb-6">
           <label htmlFor="productType" className="mb-3 block text-[#1F2937]">
             어떤 품목을 소분하세요?
           </label>
@@ -108,7 +92,7 @@ export function SharingRegisterForm({ handleClose }: SharingRegisterFormProps) {
             id="productType"
             required
             value={formData.productType}
-            className="min-w-[120px] cursor-pointer appearance-none rounded-md border-2 border-[#f3f5f6] bg-white px-3 py-2 pr-8 text-gray-700 transition-all duration-200 hover:border-gray-500 focus:border-gray-500 focus:outline-none"
+            className="hover:border-primary focus:border-primary mb-3 w-full cursor-pointer appearance-none rounded-md border-2 border-[#f3f5f6] bg-white px-3 py-2 pr-8 text-gray-700 transition-all duration-200 focus:outline-none"
             onChange={(e) =>
               setFormData({ ...formData, productType: e.target.value })
             }
@@ -119,21 +103,35 @@ export function SharingRegisterForm({ handleClose }: SharingRegisterFormProps) {
               </option>
             ))}
           </select>
+          <TextInput
+            id="itemName"
+            required
+            placeholder="품목 이름을 적어주세요. (ex. 동물복지 유정란 30구)"
+            value={formData.itemName}
+            onChange={(e) =>
+              setFormData({ ...formData, itemName: e.target.value })
+            }
+          />
         </div>
 
         <div className="mb-6">
-          <label htmlFor="price" className="mb-3 block text-[#1F2937]">
-            소분된 가격은 얼마인가요?
-          </label>
-          <TextInput
-            name="price"
-            id="price"
-            required
-            value={formData.price.toString()}
-            onChange={(e) =>
-              setFormData({ ...formData, price: Number(e.target.value) })
-            }
-          />
+          <div>
+            <label htmlFor="province" className="mb-3 block text-[#1F2937]">
+              몇명을 모을까요?
+            </label>
+            <div className="mb-3 flex items-center gap-2">
+              <TextInput
+                name="capacity"
+                id="capacity"
+                required
+                value={formData.capacity.toString()}
+                placeholder="ex) 3"
+                onChange={(e) =>
+                  setFormData({ ...formData, capacity: Number(e.target.value) })
+                }
+              />
+            </div>
+          </div>
         </div>
 
         <div className="mb-6">
@@ -191,19 +189,46 @@ export function SharingRegisterForm({ handleClose }: SharingRegisterFormProps) {
                 ))}
               </select>
             </div>
+            <div>
+              <TextInput
+                name="detail"
+                required
+                id="detail"
+                placeholder="나머지 장소를 입력해주세요"
+                value={formData.detail}
+                onChange={(e) =>
+                  setFormData({ ...formData, detail: e.target.value })
+                }
+              />
+            </div>
           </div>
         </div>
+
         <div className="mb-6">
-          <TextInput
-            name="detail"
-            required
-            id="detail"
-            placeholder="나머지 장소를 입력해주세요"
-            value={formData.detail}
-            onChange={(e) =>
-              setFormData({ ...formData, detail: e.target.value })
-            }
-          />
+          {/* <label htmlFor="description" className="mb-3 block">
+            이미지를 추가할까요?
+          </label>
+          <div className="flex items-center gap-2">
+            <input
+              id="image-upload"
+              type="file"
+              multiple
+              accept="image/*"
+              className="cursor-pointer appearance-none rounded-md border-2 border-[#f3f5f6] bg-white px-3 py-2 text-gray-700 transition-all duration-200 hover:border-gray-500 focus:border-gray-500 focus:outline-none"
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                setFormData({
+                  ...formData,
+                  imageUrls: Array.from(e.target.files || []),
+                })
+              }
+            />
+            <Button
+              type="button"
+              label="파일 찾기"
+              className="!text-primary border-primary block shrink-0 !bg-white"
+            />
+          </div> */}
+          <ImageUploadForm />
         </div>
 
         <div className="mb-6">

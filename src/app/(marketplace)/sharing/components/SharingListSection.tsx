@@ -18,6 +18,7 @@ import {
   DividingMeetingsType,
 } from '@/types/meetingsType';
 import { useEffect, useState } from 'react';
+import { timeFormatter } from '@/utils/timeFormetter';
 
 export const SharingListSection = ({
   sharingMettingList,
@@ -63,7 +64,6 @@ export const SharingListSection = ({
             className="cursor-pointer"
           >
             <CardContent>
-              {/* 추후 미성님 컴포넌트로 수정 필요 */}
               <Chip className="absolute top-4 left-4 px-3 py-1.5">
                 {getStatus(metting)}
               </Chip>
@@ -86,9 +86,10 @@ export const SharingListSection = ({
               <CardTitle className="font-memomentKkukkkuk line-clamp-1">
                 {metting.item}
               </CardTitle>
-              {/* 추후 백엔드 코드 수정 후 사용자 이름 추가 필요 및 타임스탬프 형식 변경 필요 */}
-              <CardSubtitle className="text-text-sub2 text-sm">
-                <span>-사용자 이름-</span> <span>1시간 전</span>
+              <CardSubtitle className="text-text-sub2 flex items-center gap-1 text-sm">
+                <span>{metting.user.userName}</span>
+                <span>・</span>
+                <span>{timeFormatter(metting.createdAt)}</span>
               </CardSubtitle>
             </CardContent>
             <Line />
