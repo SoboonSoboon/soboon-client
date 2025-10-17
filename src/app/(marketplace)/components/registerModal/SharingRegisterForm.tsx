@@ -14,6 +14,7 @@ import { useRouter } from 'next/navigation';
 import { ApiResponse } from '@/types/common';
 import categories from '@/constants/categories';
 import { XIcon } from 'lucide-react';
+import ImageUploadForm from './imageLoader';
 
 interface SharingRegisterFormProps {
   handleClose: () => void;
@@ -227,6 +228,7 @@ export function SharingRegisterForm({ handleClose }: SharingRegisterFormProps) {
               className="!text-primary border-primary block shrink-0 !bg-white"
             />
           </div> */}
+          <ImageUploadForm />
         </div>
 
         <div className="mb-6">
