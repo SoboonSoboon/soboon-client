@@ -13,14 +13,18 @@ export interface DropdownProps {
   value?: string;
   onChange?: (value: string) => void;
   disabled?: boolean;
+  required?: boolean;
 }
 
 export const Dropdown = ({
+  name,
+  id,
   options,
   placeholder = '선택하세요',
   value,
   onChange,
   disabled = false,
+  required = false,
   ...props
 }: DropdownProps) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -59,6 +63,8 @@ export const Dropdown = ({
     <div className="relative w-full" ref={dropdownRef} {...props}>
       <button
         type="button"
+        name={name}
+        id={id}
         className={`flex w-full items-center justify-between gap-2.5 rounded-xl border-2 border-transparent bg-[var(--GrayScale-Gray5)] px-4 py-2.5 text-[var(--GrayScale-Gray40)] focus:outline-none ${
           disabled
             ? 'cursor-not-allowed opacity-50'
