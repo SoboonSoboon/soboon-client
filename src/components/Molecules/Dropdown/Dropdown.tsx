@@ -105,7 +105,7 @@ export const Dropdown = ({
             <button
               key={option.value}
               type="button"
-              className={`w-full px-4 py-2 text-left first:rounded-t-xl last:rounded-b-xl hover:bg-[var(--GrayScale-Gray5)] focus:bg-[var(--GrayScale-Gray5)] focus:outline-none ${
+              className={`w-full cursor-pointer px-4 py-2 text-left first:rounded-t-xl last:rounded-b-xl hover:bg-[var(--GrayScale-Gray5)] focus:bg-[var(--GrayScale-Gray5)] focus:outline-none ${
                 value === option.value
                   ? 'bg-[var(--OrangeScale-Orange5)] text-[var(--OrangeScale-Orange50)]'
                   : 'text-[var(--GrayScale-Gray80)]'
