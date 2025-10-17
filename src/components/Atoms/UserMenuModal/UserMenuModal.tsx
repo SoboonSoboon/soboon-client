@@ -2,7 +2,7 @@
 
 import { cn } from '@/utils/cn';
 import Link from 'next/link';
-import { useEffect, useRef } from 'react';
+import { useClickOutside } from '@/hooks/useClickOutside';
 
 export interface UserMenuModalProps
   extends React.HTMLAttributes<HTMLDivElement> {
@@ -15,22 +15,7 @@ export const UserMenuModal = ({
   onClose,
   ...props
 }: UserMenuModalProps) => {
-  const menuRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
-        onClose?.();
-      }
-    };
-
-    if (onClose) {
-      document.addEventListener('mousedown', handleClickOutside);
-      return () => {
-        document.removeEventListener('mousedown', handleClickOutside);
-      };
-    }
-  }, [onClose]);
+  const menuRef = useClickOutside(onClose as () => void);
 
   return (
     <div
@@ -42,12 +27,12 @@ export const UserMenuModal = ({
       {...props}
     >
       <ul className="text-gray-90 flex flex-col">
-        <li className="hover:bg-orange-5 flex cursor-pointer border-b border-[var(--GrayScale-Gray10)] px-4 py-2.5 text-[#1F2937] transition-all duration-200 hover:rounded-t-xl">
+        <li className="hover:bg-orange-5 flex cursor-pointer border-b border-[var(--GrayScale-Gray10)] px-4 py-2.5 font-medium text-[#1F2937] transition-all duration-200 hover:rounded-t-xl">
           <Link href="/mypage">
             <span>마이페이지</span>
           </Link>
         </li>
-        <li className="hover:bg-orange-5 flex cursor-pointer px-4 py-2.5 transition-all duration-200 hover:rounded-b-xl">
+        <li className="hover:bg-orange-5 flex cursor-pointer px-4 py-2.5 font-medium transition-all duration-200 hover:rounded-b-xl">
           <span>로그아웃</span>
         </li>
       </ul>
