@@ -22,6 +22,16 @@ interface CommentsType {
   };
 }
 
+interface CommentsListType {
+  content: CommentType[];
+  sliceInfo: {
+    currentPage: number;
+    size: number;
+    hasNext: boolean;
+  };
+  totalElements: number;
+}
+
 interface CommentType {
   commentId: number;
   authorId: number;
@@ -76,6 +86,7 @@ type CreateReplyResponse = ApiResponse<{
 
 export type {
   CommentsType,
+  CommentsListType,
   CommentType,
   ReplyType,
   CreateCommentResponse,

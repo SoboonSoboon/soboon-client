@@ -7,7 +7,7 @@ import {
   DetailAside,
 } from '@/app/(marketplace)/components';
 import { MeetingDetailType } from '@/types/meetingsType';
-import { CommentsType } from '@/types/commentType';
+import { CommentsListType, CommentsType } from '@/types/commentType';
 
 const carouselImages = [
   'https://www.dummyimage.com/700x600/FF6B6B/fff',
@@ -47,11 +47,12 @@ async function getSharingMettingDetail({
   }
 }
 
+// 댓글 조회
 async function getComments({
   id,
 }: {
   id: string;
-}): Promise<CommentsType | null> {
+}): Promise<CommentsListType | null> {
   try {
     const response = await fetch(
       `${process.env.NEXT_PUBLIC_SOBOON_API_URL}/v1/meetings/${id}/comments`,
@@ -79,12 +80,14 @@ export default async function SharingDetailPage({
 }: {
   params: Promise<{ id: string }>;
 }) {
+  const id = (await params).id;
   // 소분하기 모임 상세 데이터 조회
   const meetingDetail = await getSharingMettingDetail({
-    id: (await params).id,
+    id,
   });
 
-  const commentsList = await getComments({ id: (await params).id });
+  // 댓글 조회
+  const commentsList = await getComments({ id });
 
   return (
     <section>
