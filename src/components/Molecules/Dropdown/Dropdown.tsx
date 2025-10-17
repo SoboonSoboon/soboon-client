@@ -8,6 +8,8 @@ export interface DropdownOption {
 }
 
 export interface DropdownProps {
+  name?: string;
+  id?: string;
   options: DropdownOption[];
   placeholder?: string;
   value?: string;
