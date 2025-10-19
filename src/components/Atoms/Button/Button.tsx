@@ -7,6 +7,7 @@ export interface ButtonProps
   backgroundColor?: string;
   size?: 'small' | 'medium' | 'large';
   label: string;
+  onClick?: () => void;
 }
 
 export const Button = ({
@@ -16,21 +17,22 @@ export const Button = ({
   backgroundColor,
   label,
   className,
+  onClick,
   ...props
 }: ButtonProps) => {
+  const isBlocked = variant === 'block';
   // variant가 없으면 기존 primary prop 사용 (mvp 끝나고 나서 common리팩토링)
   const buttonVariant = variant || (primary ? 'primary' : 'secondary');
 
-  const baseStyles =
-    'inline-block cursor-pointer rounded-[8px] border-1 leading-none';
+  const baseStyles = 'inline-block  rounded-[8px] border leading-none';
 
   const variantStyles = {
-    primary: 'bg-primary min-w-[115px] text-white',
+    primary: 'bg-primary min-w-[115px] text-white cursor-pointer',
     secondary:
-      'bg-transparent text-[#333] shadow-[rgba(0,0,0,0.15)_0px_0px_0px_1px_inset]',
+      'bg-transparent text-[#333] shadow-[rgba(0,0,0,0.15)_0px_0px_0px_1px_inset] cursor-pointer',
     outline:
-      'text-primary border-primary bg-white hover:bg-primary hover:text-white',
-    block: 'bg-gray-40 text-gray-80 cursor-none border-none ',
+      'text-primary border-primary bg-white hover:bg-primary hover:text-white cursor-pointer',
+    block: 'bg-gray-40 text-gray-80 border-none ',
   };
 
   const sizeStyles = {
@@ -38,7 +40,15 @@ export const Button = ({
     medium: 'px-5 py-[11px] text-base',
     large: 'px-6 py-3 text-base',
   };
+  const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+    if (isBlocked) {
+      e.preventDefault();
+      e.stopPropagation();
+      return;
+    }
 
+    onClick?.();
+  };
   return (
     <button
       type="button"
@@ -49,6 +59,7 @@ export const Button = ({
         className,
       )}
       style={backgroundColor ? { backgroundColor } : undefined}
+      onClick={handleClick}
       {...props}
     >
       {label}
