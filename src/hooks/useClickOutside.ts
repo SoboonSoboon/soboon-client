@@ -1,13 +1,24 @@
 import { useEffect, useRef } from 'react';
 
-export const useClickOutside = (onClose: () => void) => {
+export const useClickOutside = (
+  onClose: () => void,
+  excludeRef?: React.RefObject<HTMLElement>,
+) => {
   const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      if (ref.current && !ref.current.contains(event.target as Node)) {
-        onClose();
+      const target = event.target as Node;
+
+      if (ref.current && ref.current.contains(target)) {
+        return;
       }
+
+      if (excludeRef?.current && excludeRef.current.contains(target)) {
+        return;
+      }
+
+      onClose();
     };
 
     if (onClose !== undefined) {
@@ -16,7 +27,7 @@ export const useClickOutside = (onClose: () => void) => {
         document.removeEventListener('mousedown', handleClickOutside);
       };
     }
-  }, [onClose]);
+  }, [onClose, excludeRef]);
 
   return ref as React.RefObject<HTMLDivElement>;
 };
