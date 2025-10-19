@@ -46,7 +46,7 @@ export const Button = ({
       e.stopPropagation();
       return;
     }
-
+    e.stopPropagation();
     onClick?.();
   };
   return (
