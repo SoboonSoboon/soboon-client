@@ -8,10 +8,14 @@ export interface ModalProps {
   size?: ModalSize;
   showBackdrop?: boolean;
   closeOnBackdropClick?: boolean;
+  closeOnEscape?: boolean;
   position?: ModalPosition;
   className?: string;
   contentClassName?: string;
-  showCloseButton?: boolean;        
-  closeButtonText?: string;         
+  showCloseButton?: boolean;
+  closeButtonText?: string;
   closeButtonClassName?: string;
+  lockScroll?: boolean;
+  scrollable?: boolean;
+  maxHeight?: string;
 }
