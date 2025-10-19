@@ -25,22 +25,8 @@ export const DetailAside = ({
   return (
     <aside className="w-[430px]">
       <div className="flex w-full justify-between">
-        <div className="w-[90%]">
-          <h2 className="font-memomentKkukkkuk mb-2 line-clamp-2 text-2xl">
-            {title}
-          </h2>
-          <div className="flex items-center gap-2">
-            {/* 추후 공용 컴포넌트 수정 후 교체 예정 */}
-            <Image
-              src={'/images/dummy_profile.png'}
-              alt="profile"
-              width={24}
-              height={24}
-              className="border-text-sub2 h-6 w-6 rounded-full border object-cover"
-            />
-            <span className="text-text-sub2">빵빵이와 옥지</span>
-          </div>
-        </div>
+        {/* 상태 바 */}
+        <div>모집중</div>
 
         {/* 아이콘 버튼 */}
         <div className="relative flex cursor-pointer justify-center">
@@ -65,6 +51,23 @@ export const DetailAside = ({
               />
             </div>
           )}
+        </div>
+      </div>
+
+      <div>
+        <h2 className="font-memomentKkukkkuk mb-2 line-clamp-2 text-2xl">
+          {title}
+        </h2>
+        <div className="flex items-center gap-2">
+          {/* 추후 공용 컴포넌트 수정 후 교체 예정 */}
+          <Image
+            src={'/images/dummy_profile.png'}
+            alt="profile"
+            width={24}
+            height={24}
+            className="border-text-sub2 h-6 w-6 rounded-full border object-cover"
+          />
+          <span className="text-text-sub2">빵빵이와 옥지</span>
         </div>
       </div>
 
