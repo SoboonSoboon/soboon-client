@@ -9,7 +9,6 @@ interface ReviewModal {
     close: () => void;
   };
   meetingId: number;
-  userRole: 'HOST' | 'PARTICIPANT';
   targetUser: {
     userId: number;
     nickname: string;
@@ -27,7 +26,6 @@ const REVIEW_KEYWORDS: Record<ReviewKeyword, string> = {
 export const ReviewModal = ({
   modal,
   meetingId,
-  userRole,
   targetUser,
   category,
 }: ReviewModal) => {
@@ -64,52 +62,51 @@ export const ReviewModal = ({
   };
   return (
     <Modal isOpen={modal.isOpen} onClose={modal.close} className="z-50">
-      <div className="mx-auto w-full max-w-md rounded-lg bg-white">
+      <div className="w-full max-w-md rounded-lg bg-white">
         {/* Header */}
-        <div className="flex items-center justify-between border-b">
-          <div className="flex items-center gap-3">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-5">
             <ProfileImg
               profileImageUrl={targetUser.profileImageUrl}
-              size={50}
+              size={60}
               className="rounded-full"
             />
-            <span className="font-semibold">{targetUser.nickname}</span>
+            <span className="font-memomentKkukkkuk text-xl font-semibold">
+              {targetUser.nickname}
+            </span>
           </div>
         </div>
 
         {/* Main Content */}
-        <div className="p-6">
-          {/* 키워드 선택 */}
-          <div className="mb-6">
-            <h3 className="text-gray-70 mb-3 text-sm font-semibold">
-              키워드 선택
-            </h3>
-            <div className="grid grid-cols-2 gap-2">
-              {availableKeywords.map((keyword) => (
-                <button
-                  key={keyword}
-                  onClick={() => handleKeywordToggle(keyword)}
-                  className={`rounded-lg border p-3 text-sm transition-colors ${
-                    selectedKeywords.includes(keyword)
-                      ? 'bg-primary border-primary text-white'
-                      : 'hover:border-primary border-gray-300 bg-white text-gray-700'
-                  }`}
-                >
-                  {REVIEW_KEYWORDS[keyword]}
-                </button>
-              ))}
-            </div>
+        <div className="py-3">
+          <h3 className="text-gray-70 mb-3 text-sm font-semibold">
+            키워드 선택
+          </h3>
+          <div className="grid grid-cols-2 gap-2">
+            {availableKeywords.map((keyword) => (
+              <button
+                key={keyword}
+                onClick={() => handleKeywordToggle(keyword)}
+                className={`cursor-pointer rounded-lg border p-3 text-sm transition-colors ${
+                  selectedKeywords.includes(keyword)
+                    ? 'bg-primary border-primary text-white'
+                    : 'hover:border-primary text-gray-80 border-gray-30 bg-white'
+                }`}
+              >
+                {REVIEW_KEYWORDS[keyword]}
+              </button>
+            ))}
           </div>
 
           {/* Footer */}
-          <div className="flex gap-3 border-t p-6">
+          <div className="flex gap-3 p-6">
             <Button
               label="닫기"
-              className="flex-1 !py-3"
+              className="hover:bg-gray-30 flex-1 !py-3"
               onClick={() => modal.close()}
             />
             <Button
-              primary={true}
+              variant="outline"
               label={'확정'}
               className="flex-1 !py-3"
               onClick={handleSubmit}

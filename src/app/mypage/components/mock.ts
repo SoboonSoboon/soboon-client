@@ -495,11 +495,11 @@ export const likedMeetingsData: MeetingApiResponse = {
 //리뷰 임시 데이터
 export const reviewData = {
   meetingId: 1001,
-  userRole: 'HOST' as const,
   category: 'DIVIDING' as const,
   targets: {
     userId: 101,
     nickname: '홍길동',
-    profileImageUrl: 'https://example.com/profiles/101.png',
+    profileImageUrl: '',
   },
+  reviewer: true,
 };
