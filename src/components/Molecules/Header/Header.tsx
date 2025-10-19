@@ -28,13 +28,13 @@ export const Header = ({
         </Link>
         <nav className="flex items-center gap-6 text-base font-normal">
           <Link
-            href="/sharing"
+            href="/shopping"
             className="font-memomentKkukkkuk hover:text-primary whitespace-nowrap"
           >
             함께 장보기
           </Link>
           <Link
-            href="/shopping"
+            href="/sharing"
             className="font-memomentKkukkkuk hover:text-primary whitespace-nowrap"
           >
             함께 소분하기
