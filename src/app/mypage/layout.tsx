@@ -10,7 +10,7 @@ export default function MyPageLayout({
       <div className="mx-auto h-full max-w-[1200px]">
         <div className="flex h-full w-full gap-10">
           {/* 왼쪽 고정 프로필 */}
-          <div className="w-[429px] flex-shrink-0">
+          <div className="w-[340px] flex-shrink-0">
             <ProfileSideBar />
           </div>
 

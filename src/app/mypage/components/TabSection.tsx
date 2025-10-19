@@ -56,16 +56,17 @@ export const TabSection = ({
 
       {/* 서브 탭 */}
 
-      <div className="flex gap-6">
+      <div className="flex gap-2.5">
         {subTabs.map((tab) => (
           <button
             key={tab.key}
             onClick={() => onSubTabChange(tab.key)}
             className={`h-9 w-auto rounded-lg border px-4 text-sm font-medium transition-colors ${
               activeSubTab === tab.key
-                ? 'border-quaternary bg-white'
+                ? 'bg-gray-70 text-white'
                 : 'bg-gray-5 cursor-pointer border-none'
             }`}
+            disabled={activeSubTab === tab.key}
           >
             {tab.label}
           </button>
