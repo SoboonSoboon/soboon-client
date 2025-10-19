@@ -48,7 +48,6 @@ export const FilterSection = () => {
         params.set('productType', productType);
       }
 
-      // URL 업데이트 (페이지 새로고침 없이)
       router.push(`?${params.toString()}`);
 
       requestAnimationFrame(() => {

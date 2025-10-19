@@ -13,3 +13,4 @@ export { GoToTopButton } from './GoToTopButton';
 export { CreateButton } from './CreateButton';
 export { Carousel } from './Carousel';
 export { StatusTag } from './StatusTag';
+export { UserMenuModal, type UserMenuModalProps } from './UserMenuModal';

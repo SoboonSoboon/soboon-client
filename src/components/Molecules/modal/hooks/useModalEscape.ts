@@ -1,20 +1,28 @@
 import { useCallback, useEffect } from 'react';
-
-export const useModalEscape = (isOpen: boolean, onClose: () => void) => {
+interface UseModalEscape {
+  isOpen: boolean;
+  onClose: () => void;
+  closeOnEscape?: boolean;
+}
+export const useModalEscape = ({
+  isOpen,
+  onClose,
+  closeOnEscape = true,
+}: UseModalEscape) => {
   const handleEscape = useCallback(
     (event: KeyboardEvent) => {
-      if (event.key === 'Escape') {
+      if (event.key === 'Escape' && closeOnEscape) {
         onClose();
       }
     },
-    [onClose],
+    [onClose, closeOnEscape],
   );
 
   useEffect(() => {
-    if (!isOpen) return;
+    if (!isOpen || !closeOnEscape) return;
     document.addEventListener('keydown', handleEscape);
     return () => {
       document.removeEventListener('keydown', handleEscape);
     };
-  }, [isOpen, handleEscape]);
+  }, [isOpen, handleEscape, closeOnEscape]);
 };

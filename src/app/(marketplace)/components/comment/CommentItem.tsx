@@ -1,28 +1,25 @@
-import Image from 'next/image';
-import { CommentInterface, replyInterface } from '../CommentSection';
 import { EllipsisVertical } from 'lucide-react';
+import { timeFormatter } from '@/utils/timeFormetter';
+import { CommentType, ReplyType } from '@/types/commentType';
+import { ProfileImg } from '@/components';
 
 export const CommentItem = ({
   comment,
 }: {
-  comment: CommentInterface | replyInterface;
+  comment: CommentType | ReplyType;
 }) => {
+  console.log(comment);
   return (
     <div>
       <div className="flex gap-3">
-        <Image
-          src={comment.authorProfileImageUrl}
-          alt={comment.authorNickname}
-          className="size-6 rounded-full"
-          width={24}
-          height={24}
-        />
+        {/* S3 이미지 추가 필요 */}
+        <ProfileImg profileImageUrl={'/images/dummy_profile.png'} size={24} />
         <div className="flex-1 gap-2">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
               <span className="text-text-sub2">{comment.authorNickname}</span>
               <span className="text-sm text-gray-50">
-                {new Date(comment.createdAt).toLocaleDateString()}
+                {timeFormatter(comment.createdAt)}
               </span>
             </div>
             <div className="cursor-pointer">

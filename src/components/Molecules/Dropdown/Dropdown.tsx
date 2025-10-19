@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useRef, useEffect } from 'react';
+import { cn } from '@/utils/cn';
 
 export interface DropdownOption {
   value: string;
@@ -8,19 +9,27 @@ export interface DropdownOption {
 }
 
 export interface DropdownProps {
+  name?: string;
+  id?: string;
   options: DropdownOption[];
   placeholder?: string;
   value?: string;
   onChange?: (value: string) => void;
   disabled?: boolean;
+  required?: boolean;
+  className?: string;
 }
 
 export const Dropdown = ({
+  name,
+  id,
   options,
   placeholder = '선택하세요',
   value,
   onChange,
   disabled = false,
+  required = false,
+  className,
   ...props
 }: DropdownProps) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -56,13 +65,17 @@ export const Dropdown = ({
   };
 
   return (
-    <div className="relative w-full" ref={dropdownRef} {...props}>
+    <div
+      className={cn('relative w-full', className)}
+      ref={dropdownRef}
+      {...props}
+    >
       <button
         type="button"
+        name={name}
+        id={id}
         className={`flex w-full items-center justify-between gap-2.5 rounded-xl border-2 border-transparent bg-[var(--GrayScale-Gray5)] px-4 py-2.5 text-[var(--GrayScale-Gray40)] focus:outline-none ${
-          disabled
-            ? 'cursor-not-allowed opacity-50'
-            : 'cursor-pointer hover:bg-[var(--GrayScale-Gray10)]'
+          disabled ? 'cursor-not-allowed opacity-50' : 'cursor-pointer'
         } ${isOpen ? 'border-[var(--OrangeScale-Orange50)]' : ''} `}
         onClick={handleToggle}
         disabled={disabled}
@@ -97,7 +110,7 @@ export const Dropdown = ({
             <button
               key={option.value}
               type="button"
-              className={`w-full px-4 py-2 text-left first:rounded-t-xl last:rounded-b-xl hover:bg-[var(--GrayScale-Gray5)] focus:bg-[var(--GrayScale-Gray5)] focus:outline-none ${
+              className={`w-full cursor-pointer px-4 py-2 text-left first:rounded-t-xl last:rounded-b-xl hover:bg-[var(--GrayScale-Gray5)] focus:bg-[var(--GrayScale-Gray5)] focus:outline-none ${
                 value === option.value
                   ? 'bg-[var(--OrangeScale-Orange5)] text-[var(--OrangeScale-Orange50)]'
                   : 'text-[var(--GrayScale-Gray80)]'

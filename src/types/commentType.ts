@@ -4,7 +4,7 @@ import { ApiResponse } from './common';
 댓글 조회
 GET /v1/meetings/{id}/comments
 */
-type CommentsType = ApiResponse<{
+interface CommentsType {
   content: {
     commentId: number;
     authorId: number;
@@ -15,8 +15,33 @@ type CommentsType = ApiResponse<{
     createdAt: string;
     replies: ReplyType[];
   }[];
-  hasNext: boolean;
-}>;
+  sliceInfo: {
+    currentPage: number;
+    size: number;
+    hasNext: boolean;
+  };
+}
+
+interface CommentsListType {
+  content: CommentType[];
+  sliceInfo: {
+    currentPage: number;
+    size: number;
+    hasNext: boolean;
+  };
+  totalElements: number;
+}
+
+interface CommentType {
+  commentId: number;
+  authorId: number;
+  authorNickname: string;
+  authorProfileImageUrl: string;
+  content: string;
+  secret: boolean;
+  createdAt: string;
+  replies: ReplyType[];
+}
 
 /*
 대댓글 타입
@@ -61,6 +86,8 @@ type CreateReplyResponse = ApiResponse<{
 
 export type {
   CommentsType,
+  CommentsListType,
+  CommentType,
   ReplyType,
   CreateCommentResponse,
   UpdateCommentResponse,

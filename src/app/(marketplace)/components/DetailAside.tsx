@@ -1,12 +1,20 @@
+'use client';
+
 import Image from 'next/image';
 import { Button } from '@/components';
 import { EllipsisVertical, MapPin } from 'lucide-react';
+import { useState, useRef } from 'react';
+import { ActionMenu } from './ActionMenu/ActionMenu';
+import { ApplicantsMemberType } from '@/types/applicantsType';
+import { ApplicantsList } from './applicants/ApplicantsList';
 
 interface DetailAsideProps {
   title: string;
   detail_address: string;
   current_member: number;
   total_member: number;
+  isAuthor: boolean;
+  participants: ApplicantsMemberType['data'][];
 }
 
 export const DetailAside = ({
@@ -14,7 +22,12 @@ export const DetailAside = ({
   detail_address,
   current_member,
   total_member,
+  isAuthor,
+  participants,
 }: DetailAsideProps) => {
+  const [open, setOpen] = useState(false);
+  const buttonRef = useRef<HTMLDivElement>(null);
+
   return (
     <aside className="w-[430px]">
       <div className="flex w-full justify-between">
@@ -34,8 +47,25 @@ export const DetailAside = ({
             <span className="text-text-sub2">빵빵이와 옥지</span>
           </div>
         </div>
-        <div>
-          <EllipsisVertical className="text-gray-30 size-6" />
+        <div className="relative">
+          <div
+            ref={buttonRef}
+            onClick={(e) => {
+              e.stopPropagation();
+              setOpen(!open);
+            }}
+            className="flex cursor-pointer rounded-lg p-1.5 hover:bg-[var(--GrayScale-Gray5)]"
+          >
+            <EllipsisVertical className="text-gray-30 size-6" />
+          </div>
+          {open && (
+            <div className="absolute top-8 right-0 z-50">
+              <ActionMenu
+                onClose={() => setOpen(false)}
+                buttonRef={buttonRef as React.RefObject<HTMLElement>}
+              />
+            </div>
+          )}
         </div>
       </div>
 
@@ -46,6 +76,7 @@ export const DetailAside = ({
           <MapPin className="size-6" />
           <p>{detail_address}</p>
         </div>
+
         <div>
           <p>
             <span className="text-primary">
@@ -56,17 +87,29 @@ export const DetailAside = ({
         </div>
       </div>
 
-      <div className="flex gap-3">
+      {!isAuthor && (
+        <div className="mb-5 flex gap-3">
+          <Button
+            label="찜"
+            className="border-primary text-primary w-20 shrink-0"
+          />
+          <Button
+            label="모임 신청"
+            className="w-full text-white"
+            backgroundColor="#ff4805"
+          />
+        </div>
+      )}
+
+      <ApplicantsList isAuthor={isAuthor} participants={participants} />
+
+      {isAuthor && (
         <Button
-          label="찜"
-          className="border-primary text-primary w-20 shrink-0"
-        />
-        <Button
-          label="모임 신청"
+          label="모임 마감"
           className="w-full text-white"
           backgroundColor="#ff4805"
         />
-      </div>
+      )}
     </aside>
   );
 };

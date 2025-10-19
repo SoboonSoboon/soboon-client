@@ -11,6 +11,7 @@ import {
   StatusTag,
 } from '@/components';
 import { ShoppingContentType } from '@/types/meetingsType';
+import { timeFormatter } from '@/utils/timeFormetter';
 import { MapPin } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 
@@ -27,13 +28,13 @@ export const ShoppingListSection = ({
 
   return (
     <div className="grid grid-cols-4 gap-5">
-      {shoppingList?.map((shopping, index) => (
+      {shoppingList?.map((shopping) => (
         <Card
+          key={shopping.id}
           className="cursor-pointer p-6"
           height="auto"
           width="auto"
-          key={index}
-          onClick={() => onClickCard((index + 1).toString())}
+          onClick={() => onClickCard(shopping.id.toString())}
         >
           <CardContent className="pt-16">
             <StatusTag
@@ -44,9 +45,10 @@ export const ShoppingListSection = ({
             <CardTitle className="font-memomentKkukkkuk line-clamp-2">
               {shopping.title}
             </CardTitle>
-            {/* 백엔드 코드 추가되면 사용자 이름 추가 필요 및 타임스탬프 형식 변경 필요 */}
-            <CardSubtitle>
-              <span>-사용자 이름-</span> <span>1시간 전</span>
+            <CardSubtitle className="text-text-sub2 flex items-center gap-1 text-sm">
+              <span>{shopping.user.userName}</span>
+              <span>・</span>
+              <span>{timeFormatter(shopping.createdAt)}</span>
             </CardSubtitle>
           </CardContent>
           <Line className="mt-6" />
