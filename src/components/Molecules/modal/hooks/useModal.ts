@@ -14,9 +14,9 @@ export interface UseModalReturn {
 }
 
 export const useModal = (options: UseModalOptions = {}): UseModalReturn => {
-  const { defaultOpen = false, onOpen, onClose } = options;
+  const { onOpen, onClose } = options;
 
-  const [isOpen, setIsOpen] = useState(defaultOpen);
+  const [isOpen, setIsOpen] = useState(false);
 
   const open = useCallback(() => {
     setIsOpen(true);
