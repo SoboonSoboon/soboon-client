@@ -2,7 +2,7 @@
 
 import Image from 'next/image';
 import { Button } from '@/components';
-import { EllipsisVertical, MapPin } from 'lucide-react';
+import { EllipsisVertical, MapPin, Bookmark } from 'lucide-react';
 import { useState, useRef } from 'react';
 import { ActionMenu } from './ActionMenu/ActionMenu';
 
@@ -41,7 +41,12 @@ export const DetailAside = ({
             <span className="text-text-sub2">빵빵이와 옥지</span>
           </div>
         </div>
-        <div className="relative">
+
+        {/* 아이콘 버튼 */}
+        <div className="relative flex cursor-pointer justify-center">
+          <div className="flex justify-center p-1.5">
+            <Bookmark className="text-gray-30 size-6" />
+          </div>
           <div
             ref={buttonRef}
             onClick={(e) => {
