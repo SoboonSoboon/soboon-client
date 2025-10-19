@@ -109,6 +109,7 @@ export default async function SharingDetailPage({
             detail_address={meetingDetail!.detail_address}
             current_member={meetingDetail!.current_member}
             total_member={meetingDetail!.total_member}
+            status={meetingDetail!.status}
           />
         </div>
       </div>

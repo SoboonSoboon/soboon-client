@@ -11,6 +11,7 @@ interface DetailAsideProps {
   detail_address: string;
   current_member: number;
   total_member: number;
+  status: 'RECRUITING' | 'COMPLETED' | 'CLOSED';
 }
 
 export const DetailAside = ({
@@ -18,6 +19,7 @@ export const DetailAside = ({
   detail_address,
   current_member,
   total_member,
+  status,
 }: DetailAsideProps) => {
   const [open, setOpen] = useState(false);
   const buttonRef = useRef<HTMLDivElement>(null);
@@ -27,11 +29,11 @@ export const DetailAside = ({
       <div className="flex w-full justify-between">
         {/* 상태 바 */}
         <div>
-          <StatusTag status="RECRUITING" />
+          <StatusTag status={status} />
         </div>
 
         {/* 아이콘 버튼 */}
-        <div className="relative flex cursor-pointer justify-center">
+        <div className="relative flex cursor-pointer justify-center gap-2">
           <div className="flex justify-center p-1.5">
             <Bookmark className="text-gray-40 fill-gray-40 size-6" />
           </div>
