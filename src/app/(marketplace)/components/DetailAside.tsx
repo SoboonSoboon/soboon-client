@@ -1,6 +1,10 @@
+'use client';
+
 import Image from 'next/image';
 import { Button } from '@/components';
 import { EllipsisVertical, MapPin } from 'lucide-react';
+import { useState, useRef } from 'react';
+import { ActionMenu } from './ActionMenu/ActionMenu';
 
 interface DetailAsideProps {
   title: string;
@@ -15,6 +19,9 @@ export const DetailAside = ({
   current_member,
   total_member,
 }: DetailAsideProps) => {
+  const [open, setOpen] = useState(false);
+  const buttonRef = useRef<HTMLDivElement>(null);
+
   return (
     <aside className="w-[430px]">
       <div className="flex w-full justify-between">
@@ -34,8 +41,25 @@ export const DetailAside = ({
             <span className="text-text-sub2">빵빵이와 옥지</span>
           </div>
         </div>
-        <div>
-          <EllipsisVertical className="text-gray-30 size-6" />
+        <div className="relative">
+          <div
+            ref={buttonRef}
+            onClick={(e) => {
+              e.stopPropagation();
+              setOpen(!open);
+            }}
+            className="flex cursor-pointer rounded-lg p-1.5 hover:bg-[var(--GrayScale-Gray5)]"
+          >
+            <EllipsisVertical className="text-gray-30 size-6" />
+          </div>
+          {open && (
+            <div className="absolute top-8 right-0 z-50">
+              <ActionMenu
+                onClose={() => setOpen(false)}
+                buttonRef={buttonRef as React.RefObject<HTMLElement>}
+              />
+            </div>
+          )}
         </div>
       </div>
 
