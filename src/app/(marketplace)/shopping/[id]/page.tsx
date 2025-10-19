@@ -156,6 +156,7 @@ export default async function ShoppingDetailPage({
             detail_address={shoppingMettingDetail!.detail_address}
             current_member={shoppingMettingDetail!.current_member}
             total_member={shoppingMettingDetail!.total_member}
+            status={shoppingMettingDetail!.status}
             isAuthor={isAuthor}
             participants={participants || []}
           />

@@ -1,8 +1,8 @@
 'use client';
 
 import Image from 'next/image';
-import { Button } from '@/components';
-import { EllipsisVertical, MapPin } from 'lucide-react';
+import { Button, StatusTag } from '@/components';
+import { EllipsisVertical, MapPin, Bookmark } from 'lucide-react';
 import { useState, useRef } from 'react';
 import { ActionMenu } from './ActionMenu/ActionMenu';
 import { ApplicantsMemberType } from '@/types/applicantsType';
@@ -13,6 +13,7 @@ interface DetailAsideProps {
   detail_address: string;
   current_member: number;
   total_member: number;
+  status: 'RECRUITING' | 'COMPLETED' | 'CLOSED';
   isAuthor: boolean;
   participants: ApplicantsMemberType['data'][];
 }
@@ -22,6 +23,7 @@ export const DetailAside = ({
   detail_address,
   current_member,
   total_member,
+  status,
   isAuthor,
   participants,
 }: DetailAsideProps) => {
@@ -29,25 +31,18 @@ export const DetailAside = ({
   const buttonRef = useRef<HTMLDivElement>(null);
 
   return (
-    <aside className="w-[430px]">
+    <aside className="flex w-[430px] flex-col gap-5">
       <div className="flex w-full justify-between">
-        <div className="w-[90%]">
-          <h2 className="font-memomentKkukkkuk mb-2 line-clamp-2 text-2xl">
-            {title}
-          </h2>
-          <div className="flex items-center gap-2">
-            {/* 추후 공용 컴포넌트 수정 후 교체 예정 */}
-            <Image
-              src={'/images/dummy_profile.png'}
-              alt="profile"
-              width={24}
-              height={24}
-              className="border-text-sub2 h-6 w-6 rounded-full border object-cover"
-            />
-            <span className="text-text-sub2">빵빵이와 옥지</span>
-          </div>
+        {/* 상태 바 */}
+        <div>
+          <StatusTag status={status} />
         </div>
-        <div className="relative">
+
+        {/* 아이콘 버튼 */}
+        <div className="relative flex cursor-pointer justify-center gap-2">
+          <div className="flex justify-center p-1.5">
+            <Bookmark className="text-gray-40 fill-gray-40 size-6" />
+          </div>
           <div
             ref={buttonRef}
             onClick={(e) => {
@@ -69,11 +64,26 @@ export const DetailAside = ({
         </div>
       </div>
 
-      <div className="bg-gray-10 my-5 h-[1px] w-full"></div>
+      <div className="flex flex-col gap-3">
+        <h2 className="font-memomentKkukkkuk line-clamp-2 text-2xl">{title}</h2>
+        <div className="flex items-center gap-2">
+          {/* 추후 공용 컴포넌트 수정 후 교체 예정 */}
+          <Image
+            src={'/images/dummy_profile.png'}
+            alt="profile"
+            width={24}
+            height={24}
+            className="border-text-sub2 h-6 w-6 rounded-full border object-cover"
+          />
+          <span className="text-text-sub2">빵빵이와 옥지</span>
+        </div>
+      </div>
 
-      <div className="mb-5 flex w-full justify-between">
+      <div className="bg-gray-10 h-[1px] w-full"></div>
+
+      <div className="flex w-full justify-between">
         <div className="flex items-center gap-1">
-          <MapPin className="size-6" />
+          <MapPin className="text-gray-40 size-6" />
           <p>{detail_address}</p>
         </div>
 
