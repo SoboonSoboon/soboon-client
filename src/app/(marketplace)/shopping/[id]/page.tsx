@@ -8,6 +8,7 @@ import {
 } from '@/app/(marketplace)/components';
 import { MeetingDetailType } from '@/types/meetingsType';
 import { CommentsListType } from '@/types/commentType';
+import { ApplicantsMemberType } from '@/types/applicantsType';
 
 const dummyUser = {
   id: 35,
@@ -86,12 +87,19 @@ async function getComments({
 }
 
 // 참여 신청자 목록 조회
-async function getParticipants({ meetingId }: { meetingId: string }) {
+async function getParticipants({
+  meetingId,
+}: {
+  meetingId: string;
+}): Promise<ApplicantsMemberType['data'][]> {
   try {
     const response = await fetch(
       `${process.env.NEXT_PUBLIC_SOBOON_API_URL}/v1/meetings/${meetingId}/applicants`,
       {
         cache: 'no-store',
+        next: {
+          tags: [`participants-${meetingId}`],
+        },
         headers: {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${process.env.NEXT_PUBLIC_SOBOON_API_TOKEN}`,
@@ -105,7 +113,7 @@ async function getParticipants({ meetingId }: { meetingId: string }) {
     return responseData.data;
   } catch (error) {
     console.error('참여 신청자 목록 조회 실패', error);
-    return null;
+    return [];
   }
 }
 
@@ -149,7 +157,7 @@ export default async function ShoppingDetailPage({
             current_member={shoppingMettingDetail!.current_member}
             total_member={shoppingMettingDetail!.total_member}
             isAuthor={isAuthor}
-            participants={participants}
+            participants={participants || []}
           />
         </div>
       </div>
