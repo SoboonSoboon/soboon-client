@@ -7,7 +7,19 @@ import {
   DetailAside,
 } from '@/app/(marketplace)/components';
 import { MeetingDetailType } from '@/types/meetingsType';
-import { CommentsListType, CommentsType } from '@/types/commentType';
+import { CommentsListType } from '@/types/commentType';
+import { ApplicantsMemberType } from '@/types/applicantsType';
+
+const dummyUser = {
+  id: 35,
+  name: '테스트유저5',
+  nickname: null,
+  image: 'https://example.com/profile5.jpg',
+  province: '부산광역시',
+  city: '해운대구',
+  district: '우동',
+  detail: '901-23',
+};
 
 const carouselImages = [
   'https://www.dummyimage.com/700x600/FF6B6B/fff',
@@ -75,6 +87,36 @@ async function getComments({
   }
 }
 
+// 참여 신청자 목록 조회
+async function getParticipants({
+  meetingId,
+}: {
+  meetingId: string;
+}): Promise<ApplicantsMemberType['data'][]> {
+  try {
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_SOBOON_API_URL}/v1/meetings/${meetingId}/applicants`,
+      {
+        cache: 'no-store',
+        next: {
+          tags: [`participants-${meetingId}`],
+        },
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${process.env.NEXT_PUBLIC_SOBOON_API_TOKEN}`,
+        },
+      },
+    );
+    if (!response.ok) {
+      throw new Error('참여 신청자 목록 조회 실패');
+    }
+    const responseData = await response.json();
+    return responseData.data;
+  } catch (error) {
+    console.error('참여 신청자 목록 조회 실패', error);
+    return [];
+  }
+}
 export default async function SharingDetailPage({
   params,
 }: {
@@ -88,6 +130,10 @@ export default async function SharingDetailPage({
 
   // 댓글 조회
   const commentsList = await getComments({ id });
+
+  const isAuthor = 35 === dummyUser.id;
+
+  const participants = isAuthor ? await getParticipants({ meetingId: id }) : [];
 
   return (
     <section>
@@ -110,6 +156,8 @@ export default async function SharingDetailPage({
             current_member={meetingDetail!.current_member}
             total_member={meetingDetail!.total_member}
             status={meetingDetail!.status}
+            isAuthor={isAuthor}
+            participants={participants || []}
           />
         </div>
       </div>

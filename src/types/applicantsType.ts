@@ -5,15 +5,15 @@ import { ApiResponse } from './common';
 모임 신청자 목록
 GET /v1/meetings/{id}/applicants
 */
-type ApplicantsMemberType = ApiResponse<{
-  participants: {
+type ApplicantsMemberType = {
+  data: {
     participantId: number;
     userId: number;
     userNickname: string;
     profileImageUrl: string;
     status: string;
-  }[];
-}>;
+  };
+};
 
 /*
 신청자 only

@@ -9,7 +9,145 @@ const meta = {
   title: 'Molecules/Modal',
   component: Modal,
   parameters: {
-    layout: 'fullscreen',
+    docs: {
+      description: {
+        component: `
+# Modal 컴포넌트
+
+재사용 가능한 모달 컴포넌트입니다.
+
+## 기본 사용법
+
+### 1. 기본 Modal 사용법
+
+\`\`\`tsx
+import { Modal } from '@/components/Molecules/modal';
+import { useState } from 'react';
+
+function MyComponent() {
+  const [isOpen, setIsOpen] = useState(false);
+
+  return (
+    <>
+      <button onClick={() => setIsOpen(true)}>모달 열기</button>
+      <Modal isOpen={isOpen} onClose={() => setIsOpen(false)}>
+        <h2>모달 제목</h2>
+        <p>모달 내용</p>
+      </Modal>
+    </>
+  );
+}
+\`\`\`
+
+### 2. useModal 훅 사용법
+
+\`\`\`tsx
+import { Modal, useModal } from '@/components/Molecules/modal';
+
+function MyComponent() {
+  const modal = useModal();
+
+  return (
+    <>
+      <button onClick={modal.open}>모달 열기</button>
+      <button onClick={modal.close}>모달 닫기</button>
+      <button onClick={modal.toggle}>모달 토글</button>
+      
+      <Modal isOpen={modal.isOpen} onClose={modal.close}>
+        <h2>모달 제목</h2>
+        <p>모달 내용</p>
+      </Modal>
+    </>
+  );
+}
+\`\`\`
+
+### 3. useModal 훅 옵션 사용법
+
+\`\`\`tsx
+import { Modal, useModal } from '@/components/Molecules/modal';
+
+function MyComponent() {
+  const modal = useModal({
+    onOpen: () => console.log('모달이 열렸습니다'),
+    onClose: () => console.log('모달이 닫혔습니다')
+  });
+
+  return (
+    <>
+      <button onClick={modal.toggle}>모달 토글</button>
+      
+      <Modal isOpen={modal.isOpen} onClose={modal.close}>
+        <h2>모달 제목</h2>
+        <p>모달 내용</p>
+      </Modal>
+    </>
+  );
+}
+\`\`\`
+
+### 4. 스크롤 가능한 모달 (리스트용)
+
+\`\`\`tsx
+import { Modal } from '@/components/Molecules/modal';
+
+function ListModal() {
+  const [isOpen, setIsOpen] = useState(false);
+
+  return (
+    <>
+      <button onClick={() => setIsOpen(true)}>리스트 모달 열기</button>
+      
+      <Modal 
+        isOpen={isOpen} 
+        onClose={() => setIsOpen(false)}
+        scrollable={true}
+        maxHeight="70vh"
+        lockScroll={true}
+      >
+        <h2>긴 리스트</h2>
+        {items.map(item => (
+          <div key={item.id}>{item.name}</div>
+        ))}
+      </Modal>
+    </>
+  );
+}
+\`\`\`
+
+## Modal Props
+
+- **isOpen**: 모달의 열림/닫힘 상태 (필수)
+- **onClose**: 모달을 닫을 때 호출되는 함수 (필수)
+- **children**: 모달 내부에 렌더링될 내용 (필수)
+- **size**: 모달 크기 (sm, md, lg, 기본값: md)
+- **showBackdrop**: 배경 오버레이 표시 여부 (기본값: true)
+- **closeOnBackdropClick**: 배경 클릭으로 닫기 여부 (기본값: true)
+- **closeOnEscape**: ESC 키로 닫기 여부 (기본값: true)
+- **position**: 모달 위치 (center, top, bottom, left, right, 기본값: center)
+- **showCloseButton**: 내부 닫기 버튼 표시 여부 (기본값: false)
+- **closeButtonText**: 닫기 버튼 텍스트 (기본값: '닫기')
+- **closeButtonClassName**: 닫기 버튼 커스텀 클래스
+- **className**: 모달 컨테이너 커스텀 클래스
+- **contentClassName**: 모달 콘텐츠 커스텀 클래스
+- **lockScroll**: 모달 열릴 때 배경 스크롤 락 여부 (기본값: true)
+- **scrollable**: 모달 내부 스크롤 허용 여부 (기본값: false)
+- **maxHeight**: 모달 최대 높이 (기본값: '80vh')
+
+## useModal 훅 Props
+
+- **onOpen**: 모달이 열릴 때 호출되는 콜백 함수
+- **onClose**: 모달이 닫힐 때 호출되는 콜백 함수
+
+## useModal 훅 반환값
+
+- **isOpen**: 현재 모달의 열림/닫힘 상태
+- **open**: 모달을 여는 함수
+- **close**: 모달을 닫는 함수
+- **toggle**: 모달의 열림/닫힘 상태를 토글하는 함수
+        `,
+      },
+    },
   },
   args: {
     onClose: fn(),
@@ -53,7 +191,20 @@ const meta = {
       control: 'text',
       description: '모달 콘텐츠 커스텀 클래스',
     },
+    lockScroll: {
+      control: 'boolean',
+      description: '모달 열릴 때 스크롤 락 여부',
+    },
+    scrollable: {
+      control: 'boolean',
+      description: '모달 내부 스크롤 허용 여부',
+    },
+    maxHeight: {
+      control: 'text',
+      description: '모달 최대 높이 (예: 70vh, 500px)',
+    },
   },
+  tags: ['autodocs'],
 } satisfies Meta<typeof Modal>;
 
 export default meta;
@@ -69,6 +220,9 @@ interface InteractiveModalProps {
   closeButtonClassName?: string;
   className?: string;
   contentClassName?: string;
+  lockScroll?: boolean;
+  scrollable?: boolean;
+  maxHeight?: string;
   children?: React.ReactNode;
 }
 
@@ -83,7 +237,12 @@ const InteractiveModal = ({ children, ...props }: InteractiveModalProps) => {
       >
         모달 열기
       </button>
-      <Modal {...props} isOpen={isOpen} onClose={() => setIsOpen(false)}>
+      <Modal
+        {...props}
+        isOpen={isOpen}
+        onClose={() => setIsOpen(false)}
+        lockScroll={false}
+      >
         {children}
       </Modal>
     </div>
@@ -102,7 +261,12 @@ const UseModalWrapper = ({ children, ...props }: InteractiveModalProps) => {
       >
         {modal.isOpen ? '모달 닫기' : '모달 열기'} {/* 🔥 글씨 변경 */}
       </button>
-      <Modal {...props} isOpen={modal.isOpen} onClose={modal.close}>
+      <Modal
+        {...props}
+        isOpen={modal.isOpen}
+        onClose={modal.close}
+        lockScroll={false}
+      >
         {children}
       </Modal>
     </div>
@@ -121,7 +285,12 @@ const CustomToggleModal = ({ children, ...props }: InteractiveModalProps) => {
       >
         {modal.isOpen ? '닫기' : '열기'} {/* 🔥 커스텀 글씨 */}
       </button>
-      <Modal {...props} isOpen={modal.isOpen} onClose={modal.close}>
+      <Modal
+        {...props}
+        isOpen={modal.isOpen}
+        onClose={modal.close}
+        lockScroll={false}
+      >
         {children}
       </Modal>
     </div>
@@ -170,7 +339,12 @@ const EscapeTestModal = ({ children, ...props }: InteractiveModalProps) => {
         </div>
       )}
 
-      <Modal {...props} isOpen={isOpen} onClose={() => setIsOpen(false)}>
+      <Modal
+        {...props}
+        isOpen={isOpen}
+        onClose={() => setIsOpen(false)}
+        lockScroll={false}
+      >
         {children}
       </Modal>
     </div>
@@ -461,7 +635,7 @@ export const FormModal: Story = {
 // 🔥 실제로 열리는 모달 스토리 (isOpen: true로 고정)
 export const AlwaysOpen: Story = {
   render: (args) => (
-    <Modal {...args} isOpen={true} onClose={fn()}>
+    <Modal {...args} isOpen={true} onClose={fn()} lockScroll={false}>
       <h2 className="mb-4 text-xl font-bold">항상 열린 모달</h2>
       <p className="mb-4">이 모달은 항상 열려있습니다.</p>
       <p>스토리북에서 모달의 모양을 확인할 수 있습니다.</p>
@@ -503,5 +677,178 @@ export const AllPropsTest: Story = {
     closeButtonClassName: 'bg-blue-500 hover:bg-blue-600',
     className: 'backdrop-blur-sm',
     contentClassName: 'border-2 border-blue-300',
+  },
+};
+
+// 🔥 모든 Modal props를 사용한 완전한 예제
+export const CompleteModalExample: Story = {
+  render: (args) => (
+    <InteractiveModal {...args}>
+      <h2 className="mb-4 text-xl font-bold">완전한 Modal 예제</h2>
+      <p className="mb-4">이 모달은 모든 Modal props를 사용합니다.</p>
+      <div className="space-y-2 text-sm">
+        <p>• size: {args.size}</p>
+        <p>• showBackdrop: {args.showBackdrop ? 'true' : 'false'}</p>
+        <p>
+          • closeOnBackdropClick: {args.closeOnBackdropClick ? 'true' : 'false'}
+        </p>
+        <p>• position: {args.position}</p>
+        <p>• showCloseButton: {args.showCloseButton ? 'true' : 'false'}</p>
+        <p>• closeButtonText: {`"${args.closeButtonText}"`}</p>
+        <p>• closeButtonClassName: {`"${args.closeButtonClassName}"`}</p>
+        <p>• className: {`"${args.className}"`}</p>
+        <p>• contentClassName: {`"${args.contentClassName}"`}</p>
+      </div>
+    </InteractiveModal>
+  ),
+  args: {
+    size: 'lg',
+    showBackdrop: true,
+    closeOnBackdropClick: true,
+    position: 'center',
+    showCloseButton: true,
+    closeButtonText: '확인',
+    closeButtonClassName: 'bg-green-500 hover:bg-green-600 text-white',
+    className: 'backdrop-blur-sm',
+    contentClassName: 'border-2 border-green-300 shadow-xl',
+  },
+};
+
+// 🔥 useModal 훅의 모든 기능을 사용한 예제
+export const CompleteUseModalExample: Story = {
+  render: (args) => {
+    const modal = useModal({
+      defaultOpen: false,
+      onOpen: () => console.log('모달이 열렸습니다'),
+      onClose: () => console.log('모달이 닫혔습니다'),
+    });
+
+    return (
+      <div>
+        <div className="mb-4 space-x-2">
+          <button
+            onClick={modal.open}
+            className="rounded bg-blue-500 px-4 py-2 text-white hover:bg-blue-600"
+          >
+            모달 열기
+          </button>
+          <button
+            onClick={modal.close}
+            className="rounded bg-red-500 px-4 py-2 text-white hover:bg-red-600"
+          >
+            모달 닫기
+          </button>
+          <button
+            onClick={modal.toggle}
+            className="rounded bg-green-500 px-4 py-2 text-white hover:bg-green-600"
+          >
+            모달 토글
+          </button>
+        </div>
+
+        <div className="mb-4 rounded bg-gray-100 p-3">
+          <p className="text-sm">현재 상태: {modal.isOpen ? '열림' : '닫힘'}</p>
+          <p className="text-sm">
+            콘솔을 확인하여 onOpen/onClose 콜백을 확인하세요.
+          </p>
+        </div>
+
+        <Modal {...args} isOpen={modal.isOpen} onClose={modal.close}>
+          <h2 className="mb-4 text-xl font-bold">useModal 훅 완전 예제</h2>
+          <p className="mb-4">
+            이 모달은 useModal 훅의 모든 기능을 사용합니다.
+          </p>
+          <div className="space-y-2 text-sm">
+            <p>• defaultOpen: false</p>
+            <p>• onOpen: 콘솔에 &quot;모달이 열렸습니다&quot; 출력</p>
+            <p>• onClose: 콘솔에 &quot;모달이 닫혔습니다&quot; 출력</p>
+            <p>• isOpen: 현재 모달 상태</p>
+            <p>• open(): 모달 열기</p>
+            <p>• close(): 모달 닫기</p>
+            <p>• toggle(): 모달 토글</p>
+          </div>
+        </Modal>
+      </div>
+    );
+  },
+  args: {
+    size: 'md',
+    showBackdrop: true,
+    closeOnBackdropClick: true,
+    position: 'center',
+    showCloseButton: true,
+    closeButtonText: '닫기',
+    closeButtonClassName: 'bg-purple-500 hover:bg-purple-600 text-white',
+    className: 'backdrop-blur-sm',
+    contentClassName: 'border-2 border-purple-300 shadow-xl',
+  },
+};
+
+// 🔥 스크롤 가능한 모달 스토리
+export const ScrollableModal: Story = {
+  render: (args) => (
+    <InteractiveModal {...args}>
+      <h2 className="mb-4 text-xl font-bold">스크롤 가능한 모달</h2>
+      <p className="mb-4">이 모달은 내부 스크롤이 가능합니다.</p>
+      <div className="space-y-4">
+        {Array.from({ length: 20 }, (_, i) => (
+          <div key={i} className="rounded bg-gray-100 p-4">
+            <h3 className="font-semibold">항목 {i + 1}</h3>
+            <p className="text-sm text-gray-600">
+              이것은 스크롤 가능한 모달의 {i + 1}번째 항목입니다. 내용이
+              많아지면 모달 내부에서 스크롤할 수 있습니다.
+            </p>
+          </div>
+        ))}
+      </div>
+    </InteractiveModal>
+  ),
+  args: {
+    size: 'md',
+    showBackdrop: true,
+    closeOnBackdropClick: true,
+    position: 'center',
+    showCloseButton: true,
+    closeButtonText: '닫기',
+    scrollable: true,
+    maxHeight: '70vh',
+    lockScroll: true,
+  },
+};
+
+// 🔥 긴 리스트 모달 스토리
+export const LongListModal: Story = {
+  render: (args) => (
+    <InteractiveModal {...args}>
+      <h2 className="mb-4 text-xl font-bold">긴 리스트 모달</h2>
+      <p className="mb-4">검색 결과나 목록을 표시할 때 사용합니다.</p>
+      <div className="space-y-2">
+        {Array.from({ length: 50 }, (_, i) => (
+          <div
+            key={i}
+            className="flex items-center justify-between rounded bg-gray-50 p-3"
+          >
+            <div>
+              <h4 className="font-medium">아이템 {i + 1}</h4>
+              <p className="text-sm text-gray-500">설명 {i + 1}</p>
+            </div>
+            <button className="rounded bg-blue-500 px-3 py-1 text-sm text-white hover:bg-blue-600">
+              선택
+            </button>
+          </div>
+        ))}
+      </div>
+    </InteractiveModal>
+  ),
+  args: {
+    size: 'lg',
+    showBackdrop: true,
+    closeOnBackdropClick: true,
+    position: 'center',
+    showCloseButton: true,
+    closeButtonText: '닫기',
+    scrollable: true,
+    maxHeight: '80vh',
+    lockScroll: true,
   },
 };

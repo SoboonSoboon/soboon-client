@@ -5,6 +5,8 @@ import { Button, StatusTag } from '@/components';
 import { EllipsisVertical, MapPin, Bookmark } from 'lucide-react';
 import { useState, useRef } from 'react';
 import { ActionMenu } from './ActionMenu/ActionMenu';
+import { ApplicantsMemberType } from '@/types/applicantsType';
+import { ApplicantsList } from './applicants/ApplicantsList';
 
 interface DetailAsideProps {
   title: string;
@@ -12,6 +14,8 @@ interface DetailAsideProps {
   current_member: number;
   total_member: number;
   status: 'RECRUITING' | 'COMPLETED' | 'CLOSED';
+  isAuthor: boolean;
+  participants: ApplicantsMemberType['data'][];
 }
 
 export const DetailAside = ({
@@ -20,6 +24,8 @@ export const DetailAside = ({
   current_member,
   total_member,
   status,
+  isAuthor,
+  participants,
 }: DetailAsideProps) => {
   const [open, setOpen] = useState(false);
   const buttonRef = useRef<HTMLDivElement>(null);
@@ -80,6 +86,7 @@ export const DetailAside = ({
           <MapPin className="text-gray-40 size-6" />
           <p>{detail_address}</p>
         </div>
+
         <div>
           <p>
             <span className="text-primary">
@@ -90,17 +97,29 @@ export const DetailAside = ({
         </div>
       </div>
 
-      <div className="flex gap-3">
+      {!isAuthor && (
+        <div className="mb-5 flex gap-3">
+          <Button
+            label="찜"
+            className="border-primary text-primary w-20 shrink-0"
+          />
+          <Button
+            label="모임 신청"
+            className="w-full text-white"
+            backgroundColor="#ff4805"
+          />
+        </div>
+      )}
+
+      <ApplicantsList isAuthor={isAuthor} participants={participants} />
+
+      {isAuthor && (
         <Button
-          label="찜"
-          className="border-primary text-primary w-20 shrink-0"
-        />
-        <Button
-          label="모임 신청"
+          label="모임 마감"
           className="w-full text-white"
           backgroundColor="#ff4805"
         />
-      </div>
+      )}
     </aside>
   );
 };
