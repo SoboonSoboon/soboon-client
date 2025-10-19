@@ -13,7 +13,7 @@ export const CommentItem = ({
     <div>
       <div className="flex gap-3">
         {/* S3 이미지 추가 필요 */}
-        <ProfileImg profileImageUrl={'/images/dummy_profile.png'} size={24} />
+        <ProfileImg profileImageUrl={comment.authorProfileImageUrl} size={24} />
         <div className="flex-1 gap-2">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
