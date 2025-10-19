@@ -1,12 +1,15 @@
 import Image from 'next/image';
-import { Button } from '@/components';
+import { Button, ProfileImg } from '@/components';
 import { EllipsisVertical, MapPin } from 'lucide-react';
+import { ApplicantsMemberType } from '@/types/applicantsType';
 
 interface DetailAsideProps {
   title: string;
   detail_address: string;
   current_member: number;
   total_member: number;
+  isAuthor: boolean;
+  participants: ApplicantsMemberType['data'][];
 }
 
 export const DetailAside = ({
@@ -14,6 +17,8 @@ export const DetailAside = ({
   detail_address,
   current_member,
   total_member,
+  isAuthor,
+  participants,
 }: DetailAsideProps) => {
   return (
     <aside className="w-[430px]">
@@ -46,27 +51,74 @@ export const DetailAside = ({
           <MapPin className="size-6" />
           <p>{detail_address}</p>
         </div>
-        <div>
-          <p>
-            <span className="text-primary">
-              {current_member}&nbsp;/&nbsp;{total_member}
-            </span>
-            &nbsp;명 모집중
-          </p>
-        </div>
+        {!isAuthor && (
+          <div>
+            <p>
+              <span className="text-primary">
+                {current_member}&nbsp;/&nbsp;{total_member}
+              </span>
+              &nbsp;명 모집중
+            </p>
+          </div>
+        )}
       </div>
 
-      <div className="flex gap-3">
+      {!isAuthor && (
+        <div className="mb-5 flex gap-3">
+          <Button
+            label="찜"
+            className="border-primary text-primary w-20 shrink-0"
+          />
+          <Button
+            label="모임 신청"
+            className="w-full text-white"
+            backgroundColor="#ff4805"
+          />
+        </div>
+      )}
+
+      {isAuthor && (
+        <div className="border-gray-10 mb-5 w-full rounded-xl border bg-white">
+          {participants.length === 0 ? (
+            <div className="text-text-sub2 flex min-h-[143px] items-center justify-center">
+              <p>아직 참여 신청한 사람이 없어요 .. !</p>
+            </div>
+          ) : (
+            participants.map((participant) => (
+              <div
+                key={participant.participantId}
+                className="flex items-center justify-between px-6 py-3"
+              >
+                <div className="flex items-center gap-2 py-2">
+                  <ProfileImg
+                    profileImageUrl={participant.profileImageUrl}
+                    size={32}
+                  />
+                  <p>{participant.userNickname}</p>
+                </div>
+                <div className="flex gap-2">
+                  <Button
+                    label="수락"
+                    className="text-primary border-primary px-3 py-2.5"
+                  />
+                  <Button
+                    label="거절"
+                    className="border-text-sub1 text-text-sub1 px-3 py-2.5"
+                  />
+                </div>
+              </div>
+            ))
+          )}
+        </div>
+      )}
+
+      {isAuthor && (
         <Button
-          label="찜"
-          className="border-primary text-primary w-20 shrink-0"
-        />
-        <Button
-          label="모임 신청"
+          label="모임 마감"
           className="w-full text-white"
           backgroundColor="#ff4805"
         />
-      </div>
+      )}
     </aside>
   );
 };
