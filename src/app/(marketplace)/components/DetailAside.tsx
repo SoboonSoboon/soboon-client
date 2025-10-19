@@ -33,7 +33,7 @@ export const DetailAside = ({
         {/* 아이콘 버튼 */}
         <div className="relative flex cursor-pointer justify-center">
           <div className="flex justify-center p-1.5">
-            <Bookmark className="text-gray-30 size-6" />
+            <Bookmark className="text-gray-40 fill-gray-40 size-6" />
           </div>
           <div
             ref={buttonRef}
@@ -75,7 +75,7 @@ export const DetailAside = ({
 
       <div className="flex w-full justify-between">
         <div className="flex items-center gap-1">
-          <MapPin className="size-6" />
+          <MapPin className="text-gray-40 size-6" />
           <p>{detail_address}</p>
         </div>
         <div>
