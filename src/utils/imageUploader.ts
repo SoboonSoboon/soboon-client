@@ -12,7 +12,7 @@ export const imageUploader = async (images: File[]): Promise<string[]> => {
         fileName: image.name,
       });
 
-      const { presignedUrl, imageUrl } = response.data;
+      const { presignedUrl, imgUrl } = response.data;
 
       const uploadResponse = await fetch(presignedUrl, {
         method: 'PUT',
@@ -26,7 +26,7 @@ export const imageUploader = async (images: File[]): Promise<string[]> => {
         throw new Error(`Failed to upload image: ${image.name}`);
       }
 
-      return imageUrl;
+      return imgUrl;
     }),
   );
 

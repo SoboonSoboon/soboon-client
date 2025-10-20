@@ -9,13 +9,12 @@ import { useMemo, useState } from 'react';
 import { sharingRegisterApi } from '@/apis/meetings/registerApi';
 import { useToast, TextInput, Textarea, Button } from '@/components/Atoms';
 import { Dropdown } from '@/components/Molecules';
-
 import { useMutation } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
 import { ApiResponse } from '@/types/common';
 import categories from '@/constants/categories';
-import { XIcon } from 'lucide-react';
-import ImageUploadForm from './imageLoader';
+import ImageUploadForm from './ImageLoader';
+import RegisterModalHeader from './RegisterModalHeader';
 
 interface SharingRegisterFormProps {
   handleClose: () => void;
@@ -36,7 +35,7 @@ export function SharingRegisterForm({ handleClose }: SharingRegisterFormProps) {
     detail: '',
     capacity: 0,
     productType: '',
-    imageUrls: [],
+    imageUrls: [] as File[],
   });
 
   const isValid = useMemo(() => {
@@ -54,7 +53,9 @@ export function SharingRegisterForm({ handleClose }: SharingRegisterFormProps) {
 
   const { mutate } = useMutation({
     mutationFn: async () => {
-      const response = await sharingRegisterApi(formData);
+      const response = await sharingRegisterApi({
+        ...formData,
+      });
       return response;
     },
     onSuccess: (data: ApiResponse<string>) => {
@@ -77,12 +78,10 @@ export function SharingRegisterForm({ handleClose }: SharingRegisterFormProps) {
 
   return (
     <>
-      <div className="mb-8 flex items-center justify-between">
-        <h1 className="text-2xl font-bold">소분하기 모임 등록</h1>
-        <button onClick={handleClose} className="cursor-pointer">
-          <XIcon className="h-4 w-4" />
-        </button>
-      </div>
+      <RegisterModalHeader
+        title="소분하기 모임 등록"
+        handleClose={handleClose}
+      />
       <form onSubmit={handleSubmit}>
         <div className="mb-6">
           <label htmlFor="productType" className="mb-3 block text-[#1F2937]">
@@ -181,30 +180,7 @@ export function SharingRegisterForm({ handleClose }: SharingRegisterFormProps) {
         </div>
 
         <div className="mb-6">
-          {/* <label htmlFor="description" className="mb-3 block">
-            이미지를 추가할까요?
-          </label>
-          <div className="flex items-center gap-2">
-            <input
-              id="image-upload"
-              type="file"
-              multiple
-              accept="image/*"
-              className="cursor-pointer appearance-none rounded-md border-2 border-[#f3f5f6] bg-white px-3 py-2 text-gray-700 transition-all duration-200 hover:border-gray-500 focus:border-gray-500 focus:outline-none"
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                setFormData({
-                  ...formData,
-                  imageUrls: Array.from(e.target.files || []),
-                })
-              }
-            />
-            <Button
-              type="button"
-              label="파일 찾기"
-              className="!text-primary border-primary block shrink-0 !bg-white"
-            />
-          </div> */}
-          <ImageUploadForm />
+          <ImageUploadForm formData={formData} setFormData={setFormData} />
         </div>
 
         <div className="mb-6">
