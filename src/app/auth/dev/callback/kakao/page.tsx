@@ -2,6 +2,8 @@
 
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { axiosInstance } from '@/apis/axiosInstance';
+// import { useAuthStore } from '@/apis/auth/hooks/useLogin';
 
 export default function KakaoCallbackPage({
   searchParams,
@@ -17,37 +19,36 @@ export default function KakaoCallbackPage({
 
     const handleKakaoCallback = async (code: string) => {
       try {
-        setStatus('백엔드 처리 중...');
+        const isDev = process.env.NODE_ENV === 'development';
+        const endpoint = isDev
+          ? '/v1/auth/dev/callback/kakao'
+          : '/v1/auth/callback/kakao';
+        const response = await axiosInstance.get(`${endpoint}?code=${code}`);
+        const data = response.data;
+        sessionStorage.setItem('accessToken', data.accessToken); //todo: 전역상태관리로 관리하기로 변경
 
-        const baseURL = process.env.NEXT_PUBLIC_SOBOON_API_URL;
-
-        const response = await fetch(
-          `${baseURL}v1/auth/dev/callback/kakao?code=${code}`,
-          {
-            method: 'GET',
-            credentials: 'include',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-          },
-        );
-
-        if (!response.ok) {
-          throw new Error(`처리 실패: ${response.status}`);
-        }
-
-        const data = await response.json();
-        console.log('응답:', data);
-
-        //응답에 accessToken이 있으면 로그인, 없으면 추가 정보 입력 필요
-
-        if (data.accessToken) {
-          localStorage.setItem('accessToken', data.accessToken);
-          console.log('Access Token 저장 완료');
-          alert('로그인 성공'); //추후 토스트로 변경
+        //complete가 true면 로그인, false면 추가 정보 입력 필요
+        if (data.complete) {
+          console.log('로그인 성공'); //todo: 추후 토스트로 변경
+          console.log(data);
           setTimeout(() => router.push('/sharing'), 300);
+
+          // if (data.complete) {
+          //   useAuthStore.setState({
+          //     isLoggedIn: true,
+          //     userId: data.userId,
+          //     userName: data.userName,
+          //     userNickname: data.userNickname,
+          //     userToken: data.accessToken,
+          //     userLocation: {
+          //       province: data.province,
+          //       city: data.city,
+          //       district: data.district,
+
+          //     },
+          //   });
         } else {
-          alert('추가 정보 입력이 필요합니다.'); //추후 토스트로 변경
+          console.log('추가 정보 입력이 필요합니다.'); //todo: 추후 토스트로 변경
           setTimeout(() => router.push('/auth/addinfo'), 300);
         }
       } catch (error) {
