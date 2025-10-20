@@ -2,6 +2,7 @@ import { SideButtonSection } from '@/components';
 import { FilterSection } from './components/FilterSection';
 import { ShoppingListSection } from './components/ShoppingListSection';
 import { ShoppingMeetingsType } from '@/types/meetingsType';
+import { IntroSection } from '../components/IntroSection';
 
 async function getShoppingList(
   query: URLSearchParams,
@@ -50,6 +51,7 @@ export default async function ShoppingPage({
 
   return (
     <section>
+      <IntroSection />
       <FilterSection />
       <ShoppingListSection shoppingList={shoppingList!.content} />
       <SideButtonSection />
