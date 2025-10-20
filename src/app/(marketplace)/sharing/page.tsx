@@ -1,8 +1,10 @@
-import { SharingListSection } from './components/SharingListSection';
-import { FilterSection } from './components/FilterSection';
 import { SideButtonSection } from '@/components';
 import { DividingMeetingsType } from '@/types/meetingsType';
-import { IntroSection } from '../components/IntroSection';
+import { IntroSection } from '@/app/(marketplace)/components';
+import {
+  FilterSection,
+  SharingListSection,
+} from '@/app/(marketplace)/sharing/components';
 
 async function getSharingMetting(
   query: URLSearchParams,

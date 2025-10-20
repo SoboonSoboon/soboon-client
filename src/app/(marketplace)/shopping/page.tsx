@@ -1,8 +1,7 @@
 import { SideButtonSection } from '@/components';
-import { FilterSection } from './components/FilterSection';
-import { ShoppingListSection } from './components/ShoppingListSection';
+import { IntroSection } from '@/app/(marketplace)/components';
 import { ShoppingMeetingsType } from '@/types/meetingsType';
-import { IntroSection } from '../components/IntroSection';
+import { FilterSection, ShoppingListSection } from './components';
 
 async function getShoppingList(
   query: URLSearchParams,
