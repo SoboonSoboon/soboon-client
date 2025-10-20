@@ -20,7 +20,11 @@ export const CommentInputContainer = () => {
     <div className="mb-6">
       <form action={formAction} className="flex items-center gap-2">
         <input name="meetingId" hidden readOnly value={meetingId} />
-        <TextInput placeholder="댓글을 입력해주세요." name="comment" />
+        <TextInput
+          placeholder="댓글을 입력해주세요."
+          name="comment"
+          className="!border-text-line1 border bg-white"
+        />
         <Button
           label="작성"
           type="submit"

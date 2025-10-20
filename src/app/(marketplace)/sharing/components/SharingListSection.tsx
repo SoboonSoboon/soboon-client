@@ -8,9 +8,9 @@ import {
   CardImage,
   CardSubtitle,
   CardTitle,
-  Chip,
   LikeButton,
   Line,
+  StatusTag,
 } from '@/components';
 import { MapPin } from 'lucide-react';
 import {
@@ -39,14 +39,6 @@ export const SharingListSection = ({
     router.push(`/sharing/${id}`);
   };
 
-  const getStatus = (metting: DividingContentType) => {
-    return metting.status === 'RECRUITING'
-      ? '모집중'
-      : metting.status === 'COMPLETED'
-        ? '완료'
-        : '취소됨';
-  };
-
   return (
     <div className="grid grid-cols-3 gap-8">
       {mettingList?.length === 0 ? (
@@ -64,10 +56,11 @@ export const SharingListSection = ({
             className="cursor-pointer"
           >
             <CardContent>
-              <Chip className="absolute top-4 left-4 px-3 py-1.5">
-                {getStatus(metting)}
-              </Chip>
-              <LikeButton />
+              <StatusTag
+                status={metting.status}
+                className="absolute top-3 left-3"
+              />
+              <LikeButton className="absolute top-[4px] right-0" />
               {/* 추후에 이미지 관련 로직 개발 후 수정 필요 */}
               <CardImage
                 alt="기본 카드"
