@@ -4,7 +4,7 @@ import { cn } from '@/utils/cn';
 import { useClickOutside } from '@/hooks/useClickOutside';
 import { Modal, useModal } from '@/components/Molecules/modal';
 import { deleteMeetingsApi } from '@/apis/meetings/deleteMeetingsApi';
-import { useRouter } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { useState } from 'react';
 
 export interface ActionMenuProps extends React.HTMLAttributes<HTMLDivElement> {
@@ -23,6 +23,7 @@ export const ActionMenu = ({
 }: ActionMenuProps) => {
   const deleteModal = useModal();
   const router = useRouter();
+  const pathname = usePathname();
   const [isDeleting, setIsDeleting] = useState(false);
 
   const handleOutsideClose = () => {
@@ -52,7 +53,7 @@ export const ActionMenu = ({
       deleteModal.close();
       onClose?.();
 
-      router.push('/');
+      router.push(`/${pathname.includes('/sharing') ? 'sharing' : 'shopping'}`);
       router.refresh();
     } catch (error) {
       console.error('게시글 삭제 실패:', error);
