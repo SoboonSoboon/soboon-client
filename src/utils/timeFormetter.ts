@@ -1,3 +1,8 @@
+/**
+ * 생성 시간 기준 분, 시간, 일, 개월 단위로 표시하는 함수
+ * @param createdAt string
+ * @returns string
+ */
 export const timeFormatter = (createdAt: string) => {
   const now = new Date();
   const created = new Date(createdAt);
