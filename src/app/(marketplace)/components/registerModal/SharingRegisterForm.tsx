@@ -13,7 +13,7 @@ import { useMutation } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
 import { ApiResponse } from '@/types/common';
 import categories from '@/constants/categories';
-import ImageUploadForm from './ImageLoader';
+import ImageUploadForm from './imageLoader';
 import RegisterModalHeader from './RegisterModalHeader';
 
 interface SharingRegisterFormProps {
