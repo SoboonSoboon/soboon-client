@@ -2,7 +2,7 @@ import Image from 'next/image';
 
 export const IntroSection = () => {
   return (
-    <div className="border-gray-10 mb-8 flex h-[250px] w-full items-center justify-between overflow-hidden rounded-lg border-1 bg-white p-6 px-[6rem]">
+    <div className="border-gray-10 flex h-[250px] w-full items-center justify-between overflow-hidden rounded-lg border-1 bg-white p-6 px-[6rem]">
       <div className="flex h-full flex-col justify-center gap-5">
         <p className="text-text-main font-memomentKkukkkuk text-2xl">
           함께하면 더 알뜰하니까!

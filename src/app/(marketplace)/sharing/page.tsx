@@ -58,7 +58,7 @@ export default async function SharingPage({
 
   console.log(sharingMettingList);
   return (
-    <>
+    <main className="flex flex-col gap-8 py-8">
       <IntroSection />
       <section className="flex gap-10">
         <aside className="sticky top-6 h-[95vh] w-[200px]">
@@ -69,6 +69,6 @@ export default async function SharingPage({
         </div>
         <SideButtonSection />
       </section>
-    </>
+    </main>
   );
 }

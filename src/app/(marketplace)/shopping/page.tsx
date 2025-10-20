@@ -49,11 +49,13 @@ export default async function ShoppingPage({
   console.log(shoppingList);
 
   return (
-    <section>
+    <main className="flex flex-col gap-8 py-8">
       <IntroSection />
-      <FilterSection />
-      <ShoppingListSection shoppingList={shoppingList!.content} />
+      <section className="flex flex-col gap-6">
+        <FilterSection />
+        <ShoppingListSection shoppingList={shoppingList!.content} />
+      </section>
       <SideButtonSection />
-    </section>
+    </main>
   );
 }
