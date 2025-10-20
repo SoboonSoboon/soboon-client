@@ -60,8 +60,7 @@ export const SharingListSection = ({
                 status={metting.status}
                 className="absolute top-3 left-3"
               />
-              <LikeButton className="absolute top-[4px] right-0" />
-              {/* 추후에 이미지 관련 로직 개발 후 수정 필요 */}
+              <LikeButton className="absolute top-4 right-0" />
               <CardImage
                 alt="기본 카드"
                 src={
