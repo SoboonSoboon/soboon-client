@@ -71,7 +71,17 @@ export const Carousel = ({
 
   // todo: 이미지가 없을 때 대체 이미지 사용
   if (carouselImages.length === 0) {
-    return <div>이미지가 없습니다.</div>;
+    return (
+      <div>
+        <Image
+          src={'/images/notFound_image.png'}
+          alt="캐러셀 이미지"
+          width={width}
+          height={height}
+          className="h-full w-full object-cover"
+        />
+      </div>
+    );
   }
 
   // 이미지가 1장일 때
@@ -106,13 +116,19 @@ export const Carousel = ({
           data-testid="carousel-container"
         >
           {newCarouselImagesArray.map((image, index) => (
-            <Image
-              src={image}
-              alt="캐러셀 이미지"
-              width={width}
-              height={height}
+            <div
               key={index}
-            />
+              className="flex h-full w-full shrink-0 items-center justify-center"
+            >
+              <Image
+                src={image}
+                alt="캐러셀 이미지"
+                width={width}
+                height={height}
+                className="h-full w-full object-cover"
+                property={index === 1 ? 'true' : 'false'}
+              />
+            </div>
           ))}
         </div>
       </div>
