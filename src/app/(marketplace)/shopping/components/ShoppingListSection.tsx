@@ -31,7 +31,7 @@ export const ShoppingListSection = ({
       {shoppingList?.map((shopping) => (
         <Card
           key={shopping.id}
-          className="cursor-pointer p-6"
+          className="border-gray-10 cursor-pointer rounded-xl border-1 p-6"
           height="auto"
           width="auto"
           onClick={() => onClickCard(shopping.id.toString())}
