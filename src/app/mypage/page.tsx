@@ -37,8 +37,8 @@ export default function MyPage() {
   }, [activeMainTab, activeSubTab]);
 
   return (
-    <div className="min-h-screen w-full bg-gray-50">
-      <div className="flex h-screen flex-1 flex-col bg-white">
+    <div className="min-h-screen w-full">
+      <div className="flex flex-1 flex-col bg-white">
         <TabSection
           activeMainTab={activeMainTab}
           activeSubTab={activeSubTab}
@@ -46,7 +46,7 @@ export default function MyPage() {
           onSubTabChange={setActiveSubTab}
         />
 
-        <div className="flex-1 overflow-hidden pt-6">
+        <div className="flex-1 pt-6">
           <CardList meetings={meetings} />
         </div>
       </div>

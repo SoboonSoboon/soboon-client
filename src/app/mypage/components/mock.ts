@@ -491,3 +491,15 @@ export const likedMeetingsData: MeetingApiResponse = {
     ],
   },
 };
+
+//리뷰 임시 데이터
+export const reviewData = {
+  meetingId: 1001,
+  category: 'DIVIDING' as const,
+  targets: {
+    userId: 101,
+    nickname: '홍길동',
+    profileImageUrl: '',
+  },
+  reviewer: true,
+};
