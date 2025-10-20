@@ -3,22 +3,27 @@
 import { cn } from '@/utils/cn';
 import { useClickOutside } from '@/hooks/useClickOutside';
 import { Modal, useModal } from '@/components/Molecules/modal';
+import { deleteMeetingsApi } from '@/apis/meetings/deleteMeetingsApi';
+import { useRouter } from 'next/navigation';
+import { useState } from 'react';
 
 export interface ActionMenuProps extends React.HTMLAttributes<HTMLDivElement> {
   className?: string;
   onClose?: () => void;
   buttonRef?: React.RefObject<HTMLElement>;
-  onDelete?: () => void;
+  meetingId: number;
 }
 
 export const ActionMenu = ({
   className,
   onClose,
   buttonRef,
-  onDelete,
+  meetingId,
   ...props
 }: ActionMenuProps) => {
   const deleteModal = useModal();
+  const router = useRouter();
+  const [isDeleting, setIsDeleting] = useState(false);
 
   const handleOutsideClose = () => {
     if (!deleteModal.isOpen) {
@@ -33,12 +38,27 @@ export const ActionMenu = ({
     deleteModal.open();
   };
 
-  const handleConfirmDelete = (event: React.MouseEvent<HTMLButtonElement>) => {
+  const handleConfirmDelete = async (
+    event: React.MouseEvent<HTMLButtonElement>,
+  ) => {
     event.stopPropagation();
-    console.log('게시글 삭제 버튼 클릭');
-    onDelete?.();
-    deleteModal.close();
-    onClose?.();
+
+    if (isDeleting) return;
+
+    try {
+      setIsDeleting(true);
+      await deleteMeetingsApi(meetingId);
+
+      deleteModal.close();
+      onClose?.();
+
+      router.push('/');
+      router.refresh();
+    } catch (error) {
+      console.error('게시글 삭제 실패:', error);
+      alert('게시글 삭제에 실패했습니다. 다시 시도해주세요.');
+      setIsDeleting(false);
+    }
   };
 
   return (
@@ -89,9 +109,10 @@ export const ActionMenu = ({
             <button
               type="button"
               onClick={handleConfirmDelete}
-              className="bg-primary flex-1 cursor-pointer rounded-lg px-4 py-2 text-white transition-colors"
+              disabled={isDeleting}
+              className="bg-primary flex-1 cursor-pointer rounded-lg px-4 py-2 text-white transition-colors disabled:cursor-not-allowed disabled:opacity-50"
             >
-              삭제
+              {isDeleting ? '삭제 중...' : '삭제'}
             </button>
           </div>
         </div>

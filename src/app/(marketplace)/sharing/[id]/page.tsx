@@ -21,14 +21,6 @@ const dummyUser = {
   detail: '901-23',
 };
 
-const carouselImages = [
-  'https://www.dummyimage.com/700x600/FF6B6B/fff',
-  'https://www.dummyimage.com/700x600/FFA500/fff',
-  'https://www.dummyimage.com/700x600/FFFF00/fff',
-  'https://www.dummyimage.com/700x600/00FF00/fff',
-  'https://www.dummyimage.com/700x600/0000FF/fff',
-];
-
 // 소분하기 모임 상세 데이터 조회
 async function getSharingMettingDetail({
   id,
@@ -141,7 +133,7 @@ export default async function SharingDetailPage({
       <div className="flex gap-10">
         <article className="w-[730px]">
           {/* 추후에 DB에 실제 이미지가 추가되면 연동 필요 */}
-          <Carousel carouselImages={carouselImages} className="mb-8" />
+          <Carousel carouselImages={meetingDetail!.images} className="mb-8" />
           <DetailContent description={meetingDetail!.description} />
           <DetailContentFooter createdAt={meetingDetail!.createdAt} />
 
@@ -158,6 +150,7 @@ export default async function SharingDetailPage({
             status={meetingDetail!.status}
             isAuthor={isAuthor}
             participants={participants || []}
+            meetingId={Number(id)}
           />
         </div>
       </div>

@@ -159,6 +159,7 @@ export default async function ShoppingDetailPage({
             status={shoppingMettingDetail!.status}
             isAuthor={isAuthor}
             participants={participants || []}
+            meetingId={Number(id)}
           />
         </div>
       </div>

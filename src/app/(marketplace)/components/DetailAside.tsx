@@ -16,6 +16,7 @@ interface DetailAsideProps {
   status: 'RECRUITING' | 'COMPLETED' | 'CLOSED';
   isAuthor: boolean;
   participants: ApplicantsMemberType['data'][];
+  meetingId: number;
 }
 
 export const DetailAside = ({
@@ -26,6 +27,7 @@ export const DetailAside = ({
   status,
   isAuthor,
   participants,
+  meetingId,
 }: DetailAsideProps) => {
   const [open, setOpen] = useState(false);
   const buttonRef = useRef<HTMLDivElement>(null);
@@ -58,6 +60,7 @@ export const DetailAside = ({
               <ActionMenu
                 onClose={() => setOpen(false)}
                 buttonRef={buttonRef as React.RefObject<HTMLElement>}
+                meetingId={meetingId}
               />
             </div>
           )}
