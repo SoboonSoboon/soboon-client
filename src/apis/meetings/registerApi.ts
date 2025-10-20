@@ -45,9 +45,10 @@ export const shoppingRegisterApi = async (data: ShoppingRegisterData) => {
 };
 
 export const sharingRegisterApi = async (data: SharingRegisterData) => {
+  const formattedData = await formatSharingRegisterData(data);
   const response = await axiosInstance.post(
     '/v1/meetings/dividing',
-    await formatSharingRegisterData(data),
+    formattedData,
   );
   return response.data;
 };
