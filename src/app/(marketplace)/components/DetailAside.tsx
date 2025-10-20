@@ -29,6 +29,11 @@ export const DetailAside = ({
 }: DetailAsideProps) => {
   const [open, setOpen] = useState(false);
   const buttonRef = useRef<HTMLDivElement>(null);
+  const [isBookmarked, setIsBookmarked] = useState(false);
+
+  const handleBookmarkClick = () => {
+    setIsBookmarked(!isBookmarked);
+  };
 
   return (
     <aside className="flex w-[430px] flex-col gap-5">
@@ -41,7 +46,10 @@ export const DetailAside = ({
         {/* 아이콘 버튼 */}
         <div className="relative flex cursor-pointer justify-center gap-2">
           <div className="flex justify-center p-1.5">
-            <Bookmark className="text-gray-40 fill-gray-40 size-6" />
+            <Bookmark
+              className={`text-gray-40 ${isBookmarked ? 'fill-gray-40' : 'fill-none'} size-6`}
+              onClick={handleBookmarkClick}
+            />
           </div>
           <div
             ref={buttonRef}
