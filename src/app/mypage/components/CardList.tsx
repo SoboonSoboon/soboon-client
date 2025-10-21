@@ -1,7 +1,8 @@
+import { MeetingItem } from '../utils/mypageType';
 import { MeetingCard } from './MeetingCard';
-import { meetingItem } from './mock';
+
 export interface CardListProps {
-  data: meetingItem[];
+  data: MeetingItem[];
 }
 export const CardList = ({ data }: CardListProps) => {
   return (

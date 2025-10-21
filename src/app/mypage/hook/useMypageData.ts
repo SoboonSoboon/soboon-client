@@ -1,3 +1,5 @@
+'use client';
+
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useMemo } from 'react';
 import { MainTabType, SubTabType } from '../components';
@@ -6,13 +8,13 @@ import {
   useHostMeetingList,
   useParticipateMeetingList,
 } from './useMeetings';
-import { storage } from '../components/mock';
+import { Storage } from '../utils/mypageType';
 
 export const useMyPageData = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
   const activeMainTab = useMemo(
-    () => (searchParams.get('main') as MainTabType) || 'created',
+    () => (searchParams.get('main') as MainTabType) || 'host',
     [searchParams],
   );
   const activeSubTab = useMemo(
@@ -81,7 +83,7 @@ export const useMyPageData = () => {
         status: item.status,
         usageStatus: item.usageStatus,
         location: item.location,
-        storage: item.storage as storage[], // StorageType으로 캐스팅
+        storage: item.storage as Storage[], // StorageType으로 캐스팅
         thumbnailUrl: item.thumbnailUrl,
         createdAt: item.createdAt,
         reviewStatus: item.reviewStatus || {
