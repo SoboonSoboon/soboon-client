@@ -56,7 +56,6 @@ export default async function SharingPage({
   });
   const sharingMettingList = await getSharingMetting(query);
 
-  console.log(sharingMettingList);
   return (
     <main className="flex flex-col gap-8 py-8">
       <IntroSection />

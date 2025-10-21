@@ -46,8 +46,6 @@ export default async function ShoppingPage({
 
   const shoppingList = await getShoppingList(query);
 
-  console.log(shoppingList);
-
   return (
     <main className="flex flex-col gap-8 py-8">
       <IntroSection />

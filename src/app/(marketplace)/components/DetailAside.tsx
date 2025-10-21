@@ -1,14 +1,13 @@
 'use client';
 
-import Image from 'next/image';
-import { Button, StatusTag } from '@/components';
+import { StatusTag } from '@/components';
 import { EllipsisVertical, MapPin, Bookmark } from 'lucide-react';
 import { useState, useRef } from 'react';
 import { ActionMenu } from './ActionMenu/ActionMenu';
 import { ApplicantsMemberType } from '@/types/applicantsType';
 import { ApplicantsList } from './applicants/ApplicantsList';
 import { applyMeeting, handleCloseMeeting } from '@/action/applicantsAction';
-import { useToast } from '@/components/Atoms';
+import { ProfileImg, useToast } from '@/components/Atoms';
 import { useParams } from 'next/navigation';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import {
@@ -21,6 +20,8 @@ import {
   postBookmarkedMeetingApi,
   deleteBookmarkedMeetingApi,
 } from '@/apis/meetings/bookmarkApi';
+import { ApplyStatusButtonSection } from './DetailAside/ApplyStatusButtonSection';
+import { AuthorStatusButtonSection } from './DetailAside/AuthorStatusButtonSection';
 
 interface DetailAsideProps {
   meetingId: number;
@@ -32,6 +33,11 @@ interface DetailAsideProps {
   isAuthor: boolean;
   participants: ApplicantsMemberType['data'][];
   bookmarked: boolean;
+  userInfo: {
+    userId: number;
+    userName: string;
+    profile: string;
+  };
 }
 
 export const DetailAside = ({
@@ -43,6 +49,7 @@ export const DetailAside = ({
   isAuthor,
   participants,
   bookmarked,
+  userInfo,
 }: DetailAsideProps) => {
   const [open, setOpen] = useState(false);
   const buttonRef = useRef<HTMLDivElement>(null);
@@ -143,7 +150,7 @@ export const DetailAside = ({
               <ActionMenu
                 onClose={() => setOpen(false)}
                 buttonRef={buttonRef as React.RefObject<HTMLElement>}
-                meetingId={meetingId}
+                meetingId={+meetingId}
               />
             </div>
           )}
@@ -153,15 +160,8 @@ export const DetailAside = ({
       <div className="flex flex-col gap-3">
         <h2 className="font-memomentKkukkkuk line-clamp-2 text-2xl">{title}</h2>
         <div className="flex items-center gap-2">
-          {/* 추후 공용 컴포넌트 수정 후 교체 예정 */}
-          <Image
-            src={'/images/dummy_profile.png'}
-            alt="profile"
-            width={24}
-            height={24}
-            className="border-text-sub2 h-6 w-6 rounded-full border object-cover"
-          />
-          <span className="text-text-sub2">빵빵이와 옥지</span>
+          <ProfileImg profileImageUrl={userInfo.profile} size={24} />
+          <span className="text-text-sub2">{userInfo.userName}</span>
         </div>
       </div>
 
@@ -184,68 +184,20 @@ export const DetailAside = ({
       </div>
 
       {!isAuthor && (
-        <div className="mb-5 flex gap-3">
-          <Button
-            label="찜"
-            className="border-primary text-primary w-20 shrink-0"
-          />
-          {filteredStatus?.participationStatus === undefined ||
-            (filteredStatus?.participationStatus === 'CANCELLED' && (
-              <Button
-                label="모임 신청"
-                className="w-full text-white"
-                backgroundColor="#ff4805"
-                onClick={() => handleApplyMeeting(meetingId)}
-              />
-            ))}
-          {filteredStatus?.participationStatus === 'APPLIED' && (
-            <Button
-              className="w-full text-white"
-              backgroundColor="#ff4805"
-              onClick={() => handleCancelApplyMeeting(meetingId)}
-            >
-              <div>
-                <p className="text-sm">모임이 신청되었어요.</p>
-                <p className="text-xs">다시 클릭하면 취소할 수 있어요.</p>
-              </div>
-            </Button>
-          )}
-          {filteredStatus?.participationStatus === 'APPROVED' && (
-            <Button
-              label="모임 신청이 승인되었어요."
-              className="text-text-sub2 w-full !cursor-not-allowed"
-              backgroundColor="#ff4805"
-              disabled
-            />
-          )}
-          {filteredStatus?.participationStatus === 'REJECTED' && (
-            <Button
-              label="모임 신청이 거절되었어요."
-              backgroundColor="#ff4805"
-              className="text-text-sub2 w-full !cursor-not-allowed"
-              disabled
-            />
-          )}
-        </div>
+        <ApplyStatusButtonSection
+          filteredStatus={filteredStatus}
+          handleApplyMeeting={handleApplyMeeting}
+          handleCancelApplyMeeting={handleCancelApplyMeeting}
+          meetingId={meetingId}
+        />
       )}
 
       <ApplicantsList isAuthor={isAuthor} participants={participants} />
 
-      {isAuthor && status === 'RECRUITING' && (
-        <Button
-          label="모임 마감"
-          className="w-full text-white"
-          backgroundColor="#ff4805"
-          onClick={() => handleCloseMeetingAction()}
-        />
-      )}
-
-      {isAuthor && status === 'COMPLETED' && (
-        <Button
-          label="모집 완료"
-          className="text-text-sub2 w-full !cursor-not-allowed"
-          backgroundColor="#f5f5f5"
-          disabled
+      {isAuthor && (
+        <AuthorStatusButtonSection
+          status={status}
+          handleCloseMeetingAction={handleCloseMeetingAction}
         />
       )}
     </aside>

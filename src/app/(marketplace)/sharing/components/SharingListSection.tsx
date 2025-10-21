@@ -19,6 +19,7 @@ import {
 } from '@/types/meetingsType';
 import { useEffect, useState } from 'react';
 import { timeFormatter } from '@/utils/timeFormetter';
+import { NonDividingList } from './NonDividingList';
 
 export const SharingListSection = ({
   sharingMettingList,
@@ -38,6 +39,10 @@ export const SharingListSection = ({
   const onClickCard = (id: string) => {
     router.push(`/sharing/${id}`);
   };
+
+  if (mettingList?.length === 0) {
+    return <NonDividingList />;
+  }
 
   return (
     <div className="grid grid-cols-3 gap-8">

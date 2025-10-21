@@ -26,7 +26,6 @@ export const ApplicantsList = ({
   const handleApproveApplicants = async (applicationId: number) => {
     const response = await approveApplicants(null, applicationId, meetingId);
     if (response) {
-      console.log(response);
       success(response.message || '모임 신청을 수락했어요.');
     } else {
       error(response.message || '모임 신청을 수락하지 못했어요.');
@@ -36,7 +35,6 @@ export const ApplicantsList = ({
   const handleKickApplicants = async (applicationId: number) => {
     const response = await kickApplicants(null, applicationId, meetingId);
     if (response) {
-      console.log(response);
       success(response.message || '참여자를 강퇴했어요.');
     } else {
       error(response.message || '참여자를 강퇴하지 못했어요.');
@@ -46,7 +44,6 @@ export const ApplicantsList = ({
   const handleRejectApplicants = async (applicationId: number) => {
     const response = await rejectApplicants(null, applicationId, meetingId);
     if (response) {
-      console.log(response);
       success(response.message || '모임 신청을 거절했어요.');
     } else {
       error(response.message || '모임 신청을 거절하지 못했어요.');
