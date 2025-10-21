@@ -1,5 +1,6 @@
 'use client';
 
+import { Suspense } from 'react';
 import { useState, useEffect } from 'react';
 import {
   TabSection,
@@ -15,7 +16,7 @@ import {
 } from './components/mock';
 import { useRouter, useSearchParams } from 'next/navigation';
 
-export default function MyPage() {
+function MyPageContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
 
@@ -77,5 +78,13 @@ export default function MyPage() {
         </div>
       </div>
     </div>
+  );
+}
+
+export default function MyPage() {
+  return (
+    <Suspense fallback={<div className="min-h-screen w-full bg-white" />}>
+      <MyPageContent />
+    </Suspense>
   );
 }
