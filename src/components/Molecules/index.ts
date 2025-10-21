@@ -5,7 +5,7 @@ export {
   CardImage,
   CardSubtitle,
   CardTitle,
-  LikeButton,
+  BookmarkButton,
   Line,
   MainCard,
   type cardProps,

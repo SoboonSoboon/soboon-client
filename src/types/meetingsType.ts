@@ -63,6 +63,7 @@ interface DividingContentType {
     profile: string;
   };
   createdAt: string;
+  bookmarked: boolean;
 }
 
 /*
@@ -89,6 +90,7 @@ interface ShoppingContentType {
   };
   currentMember: number;
   createdAt: string;
+  bookmarked: boolean;
 }
 
 /*

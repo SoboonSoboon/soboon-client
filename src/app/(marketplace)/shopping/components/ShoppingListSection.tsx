@@ -6,7 +6,7 @@ import {
   CardFooter,
   CardSubtitle,
   CardTitle,
-  LikeButton,
+  BookmarkButton,
   Line,
   StatusTag,
 } from '@/components';
@@ -47,7 +47,11 @@ export const ShoppingListSection = ({
               status={shopping.status}
               className="absolute top-0 left-0"
             />
-            <LikeButton className="absolute top-[4px] right-0" />
+
+            <BookmarkButton
+              className="absolute top-[4px] right-0"
+              liked={shopping.bookmarked}
+            />
             <CardTitle className="font-memomentKkukkkuk line-clamp-2">
               {shopping.title}
             </CardTitle>
