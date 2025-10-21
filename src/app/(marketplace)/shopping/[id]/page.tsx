@@ -11,7 +11,7 @@ import { CommentsListType } from '@/types/commentType';
 import { ApplicantsMemberType } from '@/types/applicantsType';
 
 const dummyUser = {
-  id: 35,
+  id: 2,
   name: '테스트유저5',
   nickname: null,
   image: 'https://example.com/profile5.jpg',

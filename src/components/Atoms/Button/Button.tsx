@@ -6,8 +6,9 @@ export interface ButtonProps
   variant?: 'primary' | 'secondary' | 'outline' | 'block';
   backgroundColor?: string;
   size?: 'small' | 'medium' | 'large';
-  label: string;
+  label?: string;
   onClick?: () => void;
+  children?: React.ReactNode;
 }
 
 export const Button = ({
@@ -15,9 +16,10 @@ export const Button = ({
   variant,
   size = 'medium',
   backgroundColor,
-  label,
+  label = '',
   className,
   onClick,
+  children,
   ...props
 }: ButtonProps) => {
   const isBlocked = variant === 'block';
@@ -62,7 +64,7 @@ export const Button = ({
       onClick={handleClick}
       {...props}
     >
-      {label}
+      {children || label}
     </button>
   );
 };

@@ -7,6 +7,16 @@ import { useState, useRef } from 'react';
 import { ActionMenu } from './ActionMenu/ActionMenu';
 import { ApplicantsMemberType } from '@/types/applicantsType';
 import { ApplicantsList } from './applicants/ApplicantsList';
+import { applyMeeting, handleCloseMeeting } from '@/action/applicantsAction';
+import { useToast } from '@/components/Atoms';
+import { useParams } from 'next/navigation';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import {
+  cancelApplyMeeting,
+  getUserApplayStatus,
+} from '@/apis/meetings/userApplayStatusApi';
+import { useMemo } from 'react';
+import { useQuery } from '@tanstack/react-query';
 import {
   postBookmarkedMeetingApi,
   deleteBookmarkedMeetingApi,
@@ -25,7 +35,6 @@ interface DetailAsideProps {
 }
 
 export const DetailAside = ({
-  meetingId,
   title,
   detail_address,
   current_member,
@@ -45,14 +54,63 @@ export const DetailAside = ({
 
     try {
       if (previousState) {
-        await deleteBookmarkedMeetingApi(meetingId);
+        await deleteBookmarkedMeetingApi(+meetingId);
       } else {
-        await postBookmarkedMeetingApi(meetingId);
+        await postBookmarkedMeetingApi(+meetingId);
       }
     } catch (error) {
       console.error('찜 추가/취소 실패:', error);
     }
   };
+  const { id: meetingId } = useParams<{ id: string }>();
+  const { success, error } = useToast();
+  const queryClient = useQueryClient();
+
+  const handleApplyMeeting = async (applicationId: string) => {
+    try {
+      const response = await applyMeeting(null, applicationId);
+      success(response.message || '모임을 신청했어요.');
+      queryClient.invalidateQueries({ queryKey: ['userApplayStatus'] });
+      return response;
+    } catch (err) {
+      error('모임 신청을 실패했어요.');
+      throw err;
+    }
+  };
+
+  const { mutate: handleCloseMeetingAction } = useMutation({
+    mutationFn: () => handleCloseMeeting(meetingId),
+    onSuccess: (response) => {
+      success(response.message || '모임을 마감했어요.');
+    },
+    onError: (err) => {
+      error('모임 마감을 실패했어요.');
+      throw err;
+    },
+  });
+
+  const { data: userApplayStatus } = useQuery({
+    queryKey: ['userApplayStatus'],
+    queryFn: () => getUserApplayStatus(),
+  });
+
+  const filteredStatus = useMemo(() => {
+    if (userApplayStatus) {
+      return userApplayStatus.find((status) => status.meetingId === +meetingId);
+    }
+    return null;
+  }, [userApplayStatus, meetingId]);
+
+  const { mutate: handleCancelApplyMeeting } = useMutation({
+    mutationFn: (meetingId: string) => cancelApplyMeeting({ id: meetingId }),
+    onSuccess: () => {
+      success('모임 신청을 취소했어요.');
+      queryClient.invalidateQueries({ queryKey: ['userApplayStatus'] });
+    },
+    onError: () => {
+      error('모임 신청을 취소하지 못했어요.');
+    },
+  });
 
   return (
     <aside className="flex w-[430px] flex-col gap-5">
@@ -130,21 +188,63 @@ export const DetailAside = ({
             label="찜"
             className="border-primary text-primary w-20 shrink-0"
           />
-          <Button
-            label="모임 신청"
-            className="w-full text-white"
-            backgroundColor="#ff4805"
-          />
+          {filteredStatus?.participationStatus === undefined ||
+            (filteredStatus?.participationStatus === 'CANCELLED' && (
+              <Button
+                label="모임 신청"
+                className="w-full text-white"
+                backgroundColor="#ff4805"
+                onClick={() => handleApplyMeeting(meetingId)}
+              />
+            ))}
+          {filteredStatus?.participationStatus === 'APPLIED' && (
+            <Button
+              className="w-full text-white"
+              backgroundColor="#ff4805"
+              onClick={() => handleCancelApplyMeeting(meetingId)}
+            >
+              <div>
+                <p className="text-sm">모임이 신청되었어요.</p>
+                <p className="text-xs">다시 클릭하면 취소할 수 있어요.</p>
+              </div>
+            </Button>
+          )}
+          {filteredStatus?.participationStatus === 'APPROVED' && (
+            <Button
+              label="모임 신청이 승인되었어요."
+              className="text-text-sub2 w-full !cursor-not-allowed"
+              backgroundColor="#ff4805"
+              disabled
+            />
+          )}
+          {filteredStatus?.participationStatus === 'REJECTED' && (
+            <Button
+              label="모임 신청이 거절되었어요."
+              backgroundColor="#ff4805"
+              className="text-text-sub2 w-full !cursor-not-allowed"
+              disabled
+            />
+          )}
         </div>
       )}
 
       <ApplicantsList isAuthor={isAuthor} participants={participants} />
 
-      {isAuthor && (
+      {isAuthor && status === 'RECRUITING' && (
         <Button
           label="모임 마감"
           className="w-full text-white"
           backgroundColor="#ff4805"
+          onClick={() => handleCloseMeetingAction()}
+        />
+      )}
+
+      {isAuthor && status === 'COMPLETED' && (
+        <Button
+          label="모집 완료"
+          className="text-text-sub2 w-full !cursor-not-allowed"
+          backgroundColor="#f5f5f5"
+          disabled
         />
       )}
     </aside>

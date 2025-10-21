@@ -11,7 +11,7 @@ import { CommentsListType } from '@/types/commentType';
 import { ApplicantsMemberType } from '@/types/applicantsType';
 
 const dummyUser = {
-  id: 35,
+  id: 2,
   name: '테스트유저5',
   nickname: null,
   image: 'https://example.com/profile5.jpg',
@@ -32,6 +32,9 @@ async function getSharingMettingDetail({
       `${process.env.NEXT_PUBLIC_SOBOON_API_URL}/v1/meetings/${id}`,
       {
         cache: 'no-store',
+        next: {
+          tags: [`meeting-${id}`],
+        },
         headers: {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${process.env.NEXT_PUBLIC_SOBOON_API_TOKEN}`,
@@ -123,9 +126,12 @@ export default async function SharingDetailPage({
   // 댓글 조회
   const commentsList = await getComments({ id });
 
-  const isAuthor = 35 === dummyUser.id;
+  const isAuthor = 5 === dummyUser.id;
 
   const participants = isAuthor ? await getParticipants({ meetingId: id }) : [];
+
+  console.log(meetingDetail);
+  console.log(participants);
 
   return (
     <section>
