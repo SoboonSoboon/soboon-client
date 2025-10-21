@@ -12,7 +12,7 @@ import {
 
 export default function MyPage() {
   const [activeMainTab, setActiveMainTab] = useState<MainTabType>('created');
-  const [activeSubTab, setActiveSubTab] = useState<SubTabType>('DIVIDING');
+  const [activeSubTab, setActiveSubTab] = useState<SubTabType>('SHOPPING');
   const [meetings, setMeetings] = useState<MeetingData[]>([]);
 
   useEffect(() => {
@@ -24,7 +24,7 @@ export default function MyPage() {
       allMeetings = hostMeetingsData.data.items;
     } else if (activeMainTab === 'participated') {
       allMeetings = participatedMeetingsData.data.items;
-    } else if (activeMainTab === 'liked') {
+    } else if (activeMainTab === 'bookmarked') {
       allMeetings = likedMeetingsData.data.items;
     }
 
