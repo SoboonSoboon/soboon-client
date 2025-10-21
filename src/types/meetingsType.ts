@@ -115,6 +115,9 @@ type CreateDividingMeetingResponseType = ApiResponse<{
   meetingId: number;
 }>;
 
+type meetingSearchParamsType = {
+  [key: string]: string | string[] | undefined | null;
+};
 export type {
   MeetingDetailType,
   UpdateMeetingResponseType,
@@ -125,4 +128,5 @@ export type {
   ShoppingContentType,
   CreateShoppingMeetingResponseType,
   CreateDividingMeetingResponseType,
+  meetingSearchParamsType,
 };
