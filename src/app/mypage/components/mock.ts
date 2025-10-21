@@ -19,7 +19,7 @@ export interface MeetingData {
 }
 
 // API 응답 타입 정의
-export interface MeetingApiResponse {
+export interface MeetingApiResponseMock {
   message: string | null;
   data: {
     userId: number;
@@ -29,7 +29,7 @@ export interface MeetingApiResponse {
 }
 
 // 참여한 모임 데이터 (DIVIDING + SHOPPING 함께)
-export const participatedMeetingsData: MeetingApiResponse = {
+export const participatedMeetingsData: MeetingApiResponseMock = {
   message: null,
   data: {
     userId: 999,
@@ -191,7 +191,7 @@ export const participatedMeetingsData: MeetingApiResponse = {
 };
 
 // 내가 만든 모임 데이터 (DIVIDING + SHOPPING 함께)
-export const hostMeetingsData: MeetingApiResponse = {
+export const hostMeetingsData: MeetingApiResponseMock = {
   message: null,
   data: {
     userId: 999,
@@ -368,7 +368,7 @@ export const hostMeetingsData: MeetingApiResponse = {
 };
 
 // 찜한 모임 데이터 (DIVIDING + SHOPPING 함께)
-export const likedMeetingsData: MeetingApiResponse = {
+export const likedMeetingsData: MeetingApiResponseMock = {
   message: null,
   data: {
     userId: 999,
@@ -503,3 +503,74 @@ export const reviewData = {
   },
   reviewer: true,
 };
+
+// API 응답 타입 정의
+// export interface MeetingApiResponse {
+//   message: string | null;
+//   data: MyPageMeetingList;
+// }
+// export interface BookMarkListApiResPonse {
+//   message: string | null;
+//   data: bookMarkList;
+// }
+// // 참여한 모임 데이터 (DIVIDING + SHOPPING 함께)
+
+// //mypage모임 api
+// export interface MyPageMeetingList {
+//   userId: number;
+//   role: 'HOST' | 'PARTICIPANT';
+//   items: MeetingItem[];
+// }
+// mypage모임 item (내가 만든 모임, 참여한 모임)
+export interface meetingItem {
+  groupId: number;
+  title: string;
+  category: category;
+  status: status;
+  usageStatus: usageStatus;
+  location: {
+    province: string;
+    city: string;
+    district: string;
+  };
+  storage: Storage[];
+  thumbnailUrl: string;
+  createdAt: string;
+  reviewStatus: { reviewedCount: string; totalCount: string };
+  bookmarked: boolean;
+}
+// export interface bookMarkList {
+//   userId: number;
+//   bookmarked: boolean;
+//   items: bookMarkItem[];
+// }
+// 북마크 아이템 타입 (DIVIDING, SHOPPING)
+export interface bookMarkItem {
+  groupId: number;
+  title: string;
+  category: category;
+  status: status;
+  usageStatus: usageStatus;
+  location: {
+    province: string;
+    city: string;
+    district: string;
+    detail?: null | string; // dividing에서만 null, shopping에서는 키 자체가 없음
+  };
+  storage: Storage[];
+  thumbnailUrl: string;
+  createdAt: string;
+  bookmarked: boolean;
+}
+
+type Storage =
+  | 'FRESH'
+  | 'EASY_MEAL'
+  | 'FROZEN'
+  | 'LIVING_KITCHEN'
+  | 'COOL'
+  | 'DIGITAL'
+  | 'ETC';
+type category = 'DIVIDING' | 'SHOPPING';
+type status = 'RECRUITING' | 'COMPLETED' | 'CLOSED';
+type usageStatus = 'UPCOMING' | 'IN_USE' | 'DONE';
