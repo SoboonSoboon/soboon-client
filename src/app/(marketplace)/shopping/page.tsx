@@ -3,17 +3,21 @@ import { IntroSection } from '@/app/(marketplace)/components';
 import { ShoppingMeetingsType } from '@/types/meetingsType';
 import { FilterSection, ShoppingListSection } from './components';
 
+// const token = localStorage.getItem('accessToken'); //todo: 전역상태관리로 관리하기로 변경
+const token = process.env.NEXT_PUBLIC_SOBOON_API_TOKEN;
+
 async function getShoppingList(
   query: URLSearchParams,
 ): Promise<ShoppingMeetingsType | null> {
   try {
     const response = await fetch(
       `${process.env.NEXT_PUBLIC_SOBOON_API_URL}/v1/meetings/shopping?${query.toString()}`,
+
       {
         cache: 'no-store',
         headers: {
           'Content-Type': 'application/json',
-          Authorization: `Bearer ${process.env.NEXT_PUBLIC_SOBOON_API_TOKEN}`,
+          Authorization: `Bearer ${token}`,
         },
       },
     );
