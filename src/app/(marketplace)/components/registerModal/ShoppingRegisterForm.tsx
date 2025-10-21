@@ -4,6 +4,7 @@ import {
   modelProvinceOptions,
   modelCityOptions,
   modelDistrictOptions,
+  capacityOptions,
 } from '@/constants/locations';
 import { useMemo, useState } from 'react';
 import { shoppingRegisterApi } from '@/apis/meetings/registerApi';
@@ -31,7 +32,7 @@ export function ShoppingRegisterForm({
     district: '',
     detail: '',
     description: '',
-    capacity: 5, // 디자인에 인원 설정이 누락되어 임시로 5명으로 설정
+    capacity: 0,
   });
 
   const isValid = useMemo(() => {
@@ -100,16 +101,16 @@ export function ShoppingRegisterForm({
             <label htmlFor="title" className="text-text-main">
               몇 명을 모을까요?
             </label>
-            {/* <Dropdown
+            <Dropdown
               name="capacity"
               id="capacity"
               required
               options={capacityOptions}
-              value={formData.capacity}
+              value={formData.capacity.toString()}
               onChange={(value) =>
-                setFormData({ ...formData, capacity: value })
+                setFormData({ ...formData, capacity: Number(value) })
               }
-            /> */}
+            />
           </div>
 
           <div className="flex flex-col gap-3">
