@@ -1,8 +1,12 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { TabSection, MainTabType, SubTabType } from './components/TabSection';
-import { CardList } from './components/CardList';
+import {
+  TabSection,
+  MainTabType,
+  SubTabType,
+  CardList,
+} from '@/app/mypage/components';
 import {
   MeetingData,
   hostMeetingsData,
