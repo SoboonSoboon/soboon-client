@@ -6,7 +6,7 @@ import {
   CardFooter,
   CardSubtitle,
   CardTitle,
-  LikeButton,
+  BookmarkButton,
   Line,
   StatusTag,
 } from '@/components';
@@ -48,7 +48,7 @@ export const ShoppingListSection = ({
               className="absolute top-0 left-0"
             />
 
-            <LikeButton
+            <BookmarkButton
               className={`${shopping.bookmarked ? 'text-primary fill-primary' : 'text-gray-40 fill-gray-40'} absolute top-[4px] right-0`}
             />
             <CardTitle className="font-memomentKkukkkuk line-clamp-2">

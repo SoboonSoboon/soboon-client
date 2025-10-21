@@ -8,7 +8,7 @@ import {
   CardImage,
   CardSubtitle,
   CardTitle,
-  LikeButton,
+  BookmarkButton,
   Line,
   StatusTag,
 } from '@/components';
@@ -65,7 +65,7 @@ export const SharingListSection = ({
                 status={metting.status}
                 className="absolute top-3 left-3"
               />
-              <LikeButton className="absolute top-4 right-0" />
+              <BookmarkButton className="absolute top-4 right-0" />
               <CardImage
                 alt="기본 카드"
                 src={
