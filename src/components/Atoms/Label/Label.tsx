@@ -7,8 +7,7 @@ export interface LabelProps
 export const Label = ({ children, required = false, ...props }: LabelProps) => {
   return (
     <label className="text-[16px] text-[var(--GrayScale-Gray80)]" {...props}>
-      {children}
-      {required && <span className="ml-1 text-red-500">*</span>}
+      {children} {required && <span className="text-primary"> *</span>}
     </label>
   );
 };
