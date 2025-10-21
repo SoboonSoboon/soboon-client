@@ -21,7 +21,7 @@ export const Header = ({
   // onLogout,
   onCreateGather,
 }: HeaderProps) => {
-  const pathname = usePathname();
+  const pathname = usePathname() || '/';
 
   return (
     <header className="border-gray-10 h-15 border-b bg-white dark:bg-black">

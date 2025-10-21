@@ -1,7 +1,7 @@
 import { SideButtonSection } from '@/components';
-import { FilterSection } from './components/FilterSection';
-import { ShoppingListSection } from './components/ShoppingListSection';
+import { IntroSection } from '@/app/(marketplace)/components';
 import { ShoppingMeetingsType } from '@/types/meetingsType';
+import { FilterSection, ShoppingListSection } from './components';
 
 async function getShoppingList(
   query: URLSearchParams,
@@ -49,10 +49,13 @@ export default async function ShoppingPage({
   console.log(shoppingList);
 
   return (
-    <section>
-      <FilterSection />
-      <ShoppingListSection shoppingList={shoppingList!.content} />
+    <main className="flex flex-col gap-8 py-8">
+      <IntroSection />
+      <section className="flex flex-col gap-6">
+        <FilterSection />
+        <ShoppingListSection shoppingList={shoppingList!.content} />
+      </section>
       <SideButtonSection />
-    </section>
+    </main>
   );
 }
