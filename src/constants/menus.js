@@ -1,7 +1,7 @@
 export const MYPAGE_TAB_LABELS = Object.freeze([
-  { value: 'created', label: '내가 만든 모임' },
-  { value: 'participated', label: '나의 모임' },
-  { value: 'bookmarked', label: '찜한 모임' },
+  { value: 'host', label: '내가 만든 모임' },
+  { value: 'participate', label: '나의 모임' },
+  { value: 'bookmark', label: '찜한 모임' },
 ]);
 
 export const MYPAGE_SUB_TAB_LABELS = Object.freeze([
