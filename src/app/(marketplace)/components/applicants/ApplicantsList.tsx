@@ -5,6 +5,7 @@ import {
   kickApplicants,
   rejectApplicants,
 } from '@/action/applicantsAction';
+
 import { Button, ProfileImg } from '@/components';
 import { useToast } from '@/components/Atoms';
 import { ApplicantsMemberType } from '@/types/applicantsType';
