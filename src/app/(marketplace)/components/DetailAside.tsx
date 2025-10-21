@@ -1,7 +1,6 @@
 'use client';
 
-import Image from 'next/image';
-import { Button, StatusTag } from '@/components';
+import { StatusTag } from '@/components';
 import { EllipsisVertical, MapPin, Bookmark } from 'lucide-react';
 import { useState, useRef } from 'react';
 import { ActionMenu } from './ActionMenu/ActionMenu';
@@ -119,8 +118,6 @@ export const DetailAside = ({
       error('모임 신청을 취소하지 못했어요.');
     },
   });
-
-  console.log(filteredStatus);
 
   return (
     <aside className="flex w-[430px] flex-col gap-5">

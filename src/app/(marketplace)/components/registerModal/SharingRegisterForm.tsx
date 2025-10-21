@@ -72,7 +72,6 @@ export function SharingRegisterForm({ handleClose }: SharingRegisterFormProps) {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    console.log(formData);
     mutate();
   };
 

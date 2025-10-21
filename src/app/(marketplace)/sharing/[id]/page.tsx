@@ -11,7 +11,7 @@ import { CommentsListType } from '@/types/commentType';
 import { ApplicantsMemberType } from '@/types/applicantsType';
 
 const dummyUser = {
-  id: 2,
+  id: 1,
   name: '테스트유저5',
   nickname: null,
   image: 'https://example.com/profile5.jpg',
@@ -126,12 +126,9 @@ export default async function SharingDetailPage({
   // 댓글 조회
   const commentsList = await getComments({ id });
 
-  const isAuthor = 5 === dummyUser.id;
+  const isAuthor = meetingDetail?.user.userId === dummyUser.id;
 
   const participants = isAuthor ? await getParticipants({ meetingId: id }) : [];
-
-  console.log(meetingDetail);
-  console.log(participants);
 
   return (
     <section>
@@ -158,6 +155,7 @@ export default async function SharingDetailPage({
             isAuthor={isAuthor}
             participants={participants || []}
             bookmarked={meetingDetail!.bookmarked}
+            userInfo={meetingDetail!.user}
           />
         </div>
       </div>
