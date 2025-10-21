@@ -25,19 +25,19 @@ export const TabSection = ({
         <div className="flex gap-2.5">
           {MYPAGE_TAB_LABELS.map((tab) => (
             <button
-              key={tab.id}
+              key={tab.value}
               onClick={() => (
-                onMainTabChange(tab.id as MainTabType),
-                console.log(tab.id)
+                onMainTabChange(tab.value as MainTabType),
+                console.log(tab.value)
               )}
               className={`font-memomentKkukkkuk relative transition-colors ${
-                activeMainTab === tab.id
+                activeMainTab === tab.value
                   ? 'text-quaternary'
                   : 'text-text-sub2 cursor-pointer'
               }`}
             >
-              {tab.name}
-              {activeMainTab === tab.id && (
+              {tab.label}
+              {activeMainTab === tab.value && (
                 <div className="bg-quaternary absolute right-0 bottom-[-1px] left-0 h-[1px]"></div>
               )}
             </button>
@@ -49,16 +49,16 @@ export const TabSection = ({
       <div className="flex gap-2.5">
         {MYPAGE_SUB_TAB_LABELS.map((tab) => (
           <button
-            key={tab.id}
-            onClick={() => onSubTabChange(tab.id as SubTabType)}
+            key={tab.key}
+            onClick={() => onSubTabChange(tab.value as SubTabType)}
             className={`h-9 w-auto rounded-lg border px-4 text-sm font-medium transition-colors ${
-              activeSubTab === tab.id
+              activeSubTab === tab.value
                 ? 'bg-gray-70 text-white'
                 : 'bg-gray-5 cursor-pointer border-none'
             }`}
-            disabled={activeSubTab === tab.id}
+            disabled={activeSubTab === tab.value}
           >
-            {tab.name}
+            {tab.label}
           </button>
         ))}
       </div>
