@@ -1,7 +1,10 @@
-import { SharingListSection } from './components/SharingListSection';
-import { FilterSection } from './components/FilterSection';
 import { SideButtonSection } from '@/components';
 import { DividingMeetingsType } from '@/types/meetingsType';
+import { IntroSection } from '@/app/(marketplace)/components';
+import {
+  FilterSection,
+  SharingListSection,
+} from '@/app/(marketplace)/sharing/components';
 
 async function getSharingMetting(
   query: URLSearchParams,
@@ -55,14 +58,17 @@ export default async function SharingPage({
 
   console.log(sharingMettingList);
   return (
-    <section className="flex gap-10">
-      <aside className="sticky top-6 h-[95vh] w-[200px]">
-        <FilterSection />
-      </aside>
-      <div className="flex-1">
-        <SharingListSection sharingMettingList={sharingMettingList} />
-      </div>
-      <SideButtonSection />
-    </section>
+    <main className="flex flex-col gap-8 py-8">
+      <IntroSection />
+      <section className="flex gap-10">
+        <aside className="sticky top-6 h-[95vh] w-[200px]">
+          <FilterSection />
+        </aside>
+        <div className="flex-1">
+          <SharingListSection sharingMettingList={sharingMettingList} />
+        </div>
+        <SideButtonSection />
+      </section>
+    </main>
   );
 }

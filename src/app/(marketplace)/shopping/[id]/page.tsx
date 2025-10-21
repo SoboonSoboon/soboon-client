@@ -152,6 +152,7 @@ export default async function ShoppingDetailPage({
 
         <div className="sticky top-6 h-[95vh]">
           <DetailAside
+            meetingId={shoppingMettingDetail!.id}
             title={shoppingMettingDetail!.title}
             detail_address={shoppingMettingDetail!.detail_address}
             current_member={shoppingMettingDetail!.current_member}
@@ -159,7 +160,7 @@ export default async function ShoppingDetailPage({
             status={shoppingMettingDetail!.status}
             isAuthor={isAuthor}
             participants={participants || []}
-            meetingId={Number(id)}
+            bookmarked={shoppingMettingDetail!.bookmarked}
           />
         </div>
       </div>
