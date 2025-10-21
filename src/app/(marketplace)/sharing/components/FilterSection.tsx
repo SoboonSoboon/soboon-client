@@ -1,43 +1,24 @@
 'use client';
 
-import { Checkbox, Dropdown, Label, TextInput } from '@/components';
+import { Checkbox, Label } from '@/components';
 import categories from '@/constants/categories';
+import { cityOptions, provinceOptions } from '@/constants/locations';
+import { ChevronDown } from 'lucide-react';
 import { useSearchParams } from 'next/navigation';
 import { useRouter } from 'next/navigation';
-import { useCallback, useState } from 'react';
+import { useCallback } from 'react';
 
 const Line = () => {
   return <div className="bg-gray-10 my-5 h-[1px] w-full" />;
 };
 
-// 추후 의논 후 데이터 추가 및 constants 파일로 이동
-const regionOptions = [
-  { value: '서울특별시', label: '서울특별시' },
-  { value: '경기도', label: '경기도' },
-  { value: '인천시', label: '인천시' },
-  { value: '강원도', label: '강원도' },
-  { value: '충청도', label: '충청도' },
-  { value: '전라도', label: '전라도' },
-  { value: '경상도', label: '경상도' },
-  { value: '제주도', label: '제주도' },
-];
-
-// 추후 의논 후 데이터 추가 및 constants 파일로 이동
-const districtOptions = [
-  { value: '강남구', label: '강남구' },
-  { value: '강동구', label: '강동구' },
-  { value: '강서구', label: '강서구' },
-  { value: '강북구', label: '강북구' },
-];
-
 export const FilterSection = () => {
-  const [price, setPrice] = useState({ min: 0, max: 0 });
-
   const searchParams = useSearchParams();
   const router = useRouter();
 
   const activeCategory = searchParams.get('productType') || '';
-
+  const activeProvince = searchParams.get('province') || '';
+  const activeCity = searchParams.get('city') || '';
   const handleCategoryChange = useCallback(
     (productType: string) => {
       const params = new URLSearchParams(searchParams.toString());
@@ -63,40 +44,14 @@ export const FilterSection = () => {
   const handleStatusChange = useCallback(
     (status: string) => {
       const params = new URLSearchParams(searchParams.toString());
-
-      if (status === '') {
-        params.delete('status');
-      } else {
-        params.set('status', status);
-      }
-
-      // URL 업데이트 (페이지 새로고침 없이)
-      router.push(`?${params.toString()}`);
-
+      params.set('status', status);
       requestAnimationFrame(() => {
         window.scrollTo({
           top: 0,
           behavior: 'smooth',
         });
       });
-    },
-    [router, searchParams],
-  );
-
-  const handlePriceChange = useCallback(
-    (min: number, max: number) => {
-      const params = new URLSearchParams(searchParams.toString());
-      params.set('min', min.toString());
-      params.set('max', max.toString());
-
       router.push(`?${params.toString()}`);
-
-      requestAnimationFrame(() => {
-        window.scrollTo({
-          top: 0,
-          behavior: 'smooth',
-        });
-      });
     },
     [router, searchParams],
   );
@@ -142,14 +97,54 @@ export const FilterSection = () => {
       <div>
         <h5 className="mb-4 text-lg">지역</h5>
         <div className="flex flex-col gap-2">
-          <Dropdown
-            options={regionOptions}
-            onChange={(e) => handleRegionChange(e, '')}
-          />
-          <Dropdown
-            options={districtOptions}
-            onChange={(e) => handleRegionChange('', e)}
-          />
+          <div className="relative">
+            <select
+              name="province"
+              id="province"
+              className="w-full min-w-[120px] cursor-pointer appearance-none rounded-md border-2 border-[#f3f5f6] bg-white px-3 py-2 pr-8 text-gray-700 transition-all duration-200 hover:border-gray-500 focus:border-gray-500 focus:outline-none"
+              onChange={(e) => {
+                const selectedProvince = provinceOptions.find(
+                  (province) => province.value === e.target.value,
+                );
+                handleRegionChange(selectedProvince?.value || '', '');
+                if (selectedProvince?.value === '') {
+                  handleRegionChange('', '');
+                }
+              }}
+            >
+              {provinceOptions.map((province) => (
+                <option key={province.value} value={province.value}>
+                  {province.label}
+                </option>
+              ))}
+            </select>
+            <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
+              <ChevronDown className="h-4 w-4 text-gray-500 transition-transform duration-200 group-hover:rotate-180" />
+            </div>
+          </div>
+          <div className="relative">
+            <select
+              name="city"
+              id="city"
+              className="w-full min-w-[120px] cursor-pointer appearance-none rounded-md border-2 border-[#f3f5f6] bg-white px-3 py-2 pr-8 text-gray-700 transition-all duration-200 hover:border-gray-500 focus:border-gray-500 focus:outline-none"
+              onChange={(e) => {
+                const selectedCity = cityOptions.find(
+                  (city) => city.value === e.target.value,
+                );
+                handleRegionChange(activeProvince, selectedCity?.value || '');
+              }}
+              value={activeCity}
+            >
+              {cityOptions.map((city) => (
+                <option key={city.value} value={city.value}>
+                  {city.label}
+                </option>
+              ))}
+            </select>
+            <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
+              <ChevronDown className="h-4 w-4 text-gray-500 transition-transform duration-200 group-hover:rotate-180" />
+            </div>
+          </div>
         </div>
       </div>
 
@@ -172,39 +167,6 @@ export const FilterSection = () => {
             </button>
           ))}
         </div>
-      </div>
-
-      <Line />
-
-      <div>
-        <h5 className="mb-4 text-lg">가격</h5>
-
-        <div className="mb-5 flex items-center gap-2">
-          <TextInput
-            className="!border-text-line1 w-1/2 bg-white"
-            placeholder="최소"
-            value={price.min === 0 ? '' : price.min.toString()}
-            onChange={(e) =>
-              setPrice({ ...price, min: Number(e.target.value) || 0 })
-            }
-          />
-          <span className="text-text-line1">~</span>
-          <TextInput
-            className="!border-text-line1 w-1/2 bg-white"
-            placeholder="최대"
-            value={price.max === 0 ? '' : price.max.toString()}
-            onChange={(e) =>
-              setPrice({ ...price, max: Number(e.target.value) || 0 })
-            }
-          />
-        </div>
-
-        <p
-          onClick={() => handlePriceChange(price.min, price.max)}
-          className={`underline ${price.min !== 0 || price.max !== 0 ? 'text-primary' : 'text-[#9CA3AF]'}`}
-        >
-          적용하기
-        </p>
       </div>
     </div>
   );
