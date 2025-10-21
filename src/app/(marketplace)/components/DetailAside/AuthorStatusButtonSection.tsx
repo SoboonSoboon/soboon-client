@@ -16,7 +16,7 @@ export const AuthorStatusButtonSection = ({
         <Button
           label="모임 마감"
           className="w-full text-white"
-          backgroundColor="#ff4805"
+          backgroundColor="var(--color-primary)"
           onClick={() => handleCloseMeetingAction()}
         />
       )}

@@ -27,12 +27,12 @@ export const UserMenuModal = ({
       {...props}
     >
       <ul className="text-gray-90 flex flex-col">
-        <li className="hover:bg-orange-5 flex cursor-pointer border-b border-[var(--GrayScale-Gray10)] px-4 py-2.5 font-medium text-[#1F2937] transition-all duration-200 hover:rounded-t-xl">
+        <li className="hover:bg-green-5 flex cursor-pointer border-b border-[var(--GrayScale-Gray10)] px-4 py-2.5 font-medium text-[#1F2937] transition-all duration-200 hover:rounded-t-xl">
           <Link href="/mypage">
             <span>마이페이지</span>
           </Link>
         </li>
-        <li className="hover:bg-orange-5 flex cursor-pointer px-4 py-2.5 font-medium transition-all duration-200 hover:rounded-b-xl">
+        <li className="hover:bg-green-5 flex cursor-pointer px-4 py-2.5 font-medium transition-all duration-200 hover:rounded-b-xl">
           <span>로그아웃</span>
         </li>
       </ul>

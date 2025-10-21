@@ -67,7 +67,7 @@ export const CreateButton = ({ actionHandlers }: CreateButtonProps) => {
         <button
           type="button"
           onClick={() => setOpen(!open)}
-          className="border-primary bg-primary flex size-11 cursor-pointer items-center justify-center rounded-full border-1 shadow-[0_0_0.25rem_0_var(--OrangeScale-Orange20)]"
+          className="border-primary bg-primary flex size-11 cursor-pointer items-center justify-center rounded-full border-1 shadow-[0_0_0.25rem_0_var(--GreenScale-Green20)]"
           aria-label={open ? '메뉴 닫기' : '메뉴 열기'}
           aria-expanded={open}
         >

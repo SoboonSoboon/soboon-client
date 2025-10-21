@@ -76,7 +76,7 @@ export const Dropdown = ({
         id={id}
         className={`flex w-full items-center justify-between gap-2.5 rounded-xl border-2 border-transparent bg-[var(--GrayScale-Gray5)] px-4 py-2.5 text-[var(--GrayScale-Gray40)] focus:outline-none ${
           disabled ? 'cursor-not-allowed opacity-50' : 'cursor-pointer'
-        } ${isOpen ? 'border-[var(--OrangeScale-Orange50)]' : ''} `}
+        } ${isOpen ? 'border-[var(--GreenScale-Green50)]' : ''} `}
         onClick={handleToggle}
         disabled={disabled}
       >
@@ -112,7 +112,7 @@ export const Dropdown = ({
               type="button"
               className={`w-full cursor-pointer px-4 py-2 text-left first:rounded-t-xl last:rounded-b-xl hover:bg-[var(--GrayScale-Gray5)] focus:bg-[var(--GrayScale-Gray5)] focus:outline-none ${
                 value === option.value
-                  ? 'bg-[var(--OrangeScale-Orange5)] text-[var(--OrangeScale-Orange50)]'
+                  ? 'bg-[var(--GreenScale-Green5)] text-[var(--GreenScale-Green50)]'
                   : 'text-[var(--GrayScale-Gray80)]'
               } `}
               onClick={() => handleSelect(option)}
