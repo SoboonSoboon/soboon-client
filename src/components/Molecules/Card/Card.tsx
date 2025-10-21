@@ -1,6 +1,6 @@
 'use client';
 
-import { memo, useState } from 'react';
+import { memo, useState, useEffect } from 'react';
 import Image from 'next/image';
 import { Bookmark } from 'lucide-react';
 
@@ -21,7 +21,7 @@ interface cardImageProps {
   alt: string;
 }
 
-const LikeButtonComponent = memo(
+const BookmarkButtonComponent = memo(
   ({
     liked = false,
     onChange,
@@ -32,6 +32,10 @@ const LikeButtonComponent = memo(
     className?: string;
   }) => {
     const [isLiked, setIsLiked] = useState(liked);
+
+    useEffect(() => {
+      setIsLiked(liked);
+    }, [liked]);
 
     const handleLike = (e: React.MouseEvent<SVGSVGElement>) => {
       e.stopPropagation();
@@ -44,15 +48,15 @@ const LikeButtonComponent = memo(
       <Bookmark
         className={`absolute top-4 right-4 size-6.5 cursor-pointer duration-300 hover:scale-110 ${className}`}
         onClick={(e: React.MouseEvent<SVGSVGElement>) => handleLike(e)}
-        fill={isLiked ? '#FF4805' : 'rgba(0,0,0, .3)'}
-        stroke="none"
+        fill={isLiked ? 'var(--color-primary)' : 'var(--color-gray-40)'}
+        stroke={isLiked ? 'var(--color-primary)' : 'var(--color-gray-40)'}
       />
     );
   },
 );
 
-LikeButtonComponent.displayName = 'LikeButton';
-export const LikeButton = LikeButtonComponent;
+BookmarkButtonComponent.displayName = 'BookmarkButton';
+export const BookmarkButton = BookmarkButtonComponent;
 
 export const Card = ({
   className,
@@ -128,7 +132,7 @@ export const MainCard = ({
     <>
       <Card className={classname}>
         <CardContent>
-          <LikeButton />
+          <BookmarkButton />
           <CardImage src={image} alt={alt} />
           <CardTitle>{title}</CardTitle>
           <CardSubtitle>{subtitle}</CardSubtitle>

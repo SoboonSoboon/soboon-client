@@ -4,7 +4,7 @@ export { CardFooter } from './Card';
 export { CardImage } from './Card';
 export { CardSubtitle } from './Card';
 export { CardTitle } from './Card';
-export { LikeButton } from './Card';
+export { BookmarkButton } from './Card';
 export { Line } from './Card';
 export { MainCard } from './Card';
 export type { cardProps } from './Card';
