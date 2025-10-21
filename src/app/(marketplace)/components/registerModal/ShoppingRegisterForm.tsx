@@ -12,7 +12,13 @@ import { useMutation } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
 import { ApiResponse } from '@/types/common';
 import { XIcon } from 'lucide-react';
-import { TextInput, useToast, Textarea, Button } from '@/components/Atoms';
+import {
+  TextInput,
+  useToast,
+  Textarea,
+  Button,
+  Label,
+} from '@/components/Atoms';
 import { Dropdown } from '@/components/Molecules';
 
 interface ShoppingRegisterFormProps {
@@ -83,9 +89,9 @@ export function ShoppingRegisterForm({
       <form onSubmit={handleSubmit} className="flex flex-col gap-10">
         <div className="flex flex-col gap-6">
           <div className="flex flex-col gap-3">
-            <label htmlFor="title" className="text-text-main">
+            <Label htmlFor="title" required>
               어떤 장보기 모임을 만들까요?
-            </label>
+            </Label>
             <TextInput
               id="title"
               required
@@ -98,9 +104,9 @@ export function ShoppingRegisterForm({
           </div>
 
           <div className="flex flex-col gap-3">
-            <label htmlFor="title" className="text-text-main">
+            <Label htmlFor="capacity" required>
               몇 명을 모을까요?
-            </label>
+            </Label>
             <Dropdown
               name="capacity"
               id="capacity"
@@ -114,9 +120,9 @@ export function ShoppingRegisterForm({
           </div>
 
           <div className="flex flex-col gap-3">
-            <label htmlFor="province" className="text-[#1F2937]">
+            <Label htmlFor="province" required>
               어디서 만날까요??
-            </label>
+            </Label>
             <div className="flex flex-col items-center gap-3">
               <div className="flex w-full items-center gap-2.5">
                 <Dropdown
@@ -166,7 +172,9 @@ export function ShoppingRegisterForm({
           </div>
 
           <div className="flex flex-col gap-3">
-            <label htmlFor="date">모임의 설명 글을 작성해보세요!</label>
+            <Label htmlFor="description" required>
+              모임의 설명 글을 작성해보세요!
+            </Label>
             <Textarea
               className="min-h-[173px]"
               name="description"
