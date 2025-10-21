@@ -65,7 +65,10 @@ export const SharingListSection = ({
                 status={metting.status}
                 className="absolute top-3 left-3"
               />
-              <BookmarkButton className="absolute top-4 right-0" />
+              <BookmarkButton
+                className="absolute top-4 right-0"
+                liked={metting.bookmarked}
+              />
               <CardImage
                 alt="기본 카드"
                 src={

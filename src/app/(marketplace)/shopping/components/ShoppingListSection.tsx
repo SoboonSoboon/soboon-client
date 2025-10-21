@@ -49,7 +49,8 @@ export const ShoppingListSection = ({
             />
 
             <BookmarkButton
-              className={`${shopping.bookmarked ? 'text-primary fill-primary' : 'text-gray-40 fill-gray-40'} absolute top-[4px] right-0`}
+              className="absolute top-[4px] right-0"
+              liked={shopping.bookmarked}
             />
             <CardTitle className="font-memomentKkukkkuk line-clamp-2">
               {shopping.title}

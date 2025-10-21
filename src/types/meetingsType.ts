@@ -62,6 +62,7 @@ interface DividingContentType {
     profile: string;
   };
   createdAt: string;
+  bookmarked: boolean;
 }
 
 /*

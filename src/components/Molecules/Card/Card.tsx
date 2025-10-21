@@ -1,6 +1,6 @@
 'use client';
 
-import { memo, useState } from 'react';
+import { memo, useState, useEffect } from 'react';
 import Image from 'next/image';
 import { Bookmark } from 'lucide-react';
 
@@ -33,6 +33,10 @@ const BookmarkButtonComponent = memo(
   }) => {
     const [isLiked, setIsLiked] = useState(liked);
 
+    useEffect(() => {
+      setIsLiked(liked);
+    }, [liked]);
+
     const handleLike = (e: React.MouseEvent<SVGSVGElement>) => {
       e.stopPropagation();
       const next = !isLiked;
@@ -44,10 +48,8 @@ const BookmarkButtonComponent = memo(
       <Bookmark
         className={`absolute top-4 right-4 size-6.5 cursor-pointer duration-300 hover:scale-110 ${className}`}
         onClick={(e: React.MouseEvent<SVGSVGElement>) => handleLike(e)}
-        fill={
-          isLiked ? 'text-primary fill-primary' : 'text-gray-40 fill-gray-40'
-        }
-        stroke="none"
+        fill={isLiked ? 'var(--color-primary)' : 'var(--color-gray-40)'}
+        stroke={isLiked ? 'var(--color-primary)' : 'var(--color-gray-40)'}
       />
     );
   },
