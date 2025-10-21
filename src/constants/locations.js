@@ -39,7 +39,7 @@ export const modelProvinceOptions = [
 ];
 
 export const modelCityOptions = [
-  { value: '', label: '시/군/구 선택' },
+  { value: '', label: '시/군/구' },
   { value: '강남구', label: '강남구' },
   { value: '강동구', label: '강동구' },
   { value: '강서구', label: '강서구' },
@@ -47,7 +47,7 @@ export const modelCityOptions = [
 ];
 
 export const modelDistrictOptions = [
-  { value: '', label: '동/읍/면 선택' },
+  { value: '', label: '동/읍/면' },
   { value: '장곡동', label: '장곡동' },
   { value: '원당동', label: '원당동' },
   { value: '대장동', label: '대장동' },

@@ -72,7 +72,7 @@ export const SharingListSection = ({
                     ? '/images/notFound_image.png'
                     : metting.image
                 }
-                className="h-[200px] w-full"
+                className="border-gray-10 bg-gray-5 h-[200px] w-full rounded-lg border-1"
               />
 
               <CardTitle className="font-memomentKkukkkuk line-clamp-1">

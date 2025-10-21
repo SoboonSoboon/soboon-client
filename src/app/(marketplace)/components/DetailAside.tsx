@@ -17,8 +17,13 @@ import {
 } from '@/apis/meetings/userApplayStatusApi';
 import { useMemo } from 'react';
 import { useQuery } from '@tanstack/react-query';
+import {
+  postBookmarkedMeetingApi,
+  deleteBookmarkedMeetingApi,
+} from '@/apis/meetings/bookmarkApi';
 
 interface DetailAsideProps {
+  meetingId: number;
   title: string;
   detail_address: string;
   current_member: number;
@@ -26,9 +31,11 @@ interface DetailAsideProps {
   status: 'RECRUITING' | 'COMPLETED' | 'CLOSED';
   isAuthor: boolean;
   participants: ApplicantsMemberType['data'][];
+  bookmarked: boolean;
 }
 
 export const DetailAside = ({
+  meetingId,
   title,
   detail_address,
   current_member,
@@ -36,6 +43,7 @@ export const DetailAside = ({
   status,
   isAuthor,
   participants,
+  bookmarked,
 }: DetailAsideProps) => {
   const [open, setOpen] = useState(false);
   const buttonRef = useRef<HTMLDivElement>(null);
@@ -88,6 +96,22 @@ export const DetailAside = ({
       error('모임 신청을 취소하지 못했어요.');
     },
   });
+  const [isBookmarked, setIsBookmarked] = useState(bookmarked);
+
+  const handleBookmarkClick = async () => {
+    const previousState = isBookmarked;
+    setIsBookmarked(!isBookmarked);
+
+    try {
+      if (previousState) {
+        await deleteBookmarkedMeetingApi(meetingId);
+      } else {
+        await postBookmarkedMeetingApi(meetingId);
+      }
+    } catch (error) {
+      console.error('찜 추가/취소 실패:', error);
+    }
+  };
 
   return (
     <aside className="flex w-[430px] flex-col gap-5">
@@ -100,7 +124,10 @@ export const DetailAside = ({
         {/* 아이콘 버튼 */}
         <div className="relative flex cursor-pointer justify-center gap-2">
           <div className="flex justify-center p-1.5">
-            <Bookmark className="text-gray-40 fill-gray-40 size-6" />
+            <Bookmark
+              className={`${isBookmarked ? 'text-primary fill-primary' : 'text-gray-40 fill-gray-40'} size-6`}
+              onClick={handleBookmarkClick}
+            />
           </div>
           <div
             ref={buttonRef}
