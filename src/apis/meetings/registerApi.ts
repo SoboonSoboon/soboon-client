@@ -1,3 +1,4 @@
+import { imageUploader } from '@/utils/imageUploader';
 import { axiosInstance } from '../axiosInstance';
 
 export interface ShoppingRegisterData {
@@ -21,7 +22,7 @@ export interface SharingRegisterData {
   district: string;
   detail: string;
   productType: string;
-  imageUrls: string[];
+  imageUrls: File[];
 }
 
 export const shoppingRegisterApi = async (data: ShoppingRegisterData) => {
@@ -44,7 +45,18 @@ export const shoppingRegisterApi = async (data: ShoppingRegisterData) => {
 };
 
 export const sharingRegisterApi = async (data: SharingRegisterData) => {
-  const formatData = {
+  const formattedData = await formatSharingRegisterData(data);
+  const response = await axiosInstance.post(
+    '/v1/meetings/dividing',
+    formattedData,
+  );
+  return response.data;
+};
+
+const formatSharingRegisterData = async (data: SharingRegisterData) => {
+  const imageUrls = await imageUploader(data.imageUrls);
+
+  const formData = {
     title: data.title,
     description: data.description,
     itemName: data.itemName,
@@ -57,12 +69,8 @@ export const sharingRegisterApi = async (data: SharingRegisterData) => {
       detail: data.detail,
     },
     productType: data.productType,
-    imageUrls: data.imageUrls,
+    imageUrls: imageUrls,
   };
 
-  const response = await axiosInstance.post(
-    '/v1/meetings/dividing',
-    formatData,
-  );
-  return response.data;
+  return formData;
 };

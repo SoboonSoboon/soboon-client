@@ -11,7 +11,7 @@ import { CommentsListType } from '@/types/commentType';
 import { ApplicantsMemberType } from '@/types/applicantsType';
 
 const dummyUser = {
-  id: 35,
+  id: 1,
   name: '테스트유저5',
   nickname: null,
   image: 'https://example.com/profile5.jpg',
@@ -20,14 +20,6 @@ const dummyUser = {
   district: '우동',
   detail: '901-23',
 };
-
-const carouselImages = [
-  'https://www.dummyimage.com/700x600/FF6B6B/fff',
-  'https://www.dummyimage.com/700x600/FFA500/fff',
-  'https://www.dummyimage.com/700x600/FFFF00/fff',
-  'https://www.dummyimage.com/700x600/00FF00/fff',
-  'https://www.dummyimage.com/700x600/0000FF/fff',
-];
 
 // 소분하기 모임 상세 데이터 조회
 async function getSharingMettingDetail({
@@ -40,6 +32,9 @@ async function getSharingMettingDetail({
       `${process.env.NEXT_PUBLIC_SOBOON_API_URL}/v1/meetings/${id}`,
       {
         cache: 'no-store',
+        next: {
+          tags: [`meeting-${id}`],
+        },
         headers: {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${process.env.NEXT_PUBLIC_SOBOON_API_TOKEN}`,
@@ -131,7 +126,7 @@ export default async function SharingDetailPage({
   // 댓글 조회
   const commentsList = await getComments({ id });
 
-  const isAuthor = 35 === dummyUser.id;
+  const isAuthor = meetingDetail?.user.userId === dummyUser.id;
 
   const participants = isAuthor ? await getParticipants({ meetingId: id }) : [];
 
@@ -141,7 +136,7 @@ export default async function SharingDetailPage({
       <div className="flex gap-10">
         <article className="w-[730px]">
           {/* 추후에 DB에 실제 이미지가 추가되면 연동 필요 */}
-          <Carousel carouselImages={carouselImages} className="mb-8" />
+          <Carousel carouselImages={meetingDetail!.images} className="mb-8" />
           <DetailContent description={meetingDetail!.description} />
           <DetailContentFooter createdAt={meetingDetail!.createdAt} />
 
@@ -151,6 +146,7 @@ export default async function SharingDetailPage({
 
         <div className="sticky top-6 h-[95vh]">
           <DetailAside
+            meetingId={meetingDetail!.id}
             title={meetingDetail!.item}
             detail_address={meetingDetail!.detail_address}
             current_member={meetingDetail!.current_member}
@@ -158,6 +154,8 @@ export default async function SharingDetailPage({
             status={meetingDetail!.status}
             isAuthor={isAuthor}
             participants={participants || []}
+            bookmarked={meetingDetail!.bookmarked}
+            userInfo={meetingDetail!.user}
           />
         </div>
       </div>

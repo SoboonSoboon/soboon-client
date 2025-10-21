@@ -8,7 +8,6 @@ export const CommentItem = ({
 }: {
   comment: CommentType | ReplyType;
 }) => {
-  console.log(comment);
   return (
     <div>
       <div className="flex gap-3">

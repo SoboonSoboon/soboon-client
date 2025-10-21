@@ -19,6 +19,7 @@ import {
 } from '@/types/meetingsType';
 import { useEffect, useState } from 'react';
 import { timeFormatter } from '@/utils/timeFormetter';
+import { NonDividingList } from './NonDividingList';
 
 export const SharingListSection = ({
   sharingMettingList,
@@ -38,6 +39,10 @@ export const SharingListSection = ({
   const onClickCard = (id: string) => {
     router.push(`/sharing/${id}`);
   };
+
+  if (mettingList?.length === 0) {
+    return <NonDividingList />;
+  }
 
   return (
     <div className="grid grid-cols-3 gap-8">
@@ -60,8 +65,7 @@ export const SharingListSection = ({
                 status={metting.status}
                 className="absolute top-3 left-3"
               />
-              <LikeButton className="absolute top-[4px] right-0" />
-              {/* 추후에 이미지 관련 로직 개발 후 수정 필요 */}
+              <LikeButton className="absolute top-4 right-0" />
               <CardImage
                 alt="기본 카드"
                 src={
@@ -73,7 +77,7 @@ export const SharingListSection = ({
                     ? '/images/notFound_image.png'
                     : metting.image
                 }
-                className="h-[200px] w-full"
+                className="border-gray-10 bg-gray-5 h-[200px] w-full rounded-lg border-1"
               />
 
               <CardTitle className="font-memomentKkukkkuk line-clamp-1">

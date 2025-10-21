@@ -21,7 +21,20 @@ const nextConfig: NextConfig = {
         port: '',
         pathname: '/**',
       },
+      {
+        protocol: 'https',
+        hostname: 'soboon-bucket.s3.amazonaws.com',
+        port: '',
+        pathname: '/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'soboon-bucket.s3.ap-northeast-2.amazonaws.com',
+        port: '',
+        pathname: '/**',
+      },
     ],
+    domains: ['k.kakaocdn.net'],
   },
 };
 

@@ -45,7 +45,7 @@ export function ShoppingRegisterForm({
     );
   }, [formData]);
 
-  const { mutate } = useMutation({
+  const { mutate: shoppingRegister } = useMutation({
     mutationFn: async () => {
       const response = await shoppingRegisterApi(formData);
       return response;
@@ -65,7 +65,7 @@ export function ShoppingRegisterForm({
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
-    mutate();
+    shoppingRegister();
   };
 
   return (

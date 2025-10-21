@@ -1,14 +1,30 @@
 'use client';
 
-import Image from 'next/image';
-import { Button, StatusTag } from '@/components';
+import { StatusTag } from '@/components';
 import { EllipsisVertical, MapPin, Bookmark } from 'lucide-react';
 import { useState, useRef } from 'react';
 import { ActionMenu } from './ActionMenu/ActionMenu';
 import { ApplicantsMemberType } from '@/types/applicantsType';
 import { ApplicantsList } from './applicants/ApplicantsList';
+import { applyMeeting, handleCloseMeeting } from '@/action/applicantsAction';
+import { ProfileImg, useToast } from '@/components/Atoms';
+import { useParams } from 'next/navigation';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import {
+  cancelApplyMeeting,
+  getUserApplayStatus,
+} from '@/apis/meetings/userApplayStatusApi';
+import { useMemo } from 'react';
+import { useQuery } from '@tanstack/react-query';
+import {
+  postBookmarkedMeetingApi,
+  deleteBookmarkedMeetingApi,
+} from '@/apis/meetings/bookmarkApi';
+import { ApplyStatusButtonSection } from './DetailAside/ApplyStatusButtonSection';
+import { AuthorStatusButtonSection } from './DetailAside/AuthorStatusButtonSection';
 
 interface DetailAsideProps {
+  meetingId: number;
   title: string;
   detail_address: string;
   current_member: number;
@@ -16,6 +32,12 @@ interface DetailAsideProps {
   status: 'RECRUITING' | 'COMPLETED' | 'CLOSED';
   isAuthor: boolean;
   participants: ApplicantsMemberType['data'][];
+  bookmarked: boolean;
+  userInfo: {
+    userId: number;
+    userName: string;
+    profile: string;
+  };
 }
 
 export const DetailAside = ({
@@ -26,9 +48,76 @@ export const DetailAside = ({
   status,
   isAuthor,
   participants,
+  bookmarked,
+  userInfo,
 }: DetailAsideProps) => {
   const [open, setOpen] = useState(false);
   const buttonRef = useRef<HTMLDivElement>(null);
+  const [isBookmarked, setIsBookmarked] = useState(bookmarked);
+
+  const handleBookmarkClick = async () => {
+    const previousState = isBookmarked;
+    setIsBookmarked(!isBookmarked);
+
+    try {
+      if (previousState) {
+        await deleteBookmarkedMeetingApi(+meetingId);
+      } else {
+        await postBookmarkedMeetingApi(+meetingId);
+      }
+    } catch (error) {
+      console.error('찜 추가/취소 실패:', error);
+    }
+  };
+  const { id: meetingId } = useParams<{ id: string }>();
+  const { success, error } = useToast();
+  const queryClient = useQueryClient();
+
+  const handleApplyMeeting = async (applicationId: string) => {
+    try {
+      const response = await applyMeeting(null, applicationId);
+      success(response.message || '모임을 신청했어요.');
+      queryClient.invalidateQueries({ queryKey: ['userApplayStatus'] });
+      return response;
+    } catch (err) {
+      error('모임 신청을 실패했어요.');
+      throw err;
+    }
+  };
+
+  const { mutate: handleCloseMeetingAction } = useMutation({
+    mutationFn: () => handleCloseMeeting(meetingId),
+    onSuccess: (response) => {
+      success(response.message || '모임을 마감했어요.');
+    },
+    onError: (err) => {
+      error('모임 마감을 실패했어요.');
+      throw err;
+    },
+  });
+
+  const { data: userApplayStatus } = useQuery({
+    queryKey: ['userApplayStatus'],
+    queryFn: () => getUserApplayStatus(),
+  });
+
+  const filteredStatus = useMemo(() => {
+    if (userApplayStatus) {
+      return userApplayStatus.find((status) => status.meetingId === +meetingId);
+    }
+    return null;
+  }, [userApplayStatus, meetingId]);
+
+  const { mutate: handleCancelApplyMeeting } = useMutation({
+    mutationFn: (meetingId: string) => cancelApplyMeeting({ id: meetingId }),
+    onSuccess: () => {
+      success('모임 신청을 취소했어요.');
+      queryClient.invalidateQueries({ queryKey: ['userApplayStatus'] });
+    },
+    onError: () => {
+      error('모임 신청을 취소하지 못했어요.');
+    },
+  });
 
   return (
     <aside className="flex w-[430px] flex-col gap-5">
@@ -41,7 +130,10 @@ export const DetailAside = ({
         {/* 아이콘 버튼 */}
         <div className="relative flex cursor-pointer justify-center gap-2">
           <div className="flex justify-center p-1.5">
-            <Bookmark className="text-gray-40 fill-gray-40 size-6" />
+            <Bookmark
+              className={`${isBookmarked ? 'text-primary fill-primary' : 'text-gray-40 fill-gray-40'} size-6`}
+              onClick={handleBookmarkClick}
+            />
           </div>
           <div
             ref={buttonRef}
@@ -58,6 +150,7 @@ export const DetailAside = ({
               <ActionMenu
                 onClose={() => setOpen(false)}
                 buttonRef={buttonRef as React.RefObject<HTMLElement>}
+                meetingId={+meetingId}
               />
             </div>
           )}
@@ -67,15 +160,8 @@ export const DetailAside = ({
       <div className="flex flex-col gap-3">
         <h2 className="font-memomentKkukkkuk line-clamp-2 text-2xl">{title}</h2>
         <div className="flex items-center gap-2">
-          {/* 추후 공용 컴포넌트 수정 후 교체 예정 */}
-          <Image
-            src={'/images/dummy_profile.png'}
-            alt="profile"
-            width={24}
-            height={24}
-            className="border-text-sub2 h-6 w-6 rounded-full border object-cover"
-          />
-          <span className="text-text-sub2">빵빵이와 옥지</span>
+          <ProfileImg profileImageUrl={userInfo.profile} size={24} />
+          <span className="text-text-sub2">{userInfo.userName}</span>
         </div>
       </div>
 
@@ -98,26 +184,20 @@ export const DetailAside = ({
       </div>
 
       {!isAuthor && (
-        <div className="mb-5 flex gap-3">
-          <Button
-            label="찜"
-            className="border-primary text-primary w-20 shrink-0"
-          />
-          <Button
-            label="모임 신청"
-            className="w-full text-white"
-            backgroundColor="#ff4805"
-          />
-        </div>
+        <ApplyStatusButtonSection
+          filteredStatus={filteredStatus}
+          handleApplyMeeting={handleApplyMeeting}
+          handleCancelApplyMeeting={handleCancelApplyMeeting}
+          meetingId={meetingId}
+        />
       )}
 
       <ApplicantsList isAuthor={isAuthor} participants={participants} />
 
       {isAuthor && (
-        <Button
-          label="모임 마감"
-          className="w-full text-white"
-          backgroundColor="#ff4805"
+        <AuthorStatusButtonSection
+          status={status}
+          handleCloseMeetingAction={handleCloseMeetingAction}
         />
       )}
     </aside>

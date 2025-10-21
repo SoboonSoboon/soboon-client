@@ -48,7 +48,7 @@ export const FilterSection = () => {
   };
 
   return (
-    <div className="mb-8 flex justify-between">
+    <div className="flex justify-between">
       <div className="flex gap-4">
         <div className="relative">
           <select

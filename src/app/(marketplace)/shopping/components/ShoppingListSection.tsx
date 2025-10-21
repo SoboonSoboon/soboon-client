@@ -14,6 +14,7 @@ import { ShoppingContentType } from '@/types/meetingsType';
 import { timeFormatter } from '@/utils/timeFormetter';
 import { MapPin } from 'lucide-react';
 import { useRouter } from 'next/navigation';
+import { NonShoppingList } from './NonShoppingList';
 
 export const ShoppingListSection = ({
   shoppingList,
@@ -26,12 +27,17 @@ export const ShoppingListSection = ({
     router.push(`/shopping/${id}`);
   };
 
+  // 게시글이 없을 때의 빈 상태
+  if (!shoppingList || shoppingList.length === 0) {
+    return <NonShoppingList />;
+  }
+
   return (
     <div className="grid grid-cols-4 gap-5">
       {shoppingList?.map((shopping) => (
         <Card
           key={shopping.id}
-          className="cursor-pointer p-6"
+          className="border-gray-10 cursor-pointer rounded-xl border p-6"
           height="auto"
           width="auto"
           onClick={() => onClickCard(shopping.id.toString())}

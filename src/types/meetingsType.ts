@@ -26,6 +26,12 @@ type MeetingDetailType = {
   total_member: number;
   category: string;
   createdAt: string;
+  bookmarked: boolean;
+  user: {
+    userId: number;
+    userName: string;
+    profile: string;
+  };
 };
 
 /*

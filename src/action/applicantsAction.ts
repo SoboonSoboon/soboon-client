@@ -82,3 +82,70 @@ export const rejectApplicants = async (
 
   return responseData;
 };
+
+// 참여신청 서버 액션
+export const applyMeeting = async (_: unknown, meetingId: string) => {
+  const response = await fetch(
+    `${process.env.NEXT_PUBLIC_SOBOON_API_URL}/v1/meetings/${meetingId}/applications`,
+    {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${process.env.NEXT_PUBLIC_SOBOON_API_TOKEN}`,
+      },
+    },
+  );
+
+  if (!response.ok) {
+    const errorData = await response.json();
+    throw new Error(errorData.message || '참여신청 실패');
+  }
+
+  revalidateTag(`participants-${meetingId}`);
+
+  const responseData = await response.json();
+
+  return responseData;
+};
+
+export const applycancel = async (_: unknown, meetingId: string) => {
+  const response = await fetch(
+    `${process.env.NEXT_PUBLIC_SOBOON_API_URL}/v1/meetings/${meetingId}/applications`,
+    {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${process.env.NEXT_PUBLIC_SOBOON_API_TOKEN}`,
+      },
+    },
+  );
+
+  if (!response.ok) {
+    throw new Error('참여자 거절 실패');
+  }
+
+  revalidateTag(`participants-${meetingId}`);
+
+  const responseData = await response.json();
+
+  return responseData;
+};
+
+export const handleCloseMeeting = async (meetingId: string) => {
+  const response = await fetch(
+    `${process.env.NEXT_PUBLIC_SOBOON_API_URL}/v1/meetings/${meetingId}/complete`,
+    {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${process.env.NEXT_PUBLIC_SOBOON_API_TOKEN}`,
+      },
+    },
+  );
+  if (!response.ok) {
+    throw new Error('모임 마감 실패');
+  }
+  const responseData = await response.json();
+  revalidateTag(`meeting-${meetingId}`);
+  return responseData;
+};
