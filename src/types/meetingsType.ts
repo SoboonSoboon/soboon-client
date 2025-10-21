@@ -88,6 +88,7 @@ interface ShoppingContentType {
   };
   currentMember: number;
   createdAt: string;
+  bookmarked: boolean;
 }
 
 /*
