@@ -7,6 +7,7 @@ import { Button, TextInput } from '@/components';
 import { createReply } from '@/action/createComment';
 import { useParams } from 'next/navigation';
 import { useToast } from '@/components/Atoms';
+import { CornerDownRight } from 'lucide-react';
 
 export const CommentListContainer = ({
   commentList,
@@ -33,16 +34,23 @@ export const CommentListContainer = ({
   }, [state]);
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-6">
       {commentList.map((comment) => (
-        <div key={comment.commentId} className="border-b border-gray-200 pb-4">
+        <div key={comment.commentId} className="border-gray-10 border-b pb-6">
           {/* 메인 댓글 */}
           <div>
-            <div
-              className="cursor-pointer"
-              onClick={() => handleToggleReply(comment.commentId)}
-            >
+            <div className="flex flex-col gap-2">
               <CommentItem comment={comment} />
+              {!openReply && (
+                <div>
+                  <span
+                    className="text-primary cursor-pointer font-normal"
+                    onClick={() => handleToggleReply(comment.commentId)}
+                  >
+                    답글
+                  </span>
+                </div>
+              )}
             </div>
             {openReply === comment.commentId && (
               <div className="mt-3">
@@ -57,6 +65,7 @@ export const CommentListContainer = ({
                   <TextInput
                     placeholder="대댓글을 입력해주세요."
                     name="reply"
+                    className="!border-text-line1 !border-1 bg-white"
                   />
                   <div className="flex gap-2">
                     <Button
@@ -79,10 +88,15 @@ export const CommentListContainer = ({
 
           {/* 대댓글 */}
           {comment.replies.length > 0 && (
-            <div className="mt-3 ml-11 flex flex-col gap-2">
-              {comment.replies.map((reply) => (
-                <CommentItem key={reply.replyId} comment={reply} />
-              ))}
+            <div className="relative">
+              <div className="absolute top-0 left-2">
+                <CornerDownRight className="size-4.5 text-gray-50" />
+              </div>
+              <div className="mt-3 ml-11 flex flex-col gap-2">
+                {comment.replies.map((reply) => (
+                  <CommentItem key={reply.replyId} comment={reply} />
+                ))}
+              </div>
             </div>
           )}
         </div>
