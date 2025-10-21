@@ -11,7 +11,7 @@ import { CommentsListType } from '@/types/commentType';
 import { ApplicantsMemberType } from '@/types/applicantsType';
 
 const dummyUser = {
-  id: 2,
+  id: 1,
   name: '테스트유저5',
   nickname: null,
   image: 'https://example.com/profile5.jpg',
@@ -20,14 +20,6 @@ const dummyUser = {
   district: '우동',
   detail: '901-23',
 };
-
-const carouselImages = [
-  'https://www.dummyimage.com/700x600/FF6B6B/fff',
-  'https://www.dummyimage.com/700x600/FFA500/fff',
-  'https://www.dummyimage.com/700x600/FFFF00/fff',
-  'https://www.dummyimage.com/700x600/00FF00/fff',
-  'https://www.dummyimage.com/700x600/0000FF/fff',
-];
 
 async function getMettingDetail({
   id,
@@ -133,7 +125,7 @@ export default async function ShoppingDetailPage({
 
   // 작성자 여부 판단 로직
   // 추후 실제 사용자 데이터로 변경 필요
-  const isAuthor = 35 === dummyUser.id;
+  const isAuthor = shoppingMettingDetail?.user.userId === dummyUser.id;
 
   const participants = isAuthor ? await getParticipants({ meetingId: id }) : [];
 
@@ -142,7 +134,10 @@ export default async function ShoppingDetailPage({
       <DetailHeader />
       <div className="flex gap-10">
         <article className="w-[730px]">
-          <Carousel carouselImages={carouselImages} className="mb-8" />
+          <Carousel
+            carouselImages={shoppingMettingDetail!.images}
+            className="mb-8"
+          />
           <DetailContent description={shoppingMettingDetail!.description} />
           <DetailContentFooter createdAt={shoppingMettingDetail!.createdAt} />
 
@@ -161,6 +156,7 @@ export default async function ShoppingDetailPage({
             isAuthor={isAuthor}
             participants={participants || []}
             bookmarked={shoppingMettingDetail!.bookmarked}
+            userInfo={shoppingMettingDetail!.user}
           />
         </div>
       </div>
