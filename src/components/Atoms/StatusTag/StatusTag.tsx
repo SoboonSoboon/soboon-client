@@ -12,7 +12,7 @@ const STATUS_LABEL: Record<StatusTagProps['status'], string> = {
 
 const STATUS_STYLE: Record<StatusTagProps['status'], string> = {
   RECRUITING:
-    'bg-[var(--OrangeScale-Orange1)] border-[var(--Keycolor-primary)] text-[var(--Keycolor-primary)]',
+    'bg-[var(--GreenScale-Green1)] border-[var(--Keycolor-primary)] text-[var(--Keycolor-primary)]',
   COMPLETED:
     'bg-[var(--GrayScale-Gray5)] border-[var(--text-inactive)] text-[var(--text-sub2)]',
   CLOSED:

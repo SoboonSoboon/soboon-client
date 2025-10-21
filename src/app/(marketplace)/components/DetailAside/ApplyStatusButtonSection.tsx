@@ -23,7 +23,7 @@ export const ApplyStatusButtonSection = ({
           <Button
             label="모임 신청"
             className="w-full text-white"
-            backgroundColor="#ff4805"
+            backgroundColor="var(--color-primary)"
             onClick={() => handleApplyMeeting(meetingId)}
           />
         )}
@@ -32,7 +32,7 @@ export const ApplyStatusButtonSection = ({
         {filteredStatus?.participationStatus === 'APPLIED' && (
           <Button
             className="w-full text-white"
-            backgroundColor="#ff4805"
+            backgroundColor="var(--color-primary)"
             onClick={() => handleCancelApplyMeeting(meetingId)}
           >
             <div>
@@ -47,7 +47,7 @@ export const ApplyStatusButtonSection = ({
           <Button
             label="모임 신청이 승인되었어요."
             className="text-text-sub2 w-full !cursor-not-allowed"
-            backgroundColor="#ff4805"
+            backgroundColor="var(--color-primary)"
             disabled
           />
         )}
@@ -56,7 +56,7 @@ export const ApplyStatusButtonSection = ({
         {filteredStatus?.participationStatus === 'REJECTED' && (
           <Button
             label="모임 신청이 거절되었어요."
-            backgroundColor="#ff4805"
+            backgroundColor="var(--color-primary)"
             className="text-text-sub2 w-full !cursor-not-allowed"
             disabled
           />
