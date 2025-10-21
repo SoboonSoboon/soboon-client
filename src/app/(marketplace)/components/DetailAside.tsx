@@ -143,7 +143,7 @@ export const DetailAside = ({
               <ActionMenu
                 onClose={() => setOpen(false)}
                 buttonRef={buttonRef as React.RefObject<HTMLElement>}
-                meetingId={meetingId}
+                meetingId={+meetingId}
               />
             </div>
           )}
