@@ -7,7 +7,7 @@ import {
   CardImage,
   CardTitle,
 } from '@/components/Molecules/Card/Card';
-import { MeetingData, reviewData } from './mock';
+import { MeetingItem, reviewData } from '../utils/mypageType';
 import { Button, StatusTag } from '@/components';
 import { cn } from '@/utils/cn';
 import { useModal } from '@/components/Molecules/modal';
@@ -15,7 +15,7 @@ import { ReviewModal } from './reviewModal/ReviewModal';
 import { timeFormatter } from '@/utils/timeFormetter';
 
 // 모임 카드 컴포넌트
-export const MeetingCard = ({ meeting }: { meeting: MeetingData }) => {
+export const MeetingCard = ({ meeting }: { meeting: MeetingItem }) => {
   // 지역표기
   const location = meeting.location.district;
 

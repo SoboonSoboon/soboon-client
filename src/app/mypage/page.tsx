@@ -1,68 +1,19 @@
 'use client';
 
 import { Suspense } from 'react';
-import { useState, useEffect } from 'react';
-import {
-  TabSection,
-  MainTabType,
-  SubTabType,
-  CardList,
-} from '@/app/mypage/components';
-import {
-  MeetingData,
-  hostMeetingsData,
-  participatedMeetingsData,
-  likedMeetingsData,
-} from './components/mock';
-import { useRouter, useSearchParams } from 'next/navigation';
+import { TabSection, CardList } from '@/app/mypage/components';
+
+import { useMyPageData } from './hook/useMypageData';
 
 function MyPageContent() {
-  const router = useRouter();
-  const searchParams = useSearchParams();
-
-  const [activeMainTab, setActiveMainTab] = useState<MainTabType>(
-    (searchParams.get('main') as MainTabType) || 'created',
-  );
-  const [activeSubTab, setActiveSubTab] = useState<SubTabType>(
-    (searchParams.get('sub')?.toUpperCase() as SubTabType) || 'SHOPPING',
-  );
-  const [meetings, setMeetings] = useState<MeetingData[]>([]);
-
-  const handleMainTabChange = (tab: MainTabType) => {
-    setActiveMainTab(tab);
-    const params = new URLSearchParams(searchParams.toString());
-    params.set('main', tab);
-    router.push(`/mypage?${params.toString()}`);
-  };
-
-  const handleSubTabChange = (tab: SubTabType) => {
-    setActiveSubTab(tab);
-    const params = new URLSearchParams(searchParams.toString());
-    params.set('sub', tab.toLowerCase());
-    router.push(`/mypage?${params.toString()}`);
-  };
-
-  useEffect(() => {
-    let filteredMeetings: MeetingData[] = [];
-
-    // 1. 메인탭에 따라 전체 데이터 선택
-    let allMeetings: MeetingData[] = [];
-    if (activeMainTab === 'created') {
-      allMeetings = hostMeetingsData.data.items;
-    } else if (activeMainTab === 'participated') {
-      allMeetings = participatedMeetingsData.data.items;
-    } else if (activeMainTab === 'bookmarked') {
-      allMeetings = likedMeetingsData.data.items;
-    }
-
-    // 2. 서브탭에 따라 category 필터링
-    filteredMeetings = allMeetings.filter(
-      (meeting) => meeting.category === activeSubTab,
-    );
-
-    setMeetings(filteredMeetings);
-  }, [activeMainTab, activeSubTab]);
-
+  const {
+    activeMainTab,
+    activeSubTab,
+    currentData,
+    filteredData,
+    handleMainTabChange,
+    handleSubTabChange,
+  } = useMyPageData();
   return (
     <div className="min-h-screen w-full">
       <div className="flex flex-1 flex-col bg-white">
@@ -74,7 +25,31 @@ function MyPageContent() {
         />
 
         <div className="flex-1 pt-6">
-          <CardList meetings={meetings} />
+          {currentData.loading ? (
+            <div className="flex items-center justify-center py-20">
+              <div className="text-center">
+                <div className="border-gray-90 mx-auto mb-4 h-8 w-8 animate-spin rounded-full border-b-2"></div>
+                <p className="text-gray-60">로딩 중...</p>
+              </div>
+            </div>
+          ) : currentData.error ? (
+            <div className="flex items-center justify-center py-20">
+              <div className="text-center">
+                <h2 className="mb-2 text-xl font-bold text-red-500">
+                  데이터를 불러올 수 없습니다
+                </h2>
+                <p className="text-gray-60 mb-4">{currentData.error.message}</p>
+                <button
+                  onClick={() => window.location.reload()}
+                  className="hover:bg-blue-60 rounded bg-blue-700 px-4 py-2 text-white"
+                >
+                  다시 시도
+                </button>
+              </div>
+            </div>
+          ) : (
+            <CardList data={filteredData} />
+          )}
         </div>
       </div>
     </div>

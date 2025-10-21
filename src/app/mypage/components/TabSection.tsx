@@ -2,7 +2,7 @@
 
 import { MYPAGE_TAB_LABELS, MYPAGE_SUB_TAB_LABELS } from '@/constants';
 
-export type MainTabType = 'created' | 'participated' | 'bookmarked';
+export type MainTabType = 'host' | 'participate' | 'bookmark';
 export type SubTabType = 'SHOPPING' | 'DIVIDING';
 
 interface TabSectionProps {
