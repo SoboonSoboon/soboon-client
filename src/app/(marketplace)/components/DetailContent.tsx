@@ -1,6 +1,6 @@
 export const DetailContent = ({ description }: { description: string }) => {
   return (
-    <div className="flex w-full flex-col gap-8 break-words">
+    <div className="mt-8 flex w-full flex-col gap-8 break-words">
       <p>{description}</p>
       {/* URL을 넣을지 말지 의논 후 수정 필요 */}
       <p className="text-primary">

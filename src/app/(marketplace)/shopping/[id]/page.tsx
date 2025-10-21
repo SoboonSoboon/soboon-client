@@ -134,10 +134,7 @@ export default async function ShoppingDetailPage({
       <DetailHeader />
       <div className="flex gap-10">
         <article className="w-[730px]">
-          <Carousel
-            carouselImages={shoppingMettingDetail!.images}
-            className="mb-8"
-          />
+          <Carousel carouselImages={shoppingMettingDetail!.images} />
           <DetailContent description={shoppingMettingDetail!.description} />
           <DetailContentFooter createdAt={shoppingMettingDetail!.createdAt} />
 

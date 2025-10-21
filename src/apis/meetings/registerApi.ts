@@ -1,13 +1,16 @@
 import { imageUploader } from '@/utils/imageUploader';
 import { axiosInstance } from '../axiosInstance';
 
-export interface ShoppingRegisterData {
-  title: string;
+interface LocationType {
   province: string;
   city: string;
   district: string;
   detail: string;
-  description: string;
+}
+export interface ShoppingRegisterData {
+  title: string;
+  location: LocationType;
+  detail: string;
   capacity: number;
 }
 
@@ -29,12 +32,12 @@ export const shoppingRegisterApi = async (data: ShoppingRegisterData) => {
   const formatData = {
     title: data.title,
     location: {
-      province: data.province,
-      city: data.city,
-      district: data.district,
-      detail: data.detail,
+      province: data.location.province,
+      city: data.location.city,
+      district: data.location.district,
+      detail: data.location.detail,
     },
-    description: data.description,
+    detail: data.detail,
     capacity: data.capacity,
   };
   const response = await axiosInstance.post(

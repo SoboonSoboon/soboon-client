@@ -21,6 +21,7 @@ type MeetingDetailType = {
   detail_address: string;
   images: string[];
   status: StatusType;
+  location: LocationType;
   description: string;
   current_member: number;
   total_member: number;
