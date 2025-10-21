@@ -21,6 +21,10 @@ import {
   postBookmarkedMeetingApi,
   deleteBookmarkedMeetingApi,
 } from '@/apis/meetings/bookmarkApi';
+import {
+  postBookmarkedMeetingApi,
+  deleteBookmarkedMeetingApi,
+} from '@/apis/meetings/bookmarkApi';
 
 interface DetailAsideProps {
   meetingId: number;
@@ -112,6 +116,22 @@ export const DetailAside = ({
       error('모임 신청을 취소하지 못했어요.');
     },
   });
+  const [isBookmarked, setIsBookmarked] = useState(bookmarked);
+
+  const handleBookmarkClick = async () => {
+    const previousState = isBookmarked;
+    setIsBookmarked(!isBookmarked);
+
+    try {
+      if (previousState) {
+        await deleteBookmarkedMeetingApi(meetingId);
+      } else {
+        await postBookmarkedMeetingApi(meetingId);
+      }
+    } catch (error) {
+      console.error('찜 추가/취소 실패:', error);
+    }
+  };
 
   return (
     <aside className="flex w-[430px] flex-col gap-5">
