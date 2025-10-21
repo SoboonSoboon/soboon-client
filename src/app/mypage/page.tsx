@@ -13,11 +13,33 @@ import {
   participatedMeetingsData,
   likedMeetingsData,
 } from './components/mock';
+import { useRouter, useSearchParams } from 'next/navigation';
 
 export default function MyPage() {
-  const [activeMainTab, setActiveMainTab] = useState<MainTabType>('created');
-  const [activeSubTab, setActiveSubTab] = useState<SubTabType>('SHOPPING');
+  const router = useRouter();
+  const searchParams = useSearchParams();
+
+  const [activeMainTab, setActiveMainTab] = useState<MainTabType>(
+    (searchParams.get('main') as MainTabType) || 'created',
+  );
+  const [activeSubTab, setActiveSubTab] = useState<SubTabType>(
+    (searchParams.get('sub')?.toUpperCase() as SubTabType) || 'SHOPPING',
+  );
   const [meetings, setMeetings] = useState<MeetingData[]>([]);
+
+  const handleMainTabChange = (tab: MainTabType) => {
+    setActiveMainTab(tab);
+    const params = new URLSearchParams(searchParams.toString());
+    params.set('main', tab);
+    router.push(`/mypage?${params.toString()}`);
+  };
+
+  const handleSubTabChange = (tab: SubTabType) => {
+    setActiveSubTab(tab);
+    const params = new URLSearchParams(searchParams.toString());
+    params.set('sub', tab.toLowerCase());
+    router.push(`/mypage?${params.toString()}`);
+  };
 
   useEffect(() => {
     let filteredMeetings: MeetingData[] = [];
@@ -46,8 +68,8 @@ export default function MyPage() {
         <TabSection
           activeMainTab={activeMainTab}
           activeSubTab={activeSubTab}
-          onMainTabChange={setActiveMainTab}
-          onSubTabChange={setActiveSubTab}
+          onMainTabChange={handleMainTabChange}
+          onSubTabChange={handleSubTabChange}
         />
 
         <div className="flex-1 pt-6">
