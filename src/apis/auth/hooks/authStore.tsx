@@ -1,20 +1,20 @@
-import { createStore } from 'zustand';
-import { persist } from 'zustand/middleware';
+import { create } from 'zustand';
+import { persist, createJSONStorage } from 'zustand/middleware';
 
 type Location = {
-  province: string | null;
-  city: string | null;
-  district: string | null;
-  detail: string | null;
+  province?: string | null;
+  city?: string | null;
+  district?: string | null;
+  detail?: string | null;
 };
 
-type AuthStore = {
+type AuthStoreProps = {
   isLoggedIn: boolean;
   login: () => void;
   logout: () => void;
 
-  userId: string | null;
-  setUserId: (userId: string) => void;
+  userId: number | null;
+  setUserId: (userId: number) => void;
   userName: string | null;
   setUserName: (userName: string) => void;
   userNickname: string | null;
@@ -27,8 +27,8 @@ type AuthStore = {
   setUserLocation: (userLocation: Location) => void;
 };
 
-export const useAuthStore = createStore(
-  persist<AuthStore>(
+export const useAuthStore = create(
+  persist<AuthStoreProps>(
     (set) => ({
       isLoggedIn: false,
       login: () => set({ isLoggedIn: true }),
@@ -48,7 +48,7 @@ export const useAuthStore = createStore(
           },
         }),
       userId: null,
-      setUserId: (userId: string) => set({ userId: userId }),
+      setUserId: (userId: number) => set({ userId: userId }),
 
       userName: null,
       setUserName: (userName: string) => set({ userName: userName }),
@@ -74,6 +74,17 @@ export const useAuthStore = createStore(
     }),
     {
       name: 'userInfoStorage',
+      storage: createJSONStorage(() => {
+        // SSR 환경에서는 localStorage가 없으므로 체크
+        if (typeof window === 'undefined') {
+          return {
+            getItem: () => null,
+            setItem: () => {},
+            removeItem: () => {},
+          };
+        }
+        return localStorage;
+      }),
     },
   ),
 );

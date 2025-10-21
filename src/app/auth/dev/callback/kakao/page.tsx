@@ -1,52 +1,47 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { axiosInstance } from '@/apis/axiosInstance';
+import { useAuthStore } from '@/apis/auth/hooks/authStore';
 // import { useAuthStore } from '@/apis/auth/hooks/useLogin';
 
-export default function KakaoCallbackPage({
-  searchParams,
-}: {
-  searchParams: { code?: string; error?: string };
-}) {
+export default function KakaoCallbackPage() {
   const router = useRouter();
   const [status, setStatus] = useState('처리 중...');
 
-  useEffect(() => {
-    const code = searchParams?.code;
-    const error = searchParams?.error;
+  const searchParams = useSearchParams();
+  const kakaoAuthCode = searchParams.get('code');
 
-    const handleKakaoCallback = async (code: string) => {
+  useEffect(() => {
+    const handleKakaoCallback = async (kakaoAuthCode: string) => {
       try {
         const isDev = process.env.NODE_ENV === 'development';
         const endpoint = isDev
           ? '/v1/auth/dev/callback/kakao'
           : '/v1/auth/callback/kakao';
-        const response = await axiosInstance.get(`${endpoint}?code=${code}`);
+        const response = await axiosInstance.get(
+          `${endpoint}?code=${kakaoAuthCode}`,
+        );
         const data = response.data;
-        sessionStorage.setItem('accessToken', data.accessToken); //todo: 전역상태관리로 관리하기로 변경
+        localStorage.setItem('accessToken', data.accessToken); //todo: 전역상태관리로 관리하기로 변경
 
-        //complete가 true면 로그인, false면 추가 정보 입력 필요
         if (data.complete) {
-          console.log('로그인 성공'); //todo: 추후 토스트로 변경
-          console.log(data);
-          setTimeout(() => router.push('/sharing'), 300);
-
-          // if (data.complete) {
-          //   useAuthStore.setState({
-          //     isLoggedIn: true,
-          //     userId: data.userId,
-          //     userName: data.userName,
-          //     userNickname: data.userNickname,
-          //     userToken: data.accessToken,
-          //     userLocation: {
-          //       province: data.province,
-          //       city: data.city,
-          //       district: data.district,
-
-          //     },
-          //   });
+          useAuthStore.setState({
+            isLoggedIn: true,
+            userId: data.userId,
+            userName: data.name,
+            userNickname: data.nickname,
+            userImage: data.image,
+            userToken: data.accessToken,
+            userLocation: {
+              province: data.province,
+              city: data.city,
+              district: data.district,
+            },
+          });
+          console.log(data.nickname);
+          router.push('/sharing');
         } else {
           console.log('추가 정보 입력이 필요합니다.'); //todo: 추후 토스트로 변경
           setTimeout(() => router.push('/auth/addinfo'), 300);
@@ -59,24 +54,8 @@ export default function KakaoCallbackPage({
       }
     };
 
-    console.log('카카오 콜백:', { code, error });
-
-    if (error) {
-      console.error('카카오 인증 실패:', error);
-      setStatus('로그인 실패');
-      alert('카카오 로그인에 실패했습니다.');
-      router.push('/');
-      return;
-    }
-
-    if (!code) {
-      console.error('인증 코드가 없습니다');
-      setStatus('인증 코드 없음');
-      return;
-    }
-
-    handleKakaoCallback(code);
-  }, [searchParams, router]);
+    handleKakaoCallback(kakaoAuthCode as string);
+  }, [kakaoAuthCode, router]);
 
   return (
     <div className="flex min-h-screen items-center justify-center">
