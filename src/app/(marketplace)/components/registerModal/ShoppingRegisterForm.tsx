@@ -33,9 +33,12 @@ export function ShoppingRegisterForm({
 
   const [formData, setFormData] = useState({
     title: '',
-    province: '',
-    city: '',
-    district: '',
+    location: {
+      province: '',
+      city: '',
+      district: '',
+      detail: '',
+    },
     detail: '',
     description: '',
     capacity: 0,
@@ -44,11 +47,11 @@ export function ShoppingRegisterForm({
   const isValid = useMemo(() => {
     return (
       formData.title &&
-      formData.province &&
-      formData.city &&
-      formData.district &&
-      formData.detail &&
-      formData.description
+      formData.location.province &&
+      formData.location.city &&
+      formData.location.district &&
+      formData.location.detail &&
+      formData.detail
     );
   }, [formData]);
 
@@ -130,9 +133,12 @@ export function ShoppingRegisterForm({
                   id="province"
                   required
                   options={modelProvinceOptions}
-                  value={formData.province}
+                  value={formData.location.province}
                   onChange={(value) =>
-                    setFormData({ ...formData, province: value })
+                    setFormData({
+                      ...formData,
+                      location: { ...formData.location, province: value },
+                    })
                   }
                 />
                 <Dropdown
@@ -140,9 +146,12 @@ export function ShoppingRegisterForm({
                   id="city"
                   required
                   options={modelCityOptions}
-                  value={formData.city}
+                  value={formData.location.city}
                   onChange={(value) =>
-                    setFormData({ ...formData, city: value })
+                    setFormData({
+                      ...formData,
+                      location: { ...formData.location, city: value },
+                    })
                   }
                 />
                 <Dropdown
@@ -150,9 +159,12 @@ export function ShoppingRegisterForm({
                   id="district"
                   required
                   options={modelDistrictOptions}
-                  value={formData.district}
+                  value={formData.location.district}
                   onChange={(value) =>
-                    setFormData({ ...formData, district: value })
+                    setFormData({
+                      ...formData,
+                      location: { ...formData.location, district: value },
+                    })
                   }
                 />
               </div>
@@ -162,9 +174,15 @@ export function ShoppingRegisterForm({
                   required
                   id="detail"
                   placeholder="나머지 장소를 입력해주세요"
-                  value={formData.detail}
+                  value={formData.location.detail}
                   onChange={(e) =>
-                    setFormData({ ...formData, detail: e.target.value })
+                    setFormData({
+                      ...formData,
+                      location: {
+                        ...formData.location,
+                        detail: e.target.value,
+                      },
+                    })
                   }
                 />
               </div>
@@ -177,17 +195,17 @@ export function ShoppingRegisterForm({
             </Label>
             <Textarea
               className="min-h-[173px]"
-              name="description"
-              id="description"
+              name="detail"
+              id="detail"
               required
-              value={formData.description}
+              value={formData.detail}
               placeholder={`모집 내용을 작성해주세요.
 
 ex) 대량 고기를 사서 나누고 싶어요.
 그 외 필요한 구매 물품은 개인 구매하셔도 되어요.
 함께 장보기 할 인원은 3명 정도 생각하고 있어요.이번주 토요일인 10월 10일  3시에 만나기로 해요!`}
               onChange={(e) =>
-                setFormData({ ...formData, description: e.target.value })
+                setFormData({ ...formData, detail: e.target.value })
               }
             />
           </div>

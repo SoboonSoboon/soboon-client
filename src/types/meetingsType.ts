@@ -21,6 +21,7 @@ type MeetingDetailType = {
   detail_address: string;
   images: string[];
   status: StatusType;
+  location: LocationType;
   description: string;
   current_member: number;
   total_member: number;
@@ -117,6 +118,9 @@ type CreateDividingMeetingResponseType = ApiResponse<{
   meetingId: number;
 }>;
 
+type meetingSearchParamsType = {
+  [key: string]: string | string[] | undefined | null;
+};
 export type {
   MeetingDetailType,
   UpdateMeetingResponseType,
@@ -127,4 +131,5 @@ export type {
   ShoppingContentType,
   CreateShoppingMeetingResponseType,
   CreateDividingMeetingResponseType,
+  meetingSearchParamsType,
 };

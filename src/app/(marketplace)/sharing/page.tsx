@@ -1,5 +1,8 @@
 import { SideButtonSection } from '@/components';
-import { DividingMeetingsType } from '@/types/meetingsType';
+import {
+  DividingMeetingsType,
+  meetingSearchParamsType,
+} from '@/types/meetingsType';
 import { IntroSection } from '@/app/(marketplace)/components';
 import {
   FilterSection,
@@ -37,7 +40,7 @@ async function getSharingMetting(
 export default async function SharingPage({
   searchParams,
 }: {
-  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
+  searchParams: Promise<meetingSearchParamsType>;
 }) {
   const params = await searchParams;
 
@@ -51,8 +54,6 @@ export default async function SharingPage({
     page: (params.page as string) || '0',
     size: (params.size as string) || '20',
     status: (params.status as string) || '',
-    min: (params.min as string) || '0',
-    max: (params.max as string) || '0',
   });
   const sharingMettingList = await getSharingMetting(query);
 

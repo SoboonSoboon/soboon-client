@@ -1,6 +1,9 @@
 import { SideButtonSection } from '@/components';
 import { IntroSection } from '@/app/(marketplace)/components';
-import { ShoppingMeetingsType } from '@/types/meetingsType';
+import {
+  meetingSearchParamsType,
+  ShoppingMeetingsType,
+} from '@/types/meetingsType';
 import { FilterSection, ShoppingListSection } from './components';
 
 async function getShoppingList(
@@ -33,7 +36,7 @@ async function getShoppingList(
 export default async function ShoppingPage({
   searchParams,
 }: {
-  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
+  searchParams: Promise<meetingSearchParamsType>;
 }) {
   const params = await searchParams;
 
@@ -41,6 +44,7 @@ export default async function ShoppingPage({
     province: (params.province as string) || '',
     city: (params.city as string) || '',
     district: (params.district as string) || '',
+    status: (params.status as string) || '',
     sortType: (params.sortType as string) || '',
   });
 
