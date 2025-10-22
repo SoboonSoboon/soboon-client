@@ -17,7 +17,6 @@ export default function Home() {
             대용량 제품을 같이 사서, 필요한 만큼만 소분해요.
           </p>
           <Button
-            primary
             label="시작하기"
             className="mt-[45px]"
             onClick={redirectToKakao}

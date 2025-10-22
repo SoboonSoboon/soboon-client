@@ -1,4 +1,5 @@
 'use client';
+
 import { Bookmark, MapPin } from 'lucide-react';
 import {
   Card,
@@ -106,10 +107,10 @@ export const MeetingCard = ({
               <Button
                 variant={
                   meeting.status === 'RECRUITING'
-                    ? 'block' //disabled로 수정계획
+                    ? 'filled'
                     : reviewData.reviewer
                       ? 'outline'
-                      : 'block'
+                      : 'filled'
                 }
                 label={
                   meeting.status === 'RECRUITING'

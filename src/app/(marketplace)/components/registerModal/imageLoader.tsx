@@ -64,8 +64,8 @@ export default function ImageUploadForm({
           multiple
         />
         <Button
+          variant="outline"
           label="파일 찾기"
-          className="!text-primary border-primary block !bg-white"
           onClick={() => inputRef.current?.click()}
         />
       </div>
