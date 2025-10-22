@@ -141,7 +141,10 @@ export default async function SharingDetailPage({
           <DetailContentFooter createdAt={meetingDetail!.createdAt} />
 
           {/* 댓글 영역 */}
-          <CommentSection commentsList={commentsList} />
+          <CommentSection
+            commentsList={commentsList}
+            status={meetingDetail!.status}
+          />
         </article>
 
         <div className="sticky top-6 h-[95vh]">

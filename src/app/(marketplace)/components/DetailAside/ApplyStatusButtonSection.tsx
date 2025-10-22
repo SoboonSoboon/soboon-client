@@ -46,7 +46,7 @@ export const ApplyStatusButtonSection = ({
         {filteredStatus?.participationStatus === 'APPROVED' && (
           <Button
             label="모임 신청이 승인되었어요."
-            className="text-text-sub2 w-full !cursor-not-allowed"
+            className="w-full !cursor-not-allowed text-white"
             backgroundColor="var(--color-primary)"
             disabled
           />
@@ -57,7 +57,17 @@ export const ApplyStatusButtonSection = ({
           <Button
             label="모임 신청이 거절되었어요."
             backgroundColor="var(--color-primary)"
-            className="text-text-sub2 w-full !cursor-not-allowed"
+            className="w-full !cursor-not-allowed text-white"
+            disabled
+          />
+        )}
+
+        {/* 신청자가 강퇴되었을 때 나타나는 버튼 */}
+        {filteredStatus?.participationStatus === 'KICKED' && (
+          <Button
+            label="모임에서 강퇴되었어요."
+            backgroundColor="var(--color-primary)"
+            className="w-full !cursor-not-allowed text-white"
             disabled
           />
         )}
