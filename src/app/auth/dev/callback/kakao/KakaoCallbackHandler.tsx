@@ -5,13 +5,13 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import { axiosInstance } from '@/apis/axiosInstance';
 import { useAuthStore } from '@/apis/auth/hooks/authStore';
 
-export default function KakaoCallbackHandler() {
+export default function DevKakaoCallbackHandler() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const kakaoAuthCode = searchParams.get('code');
 
   useEffect(() => {
-    const handleKakaoCallback = async (kakaoAuthCode: string) => {
+    const handleDevKakaoCallback = async (kakaoAuthCode: string) => {
       try {
         const isDev = process.env.NODE_ENV === 'development';
         const endpoint = isDev
@@ -50,7 +50,7 @@ export default function KakaoCallbackHandler() {
       }
     };
 
-    handleKakaoCallback(kakaoAuthCode as string);
+    handleDevKakaoCallback(kakaoAuthCode as string);
   }, [kakaoAuthCode, router]);
 
   return (

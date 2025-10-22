@@ -1,10 +1,10 @@
 import { Suspense } from 'react';
-import KakaoCallbackHandler from './KakaoCallbackHandler';
+import DevKakaoCallbackHandler from './KakaoCallbackHandler';
 
-export default function KakaoCallbackPage() {
+export default function devKakaoCallbackPage() {
   return (
     <Suspense>
-      <KakaoCallbackHandler />
+      <DevKakaoCallbackHandler />
     </Suspense>
   );
 }
