@@ -1,0 +1,161 @@
+@import 'tailwindcss';
+
+@font-face {
+  font-family: 'memomentKkukkkuk';
+  src: url('/font/memomentKkukkkuk.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@theme {
+  --color-primary: var(--GreenScale-Green50);
+  --color-secondary: #ffd6cc;
+  --color-tertiary: #561700;
+  --color-quaternary: #000000;
+  --color-gray-5: #f5f5f5;
+  --color-gray-10: #e0e0e0;
+  --color-gray-20: #c8c8c8;
+  --color-gray-30: #bcbcbc;
+  --color-gray-40: #adadad;
+  --color-gray-50: #999999;
+  --color-gray-60: #7c7c7c;
+  --color-gray-70: #666666;
+  --color-gray-80: #4e4e4e;
+  --color-gray-90: #333333;
+  --color-gray-95: #1a1a1a;
+  --color-black: #000000;
+  --color-white: #ffffff;
+  --color-Green-1: #fff4f1;
+  --color-Green-5: #ffe7e2;
+  --color-Green-10: #ffd6cc;
+  --color-Green-20: #ffbaa9;
+  --color-Green-30: #ff957b;
+  --color-Green-40: #ff724e;
+  --color-Green-50: #00b460;
+  --color-Green-60: #e83600;
+  --color-Green-70: #d03800;
+  --color-Green-80: #b93100;
+  --color-Green-90: #9a2900;
+  --color-Green-95: #561700;
+  --color-Green-100: #210a02;
+  --color-warning-alt: #ffd9d9;
+  --color-warning: #ff4040;
+  --color-safe-alt: #e0f8e8;
+  --color-safe: #46c470;
+  --color-dim: rgba(0, 0, 0, 0.3);
+  --color-background: #fcfbfa;
+  --color-text-reversed-main: var(--color-white);
+  --color-text-reversed-sub1: var(--color-gray-5);
+  --color-text-line1: var(--color-gray-10);
+  --color-text-reversed-sub2: var(--color-gray-20);
+  --color-text-inactive: var(--color-gray-30);
+  --color-text-line2: var(--color-gray-30);
+  --color-text-sub2: var(--color-gray-60);
+  --color-text-sub1: var(--color-gray-80);
+  --color-text-main: var(--color-gray-95);
+  --color-background-inactive: var(--color-gray-5);
+  --color-background-alt: var(--color-white);
+}
+
+:root {
+  --GrayScale-Gray5: #f5f5f5;
+  --GrayScale-Gray10: #e0e0e0;
+  --GrayScale-Gray20: #c8c8c8;
+  --GrayScale-Gray30: #bcbcbc;
+  --GrayScale-Gray40: #adadad;
+  --GrayScale-Gray50: #999999;
+  --GrayScale-Gray60: #7c7c7c;
+  --GrayScale-Gray70: #666666;
+  --GrayScale-Gray80: #4e4e4e;
+  --GrayScale-Gray90: #333333;
+  --GrayScale-Gray95: #1a1a1a;
+  --GrayScale-Black: #000000;
+  --GrayScale-White: #ffffff;
+  --GreenScale-Green1: #fafefc;
+  --GreenScale-Green5: #e6f8ef;
+  --GreenScale-Green10: #ccf0df;
+  --GreenScale-Green20: #99e1bf;
+  --GreenScale-Green30: #66d2a0;
+  --GreenScale-Green40: #33c380;
+  --GreenScale-Green50: #00b460;
+  --GreenScale-Green60: #00904d;
+  --GreenScale-Green70: #006c3a;
+  --GreenScale-Green80: #004826;
+  --GreenScale-Green90: #002413;
+  --GreenScale-Green95: #00120a;
+  --GreenScale-Green100: #000;
+  --System-warning_alt: #ffd9d9;
+  --System-warning: #ff4040;
+  --System-safe_alt: #e0f8e8;
+  --System-safe: #46c470;
+  --System-dim: rgba(0, 0, 0, 0.3);
+  --System-background: #fcfbfa;
+  --text-reversed-main: var(--GrayScale-White);
+  --text-reversed-sub1: var(--GrayScale-Gray5);
+  --text-line1: var(--GrayScale-Gray10);
+  --text-reversed-sub2: var(--GrayScale-Gray20);
+  --text-inactive: var(--GrayScale-Gray30);
+  --text-line2: var(--GrayScale-Gray30);
+  --text-sub2: var(--GrayScale-Gray60);
+  --text-sub1: var(--GrayScale-Gray80);
+  --text-main: var(--GrayScale-Gray95);
+  --Keycolor-primary: var(--GreenScale-Green50);
+  --Keycolor-secondary: var(--GreenScale-Green10);
+  --Keycolor-tertiary: var(--GreenScale-Green95);
+  --Keycolor-quaternary: var(--GrayScale-Black);
+  --System-background_inactive: var(--GrayScale-Gray5);
+  --System-background_alt: var(--GrayScale-White);
+}
+
+@layer utilities {
+  .text-xs {
+    font-size: 12px;
+    line-height: 16px;
+  }
+  .text-sm {
+    font-size: 14px;
+    line-height: 20px;
+  }
+  .text-base {
+    font-size: 16px;
+    line-height: 24px;
+  }
+  .text-lg {
+    font-size: 18px;
+    line-height: 28px;
+  }
+  .text-xl {
+    font-size: 20px;
+    line-height: 28px;
+  }
+
+  .text-2xl {
+    font-size: 24px;
+    line-height: 32px;
+  }
+  .text-3xl {
+    font-size: 30px;
+    line-height: 36px;
+  }
+
+  .font-memomentKkukkkuk {
+    font-family: 'memomentKkukkkuk', sans-serif !important;
+  }
+
+  .bg-gray-5 {
+    background-color: var(--color-gray-5);
+  }
+}
+
+* {
+  font-family: 'pretendard', sans-serif;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: 'memomentKkukkkuk', sans-serif;
+}

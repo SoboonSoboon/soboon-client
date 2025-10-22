@@ -1,0 +1,41 @@
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
+
+# 커밋 메시지 패턴 검증
+commit_regex='^(feat|fix|docs|style|design|build|ci|perf|refactor|test|chore|rename|remove|setting|comment)([/:].*)?: .+|^Merge branch .* of .* into .*$'
+
+if ! grep -qE "$commit_regex" "$1"; then
+    echo "❌ 커밋 메시지 형식이 올바르지 않습니다!"
+    echo ""
+    echo "올바른 형식: type(scope): description"
+    echo ""
+    echo "예시:"
+    echo "  feat: 새로운 기능 추가"
+    echo "  fix: 버그 수정"
+    echo "  feat/auth: 로그인 기능 추가"
+    echo "  fix/api: API 오류 수정"
+    echo ""
+    echo "사용 가능한 타입:"
+    echo "  feat: 새로운 기능"
+    echo "  fix: 버그 수정"
+    echo "  docs: 문서 변경"
+    echo "  style: 코드 스타일 변경"
+    echo "  design : 사용자 UI 디자인 변경"
+    echo "  refactor: 리팩토링"
+    echo "  build : 빌드 파일 수정"
+    echo "  ci : CI 설정 파일 수정"
+    echo "  perf : 성능 개선"
+    echo "  test: 테스트 추가/수정"
+    echo "  chore: 빌드/설정 변경"
+    echo "  rename : 파일 혹은 폴더명을 수정"
+    echo "  remove: 삭제"
+    echo "  comment : 주석 추가 및 변경"
+    echo "  setting : 프로젝트 세팅 관련 작업"
+    echo ""
+    echo "또는 자동 생성되는 merge 커밋:"
+    echo "  Merge branch 'dev' of https://github.com/SoboonSoboon/soboon-client into feat/#65-mypage-publishing"
+    echo ""
+    exit 1
+fi
+
+echo "✅ 커밋 메시지 형식이 올바릅니다!"
