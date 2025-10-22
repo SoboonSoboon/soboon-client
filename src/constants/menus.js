@@ -5,6 +5,6 @@ export const MYPAGE_TAB_LABELS = Object.freeze([
 ]);
 
 export const MYPAGE_SUB_TAB_LABELS = Object.freeze([
-  { key: 'shopping', value: 'SHOPPING', label: '장보기' },
   { key: 'dividing', value: 'DIVIDING', label: '소분하기' },
+  { key: 'shopping', value: 'SHOPPING', label: '장보기' },
 ]);

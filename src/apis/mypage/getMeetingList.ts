@@ -4,10 +4,10 @@ import {
 } from '@/app/mypage/utils/mypageType';
 import { axiosInstance } from '../axiosInstance';
 
-export async function getHostMeetingList(
+export const getHostMeetingList = async (
   page: number = 0,
   size: number = 20,
-): Promise<MypageMeetingApiResponse> {
+): Promise<MypageMeetingApiResponse> => {
   const pageable = JSON.stringify({ page, size });
   try {
     const response = await axiosInstance(
@@ -19,11 +19,11 @@ export async function getHostMeetingList(
     console.error(' 내가 만든 모임 데이터를 가져오는데 실패했습니다:', error);
     throw error;
   }
-}
-export async function getParticipateMeetingList(
+};
+export const getParticipateMeetingList = async (
   page: number = 0,
   size: number = 20,
-): Promise<MypageMeetingApiResponse> {
+): Promise<MypageMeetingApiResponse> => {
   const pageable = JSON.stringify({ page, size });
   try {
     const response = await axiosInstance(
@@ -35,12 +35,12 @@ export async function getParticipateMeetingList(
     console.error(' 내가 참여한 모임 데이터를 가져오는데 실패했습니다:', error);
     throw error;
   }
-}
+};
 
-export async function getBookmarkMeetingList(
+export const getBookmarkMeetingList = async (
   page: number = 1,
   size: number = 20,
-): Promise<BookMarkListApiResPonse> {
+): Promise<BookMarkListApiResPonse> => {
   try {
     const response = await axiosInstance.get('/v1/me/bookmarks', {
       params: { page, size },
@@ -50,4 +50,4 @@ export async function getBookmarkMeetingList(
     console.error(' 찜한 모임 데이터를 가져오는데 실패했습니다:', error);
     throw error;
   }
-}
+};

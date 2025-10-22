@@ -18,7 +18,7 @@ export const useMyPageData = () => {
     [searchParams],
   );
   const activeSubTab = useMemo(
-    () => (searchParams.get('sub')?.toUpperCase() as SubTabType) || 'SHOPPING',
+    () => (searchParams.get('sub')?.toUpperCase() as SubTabType) || 'DIVIDING',
     [searchParams],
   );
 
