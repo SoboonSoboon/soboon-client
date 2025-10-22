@@ -210,14 +210,7 @@ ex) 대량 고기를 사서 나누고 싶어요.
             />
           </div>
         </div>
-        <Button
-          label="확인"
-          type="submit"
-          className={`w-full border-none text-white ${
-            isValid ? '!bg-primary' : '!bg-gray-30'
-          }`}
-          disabled={!isValid}
-        />
+        <Button label="확인" type="submit" disabled={!isValid} />
       </form>
     </div>
   );
