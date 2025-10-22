@@ -183,7 +183,7 @@ export default function AddInfoPage() {
         <button
           onClick={handleSubmit}
           disabled={!newData.nickname?.trim()}
-          className="bg-primary w-full cursor-pointer rounded-[8px] py-4 text-lg font-semibold text-white transition-colors hover:bg-orange-600 disabled:cursor-not-allowed disabled:bg-gray-300"
+          className="bg-primary w-full cursor-pointer rounded-[8px] py-4 text-lg font-semibold text-white transition-colors hover:bg-[var(--GreenScale-Green60)] disabled:cursor-not-allowed disabled:bg-gray-300"
         >
           저장하기
         </button>
