@@ -1,72 +1,70 @@
+import React from 'react';
 import { cn } from '@/utils/cn';
 
 export interface ButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  primary?: boolean;
-  variant?: 'primary' | 'secondary' | 'outline' | 'block';
-  backgroundColor?: string;
-  size?: 'small' | 'medium' | 'large';
+  variant?: 'filled' | 'outline';
+  size?: 'small' | 'large';
   label?: string;
-  onClick?: () => void;
   children?: React.ReactNode;
 }
 
 export const Button = ({
-  primary = false,
-  variant,
-  size = 'medium',
-  backgroundColor,
-  label = '',
-  className,
+  type = 'button',
+  disabled,
   onClick,
+  size = 'large',
+  variant = 'filled',
+  className,
+  label,
   children,
   ...props
 }: ButtonProps) => {
-  const isBlocked = variant === 'block';
-  // variant가 없으면 기존 primary prop 사용 (mvp 끝나고 나서 common리팩토링)
-  const buttonVariant = variant || (primary ? 'primary' : 'secondary');
+  const baseStyles =
+    'inline-flex items-center justify-center rounded-lg border font-medium select-none transition h-11';
 
-  const baseStyles = 'inline-block  rounded-[8px] border leading-none';
+  const sizes = {
+    small: 'h-10 px-4 text-sm', // 모바일 사이즈
+    large: 'h-11 px-5 text-base', // 데스크탑 사이즈
+  } as const;
 
-  const variantStyles = {
-    primary: 'bg-primary min-w-[115px] text-white cursor-pointer',
-    secondary:
-      'bg-transparent text-[#333] shadow-[rgba(0,0,0,0.15)_0px_0px_0px_1px_inset] cursor-pointer',
+  const variants = {
+    filled:
+      'cursor-pointer bg-primary text-white border-transparent hover:bg-[var(--GreenScale-Green60)] active:bg-[var(--GreenScale-Green70)]',
     outline:
-      'text-primary border-primary bg-white hover:bg-primary hover:text-white cursor-pointer',
-    block: 'bg-gray-40 text-gray-80 border-none ',
-  };
+      'cursor-pointer bg-white text-primary border-primary active:border-[var(--GreenScale-Green70)] active:text-[var(--GreenScale-Green70)]',
+  } as const;
 
-  const sizeStyles = {
-    small: 'px-4 py-2.5 text-base',
-    medium: 'px-5 py-[11px] text-base',
-    large: 'px-6 py-3 text-base',
-  };
+  const disabledVariants = {
+    filled:
+      'bg-[var(--GrayScale-Gray30)] text-white border-transparent cursor-not-allowed font-normal',
+    outline:
+      'bg-white text-[var(--GrayScale-Gray30)] border-[var(--GrayScale-Gray40)] cursor-not-allowed font-normal',
+  } as const;
+
   const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
-    if (isBlocked) {
+    if (disabled) {
       e.preventDefault();
       e.stopPropagation();
       return;
     }
-    e.stopPropagation();
-    onClick?.();
+    onClick?.(e);
   };
+
   return (
     <button
-      type="button"
+      type={type}
+      disabled={disabled}
+      onClick={handleClick}
       className={cn(
         baseStyles,
-        variantStyles[buttonVariant],
-        sizeStyles[size],
+        sizes[size],
+        disabled ? disabledVariants[variant] : variants[variant],
         className,
       )}
-      style={backgroundColor ? { backgroundColor } : undefined}
-      onClick={handleClick}
       {...props}
     >
       {children || label}
     </button>
   );
 };
-
-//cn clsx 사용해야될듯

@@ -6,6 +6,7 @@ import { createComment } from '@/action/commentAction';
 import { useActionState, useEffect } from 'react';
 import { useParams } from 'next/navigation';
 import { useToast } from '@/components/Atoms';
+import { cn } from '@/utils/cn';
 
 export const CommentInputContainer = ({
   status,
@@ -38,11 +39,13 @@ export const CommentInputContainer = ({
         <Button
           label="작성"
           type="submit"
-          className={`w-20 shrink-0 ${
+          variant="outline"
+          className={cn(
+            'w-20 shrink',
             status === 'COMPLETED' || status === 'CLOSED'
               ? 'border-text-line2 text-text-line2 !cursor-not-allowed'
-              : 'border-primary text-primary'
-          }`}
+              : 'border-primary text-primary',
+          )}
           disabled={status === 'COMPLETED' || status === 'CLOSED'}
         />
       </form>

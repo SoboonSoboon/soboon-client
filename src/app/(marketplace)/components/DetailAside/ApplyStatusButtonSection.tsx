@@ -22,8 +22,8 @@ export const ApplyStatusButtonSection = ({
           filteredStatus?.participationStatus === 'CANCELLED') && (
           <Button
             label="모임 신청"
-            className="w-full text-white"
-            backgroundColor="var(--color-primary)"
+            className="w-full"
+            variant="filled"
             onClick={() => handleApplyMeeting(meetingId)}
           />
         )}
@@ -31,12 +31,12 @@ export const ApplyStatusButtonSection = ({
         {/* 신청을 하지 않았을 때 나타나는 버튼 */}
         {filteredStatus?.participationStatus === 'APPLIED' && (
           <Button
-            className="w-full text-white"
-            backgroundColor="var(--color-primary)"
+            className="h-15 w-full !bg-[var(--GrayScale-Gray80)]"
+            variant="filled"
             onClick={() => handleCancelApplyMeeting(meetingId)}
           >
             <div>
-              <p className="text-sm">모임이 신청되었어요.</p>
+              <p className="text-base">모임이 신청되었어요.</p>
               <p className="text-xs">다시 클릭하면 취소할 수 있어요.</p>
             </div>
           </Button>
@@ -46,8 +46,8 @@ export const ApplyStatusButtonSection = ({
         {filteredStatus?.participationStatus === 'APPROVED' && (
           <Button
             label="모임 신청이 승인되었어요."
-            className="w-full !cursor-not-allowed text-white"
-            backgroundColor="var(--color-primary)"
+            className="w-full"
+            variant="filled"
             disabled
           />
         )}
@@ -56,8 +56,8 @@ export const ApplyStatusButtonSection = ({
         {filteredStatus?.participationStatus === 'REJECTED' && (
           <Button
             label="모임 신청이 거절되었어요."
-            backgroundColor="var(--color-primary)"
-            className="w-full !cursor-not-allowed text-white"
+            variant="filled"
+            className="w-full"
             disabled
           />
         )}
@@ -66,8 +66,8 @@ export const ApplyStatusButtonSection = ({
         {filteredStatus?.participationStatus === 'KICKED' && (
           <Button
             label="모임에서 강퇴되었어요."
-            backgroundColor="var(--color-primary)"
-            className="w-full !cursor-not-allowed text-white"
+            variant="filled"
+            className="w-full"
             disabled
           />
         )}

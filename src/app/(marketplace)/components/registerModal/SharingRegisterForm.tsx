@@ -214,14 +214,7 @@ ex)
           </div>
         </div>
 
-        <Button
-          label="확인"
-          type="submit"
-          className={`w-full border-none text-white ${
-            isValid ? '!bg-primary' : '!bg-gray-30'
-          }`}
-          disabled={!isValid}
-        />
+        <Button label="확인" type="submit" disabled={!isValid} />
       </form>
     </>
   );

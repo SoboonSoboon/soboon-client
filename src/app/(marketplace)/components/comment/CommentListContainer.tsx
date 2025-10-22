@@ -71,13 +71,13 @@ export const CommentListContainer = ({
                     <Button
                       label="작성"
                       type="submit"
-                      className="text-primary border-primary"
-                      size="small"
+                      className="text-primary border-primary w-20"
+                      variant="outline"
                     />
                     <Button
                       label="취소"
-                      className="text-text-line2 border-text-line2"
-                      size="small"
+                      className="w-20 !border-[var(--GrayScale-Gray20)] !text-[var(--GrayScale-Gray60)]"
+                      variant="outline"
                       onClick={handleCloseReply}
                     />
                   </div>
