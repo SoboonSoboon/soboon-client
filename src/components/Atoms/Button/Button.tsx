@@ -19,7 +19,7 @@ export const Button = ({
   ...props
 }: ButtonProps) => {
   const baseStyles =
-    'point-cursor inline-flex items-center justify-center rounded-lg border font-medium select-none transition h-11';
+    'cursor-pointer inline-flex items-center justify-center rounded-lg border font-medium select-none transition h-11';
 
   const sizes = {
     small: 'h-10 px-4 text-sm', // 모바일 사이즈
