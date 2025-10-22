@@ -7,12 +7,14 @@ import { useClickOutside } from '@/hooks/useClickOutside';
 export interface UserMenuModalProps
   extends React.HTMLAttributes<HTMLDivElement> {
   className?: string;
+  onClick?: () => void;
   onClose?: () => void;
 }
 
 export const UserMenuModal = ({
   className,
   onClose,
+  onClick,
   ...props
 }: UserMenuModalProps) => {
   const menuRef = useClickOutside(onClose as () => void);
@@ -32,7 +34,10 @@ export const UserMenuModal = ({
             <span>마이페이지</span>
           </Link>
         </li>
-        <li className="hover:bg-green-5 flex cursor-pointer px-4 py-2.5 font-medium transition-all duration-200 hover:rounded-b-xl">
+        <li
+          onClick={onClick}
+          className="hover:bg-orange-5 flex cursor-pointer px-4 py-2.5 font-medium transition-all duration-200 hover:rounded-b-xl"
+        >
           <span>로그아웃</span>
         </li>
       </ul>
