@@ -4,7 +4,7 @@ import { CommentsType } from '@/types/commentType';
 import { CommentItem } from './CommentItem';
 import { useActionState, useEffect, useState } from 'react';
 import { Button, TextInput } from '@/components';
-import { createReply } from '@/action/createComment';
+import { createReply } from '@/action/commentAction';
 import { useParams } from 'next/navigation';
 import { useToast } from '@/components/Atoms';
 import { CornerDownRight } from 'lucide-react';

@@ -15,7 +15,7 @@ export default function RootLayout({
           href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css"
         />
       </head>
-      <body>
+      <body className="mb-50">
         <Header />
         <div className="mx-auto w-[1200px]">
           <Providers>{children}</Providers>
