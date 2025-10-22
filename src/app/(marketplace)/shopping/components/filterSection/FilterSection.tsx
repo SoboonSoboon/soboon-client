@@ -1,11 +1,11 @@
 'use client';
 
 import { DateFilter } from '@/components';
-import { cityOptions, provinceOptions } from '@/constants/locations';
+import { CITY_OPTIONS, PROVINCE_OPTIONS, GET_CITY_OPTIONS } from '@/constants';
 import { statusOptions } from '@/constants/status';
 import { ChevronDown } from 'lucide-react';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { useCallback } from 'react';
+import { useCallback, useMemo } from 'react';
 
 export const FilterSection = () => {
   const searchParams = useSearchParams();
@@ -14,6 +14,16 @@ export const FilterSection = () => {
   const activeProvince = searchParams.get('province') || '';
   const activeCity = searchParams.get('city') || '';
   const activeStatus = searchParams.get('status') || '';
+
+  const availableCityOptions = useMemo(() => {
+    if (!activeProvince) {
+      return CITY_OPTIONS; // 전체 옵션 보여주기
+    }
+    return [
+      { value: '', label: '전체' },
+      ...GET_CITY_OPTIONS(activeProvince).slice(1),
+    ];
+  }, [activeProvince]);
 
   const handleStatusChange = useCallback(
     (status: string) => {
@@ -73,17 +83,14 @@ export const FilterSection = () => {
             id="province"
             className="min-w-[120px] cursor-pointer appearance-none rounded-md border-2 border-[#f3f5f6] bg-white px-3 py-2 pr-8 text-gray-700 transition-all duration-200 hover:border-gray-500 focus:border-gray-500 focus:outline-none"
             onChange={(e) => {
-              const selectedProvince = provinceOptions.find(
-                (city) => city.value === e.target.value,
+              const selectedProvince = PROVINCE_OPTIONS.find(
+                (province) => province.value === e.target.value,
               );
-              handleRegionChange(selectedProvince?.value || '', activeCity);
-              if (selectedProvince?.value === '') {
-                handleRegionChange('', '');
-              }
+              handleRegionChange(selectedProvince?.value || '', '');
             }}
             value={activeProvince}
           >
-            {provinceOptions.map((city) => (
+            {PROVINCE_OPTIONS.map((city) => (
               <option key={city.value} value={city.value}>
                 {city.label}
               </option>
@@ -99,16 +106,16 @@ export const FilterSection = () => {
             id="city"
             className="min-w-[120px] cursor-pointer appearance-none rounded-md border-2 border-[#f3f5f6] bg-white px-3 py-2 pr-8 text-gray-700 transition-all duration-200 hover:border-gray-500 focus:border-gray-500 focus:outline-none"
             onChange={(e) => {
-              const selectedCity = cityOptions.find(
-                (district) => district.value === e.target.value,
+              const selectedCity = availableCityOptions.find(
+                (city) => city.value === e.target.value,
               );
               handleRegionChange(activeProvince, selectedCity?.value || '');
             }}
             value={activeCity}
           >
-            {cityOptions.map((district) => (
-              <option key={district.value} value={district.value}>
-                {district.label}
+            {availableCityOptions.map((city) => (
+              <option key={city.value} value={city.value}>
+                {city.label}
               </option>
             ))}
           </select>

@@ -5,10 +5,10 @@ import { useAuthStore } from '@/apis/auth/hooks/authStore';
 import { useProfile } from '@/apis/auth/hooks/useProfileData';
 import { Button, Dropdown } from '@/components';
 import {
-  modelCityOptions,
-  modelDistrictOptions,
-  modelProvinceOptions,
-} from '@/constants/locations';
+  MODEL_PROVINCE_OPTIONS,
+  GET_MODEL_CITY_OPTIONS,
+  GET_MODEL_DISTRICT_OPTIONS,
+} from '@/constants';
 import { profileDataType } from '@/types/authType';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
@@ -156,23 +156,32 @@ export default function AddInfoPage() {
               name="province"
               id="province"
               required
-              options={modelProvinceOptions}
+              options={MODEL_PROVINCE_OPTIONS}
               value={newData.province || ''}
-              onChange={(value) => setNewData({ ...newData, province: value })}
+              onChange={(value) =>
+                setNewData({
+                  ...newData,
+                  province: value,
+                  city: '',
+                  district: '',
+                })
+              }
             />
             <Dropdown
               name="city"
               id="city"
               required
-              options={modelCityOptions}
+              options={GET_MODEL_CITY_OPTIONS(newData.province)}
               value={newData.city || ''}
-              onChange={(value) => setNewData({ ...newData, city: value })}
+              onChange={(value) =>
+                setNewData({ ...newData, city: value, district: '' })
+              }
             />
             <Dropdown
               name="district"
               id="district"
               required
-              options={modelDistrictOptions}
+              options={GET_MODEL_DISTRICT_OPTIONS(newData.city)}
               value={newData.district || ''}
               onChange={(value) => setNewData({ ...newData, district: value })}
             />

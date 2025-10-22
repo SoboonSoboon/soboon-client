@@ -2,11 +2,11 @@
 
 import { Checkbox, Label } from '@/components';
 import categories from '@/constants/categories';
-import { cityOptions, provinceOptions } from '@/constants/locations';
+import { CITY_OPTIONS, PROVINCE_OPTIONS, GET_CITY_OPTIONS } from '@/constants';
 import { ChevronDown } from 'lucide-react';
 import { useSearchParams } from 'next/navigation';
 import { useRouter } from 'next/navigation';
-import { useCallback } from 'react';
+import { useCallback, useMemo } from 'react';
 
 const Line = () => {
   return <div className="bg-gray-10 my-5 h-[1px] w-full" />;
@@ -19,6 +19,17 @@ export const FilterSection = () => {
   const activeCategory = searchParams.get('productType') || '';
   const activeProvince = searchParams.get('province') || '';
   const activeCity = searchParams.get('city') || '';
+
+  const availableCityOptions = useMemo(() => {
+    if (!activeProvince) {
+      return CITY_OPTIONS; // 전체 옵션 보여주기
+    }
+    return [
+      { value: '', label: '전체' },
+      ...GET_CITY_OPTIONS(activeProvince).slice(1),
+    ];
+  }, [activeProvince]);
+
   const handleCategoryChange = useCallback(
     (productType: string) => {
       const params = new URLSearchParams(searchParams.toString());
@@ -103,16 +114,14 @@ export const FilterSection = () => {
               id="province"
               className="w-full min-w-[120px] cursor-pointer appearance-none rounded-md border-2 border-[#f3f5f6] bg-white px-3 py-2 pr-8 text-gray-700 transition-all duration-200 hover:border-gray-500 focus:border-gray-500 focus:outline-none"
               onChange={(e) => {
-                const selectedProvince = provinceOptions.find(
+                const selectedProvince = PROVINCE_OPTIONS.find(
                   (province) => province.value === e.target.value,
                 );
                 handleRegionChange(selectedProvince?.value || '', '');
-                if (selectedProvince?.value === '') {
-                  handleRegionChange('', '');
-                }
               }}
+              value={activeProvince}
             >
-              {provinceOptions.map((province) => (
+              {PROVINCE_OPTIONS.map((province) => (
                 <option key={province.value} value={province.value}>
                   {province.label}
                 </option>
@@ -128,14 +137,14 @@ export const FilterSection = () => {
               id="city"
               className="w-full min-w-[120px] cursor-pointer appearance-none rounded-md border-2 border-[#f3f5f6] bg-white px-3 py-2 pr-8 text-gray-700 transition-all duration-200 hover:border-gray-500 focus:border-gray-500 focus:outline-none"
               onChange={(e) => {
-                const selectedCity = cityOptions.find(
+                const selectedCity = availableCityOptions.find(
                   (city) => city.value === e.target.value,
                 );
                 handleRegionChange(activeProvince, selectedCity?.value || '');
               }}
               value={activeCity}
             >
-              {cityOptions.map((city) => (
+              {availableCityOptions.map((city) => (
                 <option key={city.value} value={city.value}>
                   {city.label}
                 </option>

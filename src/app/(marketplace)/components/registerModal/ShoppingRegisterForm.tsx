@@ -1,11 +1,11 @@
 'use client';
 
 import {
-  modelProvinceOptions,
-  modelCityOptions,
-  modelDistrictOptions,
-  capacityOptions,
-} from '@/constants/locations';
+  MODEL_PROVINCE_OPTIONS,
+  GET_MODEL_CITY_OPTIONS,
+  GET_MODEL_DISTRICT_OPTIONS,
+  CAPACITY_OPTIONS,
+} from '@/constants';
 import { useMemo, useState } from 'react';
 import { shoppingRegisterApi } from '@/apis/meetings/registerApi';
 import { useMutation } from '@tanstack/react-query';
@@ -114,7 +114,7 @@ export function ShoppingRegisterForm({
               name="capacity"
               id="capacity"
               required
-              options={capacityOptions}
+              options={CAPACITY_OPTIONS}
               value={formData.capacity.toString()}
               onChange={(value) =>
                 setFormData({ ...formData, capacity: Number(value) })
@@ -132,12 +132,17 @@ export function ShoppingRegisterForm({
                   name="province"
                   id="province"
                   required
-                  options={modelProvinceOptions}
+                  options={MODEL_PROVINCE_OPTIONS}
                   value={formData.location.province}
                   onChange={(value) =>
                     setFormData({
                       ...formData,
-                      location: { ...formData.location, province: value },
+                      location: {
+                        ...formData.location,
+                        province: value,
+                        city: '',
+                        district: '',
+                      },
                     })
                   }
                 />
@@ -145,12 +150,16 @@ export function ShoppingRegisterForm({
                   name="city"
                   id="city"
                   required
-                  options={modelCityOptions}
+                  options={GET_MODEL_CITY_OPTIONS(formData.location.province)}
                   value={formData.location.city}
                   onChange={(value) =>
                     setFormData({
                       ...formData,
-                      location: { ...formData.location, city: value },
+                      location: {
+                        ...formData.location,
+                        city: value,
+                        district: '',
+                      },
                     })
                   }
                 />
@@ -158,7 +167,7 @@ export function ShoppingRegisterForm({
                   name="district"
                   id="district"
                   required
-                  options={modelDistrictOptions}
+                  options={GET_MODEL_DISTRICT_OPTIONS(formData.location.city)}
                   value={formData.location.district}
                   onChange={(value) =>
                     setFormData({
