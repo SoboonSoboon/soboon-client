@@ -24,8 +24,8 @@ export const Button = ({
     'inline-flex items-center justify-center rounded-lg border font-medium select-none transition h-11';
 
   const sizes = {
-    small: 'h-10 w-[120px] px-4 text-sm', // 모바일 사이즈
-    large: 'h-11 w-[332px] px-5 text-base', // 데스크탑 사이즈
+    small: 'h-10 px-4 text-sm', // 모바일 사이즈
+    large: 'h-11 px-5 text-base', // 데스크탑 사이즈
   } as const;
 
   const variants = {
