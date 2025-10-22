@@ -1,3 +1,4 @@
+import React from 'react';
 import { cn } from '@/utils/cn';
 
 export interface ButtonProps
@@ -56,7 +57,6 @@ export const Button = ({
       className={cn(
         baseStyles,
         sizes[size],
-        variants[variant],
         disabled ? disabledVariants[variant] : variants[variant],
         className,
       )}
