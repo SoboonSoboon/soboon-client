@@ -1,10 +1,10 @@
 'use client';
 
 import {
-  modelProvinceOptions,
-  modelCityOptions,
-  modelDistrictOptions,
-} from '@/constants/locations';
+  MODEL_PROVINCE_OPTIONS,
+  GET_MODEL_CITY_OPTIONS,
+  GET_MODEL_DISTRICT_OPTIONS,
+} from '@/constants';
 import { useMemo, useState } from 'react';
 import { sharingRegisterApi } from '@/apis/meetings/registerApi';
 import {
@@ -140,27 +140,32 @@ export function SharingRegisterForm({ handleClose }: SharingRegisterFormProps) {
                   name="province"
                   id="province"
                   required
-                  options={modelProvinceOptions}
+                  options={MODEL_PROVINCE_OPTIONS}
                   value={formData.province}
                   onChange={(value) =>
-                    setFormData({ ...formData, province: value })
+                    setFormData({
+                      ...formData,
+                      province: value,
+                      city: '',
+                      district: '',
+                    })
                   }
                 />
                 <Dropdown
                   name="city"
                   id="city"
                   required
-                  options={modelCityOptions}
+                  options={GET_MODEL_CITY_OPTIONS(formData.province)}
                   value={formData.city}
                   onChange={(value) =>
-                    setFormData({ ...formData, city: value })
+                    setFormData({ ...formData, city: value, district: '' })
                   }
                 />
                 <Dropdown
                   name="district"
                   id="district"
                   required
-                  options={modelDistrictOptions}
+                  options={GET_MODEL_DISTRICT_OPTIONS(formData.city)}
                   value={formData.district}
                   onChange={(value) =>
                     setFormData({ ...formData, district: value })
