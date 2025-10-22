@@ -32,7 +32,7 @@ export const Header = () => {
       <div className="text-text-main mx-auto flex h-full max-w-[1200px] items-center justify-between bg-white dark:bg-black dark:text-white">
         <div className="flex items-center gap-6">
           {isLoggedIn ? (
-            <Link href="/shopping">
+            <Link href="/sharing">
               <Logo width={75} height={28} />{' '}
             </Link>
           ) : (
@@ -45,20 +45,20 @@ export const Header = () => {
             {isLoggedIn ? (
               <>
                 <Link
-                  href="/shopping"
-                  className={`font-memomentKkukkkuk hover:text-primary whitespace-nowrap ${
-                    pathname.startsWith('/shopping') ? 'text-primary' : ''
-                  }`}
-                >
-                  함께 장보기
-                </Link>
-                <Link
                   href="/sharing"
                   className={`font-memomentKkukkkuk hover:text-primary whitespace-nowrap ${
                     pathname.startsWith('/sharing') ? 'text-primary' : ''
                   }`}
                 >
                   함께 소분하기
+                </Link>
+                <Link
+                  href="/shopping"
+                  className={`font-memomentKkukkkuk hover:text-primary whitespace-nowrap ${
+                    pathname.startsWith('/shopping') ? 'text-primary' : ''
+                  }`}
+                >
+                  함께 장보기
                 </Link>
               </>
             ) : (
