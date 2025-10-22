@@ -3,16 +3,16 @@ import { ProfileImg } from '@/components/Atoms';
 import { ReviewItemBar } from './ReviewItemBar';
 import { ReviewData } from '@/utils/review';
 import { useState } from 'react';
+import { useAuthStore } from '@/apis/auth/hooks/authStore';
 interface ProfileSideBar {
   reviewData: ReviewData;
 }
 
 export const ProfileSideBar = ({ reviewData }: ProfileSideBar) => {
   const [reviews] = useState(reviewData);
-
+  const userNickname = useAuthStore((state) => state.userNickname);
+  const userImage = useAuthStore((state) => state.userImage);
   const userData = {
-    nickname: '그린데이즈',
-    Image: '',
     keywords: [
       { keyword: 'TIME_PROMISE', count: 8 },
       { keyword: 'KIND_AND_CARING', count: 7 },
@@ -37,8 +37,8 @@ export const ProfileSideBar = ({ reviewData }: ProfileSideBar) => {
   return (
     <div className="border-gray-10 flex w-full flex-col gap-5 rounded-lg border bg-white px-8 py-15">
       <div className="flex flex-col items-center justify-center gap-2.5">
-        <ProfileImg profileImageUrl={userData.Image} size={118} />
-        <h2 className="font-memomentKkukkkuk text-2xl">{userData.nickname}</h2>
+        <ProfileImg profileImageUrl={userImage || ''} size={118} />
+        <h2 className="font-memomentKkukkkuk text-2xl">{userNickname}</h2>
       </div>
 
       <div className="flex flex-col gap-4">
