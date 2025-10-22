@@ -1,7 +1,15 @@
+'use client';
 import { ProfileImg } from '@/components/Atoms';
 import { ReviewItemBar } from './ReviewItemBar';
+import { ReviewData } from '@/utils/review';
+import { useState } from 'react';
+interface ProfileSideBar {
+  reviewData: ReviewData;
+}
 
-export const ProfileSideBar = () => {
+export const ProfileSideBar = ({ reviewData }: ProfileSideBar) => {
+  const [reviews] = useState(reviewData);
+
   const userData = {
     nickname: '그린데이즈',
     Image: '',
@@ -9,7 +17,7 @@ export const ProfileSideBar = () => {
       { keyword: 'TIME_PROMISE', count: 8 },
       { keyword: 'KIND_AND_CARING', count: 7 },
       { keyword: 'SAME_AS_PHOTO', count: 5 },
-      { keyword: 'FAST_RESPONSE', count: 0 },
+      { keyword: 'FAST_RESPONSE', count: 15 },
       { keyword: 'GOOD_DISTRIBUTION', count: 10 },
     ],
   };
@@ -23,8 +31,9 @@ export const ProfileSideBar = () => {
   } as const;
 
   // 리뷰 키워드 중 최대 count에 20% 여유를 더한 값 계산
-  const maxCount = Math.max(...userData.keywords.map((k) => k.count)) * 1.2;
-
+  const maxCount = Math.max(...reviews.keywords.map((k) => k.count)) * 1.2;
+  const maxCountMock = Math.max(...userData.keywords.map((k) => k.count)) * 1.2;
+  console.log(reviewData, 'data');
   return (
     <div className="border-gray-10 flex w-full flex-col gap-5 rounded-lg border bg-white px-8 py-15">
       <div className="flex flex-col items-center justify-center gap-2.5">
@@ -39,7 +48,7 @@ export const ProfileSideBar = () => {
             <ReviewItemBar
               key={index}
               count={data.count}
-              maxCount={maxCount}
+              maxCount={maxCountMock}
               label={
                 KEYWORD_LABELS[data.keyword as keyof typeof KEYWORD_LABELS]
               }
