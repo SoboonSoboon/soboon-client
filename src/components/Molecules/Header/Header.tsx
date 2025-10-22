@@ -105,12 +105,7 @@ export const Header = () => {
             </>
           ) : (
             <>
-              <Button
-                primary
-                size="small"
-                onClick={redirectToKakao}
-                label="시작하기"
-              />
+              <Button onClick={redirectToKakao} label="시작하기" />
             </>
           )}
         </div>
