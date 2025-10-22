@@ -8,8 +8,10 @@ import { useEffect, useState } from 'react';
 
 export const CommentSection = ({
   commentsList,
+  status,
 }: {
   commentsList: CommentsListType | null;
+  status: 'RECRUITING' | 'COMPLETED' | 'CLOSED';
 }) => {
   const [comments, setComments] = useState<CommentsListType['content']>(
     commentsList?.content || [],
@@ -25,7 +27,7 @@ export const CommentSection = ({
       <CommentCountContainer commentCount={commentsList!.totalElements} />
 
       {/* 댓글 입력 영역 */}
-      <CommentInputContainer />
+      <CommentInputContainer status={status} />
 
       {/* 댓글 리스트 영역 */}
       <CommentListContainer commentList={comments} />

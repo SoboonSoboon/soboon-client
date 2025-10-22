@@ -107,7 +107,9 @@
   --System-background_inactive: var(--GrayScale-Gray5);
   --System-background_alt: var(--GrayScale-White);
 }
-
+body {
+  background-color: #fdfdfd;
+}
 @layer utilities {
   .text-xs {
     font-size: 12px;
@@ -141,10 +143,6 @@
 
   .font-memomentKkukkkuk {
     font-family: 'memomentKkukkkuk', sans-serif !important;
-  }
-
-  .bg-gray-5 {
-    background-color: var(--color-gray-5);
   }
 }
 

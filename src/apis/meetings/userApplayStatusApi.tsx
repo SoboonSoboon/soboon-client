@@ -2,7 +2,12 @@ import { axiosInstance } from '../axiosInstance';
 
 export type UserApplayStatusType = {
   meetingId: number;
-  participationStatus: 'APPROVED' | 'APPLIED' | 'REJECTED' | 'CANCELLED';
+  participationStatus:
+    | 'APPROVED'
+    | 'APPLIED'
+    | 'REJECTED'
+    | 'CANCELLED'
+    | 'KICKED';
 };
 
 export const getUserApplayStatus = async (): Promise<

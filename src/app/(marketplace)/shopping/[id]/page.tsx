@@ -139,7 +139,10 @@ export default async function ShoppingDetailPage({
           <DetailContentFooter createdAt={shoppingMettingDetail!.createdAt} />
 
           {/* 댓글 영역 */}
-          <CommentSection commentsList={commentsList} />
+          <CommentSection
+            commentsList={commentsList}
+            status={shoppingMettingDetail!.status}
+          />
         </article>
 
         <div className="sticky top-6 h-[95vh]">
