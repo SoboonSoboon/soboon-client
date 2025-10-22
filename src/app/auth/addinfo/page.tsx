@@ -3,7 +3,7 @@
 import { postMyProfileData } from '@/apis/auth/authApi';
 import { useAuthStore } from '@/apis/auth/hooks/authStore';
 import { useProfile } from '@/apis/auth/hooks/useProfileData';
-import { Dropdown } from '@/components';
+import { Button, Dropdown } from '@/components';
 import {
   modelCityOptions,
   modelDistrictOptions,
@@ -180,13 +180,14 @@ export default function AddInfoPage() {
         </div>
 
         {/* 저장하기 버튼 */}
-        <button
+        <Button
+          label="저장하기"
           onClick={handleSubmit}
           disabled={!newData.nickname?.trim()}
-          className="bg-primary w-full cursor-pointer rounded-[8px] py-4 text-lg font-semibold text-white transition-colors hover:bg-[var(--GreenScale-Green60)] disabled:cursor-not-allowed disabled:bg-gray-300"
+          className="w-full"
         >
           저장하기
-        </button>
+        </Button>
       </div>
     </div>
   );
