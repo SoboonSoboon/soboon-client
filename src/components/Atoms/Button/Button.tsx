@@ -21,7 +21,7 @@ export const Button = ({
   ...props
 }: ButtonProps) => {
   const baseStyles =
-    'inline-flex items-center justify-center rounded-lg border font-medium select-none transition h-11';
+    'inline-flex items-center justify-center rounded-lg font-medium select-none transition h-11';
 
   const sizes = {
     small: 'h-10 px-4 text-sm', // 모바일 사이즈
@@ -30,14 +30,14 @@ export const Button = ({
 
   const variants = {
     filled:
-      'cursor-pointer bg-primary text-white border-transparent hover:bg-[var(--GreenScale-Green60)] active:bg-[var(--GreenScale-Green70)]',
+      'cursor-pointer bg-primary text-white hover:bg-[var(--GreenScale-Green60)] active:bg-[var(--GreenScale-Green70)]',
     outline:
-      'cursor-pointer bg-white text-primary border-primary active:border-[var(--GreenScale-Green70)] active:text-[var(--GreenScale-Green70)]',
+      'cursor-pointer bg-white text-primary border border-primary active:border-[var(--GreenScale-Green70)] active:text-[var(--GreenScale-Green70)]',
   } as const;
 
   const disabledVariants = {
     filled:
-      'bg-[var(--GrayScale-Gray30)] text-white border-transparent cursor-not-allowed font-normal',
+      'bg-[var(--GrayScale-Gray30)] text-white cursor-not-allowed font-normal',
     outline:
       'bg-white text-[var(--GrayScale-Gray30)] border-[var(--GrayScale-Gray40)] cursor-not-allowed font-normal',
   } as const;
