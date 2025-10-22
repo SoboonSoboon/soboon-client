@@ -8,7 +8,7 @@ import {
   CardImage,
   CardSubtitle,
   CardTitle,
-  LikeButton,
+  BookmarkButton,
   Line,
   StatusTag,
 } from '@/components';
@@ -19,6 +19,7 @@ import {
 } from '@/types/meetingsType';
 import { useEffect, useState } from 'react';
 import { timeFormatter } from '@/utils/timeFormetter';
+import { NonDividingList } from './NonDividingList';
 
 export const SharingListSection = ({
   sharingMettingList,
@@ -38,6 +39,10 @@ export const SharingListSection = ({
   const onClickCard = (id: string) => {
     router.push(`/sharing/${id}`);
   };
+
+  if (mettingList?.length === 0) {
+    return <NonDividingList />;
+  }
 
   return (
     <div className="grid grid-cols-3 gap-8">
@@ -60,7 +65,10 @@ export const SharingListSection = ({
                 status={metting.status}
                 className="absolute top-3 left-3"
               />
-              <LikeButton className="absolute top-4 right-0" />
+              <BookmarkButton
+                className="absolute top-4 right-0"
+                liked={metting.bookmarked}
+              />
               <CardImage
                 alt="기본 카드"
                 src={

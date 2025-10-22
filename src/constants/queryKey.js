@@ -8,4 +8,10 @@ export const mypageKeys = {
     page,
     size,
   ],
+  bookmarksMeeting: (page, size) => [
+    ...mypageKeys.meetings(),
+    'bookmarks',
+    page,
+    size,
+  ],
 };

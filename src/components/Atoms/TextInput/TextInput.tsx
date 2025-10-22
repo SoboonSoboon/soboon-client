@@ -18,7 +18,7 @@ export const TextInput = ({
   return (
     <input
       className={cn(
-        'flex w-full flex-1 items-center rounded-xl border-2 border-transparent bg-[var(--GrayScale-Gray5)] px-4 py-2.5 text-[var(--GrayScale-Gray80)] focus:border-[var(--OrangeScale-Orange50)] focus:outline-none',
+        'flex w-full flex-1 items-center rounded-xl border-2 border-transparent bg-[var(--GrayScale-Gray5)] px-4 py-2.5 text-[var(--GrayScale-Gray80)] focus:border-[var(--GreenScale-Green50)] focus:outline-none',
         className,
       )}
       placeholder={placeholder}

@@ -21,12 +21,18 @@ type MeetingDetailType = {
   detail_address: string;
   images: string[];
   status: StatusType;
+  location: LocationType;
   description: string;
   current_member: number;
   total_member: number;
   category: string;
   createdAt: string;
   bookmarked: boolean;
+  user: {
+    userId: number;
+    userName: string;
+    profile: string;
+  };
 };
 
 /*
@@ -57,6 +63,7 @@ interface DividingContentType {
     profile: string;
   };
   createdAt: string;
+  bookmarked: boolean;
 }
 
 /*
@@ -83,6 +90,7 @@ interface ShoppingContentType {
   };
   currentMember: number;
   createdAt: string;
+  bookmarked: boolean;
 }
 
 /*
@@ -110,6 +118,9 @@ type CreateDividingMeetingResponseType = ApiResponse<{
   meetingId: number;
 }>;
 
+type meetingSearchParamsType = {
+  [key: string]: string | string[] | undefined | null;
+};
 export type {
   MeetingDetailType,
   UpdateMeetingResponseType,
@@ -120,4 +131,5 @@ export type {
   ShoppingContentType,
   CreateShoppingMeetingResponseType,
   CreateDividingMeetingResponseType,
+  meetingSearchParamsType,
 };

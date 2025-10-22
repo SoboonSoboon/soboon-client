@@ -1,6 +1,9 @@
 import { SideButtonSection } from '@/components';
 import { IntroSection } from '@/app/(marketplace)/components';
-import { ShoppingMeetingsType } from '@/types/meetingsType';
+import {
+  meetingSearchParamsType,
+  ShoppingMeetingsType,
+} from '@/types/meetingsType';
 import { FilterSection, ShoppingListSection } from './components';
 
 // const token = localStorage.getItem('accessToken'); //todo: 전역상태관리로 관리하기로 변경
@@ -37,7 +40,7 @@ async function getShoppingList(
 export default async function ShoppingPage({
   searchParams,
 }: {
-  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
+  searchParams: Promise<meetingSearchParamsType>;
 }) {
   const params = await searchParams;
 
@@ -45,12 +48,11 @@ export default async function ShoppingPage({
     province: (params.province as string) || '',
     city: (params.city as string) || '',
     district: (params.district as string) || '',
+    status: (params.status as string) || '',
     sortType: (params.sortType as string) || '',
   });
 
   const shoppingList = await getShoppingList(query);
-
-  console.log(shoppingList);
 
   return (
     <main className="flex flex-col gap-8 py-8">

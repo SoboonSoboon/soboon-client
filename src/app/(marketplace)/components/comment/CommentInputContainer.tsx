@@ -23,7 +23,7 @@ export const CommentInputContainer = () => {
         <TextInput
           placeholder="댓글을 입력해주세요."
           name="comment"
-          className="!border-text-line1 border bg-white"
+          className="!border-text-line1 !border-1 bg-white"
         />
         <Button
           label="작성"
