@@ -25,7 +25,7 @@ export const Button = ({
 
   const sizes = {
     small: 'h-10 px-4 text-sm', // 모바일 사이즈
-    large: 'h-11 px-5 text-base', // 데스크탑 사이즈
+    large: 'h-11 px-5', // 데스크탑 사이즈
   } as const;
 
   const variants = {

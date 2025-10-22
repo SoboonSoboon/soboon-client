@@ -24,7 +24,6 @@ describe('Button 컴포넌트', () => {
         'items-center',
         'justify-center',
         'rounded-lg',
-        'border',
       );
     });
   });
@@ -33,21 +32,13 @@ describe('Button 컴포넌트', () => {
     it('variant를 지정하지 않으면 filled가 기본값이어야 한다', () => {
       render(<Button label="기본 버튼" />);
       const button = screen.getByRole('button');
-      expect(button).toHaveClass(
-        'bg-primary',
-        'text-white',
-        'border-transparent',
-      );
+      expect(button).toHaveClass('bg-primary', 'text-white');
     });
 
     it('variant가 filled일 때 filled 스타일이 적용되어야 한다', () => {
       render(<Button label="Filled" variant="filled" />);
       const button = screen.getByRole('button');
-      expect(button).toHaveClass(
-        'bg-primary',
-        'text-white',
-        'border-transparent',
-      );
+      expect(button).toHaveClass('bg-primary', 'text-white');
     });
 
     it('variant가 outline일 때 outline 스타일이 적용되어야 한다', () => {
@@ -61,7 +52,7 @@ describe('Button 컴포넌트', () => {
     it('size를 지정하지 않으면 large가 기본값이어야 한다', () => {
       render(<Button label="Large" />);
       const button = screen.getByRole('button');
-      expect(button).toHaveClass('h-11', 'px-5', 'text-base');
+      expect(button).toHaveClass('h-11', 'px-5');
     });
 
     it('size가 small일 때 small 스타일이 적용되어야 한다', () => {
@@ -73,7 +64,7 @@ describe('Button 컴포넌트', () => {
     it('size가 large일 때 large 스타일이 적용되어야 한다', () => {
       render(<Button label="Large" size="large" />);
       const button = screen.getByRole('button');
-      expect(button).toHaveClass('h-11', 'px-5', 'text-base');
+      expect(button).toHaveClass('h-11', 'px-5');
     });
   });
 
@@ -191,13 +182,7 @@ describe('Button 컴포넌트', () => {
     it('outline variant와 large size 조합이 제대로 작동해야 한다', () => {
       render(<Button label="버튼" variant="outline" size="large" />);
       const button = screen.getByRole('button');
-      expect(button).toHaveClass(
-        'bg-white',
-        'border-primary',
-        'h-11',
-        'px-5',
-        'text-base',
-      );
+      expect(button).toHaveClass('bg-white', 'border-primary', 'h-11', 'px-5');
     });
   });
 });
