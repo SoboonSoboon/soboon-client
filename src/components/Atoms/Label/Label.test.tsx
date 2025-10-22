@@ -10,7 +10,7 @@ describe('Label 컴포넌트', () => {
   it('required prop이 true일 때 필수 표시(*)가 보여야 한다', () => {
     render(<Label required>테스트 라벨</Label>);
     expect(screen.getByText('*')).toBeInTheDocument();
-    expect(screen.getByText('*')).toHaveClass('text-red-500');
+    expect(screen.getByText('*')).toHaveClass('text-primary');
   });
 
   it('required prop이 false일 때 필수 표시(*)가 보이지 않아야 한다', () => {

@@ -1,6 +1,7 @@
 'use client';
 
 import { postMyProfileData } from '@/apis/auth/authApi';
+import { useAuthStore } from '@/apis/auth/hooks/authStore';
 import { useProfile } from '@/apis/auth/hooks/useProfileData';
 import { Dropdown } from '@/components';
 import {
@@ -11,23 +12,44 @@ import {
 import { profileDataType } from '@/types/authType';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
+
+const defaultImage =
+  'https://github.com/SoboonSoboon/soboon-client/blob/53fc79821c2d3598dabd6e0d5b21df0da774dd48/public/images/profile_default.svg';
 
 export default function AddInfoPage() {
+  const router = useRouter();
   const { data: profileData, isLoading, error } = useProfile();
   const [newData, setNewData] = useState<profileDataType>({
-    nickname: profileData?.nickname || profileData?.name || '',
-    image: profileData?.image || '',
-    province: profileData?.province || '',
-    city: profileData?.city || '',
-    district: profileData?.district || '',
-    detail: profileData?.detail || '',
+    nickname: '',
+    image: '',
+    province: '',
+    city: '',
+    district: '',
+    detail: '',
   });
 
   const handleSubmit = async () => {
     try {
-      await postMyProfileData(newData);
-      console.log('저장 결과:', newData);
-      window.location.href = '/sharing';
+      const response = await postMyProfileData(newData);
+
+      if (response.message == '정보 입력 성공') {
+        // Zustand 스토어 업데이트
+        useAuthStore.setState({
+          isLoggedIn: true,
+          userId: newData.id,
+          userName: newData.name,
+          userNickname: newData.nickname,
+          userImage: newData.image,
+          userLocation: {
+            province: newData.province!,
+            city: newData.city!,
+            district: newData.district!,
+            detail: newData.detail,
+          },
+        });
+        router.push('/sharing');
+      }
     } catch (error) {
       console.log('저장 실패!');
       console.error('저장 오류:', error);
@@ -44,8 +66,6 @@ export default function AddInfoPage() {
       reader.readAsDataURL(file);
     }
   };
-  const defaultImage =
-    'https://github.com/SoboonSoboon/soboon-client/blob/53fc79821c2d3598dabd6e0d5b21df0da774dd48/public/images/profile_default.svg';
 
   useEffect(() => {
     if (profileData) {
@@ -73,23 +93,10 @@ export default function AddInfoPage() {
         <h1 className="mb-8 text-2xl font-bold text-gray-900">프로필 만들기</h1>
 
         {/* 프로필 사진 */}
-        <div className="mb-8">
-          {/* <label className="cursor-pointer">
-              <input
-                type="file"
-                accept="image/*"
-                onChange={(e) =>
-                  setNewData({ ...newData, image: e.target.value })
-                }
-                className="hidden"
-              />
-            </label> */}
-        </div>
-
         <div className="mb-8 flex flex-col items-center">
           <div className="relative mb-4">
             <Image
-              src={profileData.image || defaultImage}
+              src={newData.image || defaultImage}
               alt="프로필 미리보기"
               width={96}
               height={96}
@@ -109,24 +116,15 @@ export default function AddInfoPage() {
                   width="24"
                   height="24"
                   viewBox="0 0 24 24"
-                  fill="white"
-                  className="h-4 w-4"
+                  fill="none"
+                  stroke="#707070"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  className="lucide lucide-pencil h-4 w-4"
                 >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="24"
-                    height="24"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="#707070"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    className="lucide lucide-pencil-icon lucide-pencil"
-                  >
-                    <path d="M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497z" />
-                    <path d="m15 5 4 4" />
-                  </svg>
+                  <path d="M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497z" />
+                  <path d="m15 5 4 4" />
                 </svg>
               </div>
             </label>
@@ -138,7 +136,7 @@ export default function AddInfoPage() {
           <h2 className="mb-4 text-lg font-semibold text-gray-900">닉네임</h2>
           <input
             type="text"
-            value={newData.nickname!}
+            value={newData.nickname || ''}
             onChange={(e) =>
               setNewData({ ...newData, nickname: e.target.value })
             }
@@ -159,7 +157,7 @@ export default function AddInfoPage() {
               id="province"
               required
               options={modelProvinceOptions}
-              value={newData.province}
+              value={newData.province || ''}
               onChange={(value) => setNewData({ ...newData, province: value })}
             />
             <Dropdown
@@ -167,7 +165,7 @@ export default function AddInfoPage() {
               id="city"
               required
               options={modelCityOptions}
-              value={newData.city}
+              value={newData.city || ''}
               onChange={(value) => setNewData({ ...newData, city: value })}
             />
             <Dropdown
@@ -175,7 +173,7 @@ export default function AddInfoPage() {
               id="district"
               required
               options={modelDistrictOptions}
-              value={newData.district}
+              value={newData.district || ''}
               onChange={(value) => setNewData({ ...newData, district: value })}
             />
           </div>
@@ -184,7 +182,7 @@ export default function AddInfoPage() {
         {/* 저장하기 버튼 */}
         <button
           onClick={handleSubmit}
-          // disabled={!newData.nickname.trim()}
+          disabled={!newData.nickname?.trim()}
           className="bg-primary w-full cursor-pointer rounded-[8px] py-4 text-lg font-semibold text-white transition-colors hover:bg-orange-600 disabled:cursor-not-allowed disabled:bg-gray-300"
         >
           저장하기

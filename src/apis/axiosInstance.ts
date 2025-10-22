@@ -13,7 +13,7 @@ export const axiosInstance = axios.create({
 axiosInstance.interceptors.request.use(
   (config) => {
     const token = process.env.NEXT_PUBLIC_SOBOON_API_TOKEN;
-    // const token = sessionStorage.getItem('accessToken'); //todo: 전역상태관리로 관리하기로 변경
+    // const token = localStorage.getItem('accessToken'); //todo: 전역상태관리로 관리하기로 변경
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }
