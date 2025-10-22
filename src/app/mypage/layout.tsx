@@ -13,7 +13,9 @@ export default async function MyPageLayout({
         <div className="flex h-full w-full gap-10">
           {/* 왼쪽 고정 프로필 */}
           <div className="w-[340px] flex-shrink-0">
-            <ProfileSideBar reviewData={reviews.data} />
+            <div className="sticky top-20">
+              <ProfileSideBar reviewData={reviews.data} />
+            </div>
           </div>
 
           {/* 오른쪽 동적 콘텐츠 */}
