@@ -48,7 +48,7 @@ function MyPageContent() {
               </div>
             </div>
           ) : (
-            <CardList data={filteredData} />
+            <CardList data={filteredData} activeMainTab={activeMainTab} />
           )}
         </div>
       </div>

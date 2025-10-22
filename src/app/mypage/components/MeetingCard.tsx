@@ -13,9 +13,17 @@ import { cn } from '@/utils/cn';
 import { useModal } from '@/components/Molecules/modal';
 import { ReviewModal } from './reviewModal/ReviewModal';
 import { timeFormatter } from '@/utils/timeFormetter';
+import { useRouter } from 'next/navigation';
 
 // 모임 카드 컴포넌트
-export const MeetingCard = ({ meeting }: { meeting: MeetingItem }) => {
+export const MeetingCard = ({
+  meeting,
+  activeMainTab,
+}: {
+  meeting: MeetingItem;
+  activeMainTab: string;
+}) => {
+  const router = useRouter();
   // 지역표기
   const location = meeting.location.district;
 
@@ -27,15 +35,31 @@ export const MeetingCard = ({ meeting }: { meeting: MeetingItem }) => {
     onClose: () => console.log('참여자 리뷰 모달 닫힘'),
   });
 
+  // 카드 클릭 핸들러
+  const handleCardClick = () => {
+    const category =
+      meeting.category.toLowerCase() === 'dividing'
+        ? 'sharing'
+        : meeting.category.toLowerCase();
+    router.push(`/${category}/${meeting.groupId}`);
+  };
+
   return (
     <div className="w-[calc(33.333%-21.33px)] flex-shrink-0">
-      <Card width="100%" height="384px" className="overflow-hidden bg-white">
+      <Card
+        width="100%"
+        height="384px"
+        className="cursor-pointer overflow-hidden bg-white"
+        onClick={handleCardClick}
+      >
         <CardContent>
           <div className="pb-5">
-            {/* 북마크 아이콘 */}
-            <div className="absolute top-4 right-4 z-10">
-              <Bookmark className="fill-gray-40 text-gray-40 size-5 border-none" />
-            </div>
+            {/* 북마크 아이콘 - host 탭일 때 숨김 */}
+            {activeMainTab !== 'host' && (
+              <div className="absolute top-4 right-4 z-10">
+                <Bookmark className="fill-gray-40 text-gray-40 size-5 border-none" />
+              </div>
+            )}
             <div className="absolute top-4 left-4 z-10">
               <StatusTag
                 status={meeting.status}
@@ -80,11 +104,28 @@ export const MeetingCard = ({ meeting }: { meeting: MeetingItem }) => {
                 <span className="text-sm">{location}</span>
               </div>
               <Button
-                variant={reviewData.reviewer ? 'outline' : 'block'}
-                label={reviewData.reviewer ? '리뷰하기' : '리뷰마감'}
+                variant={
+                  meeting.status === 'RECRUITING'
+                    ? 'block' //disabled로 수정계획
+                    : reviewData.reviewer
+                      ? 'outline'
+                      : 'block'
+                }
+                label={
+                  meeting.status === 'RECRUITING'
+                    ? '모집중'
+                    : reviewData.reviewer
+                      ? '리뷰하기'
+                      : '리뷰완료'
+                }
                 className="flex !py-[9px]"
                 size="small"
-                onClick={() => reviewModal.open()}
+                onClick={() => {
+                  if (meeting.status !== 'RECRUITING') {
+                    reviewModal.open();
+                  }
+                }}
+                disabled={meeting.status === 'RECRUITING'}
               />
             </CardFooter>
           </div>
