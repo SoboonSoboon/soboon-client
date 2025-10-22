@@ -2,9 +2,9 @@ import { create } from 'zustand';
 import { persist, createJSONStorage } from 'zustand/middleware';
 
 type Location = {
-  province?: string | null;
-  city?: string | null;
-  district?: string | null;
+  province: string | null;
+  city: string | null;
+  district: string | null;
   detail?: string | null;
 };
 

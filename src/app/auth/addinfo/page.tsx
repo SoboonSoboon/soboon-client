@@ -22,7 +22,7 @@ export default function AddInfoPage() {
   const { data: profileData, isLoading, error } = useProfile();
   const [newData, setNewData] = useState<profileDataType>({
     nickname: '',
-    image: defaultImage,
+    image: '',
     province: '',
     city: '',
     district: '',
@@ -32,7 +32,6 @@ export default function AddInfoPage() {
   const handleSubmit = async () => {
     try {
       const response = await postMyProfileData(newData);
-      console.log('저장 결과:', response);
 
       if (response.message == '정보 입력 성공') {
         // Zustand 스토어 업데이트
@@ -43,9 +42,9 @@ export default function AddInfoPage() {
           userNickname: newData.nickname,
           userImage: newData.image,
           userLocation: {
-            province: newData.province,
-            city: newData.city,
-            district: newData.district,
+            province: newData.province!,
+            city: newData.city!,
+            district: newData.district!,
             detail: newData.detail,
           },
         });
