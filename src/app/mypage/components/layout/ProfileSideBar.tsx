@@ -48,7 +48,7 @@ export const ProfileSideBar = ({ reviewData }: ProfileSideBar) => {
             <ReviewItemBar
               key={index}
               count={data.count}
-              maxCount={maxCountMock}
+              maxCount={maxCount ? maxCount : maxCountMock}
               label={
                 KEYWORD_LABELS[data.keyword as keyof typeof KEYWORD_LABELS]
               }
