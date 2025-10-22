@@ -2,17 +2,18 @@
 
 import { TextInput } from '@/components';
 import { Button } from '@/components';
-import { createComment } from '@/action/createComment';
+import { createComment } from '@/action/commentAction';
 import { useActionState, useEffect } from 'react';
 import { useParams } from 'next/navigation';
+import { useToast } from '@/components/Atoms';
 
 export const CommentInputContainer = () => {
   const meetingId = useParams<{ id: string }>().id;
   const [state, formAction] = useActionState(createComment, null);
-
+  const { success } = useToast();
   useEffect(() => {
     if (state) {
-      console.log(state);
+      success(state);
     }
   }, [state]);
 
