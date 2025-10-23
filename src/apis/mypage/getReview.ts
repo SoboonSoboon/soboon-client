@@ -1,6 +1,8 @@
 import {
   ReviewResponse,
   ReviewTargetsResponse,
+  CreateHostReviewRequest,
+  CreateParticipantReviewRequest,
 } from '@/app/mypage/utils/review';
 
 const baseUrl = process.env.NEXT_PUBLIC_SOBOON_API_URL;
@@ -87,5 +89,50 @@ export const getReviewTargets = async (
         ],
       },
     };
+  }
+};
+
+export const createHostReview = async (
+  data: CreateHostReviewRequest,
+): Promise<void> => {
+  try {
+    const response = await fetch(`${baseUrl}/v1/reviews/host`, {
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${token}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+    });
+
+    if (!response.ok) {
+      throw new Error('Failed to create host review');
+    }
+  } catch (error) {
+    console.error('Error creating host review:', error);
+    throw error;
+  }
+};
+
+// 4. 참여자→주최자 리뷰 작성 (POST /v1/reviews/participant)
+export const createParticipantReview = async (
+  data: CreateParticipantReviewRequest,
+): Promise<void> => {
+  try {
+    const response = await fetch(`${baseUrl}/v1/reviews/participant`, {
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${token}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+    });
+
+    if (!response.ok) {
+      throw new Error('Failed to create participant review');
+    }
+  } catch (error) {
+    console.error('Error creating participant review:', error);
+    throw error;
   }
 };
