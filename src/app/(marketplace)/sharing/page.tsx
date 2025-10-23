@@ -8,7 +8,7 @@ import {
   SharingListSection,
 } from '@/app/(marketplace)/sharing/components';
 
-async function getSharingMetting(
+async function getSharingMeeting(
   query: URLSearchParams,
 ): Promise<DividingMeetingsType | null> {
   try {
@@ -24,14 +24,14 @@ async function getSharingMetting(
     );
 
     if (!response.ok) {
-      throw new Error('Failed to fetch sharing metting');
+      throw new Error('Failed to fetch sharing meeting');
     }
 
     const responseData = await response.json();
 
     return responseData.data;
   } catch (error) {
-    console.error('Failed to fetch sharing metting', error);
+    console.error('Failed to fetch sharing meeting', error);
     return null;
   }
 }
@@ -54,7 +54,7 @@ export default async function SharingPage({
     size: (params.size as string) || '20',
     status: (params.status as string) || '',
   });
-  const sharingMettingList = await getSharingMetting(query);
+  const sharingMeetingList = await getSharingMeeting(query);
 
   return (
     <main className="flex flex-col gap-8 py-8">
@@ -64,7 +64,7 @@ export default async function SharingPage({
           <FilterSection />
         </aside>
         <div className="flex-1">
-          <SharingListSection sharingMettingList={sharingMettingList} />
+          <SharingListSection sharingMeetingList={sharingMeetingList} />
         </div>
       </section>
     </main>

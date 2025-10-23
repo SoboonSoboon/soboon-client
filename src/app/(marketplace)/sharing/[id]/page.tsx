@@ -22,7 +22,7 @@ const dummyUser = {
 };
 
 // 소분하기 모임 상세 데이터 조회
-async function getSharingMettingDetail({
+async function getSharingMeetingDetail({
   id,
 }: {
   id: string;
@@ -119,7 +119,7 @@ export default async function SharingDetailPage({
 }) {
   const id = (await params).id;
   // 소분하기 모임 상세 데이터 조회
-  const meetingDetail = await getSharingMettingDetail({
+  const meetingDetail = await getSharingMeetingDetail({
     id,
   });
 

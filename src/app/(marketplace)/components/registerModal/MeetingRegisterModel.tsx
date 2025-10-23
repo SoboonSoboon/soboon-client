@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import { ShoppingRegisterForm } from './ShoppingRegisterForm';
 import { SharingRegisterForm } from './SharingRegisterForm';
 
-export function ShoppingMettingRegisterModel({
+export function ShoppingMeetingRegisterModel({
   isOpen,
   meetingType,
   onClose,
