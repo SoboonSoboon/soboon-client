@@ -3,10 +3,10 @@
 import { DateFilter } from '@/components';
 import { CITY_OPTIONS, PROVINCE_OPTIONS, GET_CITY_OPTIONS } from '@/constants';
 import { statusOptions } from '@/constants/status';
-import { ChevronDown } from 'lucide-react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useCallback, useMemo } from 'react';
 import { FilterSelect } from './FilterSelect';
+import { GoToTopScroll } from '@/utils/goToTopScroll';
 
 export const FilterSection = () => {
   const searchParams = useSearchParams();
@@ -30,12 +30,7 @@ export const FilterSection = () => {
     (status: string) => {
       const params = new URLSearchParams(searchParams.toString());
       params.set('status', status);
-      requestAnimationFrame(() => {
-        window.scrollTo({
-          top: 0,
-          behavior: 'smooth',
-        });
-      });
+      GoToTopScroll();
       router.push(`?${params.toString()}`);
     },
     [router, searchParams],
@@ -57,12 +52,7 @@ export const FilterSection = () => {
         params.set('city', city);
       }
 
-      requestAnimationFrame(() => {
-        window.scrollTo({
-          top: 0,
-          behavior: 'smooth',
-        });
-      });
+      GoToTopScroll();
 
       router.push(`?${params.toString()}`);
     },
