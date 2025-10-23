@@ -133,7 +133,6 @@ export default async function ShoppingDetailPage({
       <DetailHeader />
       <div className="flex gap-10">
         <article className="w-[730px]">
-          {/* <Carousel carouselImages={shoppingMettingDetail!.images} /> */}
           <DetailContent description={shoppingMettingDetail!.description} />
           <DetailContentFooter createdAt={shoppingMettingDetail!.createdAt} />
 
@@ -146,16 +145,9 @@ export default async function ShoppingDetailPage({
 
         <div className="sticky top-6 h-[95vh]">
           <DetailAside
-            meetingId={shoppingMettingDetail!.id}
-            title={shoppingMettingDetail!.title}
-            detail_address={shoppingMettingDetail!.detail_address}
-            current_member={shoppingMettingDetail!.current_member}
-            total_member={shoppingMettingDetail!.total_member}
-            status={shoppingMettingDetail!.status}
+            meetingDetail={shoppingMettingDetail!}
             isAuthor={isAuthor}
             participants={participants || []}
-            bookmarked={shoppingMettingDetail!.bookmarked}
-            userInfo={shoppingMettingDetail!.user}
           />
         </div>
       </div>
