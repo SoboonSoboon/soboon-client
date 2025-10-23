@@ -15,10 +15,7 @@ import { timeFormatter } from '@/utils/timeFormetter';
 import { MapPin } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { NonShoppingList } from './NonShoppingList';
-import { postBookmarkedMeetingApi, deleteBookmarkedMeetingApi } from '@/apis';
-import { useToast } from '@/components/Atoms/Toast/useToast';
-import { mypageKeys } from '@/constants/queryKey';
-import { useQueryClient } from '@tanstack/react-query';
+import { useBookmark } from '@/hooks/useBookmark';
 
 export const ShoppingListSection = ({
   shoppingList,
@@ -26,27 +23,10 @@ export const ShoppingListSection = ({
   shoppingList: ShoppingContentType[] | null;
 }) => {
   const router = useRouter();
-  const { success } = useToast();
-  const queryClient = useQueryClient();
+  const { handleBookmark } = useBookmark();
+
   const onClickCard = (id: string) => {
     router.push(`/shopping/${id}`);
-  };
-
-  const handleBookmark = async (id: string, isBookmarked: boolean) => {
-    try {
-      if (isBookmarked) {
-        const response = await deleteBookmarkedMeetingApi(+id);
-        success(response.message);
-      } else {
-        const response = await postBookmarkedMeetingApi(+id);
-        success(response.message);
-      }
-      queryClient.invalidateQueries({
-        queryKey: mypageKeys.bookmarksMeeting(),
-      });
-    } catch (error) {
-      console.error('찜 처리 실패:', error);
-    }
   };
 
   // 게시글이 없을 때의 빈 상태

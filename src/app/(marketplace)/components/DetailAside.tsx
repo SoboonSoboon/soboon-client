@@ -16,10 +16,7 @@ import {
 } from '@/apis/meetings/userApplayStatusApi';
 import { useMemo } from 'react';
 import { useQuery } from '@tanstack/react-query';
-import {
-  postBookmarkedMeetingApi,
-  deleteBookmarkedMeetingApi,
-} from '@/apis/meetings/bookmarkApi';
+import { useBookmark } from '@/hooks/useBookmark';
 import { ApplyStatusButtonSection } from './DetailAside/ApplyStatusButtonSection';
 import { AuthorStatusButtonSection } from './DetailAside/AuthorStatusButtonSection';
 
@@ -54,20 +51,11 @@ export const DetailAside = ({
   const [open, setOpen] = useState(false);
   const buttonRef = useRef<HTMLDivElement>(null);
   const [isBookmarked, setIsBookmarked] = useState(bookmarked);
+  const { handleBookmark } = useBookmark();
 
-  const handleBookmarkClick = async () => {
-    const previousState = isBookmarked;
+  const handleBookmarkClick = () => {
     setIsBookmarked(!isBookmarked);
-
-    try {
-      if (previousState) {
-        await deleteBookmarkedMeetingApi(+meetingId);
-      } else {
-        await postBookmarkedMeetingApi(+meetingId);
-      }
-    } catch (error) {
-      console.error('찜 추가/취소 실패:', error);
-    }
+    handleBookmark(meetingId.toString(), isBookmarked);
   };
   const { id: meetingId } = useParams<{ id: string }>();
   const { success, error } = useToast();
