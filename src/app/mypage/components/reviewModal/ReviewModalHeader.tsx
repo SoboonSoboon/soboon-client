@@ -24,7 +24,7 @@ export const ReviewModalHeader = ({
           </div>
         ) : (
           // participant 탭: 하나의 막대
-          <div className="bg-primary h-full w-full rounded-full" />
+          <div className="bg-Green-50 h-1 w-full rounded-full" />
         )}
       </div>
       <div className="w-full text-center font-serif text-2xl font-bold">
