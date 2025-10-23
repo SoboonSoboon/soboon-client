@@ -109,7 +109,6 @@ export const createHostReview = async (
   }
 };
 
-// 4. 참여자→주최자 리뷰 작성 (POST /v1/reviews/participant)
 export const createParticipantReview = async (
   data: CreateParticipantReviewRequest,
 ): Promise<void> => {
