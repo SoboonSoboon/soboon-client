@@ -10,6 +10,7 @@ export const useFilterParams = () => {
   const activeProvince = searchParams.get('province') || '';
   const activeCity = searchParams.get('city') || '';
   const activeStatus = searchParams.get('status') || '';
+  const activeProductType = searchParams.get('productType') || '';
 
   const updateParams = useCallback(
     (updates: Record<string, string>) => {
@@ -29,5 +30,11 @@ export const useFilterParams = () => {
     [router, searchParams],
   );
 
-  return { updateParams, activeProvince, activeCity, activeStatus };
+  return {
+    updateParams,
+    activeProvince,
+    activeCity,
+    activeStatus,
+    activeProductType,
+  };
 };

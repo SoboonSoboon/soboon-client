@@ -30,7 +30,7 @@ export const FilterSection = () => {
     if (province === '') {
       updateParams({ province, city: '' });
     } else {
-      updateParams({ province, city: '' }); // province 변경 시 항상 city 초기화
+      updateParams({ province, city: '' });
     }
   };
 

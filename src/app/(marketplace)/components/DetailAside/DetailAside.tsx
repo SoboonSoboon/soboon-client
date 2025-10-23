@@ -1,13 +1,11 @@
 'use client';
 
-import { StatusTag } from '@/components';
-import { EllipsisVertical, MapPin, Bookmark } from 'lucide-react';
-import { useState, useRef } from 'react';
-import { ActionMenu } from './ActionMenu/ActionMenu';
+import { MapPin } from 'lucide-react';
+import { useState } from 'react';
 import { ApplicantsMemberType } from '@/types/applicantsType';
-import { ApplicantsList } from './applicants/ApplicantsList';
+import { ApplicantsList } from '../applicants/ApplicantsList';
 import { applyMeeting, handleCloseMeeting } from '@/action/applicantsAction';
-import { ProfileImg, useToast } from '@/components/Atoms';
+import { useToast } from '@/components/Atoms';
 import { useParams } from 'next/navigation';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import {
@@ -20,40 +18,28 @@ import {
   postBookmarkedMeetingApi,
   deleteBookmarkedMeetingApi,
 } from '@/apis/meetings/bookmarkApi';
-import { ApplyStatusButtonSection } from './DetailAside/ApplyStatusButtonSection';
-import { AuthorStatusButtonSection } from './DetailAside/AuthorStatusButtonSection';
+import { ApplyStatusButtonSection } from './ApplyStatusButtonSection';
+import { AuthorStatusButtonSection } from './AuthorStatusButtonSection';
+import { MeetingDetailType } from '@/types/meetingsType';
+import { CurrentPeople } from './CurrentPeople';
+import { AsideHeader } from './AsideHeader';
+import { AsideMoreInfo } from './AsideMoreInfo';
 
 interface DetailAsideProps {
-  meetingId: number;
-  title: string;
-  detail_address: string;
-  current_member: number;
-  total_member: number;
-  status: 'RECRUITING' | 'COMPLETED' | 'CLOSED';
+  meetingDetail: MeetingDetailType;
   isAuthor: boolean;
   participants: ApplicantsMemberType['data'][];
-  bookmarked: boolean;
-  userInfo: {
-    userId: number;
-    userName: string;
-    profile: string;
-  };
 }
 
 export const DetailAside = ({
-  title,
-  detail_address,
-  current_member,
-  total_member,
-  status,
+  meetingDetail,
   isAuthor,
   participants,
-  bookmarked,
-  userInfo,
 }: DetailAsideProps) => {
-  const [open, setOpen] = useState(false);
-  const buttonRef = useRef<HTMLDivElement>(null);
-  const [isBookmarked, setIsBookmarked] = useState(bookmarked);
+  const [isBookmarked, setIsBookmarked] = useState(meetingDetail.bookmarked);
+  const { id: meetingId } = useParams<{ id: string }>();
+  const { success, error } = useToast();
+  const queryClient = useQueryClient();
 
   const handleBookmarkClick = async () => {
     const previousState = isBookmarked;
@@ -62,16 +48,16 @@ export const DetailAside = ({
     try {
       if (previousState) {
         await deleteBookmarkedMeetingApi(+meetingId);
+        success('북마크에서 삭제되었어요.');
       } else {
         await postBookmarkedMeetingApi(+meetingId);
+        success('북마크에 추가되었어요.');
       }
-    } catch (error) {
-      console.error('찜 추가/취소 실패:', error);
+    } catch (err) {
+      console.error('찜 추가/취소 실패:', err);
+      error('찜 추가/취소 실패했어요.');
     }
   };
-  const { id: meetingId } = useParams<{ id: string }>();
-  const { success, error } = useToast();
-  const queryClient = useQueryClient();
 
   const handleApplyMeeting = async (applicationId: string) => {
     try {
@@ -121,66 +107,31 @@ export const DetailAside = ({
 
   return (
     <aside className="flex w-[430px] flex-col gap-5">
-      <div className="flex w-full justify-between">
-        {/* 상태 바 */}
-        <div>
-          <StatusTag status={status} />
-        </div>
+      <AsideMoreInfo
+        status={meetingDetail?.status}
+        isBookmarked={isBookmarked}
+        handleBookmarkClick={handleBookmarkClick}
+        meetingId={meetingId}
+      />
 
-        {/* 아이콘 버튼 */}
-        <div className="relative flex cursor-pointer justify-center gap-2">
-          <div className="flex justify-center p-1.5">
-            <Bookmark
-              className={`${isBookmarked ? 'text-primary fill-primary' : 'text-gray-40 fill-gray-40'} size-6`}
-              onClick={handleBookmarkClick}
-            />
-          </div>
-          <div
-            ref={buttonRef}
-            onClick={(e) => {
-              e.stopPropagation();
-              setOpen(!open);
-            }}
-            className="flex cursor-pointer rounded-lg p-1.5 hover:bg-[var(--GrayScale-Gray5)]"
-          >
-            <EllipsisVertical className="text-gray-30 size-6" />
-          </div>
-          {open && (
-            <div className="absolute top-8 right-0 z-50">
-              <ActionMenu
-                onClose={() => setOpen(false)}
-                buttonRef={buttonRef as React.RefObject<HTMLElement>}
-                meetingId={+meetingId}
-              />
-            </div>
-          )}
-        </div>
-      </div>
-
-      <div className="flex flex-col gap-3">
-        <h2 className="font-memomentKkukkkuk line-clamp-2 text-2xl">{title}</h2>
-        <div className="flex items-center gap-2">
-          <ProfileImg profileImageUrl={userInfo.profile} size={24} />
-          <span className="text-text-sub2">{userInfo.userName}</span>
-        </div>
-      </div>
+      <AsideHeader
+        title={meetingDetail?.title}
+        profileImageUrl={meetingDetail?.user.profile}
+        userName={meetingDetail?.user.userName}
+      />
 
       <div className="bg-gray-10 h-[1px] w-full"></div>
 
       <div className="flex w-full justify-between">
         <div className="flex items-center gap-1">
           <MapPin className="text-gray-40 size-6" />
-          <p>{detail_address}</p>
+          <p>{meetingDetail?.detail_address}</p>
         </div>
 
-        <div>
-          <p>
-            <span className="text-primary">
-              {current_member}&nbsp;/&nbsp;{total_member}
-            </span>
-            &nbsp;명 모집중
-          </p>
-        </div>
+        <CurrentPeople
+          currentMember={meetingDetail?.current_member}
+          totalMember={meetingDetail?.total_member}
+        />
       </div>
 
       {!isAuthor && (
@@ -196,7 +147,7 @@ export const DetailAside = ({
 
       {isAuthor && (
         <AuthorStatusButtonSection
-          status={status}
+          status={meetingDetail?.status}
           handleCloseMeetingAction={handleCloseMeetingAction}
         />
       )}
