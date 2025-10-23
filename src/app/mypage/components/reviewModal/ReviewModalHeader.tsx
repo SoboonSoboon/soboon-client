@@ -23,8 +23,8 @@ export const ReviewModalHeader = ({
             ))}
           </div>
         ) : (
-          // participant 탭: 하나의 막대
-          <div className="bg-Green-50 h-1 w-full rounded-full" />
+          // participant 탭: 하나의 막대 (3개 막대 중 하나와 동일한 크기)
+          <div className="bg-Green-50 h-1 w-[44px] rounded-full" />
         )}
       </div>
       <div className="w-full text-center font-serif text-2xl font-bold">
