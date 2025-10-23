@@ -26,19 +26,19 @@
   --color-gray-95: #1a1a1a;
   --color-black: #000000;
   --color-white: #ffffff;
-  --color-Green-1: #fff4f1;
-  --color-Green-5: #ffe7e2;
-  --color-Green-10: #ffd6cc;
-  --color-Green-20: #ffbaa9;
-  --color-Green-30: #ff957b;
-  --color-Green-40: #ff724e;
+  --color-Green-1: #fafefc;
+  --color-Green-5: #e6f8ef;
+  --color-Green-10: #ccf0df;
+  --color-Green-20: #99e1bf;
+  --color-Green-30: #66d2a0;
+  --color-Green-40: #33c380;
   --color-Green-50: #00b460;
-  --color-Green-60: #e83600;
-  --color-Green-70: #d03800;
-  --color-Green-80: #b93100;
-  --color-Green-90: #9a2900;
-  --color-Green-95: #561700;
-  --color-Green-100: #210a02;
+  --color-Green-60: #00904d;
+  --color-Green-70: #006c3a;
+  --color-Green-80: #004826;
+  --color-Green-90: #002413;
+  --color-Green-95: #00120a;
+  --color-Green-100: #000;
   --color-warning-alt: #ffd9d9;
   --color-warning: #ff4040;
   --color-safe-alt: #e0f8e8;
@@ -56,6 +56,7 @@
   --color-text-main: var(--color-gray-95);
   --color-background-inactive: var(--color-gray-5);
   --color-background-alt: var(--color-white);
+  --color-custom-gray-1: #f3f1ef;
 }
 
 :root {
