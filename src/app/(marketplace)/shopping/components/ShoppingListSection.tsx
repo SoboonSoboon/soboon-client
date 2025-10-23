@@ -15,6 +15,7 @@ import { timeFormatter } from '@/utils/timeFormetter';
 import { MapPin } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { NonShoppingList } from './NonShoppingList';
+import { useBookmark } from '@/hooks';
 
 export const ShoppingListSection = ({
   shoppingList,
@@ -22,6 +23,7 @@ export const ShoppingListSection = ({
   shoppingList: ShoppingContentType[] | null;
 }) => {
   const router = useRouter();
+  const { handleBookmark } = useBookmark();
 
   const onClickCard = (id: string) => {
     router.push(`/shopping/${id}`);
@@ -51,6 +53,9 @@ export const ShoppingListSection = ({
             <BookmarkButton
               className="absolute top-[4px] right-0"
               liked={shopping.bookmarked}
+              onChange={() =>
+                handleBookmark(shopping.id.toString(), shopping.bookmarked)
+              }
             />
             <CardTitle className="font-memomentKkukkkuk line-clamp-2">
               {shopping.title}

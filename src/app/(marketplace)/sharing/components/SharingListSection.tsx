@@ -20,6 +20,7 @@ import {
 import { useEffect, useState } from 'react';
 import { timeFormatter } from '@/utils/timeFormetter';
 import { NonDividingList } from './NonDividingList';
+import { useBookmark } from '@/hooks';
 
 export const SharingListSection = ({
   sharingMettingList,
@@ -35,6 +36,7 @@ export const SharingListSection = ({
   }, [sharingMettingList]);
 
   const router = useRouter();
+  const { handleBookmark } = useBookmark();
 
   const onClickCard = (id: string) => {
     router.push(`/sharing/${id}`);
@@ -68,6 +70,9 @@ export const SharingListSection = ({
               <BookmarkButton
                 className="absolute top-4 right-0"
                 liked={metting.bookmarked}
+                onChange={() =>
+                  handleBookmark(metting.groupId.toString(), metting.bookmarked)
+                }
               />
               <CardImage
                 alt="기본 카드"

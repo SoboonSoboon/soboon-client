@@ -8,16 +8,10 @@ import { applyMeeting, handleCloseMeeting } from '@/action/applicantsAction';
 import { useToast } from '@/components/Atoms';
 import { useParams } from 'next/navigation';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import {
-  cancelApplyMeeting,
-  getUserApplayStatus,
-} from '@/apis/meetings/userApplayStatusApi';
+import { cancelApplyMeeting, getUserApplayStatus } from '@/apis';
 import { useMemo } from 'react';
 import { useQuery } from '@tanstack/react-query';
-import {
-  postBookmarkedMeetingApi,
-  deleteBookmarkedMeetingApi,
-} from '@/apis/meetings/bookmarkApi';
+import { useBookmark } from '@/hooks';
 import { ApplyStatusButtonSection } from './ApplyStatusButtonSection';
 import { AuthorStatusButtonSection } from './AuthorStatusButtonSection';
 import { MeetingDetailType } from '@/types/meetingsType';
@@ -40,23 +34,11 @@ export const DetailAside = ({
   const { id: meetingId } = useParams<{ id: string }>();
   const { success, error } = useToast();
   const queryClient = useQueryClient();
+  const { handleBookmark } = useBookmark();
 
-  const handleBookmarkClick = async () => {
-    const previousState = isBookmarked;
+  const handleBookmarkClick = () => {
     setIsBookmarked(!isBookmarked);
-
-    try {
-      if (previousState) {
-        await deleteBookmarkedMeetingApi(+meetingId);
-        success('북마크에서 삭제되었어요.');
-      } else {
-        await postBookmarkedMeetingApi(+meetingId);
-        success('북마크에 추가되었어요.');
-      }
-    } catch (err) {
-      console.error('찜 추가/취소 실패:', err);
-      error('찜 추가/취소 실패했어요.');
-    }
+    handleBookmark(meetingId.toString(), isBookmarked);
   };
 
   const handleApplyMeeting = async (applicationId: string) => {
