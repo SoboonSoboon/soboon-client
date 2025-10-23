@@ -15,8 +15,10 @@ import { timeFormatter } from '@/utils/timeFormetter';
 import { MapPin } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { NonShoppingList } from './NonShoppingList';
-import { postBookmarkedMeetingApi } from '@/apis';
+import { postBookmarkedMeetingApi, deleteBookmarkedMeetingApi } from '@/apis';
 import { useToast } from '@/components/Atoms/Toast/useToast';
+import { mypageKeys } from '@/constants/queryKey';
+import { useQueryClient } from '@tanstack/react-query';
 
 export const ShoppingListSection = ({
   shoppingList,
@@ -25,16 +27,25 @@ export const ShoppingListSection = ({
 }) => {
   const router = useRouter();
   const { success } = useToast();
+  const queryClient = useQueryClient();
   const onClickCard = (id: string) => {
     router.push(`/shopping/${id}`);
   };
 
-  const handleBookmark = async (id: string) => {
+  const handleBookmark = async (id: string, isBookmarked: boolean) => {
     try {
-      const response = await postBookmarkedMeetingApi(+id);
-      success(response.message || '찜 추가 성공');
+      if (isBookmarked) {
+        const response = await deleteBookmarkedMeetingApi(+id);
+        success(response.message || '찜 삭제 성공');
+      } else {
+        const response = await postBookmarkedMeetingApi(+id);
+        success(response.message || '찜 추가 성공');
+      }
+      queryClient.invalidateQueries({
+        queryKey: mypageKeys.bookmarksMeeting(),
+      });
     } catch (error) {
-      console.error('찜 추가 실패:', error);
+      console.error('찜 처리 실패:', error);
     }
   };
 
@@ -62,7 +73,9 @@ export const ShoppingListSection = ({
             <BookmarkButton
               className="absolute top-[4px] right-0"
               liked={shopping.bookmarked}
-              onChange={() => handleBookmark(shopping.id.toString())}
+              onChange={() =>
+                handleBookmark(shopping.id.toString(), shopping.bookmarked)
+              }
             />
             <CardTitle className="font-memomentKkukkkuk line-clamp-2">
               {shopping.title}
