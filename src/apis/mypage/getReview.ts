@@ -1,9 +1,9 @@
 import {
-  ReviewResponse,
-  ReviewTargetsResponse,
   CreateHostReviewRequest,
   CreateParticipantReviewRequest,
-} from '@/utils/review';
+  ReviewResponse,
+  ReviewTargetsResponse,
+} from '@/app/mypage/utils/review';
 
 const baseUrl = process.env.NEXT_PUBLIC_SOBOON_API_URL;
 const token = process.env.NEXT_PUBLIC_SOBOON_API_TOKEN;
