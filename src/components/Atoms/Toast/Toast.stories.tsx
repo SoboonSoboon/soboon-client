@@ -8,7 +8,7 @@ const DefaultToastDemo = () => {
 
   return (
     <button
-      onClick={() => toast('기본 알림', '기본 토스트 메시지입니다.')}
+      onClick={() => toast('기본 토스트 메시지입니다.')}
       className="cursor-pointer rounded bg-gray-500 px-4 py-2 text-white hover:bg-gray-600"
     >
       기본 토스트
@@ -21,7 +21,7 @@ const SuccessToastDemo = () => {
 
   return (
     <button
-      onClick={() => success('성공!', '작업이 완료되었습니다.')}
+      onClick={() => success('작업이 완료되었습니다.')}
       className="cursor-pointer rounded bg-green-500 px-4 py-2 text-white hover:bg-green-600"
     >
       성공 토스트
@@ -34,7 +34,7 @@ const ErrorToastDemo = () => {
 
   return (
     <button
-      onClick={() => error('오류!', '작업이 실패했습니다.')}
+      onClick={() => error('작업이 실패했습니다.')}
       className="cursor-pointer rounded bg-red-500 px-4 py-2 text-white hover:bg-red-600"
     >
       오류 토스트
@@ -47,7 +47,7 @@ const WarningToastDemo = () => {
 
   return (
     <button
-      onClick={() => warning('경고!', '주의가 필요합니다.')}
+      onClick={() => warning('주의가 필요합니다.')}
       className="cursor-pointer rounded bg-yellow-500 px-4 py-2 text-white hover:bg-yellow-600"
     >
       경고 토스트
@@ -60,7 +60,7 @@ const InfoToastDemo = () => {
 
   return (
     <button
-      onClick={() => info('정보!', '알림 정보입니다.')}
+      onClick={() => info('알림 정보입니다.')}
       className="cursor-pointer rounded bg-blue-500 px-4 py-2 text-white hover:bg-blue-600"
     >
       정보 토스트
@@ -99,10 +99,10 @@ function App() {
 
   return (
     <div>
-      <button onClick={() => success('성공!', '작업이 완료되었습니다.')}>
+      <button onClick={() => success('작업이 완료되었습니다.')}>
         성공 토스트
       </button>
-      <button onClick={() => error('오류!', '다시 시도해주세요.')}>
+      <button onClick={() => error('다시 시도해주세요.')>
         에러 토스트
       </button>
     </div>

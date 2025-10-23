@@ -1,4 +1,3 @@
-import { SideButtonSection } from '@/components';
 import { IntroSection } from '@/app/(marketplace)/components';
 import {
   meetingSearchParamsType,
@@ -61,7 +60,6 @@ export default async function ShoppingPage({
         <FilterSection />
         <ShoppingListSection shoppingList={shoppingList!.content} />
       </section>
-      <SideButtonSection />
     </main>
   );
 }

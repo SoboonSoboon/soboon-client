@@ -17,7 +17,7 @@ export const ApplyStatusButtonSection = ({
   return (
     <>
       <div className="mb-5">
-        {/* 신청을 취소했을 때 나타나는 버튼 */}
+        {/* 모임 신청이 가능한 버튼 */}
         {(!filteredStatus?.participationStatus ||
           filteredStatus?.participationStatus === 'CANCELLED') && (
           <Button
@@ -28,25 +28,21 @@ export const ApplyStatusButtonSection = ({
           />
         )}
 
-        {/* 신청을 하지 않았을 때 나타나는 버튼 */}
+        {/* 모임 신청 후 취소가 가능한 버튼 */}
         {filteredStatus?.participationStatus === 'APPLIED' && (
           <Button
-            className="h-15 w-full !bg-[var(--GrayScale-Gray80)]"
+            className="w-full !bg-[var(--GrayScale-Gray80)]"
             variant="filled"
             onClick={() => handleCancelApplyMeeting(meetingId)}
-          >
-            <div>
-              <p className="text-base">모임이 신청되었어요.</p>
-              <p className="text-xs">다시 클릭하면 취소할 수 있어요.</p>
-            </div>
-          </Button>
+            label="신청 취소"
+          />
         )}
 
         {/* 신청이 승인되었을 때 나타나는 버튼 */}
         {filteredStatus?.participationStatus === 'APPROVED' && (
           <Button
             label="모임 신청이 승인되었어요."
-            className="w-full"
+            className="w-full !bg-[var(--GrayScale-Gray30)]"
             variant="filled"
             disabled
           />
@@ -57,7 +53,7 @@ export const ApplyStatusButtonSection = ({
           <Button
             label="모임 신청이 거절되었어요."
             variant="filled"
-            className="w-full"
+            className="w-full !bg-[var(--GrayScale-Gray30)]"
             disabled
           />
         )}
@@ -67,7 +63,7 @@ export const ApplyStatusButtonSection = ({
           <Button
             label="모임에서 강퇴되었어요."
             variant="filled"
-            className="w-full"
+            className="w-full !bg-[var(--GrayScale-Gray30)]"
             disabled
           />
         )}
