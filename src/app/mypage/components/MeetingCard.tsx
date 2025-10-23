@@ -14,8 +14,10 @@ import { cn } from '@/utils/cn';
 import { useModal } from '@/components/Molecules/modal';
 import { timeFormatter } from '@/utils/timeFormetter';
 import { useRouter } from 'next/navigation';
-import { useReviewNavigation } from '../hook/useReview';
+
 import { ReviewModal } from './reviewModal/ReviewModal';
+import { useReviewNavigation } from '../hook/components/useReviewNavigation';
+import { useReviewTargets } from '../hook/api/useReveiwTargets';
 
 // 모임 카드 컴포넌트
 export const MeetingCard = ({
@@ -26,16 +28,12 @@ export const MeetingCard = ({
   activeMainTab: string;
 }) => {
   const router = useRouter();
+  const { data: reviewSteps = [] } = useReviewTargets(meeting.groupId);
   // 지역표기
   const location = meeting.location.district;
 
-  const {
-    currentStepIndex,
-    setCurrentStepIndex,
-    handleNext,
-    handlePrevious,
-    reviewSteps,
-  } = useReviewNavigation();
+  const { currentStepIndex, setCurrentStepIndex, handleNext, handlePrevious } =
+    useReviewNavigation(reviewSteps);
 
   const reviewModal = useModal({
     onOpen: () => {
@@ -115,14 +113,14 @@ export const MeetingCard = ({
               </div>
               <Button
                 variant={
-                  meeting.status === 'RECRUITING'
+                  meeting.status === 'RECRUITING' || reviewSteps.length === 0
                     ? 'filled'
                     : reviewData.reviewer
                       ? 'outline'
                       : 'filled'
                 }
                 label={
-                  meeting.status === 'RECRUITING'
+                  meeting.status === 'RECRUITING' || reviewSteps.length === 0
                     ? '모집중'
                     : reviewData.reviewer
                       ? '리뷰하기'
@@ -132,11 +130,11 @@ export const MeetingCard = ({
                 size="small"
                 onClick={(e) => {
                   e.stopPropagation();
-                  if (meeting.status !== 'RECRUITING') {
-                    reviewModal.open();
-                  }
+                  reviewModal.open();
                 }}
-                disabled={meeting.status === 'RECRUITING'}
+                disabled={
+                  meeting.status === 'RECRUITING' || reviewSteps.length === 0
+                }
               />
             </CardFooter>
           </div>

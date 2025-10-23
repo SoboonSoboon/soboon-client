@@ -1,12 +1,19 @@
 interface ReviewModalHeaderProps {
   activeMainTab: string;
   currentStepIndex: number;
+  reviewStepsLength: number;
+  totalCount?: number;
 }
 
 export const ReviewModalHeader = ({
   activeMainTab,
   currentStepIndex,
+  reviewStepsLength,
+  totalCount = reviewStepsLength,
 }: ReviewModalHeaderProps) => {
+  const progress = totalCount > 0 ? (currentStepIndex + 1) / totalCount : 0;
+
+  const filledBars = Math.ceil(progress * 3);
   return (
     <div className="flex flex-col items-center justify-center gap-8">
       <div className="w-[150px] rounded-full">
@@ -17,7 +24,7 @@ export const ReviewModalHeader = ({
               <div
                 key={index}
                 className={`h-1 flex-1 rounded-full transition-colors ${
-                  index <= currentStepIndex ? 'bg-Green-50' : 'bg-gray-10'
+                  index < filledBars ? 'bg-Green-50' : 'bg-gray-10'
                 }`}
               />
             ))}

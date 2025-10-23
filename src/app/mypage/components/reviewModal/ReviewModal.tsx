@@ -79,6 +79,7 @@ export const ReviewModal = ({
           <ReviewModalHeader
             activeMainTab={activeMainTab}
             currentStepIndex={currentStepIndex}
+            reviewStepsLength={reviewSteps.length}
           />
 
           <ReviewModalContent
