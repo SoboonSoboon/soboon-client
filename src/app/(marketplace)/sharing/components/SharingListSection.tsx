@@ -49,10 +49,10 @@ export const SharingListSection = ({
     try {
       if (isBookmarked) {
         const response = await deleteBookmarkedMeetingApi(+id);
-        success(response.message || '찜 삭제 성공');
+        success(response.message);
       } else {
         const response = await postBookmarkedMeetingApi(+id);
-        success(response.message || '찜 추가 성공');
+        success(response.message);
       }
       queryClient.invalidateQueries({
         queryKey: mypageKeys.bookmarksMeeting(),
