@@ -2,7 +2,7 @@
 
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
-import { ShoppingMettingRegisterModel } from '../../components';
+import { ShoppingMeetingRegisterModal } from '../../components';
 import { Button } from '@/components';
 
 export const NonDividingList = () => {
@@ -41,7 +41,7 @@ export const NonDividingList = () => {
           </div>
         </div>
       </div>
-      <ShoppingMettingRegisterModel
+      <ShoppingMeetingRegisterModal
         meetingType="sharing"
         isOpen={isOpen}
         onClose={handleClose}

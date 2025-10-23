@@ -23,17 +23,17 @@ import { NonDividingList } from './NonDividingList';
 import { useBookmark } from '@/hooks';
 
 export const SharingListSection = ({
-  sharingMettingList,
+  sharingMeetingList,
 }: {
-  sharingMettingList: DividingMeetingsType | null;
+  sharingMeetingList: DividingMeetingsType | null;
 }) => {
-  const [mettingList, setMettingList] = useState<DividingContentType[] | null>(
+  const [meetingList, setMeetingList] = useState<DividingContentType[] | null>(
     null,
   );
 
   useEffect(() => {
-    setMettingList(sharingMettingList?.content || null);
-  }, [sharingMettingList]);
+    setMeetingList(sharingMeetingList?.content || null);
+  }, [sharingMeetingList]);
 
   const router = useRouter();
   const { handleBookmark } = useBookmark();
@@ -42,13 +42,13 @@ export const SharingListSection = ({
     router.push(`/sharing/${id}`);
   };
 
-  if (mettingList?.length === 0) {
+  if (meetingList?.length === 0) {
     return <NonDividingList />;
   }
 
   return (
     <div className="grid grid-cols-3 gap-8">
-      {mettingList?.length === 0 ? (
+      {meetingList?.length === 0 ? (
         <div>
           <p>
             아직 모임이 없어요, <br />
@@ -56,52 +56,52 @@ export const SharingListSection = ({
           </p>
         </div>
       ) : (
-        mettingList?.map((metting) => (
+        meetingList?.map((meeting) => (
           <Card
-            key={metting.groupId}
-            onClick={() => onClickCard(metting.groupId.toString())}
+            key={meeting.groupId}
+            onClick={() => onClickCard(meeting.groupId.toString())}
             className="cursor-pointer"
           >
             <CardContent>
               <StatusTag
-                status={metting.status}
+                status={meeting.status}
                 className="absolute top-3 left-3"
               />
               <BookmarkButton
                 className="absolute top-4 right-0"
-                liked={metting.bookmarked}
+                liked={meeting.bookmarked}
                 onChange={() =>
-                  handleBookmark(metting.groupId.toString(), metting.bookmarked)
+                  handleBookmark(meeting.groupId.toString(), meeting.bookmarked)
                 }
               />
               <CardImage
                 alt="기본 카드"
                 src={
-                  !metting.image ||
-                  (Array.isArray(metting.image) &&
-                    metting.image.length === 0) ||
-                  (typeof metting.image === 'string' &&
-                    metting.image.includes('example'))
+                  !meeting.image ||
+                  (Array.isArray(meeting.image) &&
+                    meeting.image.length === 0) ||
+                  (typeof meeting.image === 'string' &&
+                    meeting.image.includes('example'))
                     ? '/images/notFound_image.png'
-                    : metting.image
+                    : meeting.image
                 }
                 className="border-gray-10 bg-gray-5 h-[200px] w-full rounded-lg border-1"
               />
 
               <CardTitle className="font-memomentKkukkkuk line-clamp-1">
-                {metting.item}
+                {meeting.item}
               </CardTitle>
               <CardSubtitle className="text-text-sub2 flex items-center gap-1 text-sm">
-                <span>{metting.user.userName}</span>
+                <span>{meeting.user.userName}</span>
                 <span>・</span>
-                <span>{timeFormatter(metting.createdAt)}</span>
+                <span>{timeFormatter(meeting.createdAt)}</span>
               </CardSubtitle>
             </CardContent>
             <Line />
             <CardFooter>
               <div className="mb-2 flex items-center gap-1 text-sm">
                 <MapPin className="text-gray-40 size-4" />
-                <p>{metting.location.detail}</p>
+                <p>{meeting.location.detail}</p>
               </div>
             </CardFooter>
           </Card>

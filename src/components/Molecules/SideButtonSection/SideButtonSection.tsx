@@ -1,6 +1,6 @@
 'use client';
 
-import { ShoppingMettingRegisterModel } from '@/app/(marketplace)/components';
+import { ShoppingMeetingRegisterModal } from '@/app/(marketplace)/components';
 import { CreateButton, GoToTopButton } from '@/components/Atoms';
 import { useState } from 'react';
 
@@ -30,7 +30,7 @@ export const SideButtonSection = () => {
         />
         <GoToTopButton />
       </div>
-      <ShoppingMettingRegisterModel
+      <ShoppingMeetingRegisterModal
         meetingType={meetingType}
         isOpen={isOpen}
         onClose={handleClose}

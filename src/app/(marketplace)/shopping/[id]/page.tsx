@@ -20,7 +20,7 @@ const dummyUser = {
   detail: '901-23',
 };
 
-async function getMettingDetail({
+async function getMeetingDetail({
   id,
 }: {
   id: string;
@@ -115,7 +115,7 @@ export default async function ShoppingDetailPage({
 }) {
   const id = (await params).id;
 
-  const shoppingMettingDetail = await getMettingDetail({
+  const shoppingMeetingDetail = await getMeetingDetail({
     id,
   });
 
@@ -124,7 +124,7 @@ export default async function ShoppingDetailPage({
 
   // 작성자 여부 판단 로직
   // 추후 실제 사용자 데이터로 변경 필요
-  const isAuthor = shoppingMettingDetail?.user.userId === dummyUser.id;
+  const isAuthor = shoppingMeetingDetail?.user.userId === dummyUser.id;
 
   const participants = isAuthor ? await getParticipants({ meetingId: id }) : [];
 
@@ -133,19 +133,19 @@ export default async function ShoppingDetailPage({
       <DetailHeader />
       <div className="flex gap-10">
         <article className="w-[730px]">
-          <DetailContent description={shoppingMettingDetail!.description} />
-          <DetailContentFooter createdAt={shoppingMettingDetail!.createdAt} />
+          <DetailContent description={shoppingMeetingDetail!.description} />
+          <DetailContentFooter createdAt={shoppingMeetingDetail!.createdAt} />
 
           {/* 댓글 영역 */}
           <CommentSection
             commentsList={commentsList}
-            status={shoppingMettingDetail!.status}
+            status={shoppingMeetingDetail!.status}
           />
         </article>
 
         <div className="sticky top-6 h-[95vh]">
           <DetailAside
-            meetingDetail={shoppingMettingDetail!}
+            meetingDetail={shoppingMeetingDetail!}
             isAuthor={isAuthor}
             participants={participants || []}
           />

@@ -1,6 +1,6 @@
 'use client';
 
-import { UserApplayStatusType } from '@/apis/meetings/userApplayStatusApi';
+import { UserApplyStatusType } from '@/apis/meetings/userApplyStatusApi';
 import { Button } from '@/components';
 
 export const ApplyStatusButtonSection = ({
@@ -9,7 +9,7 @@ export const ApplyStatusButtonSection = ({
   handleCancelApplyMeeting,
   meetingId,
 }: {
-  filteredStatus: UserApplayStatusType | null | undefined;
+  filteredStatus: UserApplyStatusType | null | undefined;
   handleApplyMeeting: (meetingId: string) => void;
   handleCancelApplyMeeting: (meetingId: string) => void;
   meetingId: string;

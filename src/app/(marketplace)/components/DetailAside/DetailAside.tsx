@@ -8,7 +8,7 @@ import { applyMeeting, handleCloseMeeting } from '@/action/applicantsAction';
 import { useToast } from '@/components/Atoms';
 import { useParams } from 'next/navigation';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { cancelApplyMeeting, getUserApplayStatus } from '@/apis';
+import { cancelApplyMeeting, getUserApplyStatus } from '@/apis';
 import { useMemo } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { useBookmark } from '@/hooks';
@@ -45,7 +45,7 @@ export const DetailAside = ({
     try {
       const response = await applyMeeting(null, applicationId);
       success(response.message || '모임을 신청했어요.');
-      queryClient.invalidateQueries({ queryKey: ['userApplayStatus'] });
+      queryClient.invalidateQueries({ queryKey: ['userApplyStatus'] });
       return response;
     } catch (err) {
       error('모임 신청을 실패했어요.');
@@ -64,23 +64,23 @@ export const DetailAside = ({
     },
   });
 
-  const { data: userApplayStatus } = useQuery({
-    queryKey: ['userApplayStatus'],
-    queryFn: () => getUserApplayStatus(),
+  const { data: userApplyStatus } = useQuery({
+    queryKey: ['userApplyStatus'],
+    queryFn: () => getUserApplyStatus(),
   });
 
   const filteredStatus = useMemo(() => {
-    if (userApplayStatus) {
-      return userApplayStatus.find((status) => status.meetingId === +meetingId);
+    if (userApplyStatus) {
+      return userApplyStatus.find((status) => status.meetingId === +meetingId);
     }
     return null;
-  }, [userApplayStatus, meetingId]);
+  }, [userApplyStatus, meetingId]);
 
   const { mutate: handleCancelApplyMeeting } = useMutation({
     mutationFn: (meetingId: string) => cancelApplyMeeting({ id: meetingId }),
     onSuccess: () => {
       success('모임 신청을 취소했어요.');
-      queryClient.invalidateQueries({ queryKey: ['userApplayStatus'] });
+      queryClient.invalidateQueries({ queryKey: ['userApplyStatus'] });
     },
     onError: () => {
       error('모임 신청을 취소하지 못했어요.');
