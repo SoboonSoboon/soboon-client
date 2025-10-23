@@ -20,6 +20,10 @@ import {
 import { useEffect, useState } from 'react';
 import { timeFormatter } from '@/utils/timeFormetter';
 import { NonDividingList } from './NonDividingList';
+import { mypageKeys } from '@/constants/queryKey';
+import { postBookmarkedMeetingApi, deleteBookmarkedMeetingApi } from '@/apis';
+import { useToast } from '@/components/Atoms/Toast/useToast';
+import { useQueryClient } from '@tanstack/react-query';
 
 export const SharingListSection = ({
   sharingMettingList,
@@ -35,9 +39,27 @@ export const SharingListSection = ({
   }, [sharingMettingList]);
 
   const router = useRouter();
-
+  const { success } = useToast();
+  const queryClient = useQueryClient();
   const onClickCard = (id: string) => {
     router.push(`/sharing/${id}`);
+  };
+
+  const handleBookmark = async (id: string, isBookmarked: boolean) => {
+    try {
+      if (isBookmarked) {
+        const response = await deleteBookmarkedMeetingApi(+id);
+        success(response.message || '찜 삭제 성공');
+      } else {
+        const response = await postBookmarkedMeetingApi(+id);
+        success(response.message || '찜 추가 성공');
+      }
+      queryClient.invalidateQueries({
+        queryKey: mypageKeys.bookmarksMeeting(),
+      });
+    } catch (error) {
+      console.error('찜 처리 실패:', error);
+    }
   };
 
   if (mettingList?.length === 0) {
@@ -68,6 +90,9 @@ export const SharingListSection = ({
               <BookmarkButton
                 className="absolute top-4 right-0"
                 liked={metting.bookmarked}
+                onChange={() =>
+                  handleBookmark(metting.groupId.toString(), metting.bookmarked)
+                }
               />
               <CardImage
                 alt="기본 카드"
