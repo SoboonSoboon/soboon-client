@@ -16,6 +16,7 @@ export const FilterSelect = ({
   onChange,
   className,
 }: FilterSelectProps) => {
+  console.log(options);
   return (
     <div className="relative">
       <select

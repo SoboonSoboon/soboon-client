@@ -1,68 +1,45 @@
 'use client';
 
 import { DateFilter } from '@/components';
-import { CITY_OPTIONS, PROVINCE_OPTIONS, GET_CITY_OPTIONS } from '@/constants';
+import { PROVINCE_OPTIONS, GET_CITY_OPTIONS } from '@/constants';
 import { statusOptions } from '@/constants/status';
-import { useRouter, useSearchParams } from 'next/navigation';
-import { useCallback, useMemo } from 'react';
+import { useFilterParams } from '@/hooks/useFilterParams';
+import { useMemo } from 'react';
 import { FilterSelect } from './FilterSelect';
-import { GoToTopScroll } from '@/utils/goToTopScroll';
 
 export const FilterSection = () => {
-  const searchParams = useSearchParams();
-  const router = useRouter();
-
-  const activeProvince = searchParams.get('province') || '';
-  const activeCity = searchParams.get('city') || '';
-  const activeStatus = searchParams.get('status') || '';
+  const { activeProvince, activeCity, activeStatus, updateParams } =
+    useFilterParams();
 
   const availableCityOptions = useMemo(() => {
-    if (!activeProvince) {
-      return CITY_OPTIONS; // 전체 옵션 보여주기
+    if (activeProvince === '') {
+      return [{ value: '', label: '전체' }];
     }
+
     return [
       { value: '', label: '전체' },
       ...GET_CITY_OPTIONS(activeProvince).slice(1),
     ];
   }, [activeProvince]);
 
-  const handleStatusChange = useCallback(
-    (status: string) => {
-      const params = new URLSearchParams(searchParams.toString());
-      params.set('status', status);
-      GoToTopScroll();
-      router.push(`?${params.toString()}`);
-    },
-    [router, searchParams],
-  );
+  const handleStatusChange = (status: string) => {
+    updateParams({ status });
+  };
 
-  const handleRegionChange = useCallback(
-    (province: string, city: string) => {
-      const params = new URLSearchParams(searchParams.toString());
+  const handleProvinceChange = (province: string) => {
+    if (province === '') {
+      updateParams({ province, city: '' });
+    } else {
+      updateParams({ province, city: '' }); // province 변경 시 항상 city 초기화
+    }
+  };
 
-      if (province === '') {
-        params.delete('province');
-      } else {
-        params.set('province', province);
-      }
-
-      if (city === '') {
-        params.delete('city');
-      } else {
-        params.set('city', city);
-      }
-
-      GoToTopScroll();
-
-      router.push(`?${params.toString()}`);
-    },
-    [router, searchParams],
-  );
+  const handleCityChange = (city: string) => {
+    updateParams({ city });
+  };
 
   const handleDateChange = (value: 'RECENT' | 'OLDEST') => {
-    const params = new URLSearchParams(searchParams.toString());
-    params.set('sortType', value);
-    router.push(`?${params.toString()}`);
+    updateParams({ sortType: value });
   };
 
   return (
@@ -72,13 +49,13 @@ export const FilterSection = () => {
           name="province"
           value={activeProvince}
           options={PROVINCE_OPTIONS}
-          onChange={(value) => handleRegionChange(value, '')}
+          onChange={(province) => handleProvinceChange(province)}
         />
         <FilterSelect
           name="city"
           value={activeCity}
           options={availableCityOptions}
-          onChange={(value) => handleRegionChange(activeProvince, value)}
+          onChange={(city) => handleCityChange(city)}
         />
         <FilterSelect
           name="status"
