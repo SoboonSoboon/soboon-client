@@ -1,6 +1,6 @@
 import { axiosInstance } from '../axiosInstance';
 
-export type UserApplayStatusType = {
+export type UserApplyStatusType = {
   meetingId: number;
   participationStatus:
     | 'APPROVED'
@@ -10,9 +10,7 @@ export type UserApplayStatusType = {
     | 'KICKED';
 };
 
-export const getUserApplayStatus = async (): Promise<
-  UserApplayStatusType[]
-> => {
+export const getUserApplyStatus = async (): Promise<UserApplyStatusType[]> => {
   const response = await axiosInstance.get(`/v1/me/meetings/applications`);
   return response.data.data;
 };
