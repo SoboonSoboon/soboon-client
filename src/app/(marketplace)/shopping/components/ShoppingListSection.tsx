@@ -15,7 +15,7 @@ import { timeFormatter } from '@/utils/timeFormetter';
 import { MapPin } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { NonShoppingList } from './NonShoppingList';
-import { useBookmark } from '@/hooks/useBookmark';
+import { useBookmark } from '@/hooks';
 
 export const ShoppingListSection = ({
   shoppingList,

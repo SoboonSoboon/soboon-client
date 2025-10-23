@@ -16,7 +16,7 @@ import {
 } from '@/apis/meetings/userApplayStatusApi';
 import { useMemo } from 'react';
 import { useQuery } from '@tanstack/react-query';
-import { useBookmark } from '@/hooks/useBookmark';
+import { useBookmark } from '@/hooks';
 import { ApplyStatusButtonSection } from './DetailAside/ApplyStatusButtonSection';
 import { AuthorStatusButtonSection } from './DetailAside/AuthorStatusButtonSection';
 

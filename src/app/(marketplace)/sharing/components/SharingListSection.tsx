@@ -20,7 +20,7 @@ import {
 import { useEffect, useState } from 'react';
 import { timeFormatter } from '@/utils/timeFormetter';
 import { NonDividingList } from './NonDividingList';
-import { useBookmark } from '@/hooks/useBookmark';
+import { useBookmark } from '@/hooks';
 
 export const SharingListSection = ({
   sharingMettingList,
