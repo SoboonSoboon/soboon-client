@@ -13,6 +13,7 @@ export interface cardProps extends cardContentProps {
   width?: string;
   height?: string;
   onClick?: () => void;
+  href?: string;
 }
 
 interface cardImageProps {
@@ -64,7 +65,20 @@ export const Card = ({
   width = '306px',
   height = '376px',
   onClick,
+  href,
 }: cardProps) => {
+  if (href) {
+    return (
+      <a
+        href={href}
+        className={`${className} block select-none`}
+        style={{ width: `${width}`, height: `${height}` }}
+      >
+        {children}
+      </a>
+    );
+  }
+
   return (
     <div
       className={`${className} select-none`}

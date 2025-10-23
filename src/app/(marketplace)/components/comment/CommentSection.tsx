@@ -1,9 +1,9 @@
 'use client';
 
 import { CommentsListType } from '@/types/commentType';
-import { CommentCountContainer } from './comment/CommentCountContainer';
-import { CommentInputContainer } from './comment/CommentInputContainer';
-import { CommentListContainer } from './comment/CommentListContainer';
+import { CommentCountContainer } from './CommentCountContainer';
+import { CommentInputContainer } from './CommentInputContainer';
+import { CommentListContainer } from './CommentListContainer';
 import { useEffect, useState } from 'react';
 
 export const CommentSection = ({

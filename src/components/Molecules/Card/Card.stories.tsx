@@ -65,6 +65,24 @@ export const BookmarkButtonCard: Story = {
   ),
 };
 
+export const HrefCard: Story = {
+  render: (args) => (
+    <Card href="/" {...args}>
+      <CardContent>
+        <BookmarkButton
+          liked={false}
+          onChange={(liked) => console.log(liked)}
+        />
+        <CardImage src="https://placehold.co/300x200" alt="기본 카드" />
+        <CardTitle className="font-memomentKkukkkuk">Card Title</CardTitle>
+        <CardSubtitle>Card Subtitle</CardSubtitle>
+      </CardContent>
+      <Line />
+      <CardFooter>Footer</CardFooter>
+    </Card>
+  ),
+};
+
 export const CustomCard: Story = {
   render: (args) => (
     <Card {...args}>

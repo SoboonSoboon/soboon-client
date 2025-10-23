@@ -96,7 +96,7 @@ export const Carousel = ({
           alt="캐러셀 이미지"
           width={width}
           height={height}
-          className="h-full w-full object-cover"
+          className="h-full w-full rounded-lg object-cover"
         />
       </div>
     );

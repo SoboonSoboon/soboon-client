@@ -12,9 +12,10 @@ import { MeetingItem, reviewData } from '../utils/mypageType';
 import { Button, StatusTag } from '@/components';
 import { cn } from '@/utils/cn';
 import { useModal } from '@/components/Molecules/modal';
-import { ReviewModal } from './reviewModal/ReviewModal';
 import { timeFormatter } from '@/utils/timeFormetter';
 import { useRouter } from 'next/navigation';
+import { useReviewNavigation } from '../hook/useReview';
+import { ReviewModal } from './reviewModal/ReviewModal';
 
 // 모임 카드 컴포넌트
 export const MeetingCard = ({
@@ -28,11 +29,19 @@ export const MeetingCard = ({
   // 지역표기
   const location = meeting.location.district;
 
-  // 날짜 표기
+  const {
+    currentStepIndex,
+    setCurrentStepIndex,
+    handleNext,
+    handlePrevious,
+    reviewSteps,
+  } = useReviewNavigation();
 
-  // const reviewListModal = useModal();
   const reviewModal = useModal({
-    onOpen: () => console.log('참여자 리뷰 모달 열림'),
+    onOpen: () => {
+      setCurrentStepIndex(0);
+      console.log('참여자 리뷰 모달 열림');
+    },
     onClose: () => console.log('참여자 리뷰 모달 닫힘'),
   });
 
@@ -121,7 +130,8 @@ export const MeetingCard = ({
                 }
                 className="flex !py-[9px]"
                 size="small"
-                onClick={() => {
+                onClick={(e) => {
+                  e.stopPropagation();
                   if (meeting.status !== 'RECRUITING') {
                     reviewModal.open();
                   }
@@ -138,8 +148,18 @@ export const MeetingCard = ({
         <ReviewModal
           modal={reviewModal}
           meetingId={reviewData.meetingId}
-          targetUser={reviewData.targets}
+          targetUser={{
+            userId: reviewSteps[currentStepIndex]?.attendeeId || 0,
+            nickname: reviewSteps[currentStepIndex]?.nickname || '',
+            profileImageUrl:
+              reviewSteps[currentStepIndex]?.profileImageUrl || '',
+          }}
           category={reviewData.category}
+          reviewSteps={reviewSteps}
+          currentStepIndex={currentStepIndex}
+          onNext={handleNext}
+          onPrevious={handlePrevious}
+          activeMainTab={activeMainTab}
         />
       )}
     </div>

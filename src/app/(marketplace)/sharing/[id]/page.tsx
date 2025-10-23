@@ -149,16 +149,9 @@ export default async function SharingDetailPage({
 
         <div className="sticky top-6 h-[95vh]">
           <DetailAside
-            meetingId={meetingDetail!.id}
-            title={meetingDetail!.item}
-            detail_address={meetingDetail!.detail_address}
-            current_member={meetingDetail!.current_member}
-            total_member={meetingDetail!.total_member}
-            status={meetingDetail!.status}
+            meetingDetail={meetingDetail!}
             isAuthor={isAuthor}
             participants={participants || []}
-            bookmarked={meetingDetail!.bookmarked}
-            userInfo={meetingDetail!.user}
           />
         </div>
       </div>
