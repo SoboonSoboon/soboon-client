@@ -1,9 +1,10 @@
 'use client';
 import { ProfileImg } from '@/components/Atoms';
 import { ReviewItemBar } from './ReviewItemBar';
-import { ReviewData } from '@/utils/review';
 import { useState } from 'react';
 import { useAuthStore } from '@/apis/auth/hooks/authStore';
+import { ReviewData } from '../../utils/review';
+
 interface ProfileSideBar {
   reviewData: ReviewData;
 }
