@@ -3,6 +3,7 @@
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { ShoppingMettingRegisterModel } from '../../components';
+import { Button } from '@/components';
 
 export const NonShoppingList = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -30,19 +31,13 @@ export const NonShoppingList = () => {
           </p>
 
           <div className="flex flex-col gap-3">
-            <button
-              onClick={() => handleOpen()}
-              className="bg-primary hover:bg-primary/90 cursor-pointer rounded-lg px-6 py-3 font-medium text-white transition-colors"
-            >
+            <Button onClick={() => handleOpen()} variant="filled">
               장보기 모임 만들기
-            </button>
+            </Button>
 
-            <button
-              onClick={() => router.push('/sharing')}
-              className="text-primary hover:text-primary/80 border-primary hover:border-primary/80 cursor-pointer rounded-lg border px-6 py-3 font-medium transition-colors"
-            >
+            <Button onClick={() => router.push('/sharing')} variant="outline">
               소분하기 모임 둘러보기
-            </button>
+            </Button>
           </div>
         </div>
       </div>
