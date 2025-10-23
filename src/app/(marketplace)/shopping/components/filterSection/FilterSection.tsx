@@ -6,6 +6,7 @@ import { statusOptions } from '@/constants/status';
 import { ChevronDown } from 'lucide-react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useCallback, useMemo } from 'react';
+import { FilterSelect } from './FilterSelect';
 
 export const FilterSection = () => {
   const searchParams = useSearchParams();
@@ -77,72 +78,24 @@ export const FilterSection = () => {
   return (
     <div className="flex justify-between">
       <div className="flex gap-4">
-        <div className="relative">
-          <select
-            name="province"
-            id="province"
-            className="min-w-[120px] cursor-pointer appearance-none rounded-md border-2 border-[#f3f5f6] bg-white px-3 py-2 pr-8 text-gray-700 transition-all duration-200 hover:border-gray-500 focus:border-gray-500 focus:outline-none"
-            onChange={(e) => {
-              const selectedProvince = PROVINCE_OPTIONS.find(
-                (province) => province.value === e.target.value,
-              );
-              handleRegionChange(selectedProvince?.value || '', '');
-            }}
-            value={activeProvince}
-          >
-            {PROVINCE_OPTIONS.map((city) => (
-              <option key={city.value} value={city.value}>
-                {city.label}
-              </option>
-            ))}
-          </select>
-          <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
-            <ChevronDown className="h-4 w-4 text-gray-500 transition-transform duration-200 group-hover:rotate-180" />
-          </div>
-        </div>
-        <div className="relative">
-          <select
-            name="city"
-            id="city"
-            className="min-w-[120px] cursor-pointer appearance-none rounded-md border-2 border-[#f3f5f6] bg-white px-3 py-2 pr-8 text-gray-700 transition-all duration-200 hover:border-gray-500 focus:border-gray-500 focus:outline-none"
-            onChange={(e) => {
-              const selectedCity = availableCityOptions.find(
-                (city) => city.value === e.target.value,
-              );
-              handleRegionChange(activeProvince, selectedCity?.value || '');
-            }}
-            value={activeCity}
-          >
-            {availableCityOptions.map((city) => (
-              <option key={city.value} value={city.value}>
-                {city.label}
-              </option>
-            ))}
-          </select>
-          <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
-            <ChevronDown className="h-4 w-4 text-gray-500 transition-transform duration-200 group-hover:rotate-180" />
-          </div>
-        </div>
-        <div className="relative">
-          <select
-            name="status"
-            id="status"
-            className="min-w-[120px] cursor-pointer appearance-none rounded-md border-2 border-[#f3f5f6] bg-white px-3 py-2 pr-8 text-gray-700 transition-all duration-200 hover:border-gray-500 focus:border-gray-500 focus:outline-none"
-            onChange={(e) => {
-              handleStatusChange(e.target.value);
-            }}
-            value={activeStatus}
-          >
-            {statusOptions.map((status) => (
-              <option key={status.value} value={status.value}>
-                {status.label}
-              </option>
-            ))}
-          </select>
-          <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
-            <ChevronDown className="h-4 w-4 text-gray-500 transition-transform duration-200 group-hover:rotate-180" />
-          </div>
-        </div>
+        <FilterSelect
+          name="province"
+          value={activeProvince}
+          options={PROVINCE_OPTIONS}
+          onChange={(value) => handleRegionChange(value, '')}
+        />
+        <FilterSelect
+          name="city"
+          value={activeCity}
+          options={availableCityOptions}
+          onChange={(value) => handleRegionChange(activeProvince, value)}
+        />
+        <FilterSelect
+          name="status"
+          value={activeStatus}
+          options={statusOptions}
+          onChange={handleStatusChange}
+        />
       </div>
       <div>
         <DateFilter onChange={(value) => handleDateChange(value)} />
