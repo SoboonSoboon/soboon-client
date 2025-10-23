@@ -6,20 +6,18 @@ export const useToast = () => {
   const { addToast, removeToast } = useToastContext()!;
 
   return {
-    toast: (title: string, description?: string) =>
-      addToast({ title, description, option: 'default' }),
+    toast: (description?: string) =>
+      addToast({ description, option: 'default' }),
 
-    success: (title: string, description?: string) =>
-      addToast({ title, description, option: 'success' }),
+    success: (description?: string) =>
+      addToast({ description, option: 'success' }),
 
-    error: (title: string, description?: string) =>
-      addToast({ title, description, option: 'error' }),
+    error: (description?: string) => addToast({ description, option: 'error' }),
 
-    warning: (title: string, description?: string) =>
-      addToast({ title, description, option: 'warning' }),
+    warning: (description?: string) =>
+      addToast({ description, option: 'warning' }),
 
-    info: (title: string, description?: string) =>
-      addToast({ title, description, option: 'info' }),
+    info: (description?: string) => addToast({ description, option: 'info' }),
 
     remove: removeToast,
   };

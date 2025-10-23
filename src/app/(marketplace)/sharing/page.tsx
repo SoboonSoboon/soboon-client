@@ -1,4 +1,3 @@
-import { SideButtonSection } from '@/components';
 import {
   DividingMeetingsType,
   meetingSearchParamsType,
@@ -67,7 +66,6 @@ export default async function SharingPage({
         <div className="flex-1">
           <SharingListSection sharingMettingList={sharingMettingList} />
         </div>
-        <SideButtonSection />
       </section>
     </main>
   );
