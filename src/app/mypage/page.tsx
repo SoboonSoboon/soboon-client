@@ -3,7 +3,7 @@
 import { Suspense } from 'react';
 import { TabSection, CardList } from '@/app/mypage/components';
 
-import { useMyPageData } from './hook/useMypageData';
+import { useMyPageData } from './hook/components/useMypageData';
 
 function MyPageContent() {
   const {

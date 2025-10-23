@@ -1,6 +1,4 @@
 import {
-  CreateHostReviewRequest,
-  CreateParticipantReviewRequest,
   ReviewResponse,
   ReviewTargetsResponse,
 } from '@/app/mypage/utils/review';
@@ -42,16 +40,21 @@ export const getReceivedReview = async (): Promise<ReviewResponse> => {
   }
 };
 
-export const getReviewTargets = async (): Promise<ReviewTargetsResponse> => {
+export const getReviewTargets = async (
+  meetingId: number,
+): Promise<ReviewTargetsResponse> => {
   try {
-    const response = await fetch(`${baseUrl}/v1/reviews/targets`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-        'Content-Type': 'application/json',
+    const response = await fetch(
+      `${baseUrl}/v1/reviews/targets?meetingId=${meetingId}`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          'Content-Type': 'application/json',
+        },
+        cache: 'force-cache',
+        next: { revalidate: 300 },
       },
-      cache: 'force-cache',
-      next: { revalidate: 300 },
-    });
+    );
 
     if (!response.ok) {
       throw new Error('Failed to fetch review targets');
@@ -84,49 +87,5 @@ export const getReviewTargets = async (): Promise<ReviewTargetsResponse> => {
         ],
       },
     };
-  }
-};
-
-export const createHostReview = async (
-  data: CreateHostReviewRequest,
-): Promise<void> => {
-  try {
-    const response = await fetch(`${baseUrl}/v1/reviews/host`, {
-      method: 'POST',
-      headers: {
-        Authorization: `Bearer ${token}`,
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(data),
-    });
-
-    if (!response.ok) {
-      throw new Error('Failed to create host review');
-    }
-  } catch (error) {
-    console.error('Error creating host review:', error);
-    throw error;
-  }
-};
-
-export const createParticipantReview = async (
-  data: CreateParticipantReviewRequest,
-): Promise<void> => {
-  try {
-    const response = await fetch(`${baseUrl}/v1/reviews/participant`, {
-      method: 'POST',
-      headers: {
-        Authorization: `Bearer ${token}`,
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(data),
-    });
-
-    if (!response.ok) {
-      throw new Error('Failed to create participant review');
-    }
-  } catch (error) {
-    console.error('Error creating participant review:', error);
-    throw error;
   }
 };

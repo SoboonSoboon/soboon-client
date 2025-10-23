@@ -45,13 +45,13 @@ export interface HostReviewData {
 }
 
 // 리뷰 작성 요청 데이터 타입
-export interface CreateHostReviewRequest {
+export interface HostReviewRequest {
   eventId: number;
   userId: number;
   selectedReviews: ReviewKeyword[];
 }
 
-export interface CreateParticipantReviewRequest {
+export interface ParticipantReviewRequest {
   eventId: number;
   userId: number;
   selectedReviews: ReviewKeyword[];
@@ -59,7 +59,6 @@ export interface CreateParticipantReviewRequest {
 
 // 리뷰 대상 목록 응답 타입
 export interface ReviewTargetsResponse {
-  message: string | null;
   data: {
     eventId: number;
     category: 'SHOPPING' | 'DIVIDING';
