@@ -15,6 +15,8 @@ import { timeFormatter } from '@/utils/timeFormetter';
 import { MapPin } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { NonShoppingList } from './NonShoppingList';
+import { postBookmarkedMeetingApi } from '@/apis';
+import { useToast } from '@/components/Atoms/Toast/useToast';
 
 export const ShoppingListSection = ({
   shoppingList,
@@ -22,9 +24,18 @@ export const ShoppingListSection = ({
   shoppingList: ShoppingContentType[] | null;
 }) => {
   const router = useRouter();
-
+  const { success } = useToast();
   const onClickCard = (id: string) => {
     router.push(`/shopping/${id}`);
+  };
+
+  const handleBookmark = async (id: string) => {
+    try {
+      const response = await postBookmarkedMeetingApi(+id);
+      success(response.message || '찜 추가 성공');
+    } catch (error) {
+      console.error('찜 추가 실패:', error);
+    }
   };
 
   // 게시글이 없을 때의 빈 상태
@@ -51,6 +62,7 @@ export const ShoppingListSection = ({
             <BookmarkButton
               className="absolute top-[4px] right-0"
               liked={shopping.bookmarked}
+              onChange={() => handleBookmark(shopping.id.toString())}
             />
             <CardTitle className="font-memomentKkukkkuk line-clamp-2">
               {shopping.title}
