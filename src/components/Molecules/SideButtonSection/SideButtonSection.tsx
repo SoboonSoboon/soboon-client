@@ -1,22 +1,13 @@
 'use client';
 
-import { ShoppingMeetingRegisterModal } from '@/app/(marketplace)/components';
 import { CreateButton, GoToTopButton } from '@/components/Atoms';
-import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 
 export const SideButtonSection = () => {
-  const [isOpen, setIsOpen] = useState(false);
-  const [meetingType, setMeetingType] = useState<'shopping' | 'sharing'>(
-    'shopping',
-  );
-
-  const handleClose = () => {
-    setIsOpen(false);
-  };
+  const router = useRouter();
 
   const handleOpen = (type: 'shopping' | 'sharing') => {
-    setIsOpen(true);
-    setMeetingType(type);
+    router.push(`/${type}/register`);
   };
 
   return (
@@ -30,11 +21,6 @@ export const SideButtonSection = () => {
         />
         <GoToTopButton />
       </div>
-      <ShoppingMeetingRegisterModal
-        meetingType={meetingType}
-        isOpen={isOpen}
-        onClose={handleClose}
-      />
     </>
   );
 };

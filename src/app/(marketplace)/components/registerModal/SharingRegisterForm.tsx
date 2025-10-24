@@ -192,7 +192,12 @@ export function SharingRegisterForm({ handleClose }: SharingRegisterFormProps) {
               이미지를 추가할까요?
             </Label>
             <div className="flex flex-col gap-3">
-              <ImageUploadForm formData={formData} setFormData={setFormData} />
+              <ImageUploadForm
+                imageFiles={formData.imageUrls}
+                setImageFiles={(imageFiles) =>
+                  setFormData({ ...formData, imageUrls: imageFiles })
+                }
+              />
             </div>
           </div>
 
