@@ -74,13 +74,20 @@ export const Dropdown = ({
         type="button"
         name={name}
         id={id}
-        className={`bg-gray-5 text-gray-40 flex w-full items-center justify-between gap-2.5 rounded-xl border-2 border-transparent px-4 py-2.5 focus:outline-none ${
-          disabled ? 'cursor-not-allowed opacity-50' : 'cursor-pointer'
-        } ${isOpen ? 'border-green-50' : ''} `}
+        className={cn(
+          'bg-gray-5 text-gray-40 flex w-full items-center justify-between gap-2.5 rounded-xl border-2 border-transparent px-4 py-2.5 focus:outline-none',
+          disabled ? 'cursor-not-allowed opacity-50' : 'cursor-pointer',
+          isOpen ? 'border-green-50' : '',
+        )}
         onClick={handleToggle}
         disabled={disabled}
       >
-        <span className={` ${selectedOption ? 'text-gray-80' : placeholder}`}>
+        <span
+          className={cn(
+            'whitespace-nowrap',
+            selectedOption ? 'text-gray-80' : 'text-gray-40',
+          )}
+        >
           {selectedOption ? selectedOption.label : placeholder}
         </span>
         <svg
