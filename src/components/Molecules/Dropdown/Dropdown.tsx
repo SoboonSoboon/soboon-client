@@ -74,17 +74,13 @@ export const Dropdown = ({
         type="button"
         name={name}
         id={id}
-        className={`flex w-full items-center justify-between gap-2.5 rounded-xl border-2 border-transparent bg-[var(--GrayScale-Gray5)] px-4 py-2.5 text-[var(--GrayScale-Gray40)] focus:outline-none ${
+        className={`bg-gray-5 text-gray-40 flex w-full items-center justify-between gap-2.5 rounded-xl border-2 border-transparent px-4 py-2.5 focus:outline-none ${
           disabled ? 'cursor-not-allowed opacity-50' : 'cursor-pointer'
-        } ${isOpen ? 'border-[var(--GreenScale-Green50)]' : ''} `}
+        } ${isOpen ? 'border-green-50' : ''} `}
         onClick={handleToggle}
         disabled={disabled}
       >
-        <span
-          className={` ${
-            selectedOption ? 'text-[var(--GrayScale-Gray80)]' : placeholder
-          }`}
-        >
+        <span className={` ${selectedOption ? 'text-gray-80' : placeholder}`}>
           {selectedOption ? selectedOption.label : placeholder}
         </span>
         <svg
@@ -105,7 +101,7 @@ export const Dropdown = ({
       </button>
 
       {isOpen && options.length > 0 && (
-        <div className="absolute z-50 mt-1 max-h-60 w-full overflow-y-auto rounded-xl border border-[var(--GrayScale-Gray20)] bg-[var(--GrayScale-White)] shadow-lg">
+        <div className="border-gray-20 absolute z-50 mt-1 max-h-60 w-full overflow-y-auto rounded-xl border bg-white shadow-lg">
           {options.map((option) => (
             <button
               key={option.value}
@@ -113,7 +109,7 @@ export const Dropdown = ({
               className={`w-full cursor-pointer px-4 py-2 text-left first:rounded-t-xl last:rounded-b-xl hover:bg-[var(--GrayScale-Gray5)] focus:bg-[var(--GrayScale-Gray5)] focus:outline-none ${
                 value === option.value
                   ? 'bg-[var(--GreenScale-Green5)] text-[var(--GreenScale-Green50)]'
-                  : 'text-[var(--GrayScale-Gray80)]'
+                  : 'text-gray-80'
               } `}
               onClick={() => handleSelect(option)}
             >
