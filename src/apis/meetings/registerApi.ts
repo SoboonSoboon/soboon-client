@@ -14,6 +14,7 @@ export interface ShoppingRegisterData {
   capacity: number;
 }
 
+// 추후에 삭제될 예정
 export interface SharingRegisterData {
   title: string;
   description: string;
@@ -28,18 +29,17 @@ export interface SharingRegisterData {
   imageUrls: File[];
 }
 
-export const shoppingRegisterApi = async (data: ShoppingRegisterData) => {
-  const formatData = {
-    title: data.title,
-    location: {
-      province: data.location.province,
-      city: data.location.city,
-      district: data.location.district,
-      detail: data.location.detail,
-    },
-    detail: data.detail,
-    capacity: data.capacity,
-  };
+export interface DividingRegisterData {
+  title?: string;
+  itemName: string;
+  capacity: number;
+  location: LocationType;
+  productType: string;
+  description: string;
+  imageUrls: File[];
+}
+
+export const shoppingRegisterApi = async (formatData: ShoppingRegisterData) => {
   const response = await axiosInstance.post(
     '/v1/meetings/shopping',
     formatData,
@@ -47,6 +47,7 @@ export const shoppingRegisterApi = async (data: ShoppingRegisterData) => {
   return response.data;
 };
 
+// 추후에 삭제될 예정
 export const sharingRegisterApi = async (data: SharingRegisterData) => {
   const formattedData = await formatSharingRegisterData(data);
   const response = await axiosInstance.post(
@@ -76,4 +77,31 @@ const formatSharingRegisterData = async (data: SharingRegisterData) => {
   };
 
   return formData;
+};
+
+export const dividingRegisterApi = async (formatData: DividingRegisterData) => {
+  if (formatData.imageUrls.length === 0) {
+    const response = await axiosInstance.post('/v1/meetings/dividing', {
+      ...formatData,
+      title: '',
+      price: 0,
+    });
+    return response.data;
+  } else {
+    const formattedData = await formatDividingRegisterData(
+      formatData.imageUrls,
+    );
+    const response = await axiosInstance.post('/v1/meetings/dividing', {
+      ...formatData,
+      title: '',
+      price: 0,
+      imageUrls: formattedData,
+    });
+    return response.data;
+  }
+};
+
+export const formatDividingRegisterData = async (imageUrls: File[]) => {
+  const formattedImageUrls = await imageUploader(imageUrls);
+  return formattedImageUrls;
 };

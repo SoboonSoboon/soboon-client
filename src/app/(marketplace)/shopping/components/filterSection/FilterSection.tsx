@@ -64,9 +64,8 @@ export const FilterSection = () => {
           onChange={handleStatusChange}
         />
       </div>
-      <div>
-        <DateFilter onChange={(value) => handleDateChange(value)} />
-      </div>
+
+      <DateFilter onChange={(value) => handleDateChange(value)} />
     </div>
   );
 };
