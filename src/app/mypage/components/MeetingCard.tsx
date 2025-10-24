@@ -10,9 +10,8 @@ import {
 } from '@/components/Molecules/Card/Card';
 import { MeetingItem, reviewData } from '../utils/mypageType';
 import { Button, StatusTag } from '@/components';
-import { cn } from '@/utils/cn';
+import { cn, timeFormatter } from '@/utils';
 import { useModal } from '@/components/Molecules/modal';
-import { timeFormatter } from '@/utils/timeFormetter';
 import { useRouter } from 'next/navigation';
 import { useReviewNavigation } from '../hook/useReview';
 import { ReviewModal } from './reviewModal/ReviewModal';
