@@ -11,7 +11,7 @@ import {
   StatusTag,
 } from '@/components';
 import { ShoppingContentType } from '@/types/meetingsType';
-import { timeFormatter } from '@/utils/timeFormetter';
+import { timeFormatter } from '@/utils';
 import { MapPin } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { NonShoppingList } from './NonShoppingList';

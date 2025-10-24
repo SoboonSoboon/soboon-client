@@ -1,4 +1,4 @@
-import { timeFormatter } from '@/utils/timeFormetter';
+import { timeFormatter } from '@/utils';
 
 export const DetailContentFooter = ({ createdAt }: { createdAt: string }) => {
   return (

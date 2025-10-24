@@ -1,7 +1,7 @@
 'use client';
 
 import { EllipsisVertical } from 'lucide-react';
-import { timeFormatter } from '@/utils/timeFormetter';
+import { timeFormatter } from '@/utils';
 import { CommentType, ReplyType } from '@/types/commentType';
 import { Button, ProfileImg, TextInput } from '@/components';
 import { CommentActionMenu } from '../ActionMenu/CommentActionMenu';

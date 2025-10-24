@@ -18,7 +18,7 @@ import {
   DividingMeetingsType,
 } from '@/types/meetingsType';
 import { useEffect, useState } from 'react';
-import { timeFormatter } from '@/utils/timeFormetter';
+import { timeFormatter } from '@/utils';
 import { NonDividingList } from './NonDividingList';
 import { useBookmark } from '@/hooks';
 
