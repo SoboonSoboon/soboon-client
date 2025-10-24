@@ -70,9 +70,8 @@ export const FilterSection = () => {
           variant="filter"
         />
       </div>
-      <div>
-        <DateFilter onChange={(value) => handleDateChange(value)} />
-      </div>
+
+      <DateFilter onChange={(value) => handleDateChange(value)} />
     </div>
   );
 };

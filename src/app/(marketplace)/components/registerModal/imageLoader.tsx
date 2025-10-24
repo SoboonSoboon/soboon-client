@@ -1,42 +1,35 @@
 'use client';
 
-import { SharingRegisterData } from '@/apis/meetings/registerApi';
 import { Button } from '@/components';
 import { XIcon } from 'lucide-react';
 import { useRef } from 'react';
 
 export default function ImageUploadForm({
-  formData,
-  setFormData,
+  imageFiles,
+  setImageFiles,
 }: {
-  formData: SharingRegisterData;
-  setFormData: (formData: SharingRegisterData) => void;
+  imageFiles: File[];
+  setImageFiles: (imageFiles: File[]) => void;
 }) {
   const inputRef = useRef<HTMLInputElement>(null);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files;
     if (!file) return;
-    setFormData({
-      ...formData,
-      imageUrls: [...formData.imageUrls, ...Array.from(file)],
-    });
+    setImageFiles([...imageFiles, ...Array.from(file)]);
   };
 
   const handleRemoveImage = (image: File) => {
-    setFormData({
-      ...formData,
-      imageUrls: formData.imageUrls.filter((i) => i !== image),
-    });
+    setImageFiles(imageFiles.filter((i) => i !== image));
   };
 
   return (
     <div className="flex items-start gap-6">
       {/* ✅ 왼쪽 영역 (이미지 or placeholder) */}
       <div className="flex w-full items-center justify-center overflow-hidden rounded-xl bg-[#F9FAFB] px-4 py-2.5">
-        {formData.imageUrls.length > 0 ? (
+        {imageFiles.length > 0 ? (
           <div className="flex flex-col gap-2">
-            {formData.imageUrls.map((image) => (
+            {imageFiles.map((image) => (
               <div key={image.name} className="flex items-center gap-2">
                 <p className="text-text-sub2 text-sm">{image.name}</p>
                 <XIcon

@@ -5,7 +5,7 @@ import { cn } from '@/utils/cn';
 import { ChevronDown } from 'lucide-react';
 
 export interface DropdownOption {
-  value: string;
+  value: string | number;
   label: string;
 }
 
@@ -16,7 +16,7 @@ export interface DropdownProps {
   id?: string;
   options: DropdownOption[];
   placeholder?: string;
-  value?: string;
+  value?: string | number;
   onChange?: (value: string) => void;
   disabled?: boolean;
   required?: boolean;
@@ -65,7 +65,7 @@ export const Dropdown = ({
   };
 
   const handleSelect = (option: DropdownOption) => {
-    onChange?.(option.value);
+    onChange?.(option.value.toString());
     setIsOpen(false);
   };
 

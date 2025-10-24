@@ -41,6 +41,7 @@ export const DetailAside = ({
     handleBookmark(meetingId.toString(), isBookmarked);
   };
 
+  // todo: 모임 신청 로직 수정
   const handleApplyMeeting = async (applicationId: string) => {
     try {
       const response = await applyMeeting(null, applicationId);
@@ -64,6 +65,7 @@ export const DetailAside = ({
     },
   });
 
+  // todo: 쿼리키에 유저 id 넣어서 사용하기
   const { data: userApplyStatus } = useQuery({
     queryKey: ['userApplyStatus'],
     queryFn: () => getUserApplyStatus(),
@@ -76,6 +78,7 @@ export const DetailAside = ({
     return null;
   }, [userApplyStatus, meetingId]);
 
+  // todo: 중복 실행에 대해 생각해보기.
   const { mutate: handleCancelApplyMeeting } = useMutation({
     mutationFn: (meetingId: string) => cancelApplyMeeting({ id: meetingId }),
     onSuccess: () => {
