@@ -32,7 +32,7 @@ export const ProfileSideBar = ({ reviewData }: ProfileSideBar) => {
   } as const;
 
   // 리뷰 키워드 중 최대 count에 20% 여유를 더한 값 계산
-  const maxCount = Math.max(...reviews.keywords.map((k) => k.count)) * 1.2;
+  //const maxCount = Math.max(...reviews.keywords.map((k) => k.count)) * 1.2;
   const maxCountMock = Math.max(...userData.keywords.map((k) => k.count)) * 1.2;
   console.log(reviewData, 'data');
   return (
