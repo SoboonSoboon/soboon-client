@@ -138,41 +138,41 @@ export const CITY_OPTIONS = [
 // 선택된 시/도에 따라 시/군/구 옵션을 반환하는 함수
 export const GET_CITY_OPTIONS = (province) => {
   if (!province || province === '') {
-    return [{ value: '', label: '시/군/구' }];
+    return [];
   }
   const cities = CITY_OPTIONS_BY_PROVINCE[province] || [];
-  return [{ value: '', label: '시/군/구' }, ...cities];
+  return cities;
 };
 
 // 선택된 시/군/구에 따라 동/읍/면 옵션을 반환하는 함수
 export const GET_DISTRICT_OPTIONS = (city) => {
   if (!city || city === '') {
-    return [{ value: '', label: '동/읍/면' }];
+    return [];
   }
   const districts = DISTRICT_OPTIONS_BY_CITY[city] || DEFAULT_DISTRICT_OPTIONS;
-  return [{ value: '', label: '동/읍/면' }, ...districts];
+  return districts;
 };
 
 // 모델용 (초기 label이 다름)
 export const GET_MODEL_CITY_OPTIONS = (province) => {
   if (!province || province === '') {
-    return [{ value: '', label: '시/군/구' }];
+    return [];
   }
   const cities = CITY_OPTIONS_BY_PROVINCE[province] || [];
-  return [{ value: '', label: '시/군/구' }, ...cities];
+  return cities;
 };
 
 export const GET_MODEL_DISTRICT_OPTIONS = (city) => {
   if (!city || city === '') {
-    return [{ value: '', label: '동/읍/면' }];
+    return [];
   }
   const districts = DISTRICT_OPTIONS_BY_CITY[city] || DEFAULT_DISTRICT_OPTIONS;
-  return [{ value: '', label: '동/읍/면' }, ...districts];
+  return districts;
 };
 
 // 하위 호환성을 위해 기존 변수명 유지 (deprecated)
-export const MODEL_CITY_OPTIONS = [{ value: '', label: '시/군/구' }];
-export const MODEL_DISTRICT_OPTIONS = [{ value: '', label: '동/읍/면' }];
+export const MODEL_CITY_OPTIONS = [];
+export const MODEL_DISTRICT_OPTIONS = [];
 export const DISTRICT_OPTIONS = [{ value: '', label: '전체' }];
 
 // 모임 인원 옵션
