@@ -109,27 +109,29 @@ export const Dropdown = ({
       {isOpen && options.length > 0 && (
         <div
           className={cn(
-            'border-gray-20 absolute z-50 mt-1 max-h-60 w-fit min-w-full overflow-y-auto rounded-xl border bg-white shadow-lg',
+            'border-gray-20 absolute z-50 mt-1 max-h-60 w-fit min-w-full overflow-hidden rounded-xl border bg-white shadow-lg',
           )}
         >
-          {options.map((option) => (
-            <button
-              key={option.value}
-              type="button"
-              className={cn(
-                'w-full cursor-pointer text-left whitespace-nowrap first:rounded-t-xl last:rounded-b-xl focus:outline-none',
-                variant === 'filter'
-                  ? 'px-4 py-2 hover:bg-[var(--GrayScale-Gray5)] focus:bg-[var(--GrayScale-Gray5)]'
-                  : 'hover:bg-gray-5 focus:bg-gray-5 px-3 py-1.5',
-                value === option.value
-                  ? 'bg-[var(--GreenScale-Green5)] text-[var(--GreenScale-Green50)]'
-                  : 'text-gray-80',
-              )}
-              onClick={() => handleSelect(option)}
-            >
-              {option.label}
-            </button>
-          ))}
+          <div className="dropdown-scrollbar max-h-60 overflow-y-auto">
+            {options.map((option) => (
+              <button
+                key={option.value}
+                type="button"
+                className={cn(
+                  'w-full cursor-pointer text-left whitespace-nowrap focus:outline-none',
+                  variant === 'filter'
+                    ? 'px-4 py-2 hover:bg-[var(--GrayScale-Gray5)] focus:bg-[var(--GrayScale-Gray5)]'
+                    : 'hover:bg-gray-5 focus:bg-gray-5 px-3 py-1.5',
+                  value === option.value
+                    ? 'bg-[var(--GreenScale-Green5)] text-[var(--GreenScale-Green50)]'
+                    : 'text-gray-80',
+                )}
+                onClick={() => handleSelect(option)}
+              >
+                {option.label}
+              </button>
+            ))}
+          </div>
         </div>
       )}
     </div>
