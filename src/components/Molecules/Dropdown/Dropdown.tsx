@@ -8,6 +8,8 @@ export interface DropdownOption {
   label: string;
 }
 
+export type DropdownVariant = 'filter' | 'form';
+
 export interface DropdownProps {
   name?: string;
   id?: string;
@@ -18,6 +20,7 @@ export interface DropdownProps {
   disabled?: boolean;
   required?: boolean;
   className?: string;
+  variant?: DropdownVariant;
 }
 
 export const Dropdown = ({
@@ -30,6 +33,7 @@ export const Dropdown = ({
   disabled = false,
   required = false,
   className,
+  variant = 'filter',
   ...props
 }: DropdownProps) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -75,9 +79,11 @@ export const Dropdown = ({
         name={name}
         id={id}
         className={cn(
-          'bg-gray-5 text-gray-40 flex w-full items-center justify-between gap-2.5 rounded-xl border-2 border-transparent px-4 py-2.5 focus:outline-none',
+          'flex w-full items-center justify-between gap-2.5 rounded-xl',
+          variant === 'filter'
+            ? 'border-gray-10 text-gray-95 border bg-white px-3 py-2'
+            : 'border-gray-5 bg-gray-5 px-3 py-2',
           disabled ? 'cursor-not-allowed opacity-50' : 'cursor-pointer',
-          isOpen ? 'border-green-50' : '',
         )}
         onClick={handleToggle}
         disabled={disabled}
@@ -108,16 +114,24 @@ export const Dropdown = ({
       </button>
 
       {isOpen && options.length > 0 && (
-        <div className="border-gray-20 absolute z-50 mt-1 max-h-60 w-full overflow-y-auto rounded-xl border bg-white shadow-lg">
+        <div
+          className={cn(
+            'border-gray-20 absolute z-50 mt-1 max-h-60 w-full overflow-y-auto rounded-xl border bg-white shadow-lg',
+          )}
+        >
           {options.map((option) => (
             <button
               key={option.value}
               type="button"
-              className={`w-full cursor-pointer px-4 py-2 text-left first:rounded-t-xl last:rounded-b-xl hover:bg-[var(--GrayScale-Gray5)] focus:bg-[var(--GrayScale-Gray5)] focus:outline-none ${
+              className={cn(
+                'w-full cursor-pointer text-left first:rounded-t-xl last:rounded-b-xl focus:outline-none',
+                variant === 'filter'
+                  ? 'px-4 py-2 hover:bg-[var(--GrayScale-Gray5)] focus:bg-[var(--GrayScale-Gray5)]'
+                  : 'hover:bg-gray-5 focus:bg-gray-5 px-3 py-1.5',
                 value === option.value
                   ? 'bg-[var(--GreenScale-Green5)] text-[var(--GreenScale-Green50)]'
-                  : 'text-gray-80'
-              } `}
+                  : 'text-gray-80',
+              )}
               onClick={() => handleSelect(option)}
             >
               {option.label}

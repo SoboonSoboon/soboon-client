@@ -119,6 +119,7 @@ export function ShoppingRegisterForm({
               onChange={(value) =>
                 setFormData({ ...formData, capacity: Number(value) })
               }
+              variant="form"
             />
           </div>
 
@@ -145,6 +146,7 @@ export function ShoppingRegisterForm({
                       },
                     })
                   }
+                  variant="form"
                 />
                 <Dropdown
                   name="city"
@@ -162,6 +164,7 @@ export function ShoppingRegisterForm({
                       },
                     })
                   }
+                  variant="form"
                 />
                 <Dropdown
                   name="district"
@@ -175,6 +178,7 @@ export function ShoppingRegisterForm({
                       location: { ...formData.location, district: value },
                     })
                   }
+                  variant="form"
                 />
               </div>
               <div className="w-full">

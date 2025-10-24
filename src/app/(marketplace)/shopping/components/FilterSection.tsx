@@ -51,6 +51,7 @@ export const FilterSection = () => {
           options={PROVINCE_OPTIONS}
           onChange={(province) => handleProvinceChange(province)}
           placeholder="지역 선택"
+          variant="filter"
         />
         <Dropdown
           name="city"
@@ -58,6 +59,7 @@ export const FilterSection = () => {
           options={availableCityOptions}
           onChange={(city) => handleCityChange(city)}
           placeholder="시/군/구 선택"
+          variant="filter"
         />
         <Dropdown
           name="status"
@@ -65,6 +67,7 @@ export const FilterSection = () => {
           options={statusOptions}
           onChange={handleStatusChange}
           placeholder="상태 선택"
+          variant="filter"
         />
       </div>
       <div>

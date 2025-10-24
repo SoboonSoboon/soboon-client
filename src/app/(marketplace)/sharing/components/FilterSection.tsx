@@ -76,6 +76,7 @@ export const FilterSection = () => {
             className="w-full"
             onChange={(province) => handleProvinceChange(province)}
             placeholder="지역 선택"
+            variant="filter"
           />
           <Dropdown
             name="city"
@@ -84,6 +85,7 @@ export const FilterSection = () => {
             className="w-full"
             onChange={(city) => handleCityChange(city)}
             placeholder="시/군/구 선택"
+            variant="filter"
           />
         </div>
       </div>

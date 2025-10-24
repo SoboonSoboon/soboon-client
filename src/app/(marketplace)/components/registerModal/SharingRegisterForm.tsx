@@ -102,6 +102,7 @@ export function SharingRegisterForm({ handleClose }: SharingRegisterFormProps) {
               onChange={(value) =>
                 setFormData({ ...formData, productType: value })
               }
+              variant="form"
             />
             <TextInput
               id="itemName"
@@ -150,6 +151,7 @@ export function SharingRegisterForm({ handleClose }: SharingRegisterFormProps) {
                       district: '',
                     })
                   }
+                  variant="form"
                 />
                 <Dropdown
                   name="city"
@@ -160,6 +162,7 @@ export function SharingRegisterForm({ handleClose }: SharingRegisterFormProps) {
                   onChange={(value) =>
                     setFormData({ ...formData, city: value, district: '' })
                   }
+                  variant="form"
                 />
                 <Dropdown
                   name="district"
@@ -170,6 +173,7 @@ export function SharingRegisterForm({ handleClose }: SharingRegisterFormProps) {
                   onChange={(value) =>
                     setFormData({ ...formData, district: value })
                   }
+                  variant="form"
                 />
               </div>
               <div className="w-full">
