@@ -2,6 +2,7 @@
 
 import { useState, useRef, useEffect } from 'react';
 import { cn } from '@/utils/cn';
+import { ChevronDown } from 'lucide-react';
 
 export interface DropdownOption {
   value: string;
@@ -96,21 +97,13 @@ export const Dropdown = ({
         >
           {selectedOption ? selectedOption.label : placeholder}
         </span>
-        <svg
-          className={`size-4 transition-transform duration-200 ${
-            isOpen ? 'rotate-180' : ''
-          }`}
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth={2}
-            d="M19 9l-7 7-7-7"
-          />
-        </svg>
+        <ChevronDown
+          className={cn(
+            'text-gray-95 size-4 transition-transform duration-200',
+            variant === 'filter' ? 'size-4' : 'size-5',
+            isOpen ? 'rotate-180' : '',
+          )}
+        />
       </button>
 
       {isOpen && options.length > 0 && (
