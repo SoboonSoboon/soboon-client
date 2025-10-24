@@ -179,9 +179,8 @@ export const DISTRICT_OPTIONS = [{ value: '', label: '전체' }];
 // 모임 인원 옵션
 export const CAPACITY_OPTIONS = [
   { value: '', label: '몇 명을 모을까요?' },
-  { value: '1', label: '1' },
-  { value: '2', label: '2' },
-  { value: '3', label: '3' },
-  { value: '4', label: '4' },
-  { value: '5', label: '5' },
+  { value: 2, label: '2명' },
+  { value: 3, label: '3명' },
+  { value: 4, label: '4명' },
+  { value: 5, label: '5명' },
 ];
