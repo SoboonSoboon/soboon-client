@@ -4,6 +4,7 @@ import { useEffect } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { axiosInstance } from '@/apis/axiosInstance';
 import { useAuthStore } from '@/apis/auth/hooks/authStore';
+import { setTokenInCookie } from '@/action/authAction';
 
 export default function DevKakaoCallbackHandler() {
   const router = useRouter();
@@ -22,7 +23,7 @@ export default function DevKakaoCallbackHandler() {
         );
         const data = response.data;
         localStorage.setItem('accessToken', data.accessToken); //todo: 전역상태관리로 관리하기로 변경
-
+        await setTokenInCookie(data.accessToken);
         if (data.complete) {
           useAuthStore.setState({
             isLoggedIn: true,
