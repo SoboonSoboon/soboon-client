@@ -85,6 +85,7 @@ export const Dropdown = ({
             ? 'border-gray-10 border bg-white px-3 py-2'
             : 'border-gray-5 bg-gray-5 px-4 py-2.5',
           disabled ? 'cursor-not-allowed opacity-50' : 'cursor-pointer',
+          required && !selectedOption ? 'border-warning' : '',
         )}
         onClick={handleToggle}
         disabled={disabled}
