@@ -9,6 +9,7 @@ import {
 import { MeetingDetailType } from '@/types/meetingsType';
 import { CommentsListType } from '@/types/commentType';
 import { ApplicantsMemberType } from '@/types/applicantsType';
+import { cookies } from 'next/headers';
 
 const dummyUser = {
   id: Number(process.env.NEXT_PUBLIC_DUMMY_USER_ID),
@@ -27,6 +28,8 @@ async function getSharingMettingDetail({
 }: {
   id: string;
 }): Promise<MeetingDetailType | null> {
+  const cookieStore = await cookies();
+  const accessToken = cookieStore.get('accessToken')?.value || '';
   try {
     const response = await fetch(
       `${process.env.NEXT_PUBLIC_SOBOON_API_URL}/v1/meetings/${id}`,
@@ -37,7 +40,7 @@ async function getSharingMettingDetail({
         },
         headers: {
           'Content-Type': 'application/json',
-          Authorization: `Bearer ${process.env.NEXT_PUBLIC_SOBOON_API_TOKEN}`,
+          Authorization: `Bearer ${accessToken}`,
         },
       },
     );
@@ -60,6 +63,8 @@ async function getComments({
 }: {
   id: string;
 }): Promise<CommentsListType | null> {
+  const cookieStore = await cookies();
+  const accessToken = cookieStore.get('accessToken')?.value || '';
   try {
     const response = await fetch(
       `${process.env.NEXT_PUBLIC_SOBOON_API_URL}/v1/meetings/${id}/comments`,
@@ -67,7 +72,7 @@ async function getComments({
         cache: 'no-store',
         headers: {
           'Content-Type': 'application/json',
-          Authorization: `Bearer ${process.env.NEXT_PUBLIC_SOBOON_API_TOKEN}`,
+          Authorization: `Bearer ${accessToken}`,
         },
       },
     );
@@ -88,6 +93,8 @@ async function getParticipants({
 }: {
   meetingId: string;
 }): Promise<ApplicantsMemberType['data'][]> {
+  const cookieStore = await cookies();
+  const accessToken = cookieStore.get('accessToken')?.value || '';
   try {
     const response = await fetch(
       `${process.env.NEXT_PUBLIC_SOBOON_API_URL}/v1/meetings/${meetingId}/applicants`,
@@ -98,7 +105,7 @@ async function getParticipants({
         },
         headers: {
           'Content-Type': 'application/json',
-          Authorization: `Bearer ${process.env.NEXT_PUBLIC_SOBOON_API_TOKEN}`,
+          Authorization: `Bearer ${accessToken}`,
         },
       },
     );

@@ -9,6 +9,7 @@ import {
 import { MeetingDetailType } from '@/types/meetingsType';
 import { CommentsListType } from '@/types/commentType';
 import { ApplicantsMemberType } from '@/types/applicantsType';
+import { cookies } from 'next/headers';
 
 const dummyUser = {
   id: Number(process.env.NEXT_PUBLIC_DUMMY_USER_ID),
@@ -26,6 +27,8 @@ async function getMettingDetail({
 }: {
   id: string;
 }): Promise<MeetingDetailType | null> {
+  const cookieStore = await cookies();
+  const accessToken = cookieStore.get('accessToken')?.value || '';
   try {
     const response = await fetch(
       `${process.env.NEXT_PUBLIC_SOBOON_API_URL}/v1/meetings/${id}`,
@@ -33,7 +36,7 @@ async function getMettingDetail({
         cache: 'no-store',
         headers: {
           'Content-Type': 'application/json',
-          Authorization: `Bearer ${process.env.NEXT_PUBLIC_SOBOON_API_TOKEN}`,
+          Authorization: `Bearer ${accessToken}`,
         },
       },
     );
@@ -56,6 +59,8 @@ async function getComments({
 }: {
   id: string;
 }): Promise<CommentsListType | null> {
+  const cookieStore = await cookies();
+  const accessToken = cookieStore.get('accessToken')?.value || '';
   try {
     const response = await fetch(
       `${process.env.NEXT_PUBLIC_SOBOON_API_URL}/v1/meetings/${id}/comments`,
@@ -63,10 +68,11 @@ async function getComments({
         cache: 'no-store',
         headers: {
           'Content-Type': 'application/json',
-          Authorization: `Bearer ${process.env.NEXT_PUBLIC_SOBOON_API_TOKEN}`,
+          Authorization: `Bearer ${accessToken}`,
         },
       },
     );
+    console.log(response);
     if (!response.ok) {
       throw new Error('댓글 조회 실패');
     }
@@ -84,6 +90,8 @@ async function getParticipants({
 }: {
   meetingId: string;
 }): Promise<ApplicantsMemberType['data'][]> {
+  const cookieStore = await cookies();
+  const accessToken = cookieStore.get('accessToken')?.value || '';
   try {
     const response = await fetch(
       `${process.env.NEXT_PUBLIC_SOBOON_API_URL}/v1/meetings/${meetingId}/applicants`,
@@ -94,7 +102,7 @@ async function getParticipants({
         },
         headers: {
           'Content-Type': 'application/json',
-          Authorization: `Bearer ${process.env.NEXT_PUBLIC_SOBOON_API_TOKEN}`,
+          Authorization: `Bearer ${accessToken}`,
         },
       },
     );

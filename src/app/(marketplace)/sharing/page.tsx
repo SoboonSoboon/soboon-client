@@ -8,10 +8,13 @@ import {
   FilterSection,
   SharingListSection,
 } from '@/app/(marketplace)/sharing/components';
+import { cookies } from 'next/headers';
 
 async function getSharingMetting(
   query: URLSearchParams,
 ): Promise<DividingMeetingsType | null> {
+  const cookieStore = await cookies();
+  const accessToken = cookieStore.get('accessToken')?.value || '';
   try {
     const response = await fetch(
       `${process.env.NEXT_PUBLIC_SOBOON_API_URL}/v1/meetings/dividing?${query.toString()}`,
@@ -19,7 +22,7 @@ async function getSharingMetting(
         cache: 'no-store',
         headers: {
           'Content-Type': 'application/json',
-          Authorization: `Bearer ${process.env.NEXT_PUBLIC_SOBOON_API_TOKEN}`,
+          Authorization: `Bearer ${accessToken}`,
         },
       },
     );
