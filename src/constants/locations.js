@@ -7,7 +7,6 @@ export const PROVINCE_OPTIONS = [
 ];
 
 export const MODEL_PROVINCE_OPTIONS = [
-  { value: '', label: '지역 선택' },
   { value: '서울특별시', label: '서울특별시' },
   { value: '경기도', label: '경기도' },
   { value: '인천광역시', label: '인천광역시' },
@@ -178,7 +177,6 @@ export const DISTRICT_OPTIONS = [{ value: '', label: '전체' }];
 
 // 모임 인원 옵션
 export const CAPACITY_OPTIONS = [
-  { value: '', label: '몇 명을 모을까요?' },
   { value: '2', label: '2' },
   { value: '3', label: '3' },
   { value: '4', label: '4' },

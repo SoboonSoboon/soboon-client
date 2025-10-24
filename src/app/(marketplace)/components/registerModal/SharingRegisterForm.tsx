@@ -151,6 +151,7 @@ export function SharingRegisterForm({ handleClose }: SharingRegisterFormProps) {
                       district: '',
                     })
                   }
+                  placeholder="지역 선택"
                   variant="form"
                 />
                 <Dropdown
@@ -163,6 +164,7 @@ export function SharingRegisterForm({ handleClose }: SharingRegisterFormProps) {
                     setFormData({ ...formData, city: value, district: '' })
                   }
                   variant="form"
+                  placeholder="시/군/구"
                 />
                 <Dropdown
                   name="district"
@@ -174,6 +176,7 @@ export function SharingRegisterForm({ handleClose }: SharingRegisterFormProps) {
                     setFormData({ ...formData, district: value })
                   }
                   variant="form"
+                  placeholder="동/읍/면"
                 />
               </div>
               <div className="w-full">
