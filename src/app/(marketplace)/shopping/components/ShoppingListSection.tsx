@@ -28,7 +28,6 @@ export const ShoppingListSection = ({
   const onClickCard = (id: string) => {
     router.push(`/shopping/${id}`);
   };
-
   // 게시글이 없을 때의 빈 상태
   if (!shoppingList || shoppingList.length === 0) {
     return <NonShoppingList />;

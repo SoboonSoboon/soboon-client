@@ -1,2 +1,2 @@
 export * from './ShoppingListSection';
-export * from './filterSection';
+export * from './FilterSection';

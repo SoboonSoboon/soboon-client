@@ -17,7 +17,6 @@ import {
   DividingContentType,
   DividingMeetingsType,
 } from '@/types/meetingsType';
-import { useEffect, useState } from 'react';
 import { timeFormatter } from '@/utils/timeFormetter';
 import { NonDividingList } from './NonDividingList';
 import { useBookmark } from '@/hooks';
@@ -27,20 +26,13 @@ export const SharingListSection = ({
 }: {
   sharingMeetingList: DividingMeetingsType | null;
 }) => {
-  const [meetingList, setMeetingList] = useState<DividingContentType[] | null>(
-    null,
-  );
-
-  useEffect(() => {
-    setMeetingList(sharingMeetingList?.content || null);
-  }, [sharingMeetingList]);
-
   const router = useRouter();
   const { handleBookmark } = useBookmark();
 
   const onClickCard = (id: string) => {
     router.push(`/sharing/${id}`);
   };
+  const meetingList = sharingMeetingList?.content || [];
 
   if (meetingList?.length === 0) {
     return <NonDividingList />;
