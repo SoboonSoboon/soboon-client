@@ -2,7 +2,7 @@
 
 import { cookies } from 'next/headers';
 
-export const setTokenInCookie = async (token: string) => {
+export const setTokenInCookie = async (token: string, userId: number) => {
   const cookieStore = await cookies();
 
   cookieStore.set({
@@ -13,5 +13,12 @@ export const setTokenInCookie = async (token: string) => {
     secure: true,
     path: '/',
   });
-  console.log('accessToken set in cookie');
+
+  cookieStore.set({
+    name: 'userId',
+    value: userId.toString(),
+    httpOnly: true,
+    maxAge: 60 * 60 * 24 * 7, // 7일
+    path: '/',
+  });
 };

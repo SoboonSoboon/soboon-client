@@ -136,9 +136,11 @@ export default async function SharingDetailPage({
   });
 
   // 댓글 조회
+  const cookieStore = await cookies();
+  const userId = Number(cookieStore.get('userId')?.value) || '';
   const commentsList = await getComments({ id });
 
-  const isAuthor = meetingDetail?.user.userId === dummyUser.id;
+  const isAuthor = meetingDetail?.user.userId === userId;
 
   const participants = isAuthor ? await getParticipants({ meetingId: id }) : [];
 
