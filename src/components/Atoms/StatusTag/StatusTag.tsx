@@ -1,13 +1,15 @@
 import { cn } from '@/utils/cn';
 
 export interface StatusTagProps extends React.HTMLAttributes<HTMLDivElement> {
-  status: 'RECRUITING' | 'COMPLETED' | 'CLOSED';
+  status: 'RECRUITING' | 'COMPLETED' | 'CLOSED' | 'ReviewClosed' | 'ReviewOpen';
 }
 
 const STATUS_LABEL: Record<StatusTagProps['status'], string> = {
   RECRUITING: '모집중',
   COMPLETED: '모집완료',
   CLOSED: '모집종료',
+  ReviewClosed: '리뷰 완료',
+  ReviewOpen: '리뷰 대기',
 };
 
 const STATUS_STYLE: Record<StatusTagProps['status'], string> = {
@@ -16,6 +18,10 @@ const STATUS_STYLE: Record<StatusTagProps['status'], string> = {
   COMPLETED:
     'bg-[var(--GrayScale-Gray5)] border-[var(--text-inactive)] text-[var(--text-sub2)]',
   CLOSED:
+    'bg-[var(--GrayScale-Gray5)] border-[var(--text-inactive)] text-[var(--text-sub2)]',
+  ReviewOpen:
+    'bg-[var(--GreenScale-Green1)] border-[var(--Keycolor-primary)] text-[var(--Keycolor-primary)]',
+  ReviewClosed:
     'bg-[var(--GrayScale-Gray5)] border-[var(--text-inactive)] text-[var(--text-sub2)]',
 };
 
