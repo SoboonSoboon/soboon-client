@@ -44,7 +44,7 @@ export const FilterSection = () => {
 
   return (
     <div className="flex justify-between">
-      <div className="flex gap-4">
+      <div className="flex w-full max-w-92 gap-2">
         <Dropdown
           name="province"
           value={activeProvince}

@@ -80,10 +80,10 @@ export const Dropdown = ({
         name={name}
         id={id}
         className={cn(
-          'flex w-full items-center justify-between gap-2.5 rounded-xl',
+          'flex w-full items-center justify-between gap-1.5 rounded-xl',
           variant === 'filter'
-            ? 'border-gray-10 text-gray-95 border bg-white px-3 py-2'
-            : 'border-gray-5 bg-gray-5 px-3 py-2',
+            ? 'border-gray-10 border bg-white px-3 py-2'
+            : 'border-gray-5 bg-gray-5 px-4 py-2.5',
           disabled ? 'cursor-not-allowed opacity-50' : 'cursor-pointer',
         )}
         onClick={handleToggle}
@@ -92,7 +92,7 @@ export const Dropdown = ({
         <span
           className={cn(
             'whitespace-nowrap',
-            selectedOption ? 'text-gray-80' : 'text-gray-40',
+            selectedOption ? 'text-gray-95' : 'text-gray-40 font-medium',
           )}
         >
           {selectedOption ? selectedOption.label : placeholder}
