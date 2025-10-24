@@ -17,12 +17,14 @@ export const getPositionClass = (position: string) => {
 export const getSizeClass = (size: string) => {
   switch (size) {
     case 'sm':
-      return 'w-80 max-w-sm';
+      return 'w-80 max-w-sm p-6';
     case 'md':
-      return 'w-96 max-w-md';
+      return 'w-96 max-w-md p-6';
     case 'lg':
-      return 'w-[32rem] max-w-lg';
+      return 'w-[32rem] max-w-lg p-6';
+    case 'custom':
+      return '';
     default:
-      return 'w-96 max-w-md';
+      return 'w-96 max-w-md p-6';
   }
 };
