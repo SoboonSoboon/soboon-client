@@ -13,11 +13,8 @@ import {
   StatusTag,
 } from '@/components';
 import { MapPin } from 'lucide-react';
-import {
-  DividingContentType,
-  DividingMeetingsType,
-} from '@/types/meetingsType';
-import { timeFormatter } from '@/utils/timeFormetter';
+import { DividingMeetingsType } from '@/types/meetingsType';
+import { timeFormatter } from '@/utils';
 import { NonDividingList } from './NonDividingList';
 import { useBookmark } from '@/hooks';
 
