@@ -4,14 +4,14 @@ import userEvent from '@testing-library/user-event';
 import { Textarea } from './Textarea';
 
 describe('Textarea', () => {
-  it('기본 textarea가 렌더링되어야 한다', () => {
+  test('기본 textarea가 렌더링되어야 한다', () => {
     render(<Textarea />);
 
     const textarea = screen.getByRole('textbox');
     expect(textarea).toBeInTheDocument();
   });
 
-  it('placeholder가 올바르게 표시되어야 한다', () => {
+  test('placeholder가 올바르게 표시되어야 한다', () => {
     const placeholderText = '내용을 입력하세요';
     render(<Textarea placeholder={placeholderText} />);
 
@@ -19,7 +19,7 @@ describe('Textarea', () => {
     expect(textarea).toBeInTheDocument();
   });
 
-  it('value가 올바르게 표시되어야 한다', () => {
+  test('value가 올바르게 표시되어야 한다', () => {
     const testValue = '테스트 내용입니다';
     render(<Textarea value={testValue} onChange={() => {}} />);
 
@@ -27,7 +27,7 @@ describe('Textarea', () => {
     expect(textarea).toHaveValue(testValue);
   });
 
-  it('onChange 이벤트가 올바르게 동작해야 한다', async () => {
+  test('onChange 이벤트가 올바르게 동작해야 한다', async () => {
     const user = userEvent.setup();
     const handleChange = jest.fn();
     render(<Textarea onChange={handleChange} />);
@@ -39,7 +39,7 @@ describe('Textarea', () => {
     expect(handleChange).toHaveBeenCalledTimes(5); // 'Hello' = 5글자
   });
 
-  it('사용자 입력이 textarea에 반영되어야 한다', async () => {
+  test('사용자 입력이 textarea에 반영되어야 한다', async () => {
     const user = userEvent.setup();
     render(<Textarea />);
 
@@ -49,7 +49,7 @@ describe('Textarea', () => {
     expect(textarea.value).toBe('Hello World');
   });
 
-  it('올바른 className이 적용되어야 한다', () => {
+  test('올바른 className이 적용되어야 한다', () => {
     render(<Textarea />);
 
     const textarea = screen.getByRole('textbox');
@@ -59,7 +59,7 @@ describe('Textarea', () => {
     expect(textarea).toHaveClass('rounded-xl');
   });
 
-  it('커스텀 className이 추가로 적용되어야 한다', () => {
+  test('커스텀 className이 추가로 적용되어야 한다', () => {
     render(<Textarea className="border-2 border-blue-500" />);
 
     const textarea = screen.getByRole('textbox');
@@ -69,7 +69,7 @@ describe('Textarea', () => {
     expect(textarea).toHaveClass('border-2', 'border-blue-500');
   });
 
-  it('추가 props가 올바르게 전달되어야 한다', () => {
+  test('추가 props가 올바르게 전달되어야 한다', () => {
     render(<Textarea disabled rows={5} maxLength={100} />);
 
     const textarea = screen.getByRole('textbox');
@@ -78,7 +78,7 @@ describe('Textarea', () => {
     expect(textarea).toHaveAttribute('maxLength', '100');
   });
 
-  it('value와 onChange를 함께 사용하는 제어 컴포넌트로 동작해야 한다', async () => {
+  test('value와 onChange를 함께 사용하는 제어 컴포넌트로 동작해야 한다', async () => {
     const user = userEvent.setup();
     const TestComponent = () => {
       const [value, setValue] = React.useState('');
@@ -99,7 +99,7 @@ describe('Textarea', () => {
     expect(textarea.value).toBe('테스트');
   });
 
-  it('포커스 시 스타일이 적용되어야 한다', async () => {
+  test('포커스 시 스타일이 적용되어야 한다', async () => {
     const user = userEvent.setup();
     render(<Textarea />);
 
@@ -109,14 +109,14 @@ describe('Textarea', () => {
     expect(textarea).toHaveFocus();
   });
 
-  it('빈 값으로 렌더링되어야 한다', () => {
+  test('빈 값으로 렌더링되어야 한다', () => {
     render(<Textarea value="" onChange={() => {}} />);
 
     const textarea = screen.getByRole('textbox');
     expect(textarea).toHaveValue('');
   });
 
-  it('여러 줄의 텍스트를 입력할 수 있어야 한다', async () => {
+  test('여러 줄의 텍스트를 입력할 수 있어야 한다', async () => {
     const user = userEvent.setup();
     const multilineText = '첫 번째 줄\n두 번째 줄\n세 번째 줄';
     render(<Textarea />);
