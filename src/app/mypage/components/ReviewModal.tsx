@@ -14,7 +14,7 @@ interface ReviewModalProps {
     targetUserId: number,
     selectedKeywords: ReviewKeyword[],
   ) => void;
-  activeMainTab?: 'host' | 'participate';
+  activeMainTab?: 'host' | 'participate' | 'bookmark';
   isLoading?: boolean;
   error?: Error | null;
 }
@@ -40,7 +40,7 @@ export const ReviewModal = ({
     <Modal
       isOpen={modal.isOpen}
       onClose={modal.close}
-      className="z-50"
+      className="z-40"
       size="custom"
       contentClassName={`w-[520px] rounded-[24px] p-[52px] flex flex-col gap-8 ${
         activeMainTab === 'participate' ? 'h-[420px]' : 'h-[677px]'

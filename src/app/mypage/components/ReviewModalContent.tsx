@@ -10,7 +10,7 @@ interface ReviewModalContentProps {
     targetUserId: number,
     selectedKeywords: ReviewKeyword[],
   ) => void;
-  activeMainTab: 'host' | 'participate';
+  activeMainTab: 'host' | 'participate' | 'bookmark';
 }
 
 export const ReviewModalContent = ({

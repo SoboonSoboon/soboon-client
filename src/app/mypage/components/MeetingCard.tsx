@@ -31,7 +31,7 @@ export const MeetingCard = ({
   activeMainTab,
 }: {
   meeting: MeetingItem;
-  activeMainTab: 'host' | 'participate';
+  activeMainTab: 'host' | 'participate' | 'bookmark';
 }) => {
   const router = useRouter();
   const queryClient = useQueryClient();
