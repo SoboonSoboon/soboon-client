@@ -119,6 +119,8 @@ export function ShoppingRegisterForm({
               onChange={(value) =>
                 setFormData({ ...formData, capacity: Number(value) })
               }
+              variant="form"
+              placeholder="2"
             />
           </div>
 
@@ -145,6 +147,8 @@ export function ShoppingRegisterForm({
                       },
                     })
                   }
+                  variant="form"
+                  placeholder="지역 선택"
                 />
                 <Dropdown
                   name="city"
@@ -162,6 +166,8 @@ export function ShoppingRegisterForm({
                       },
                     })
                   }
+                  variant="form"
+                  placeholder="시/군/구"
                 />
                 <Dropdown
                   name="district"
@@ -175,6 +181,8 @@ export function ShoppingRegisterForm({
                       location: { ...formData.location, district: value },
                     })
                   }
+                  variant="form"
+                  placeholder="동/읍/면"
                 />
               </div>
               <div className="w-full">

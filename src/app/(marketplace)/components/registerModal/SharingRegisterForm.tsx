@@ -102,6 +102,7 @@ export function SharingRegisterForm({ handleClose }: SharingRegisterFormProps) {
               onChange={(value) =>
                 setFormData({ ...formData, productType: value })
               }
+              variant="form"
             />
             <TextInput
               id="itemName"
@@ -150,6 +151,8 @@ export function SharingRegisterForm({ handleClose }: SharingRegisterFormProps) {
                       district: '',
                     })
                   }
+                  placeholder="지역 선택"
+                  variant="form"
                 />
                 <Dropdown
                   name="city"
@@ -160,6 +163,8 @@ export function SharingRegisterForm({ handleClose }: SharingRegisterFormProps) {
                   onChange={(value) =>
                     setFormData({ ...formData, city: value, district: '' })
                   }
+                  variant="form"
+                  placeholder="시/군/구"
                 />
                 <Dropdown
                   name="district"
@@ -170,6 +175,8 @@ export function SharingRegisterForm({ handleClose }: SharingRegisterFormProps) {
                   onChange={(value) =>
                     setFormData({ ...formData, district: value })
                   }
+                  variant="form"
+                  placeholder="동/읍/면"
                 />
               </div>
               <div className="w-full">

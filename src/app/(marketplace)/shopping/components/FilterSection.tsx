@@ -1,11 +1,11 @@
 'use client';
 
+import { Dropdown } from '@/components/Molecules/Dropdown';
 import { DateFilter } from '@/components';
 import { PROVINCE_OPTIONS, GET_CITY_OPTIONS } from '@/constants';
 import { statusOptions } from '@/constants/status';
 import { useFilterParams } from '@/hooks/useFilterParams';
 import { useMemo } from 'react';
-import { FilterSelect } from './FilterSelect';
 
 export const FilterSection = () => {
   const { activeProvince, activeCity, activeStatus, updateParams } =
@@ -44,24 +44,30 @@ export const FilterSection = () => {
 
   return (
     <div className="flex justify-between">
-      <div className="flex gap-4">
-        <FilterSelect
+      <div className="flex w-full max-w-92 gap-2">
+        <Dropdown
           name="province"
           value={activeProvince}
           options={PROVINCE_OPTIONS}
           onChange={(province) => handleProvinceChange(province)}
+          placeholder="지역 선택"
+          variant="filter"
         />
-        <FilterSelect
+        <Dropdown
           name="city"
           value={activeCity}
           options={availableCityOptions}
           onChange={(city) => handleCityChange(city)}
+          placeholder="시/군/구 선택"
+          variant="filter"
         />
-        <FilterSelect
+        <Dropdown
           name="status"
           value={activeStatus}
           options={statusOptions}
           onChange={handleStatusChange}
+          placeholder="상태 선택"
+          variant="filter"
         />
       </div>
 

@@ -1,2 +1,2 @@
 export * from './SharingListSection';
-export * from './filterSection/FilterSection';
+export * from './FilterSection';

@@ -36,6 +36,7 @@ async function getShoppingList(
     return null;
   }
 }
+
 export default async function ShoppingPage({
   searchParams,
 }: {
