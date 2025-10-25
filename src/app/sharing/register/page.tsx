@@ -273,9 +273,7 @@ export default function DividingRegisterPage() {
           </div>
 
           <div className="flex flex-col gap-3">
-            <Label htmlFor="imageUrls" required>
-              이미지를 추가할까요?
-            </Label>
+            <Label htmlFor="imageUrls">이미지를 추가할까요?</Label>
             <div className="flex flex-col gap-3">
               <ImageUploadForm
                 imageFiles={watch('imageUrls')}
