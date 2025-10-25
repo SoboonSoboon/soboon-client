@@ -1,6 +1,6 @@
 'use client';
 
-import { Button } from '@/components';
+import { Button, TextInput } from '@/components';
 import { XIcon } from 'lucide-react';
 import { useRef, useState } from 'react';
 import Image from 'next/image';
@@ -46,13 +46,16 @@ export default function ImageUploadForm({
   return (
     <div className="flex flex-col gap-6">
       <div className="flex items-center justify-between gap-3">
-        <div className="bg-gray-5 flex-1 rounded-lg px-4 py-2.5">
-          <p className="text-gray-40">
-            {imageFiles.length > 0
+        <TextInput
+          placeholder={
+            imageFiles.length > 0
               ? `${imageFiles.length}/10개 이미지 선택됨`
-              : '이미지를 최대 10개까지 첨부할 수 있어요.'}
-          </p>
-        </div>
+              : '이미지를 최대 10개까지 첨부할 수 있어요.'
+          }
+          readOnly
+          className="flex-1 cursor-pointer focus:border-transparent focus:outline-none"
+          onClick={() => inputRef.current?.click()}
+        />
 
         <input
           type="file"
