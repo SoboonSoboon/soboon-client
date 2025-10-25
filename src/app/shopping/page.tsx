@@ -1,9 +1,10 @@
-import { IntroSection } from '@/app/(marketplace)/components';
+import { IntroSection } from '@/components/marketplace';
 import {
   meetingSearchParamsType,
   ShoppingMeetingsType,
 } from '@/types/meetingsType';
 import { FilterSection, ShoppingListSection } from './components';
+import { SideButtonSection } from '@/components';
 
 // const token = localStorage.getItem('accessToken'); //todo: 전역상태관리로 관리하기로 변경
 const token = process.env.NEXT_PUBLIC_SOBOON_API_TOKEN;
@@ -61,6 +62,7 @@ export default async function ShoppingPage({
         <FilterSection />
         <ShoppingListSection shoppingList={shoppingList!.content} />
       </section>
+      <SideButtonSection />
     </main>
   );
 }

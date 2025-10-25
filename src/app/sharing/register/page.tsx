@@ -7,12 +7,13 @@ import { GET_MODEL_DISTRICT_OPTIONS } from '@/constants/locations';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import z from 'zod';
-import ImageUploadForm from '../../components/registerModal/imageLoader';
+import ImageUploadForm from '../../../components/marketplace/registerModal/imageLoader';
 import { useMutation } from '@tanstack/react-query';
 import { dividingRegisterApi } from '@/apis';
 import { ApiResponse } from '@/types/common';
 import { useToast } from '@/components/Atoms';
 import { useRouter } from 'next/navigation';
+import { ChevronLeft } from 'lucide-react';
 
 const DIVIDING_PRODUCT_TYPE_OPTIONS = [
   { value: 'FRESH', label: '신선식품' },
@@ -119,10 +120,19 @@ export default function DividingRegisterPage() {
   };
 
   return (
-    <div className="mx-auto mt-4 w-full max-w-[760px] px-4 sm:mt-6 sm:px-6 lg:mt-10">
+    <div className="mx-auto w-full max-w-[760px] px-4 sm:mt-6 sm:px-6 lg:mt-6">
+      <div
+        className="flex cursor-pointer items-center gap-2 pb-4"
+        onClick={() => router.back()}
+      >
+        <div>
+          <ChevronLeft className="text-text-sub2 size-6" />
+        </div>
+        <span className="text-text-sub2">목록</span>
+      </div>
       <div className="rounded-xl border border-[var(--GrayScale-Gray10)] bg-white p-4 sm:p-6">
         <p className="text-pry mb-6 text-xl font-bold sm:mb-8 sm:text-2xl lg:mb-9">
-          <span className="text-primary font-memomentKkukkkuk">소분</span>
+          <strong className="text-primary font-memomentKkukkkuk">소분 </strong>
           모임 만들기
         </p>
         <form

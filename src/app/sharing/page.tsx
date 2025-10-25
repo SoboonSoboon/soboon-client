@@ -2,11 +2,9 @@ import {
   DividingMeetingsType,
   meetingSearchParamsType,
 } from '@/types/meetingsType';
-import { IntroSection } from '@/app/(marketplace)/components';
-import {
-  FilterSection,
-  SharingListSection,
-} from '@/app/(marketplace)/sharing/components';
+import { IntroSection } from '@/components/marketplace';
+import { FilterSection, SharingListSection } from '@/app/sharing/components';
+import { SideButtonSection } from '@/components';
 
 async function getSharingMeeting(
   query: URLSearchParams,
@@ -67,6 +65,7 @@ export default async function SharingPage({
           <SharingListSection sharingMeetingList={sharingMeetingList} />
         </div>
       </section>
+      <SideButtonSection />
     </main>
   );
 }
