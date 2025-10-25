@@ -136,8 +136,16 @@ export default async function ShoppingDetailPage({
   return (
     <section>
       <DetailHeader />
-      <div className="flex gap-10">
-        <article className="w-[730px]">
+      <div className="flex flex-col gap-6 lg:flex-row lg:gap-10">
+        <div className="w-full lg:sticky lg:top-6 lg:order-2 lg:w-[300px] xl:w-[350px]">
+          <DetailAside
+            meetingDetail={shoppingMeetingDetail!}
+            isAuthor={isAuthor}
+            participants={participants || []}
+          />
+        </div>
+
+        <article className="flex-1 lg:order-1">
           <DetailContent description={shoppingMeetingDetail!.description} />
           <DetailContentFooter createdAt={shoppingMeetingDetail!.createdAt} />
 
@@ -147,14 +155,6 @@ export default async function ShoppingDetailPage({
             status={shoppingMeetingDetail!.status}
           />
         </article>
-
-        <div className="sticky top-6 h-[95vh]">
-          <DetailAside
-            meetingDetail={shoppingMeetingDetail!}
-            isAuthor={isAuthor}
-            participants={participants || []}
-          />
-        </div>
       </div>
     </section>
   );
