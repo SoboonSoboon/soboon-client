@@ -1,5 +1,5 @@
 'use client';
-import { ProfileImg } from '@/components/Atoms';
+import { Button, ProfileImg } from '@/components/Atoms';
 import { ReviewItemBar } from './ReviewItemBar';
 import { useState } from 'react';
 import { useAuthStore } from '@/apis/auth/hooks/authStore';
@@ -41,7 +41,7 @@ export const ProfileSideBar = ({ reviewData }: ProfileSideBar) => {
         <ProfileImg profileImageUrl={userImage || ''} size={118} />
         <h2 className="font-memomentKkukkkuk text-2xl">{userNickname}</h2>
       </div>
-
+      <Button label="프로필 수정" variant="outline" className="w-full" />
       <div className="flex flex-col gap-4">
         {userData.keywords
           .filter((data) => data.count > 0)
