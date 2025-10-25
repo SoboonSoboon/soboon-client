@@ -87,7 +87,7 @@ export default function ImageUploadForm({
                 />
                 <button
                   onClick={() => handleRemoveImage(index)}
-                  className="bg-primary absolute top-1.5 right-1.5 rounded-full p-1 text-white"
+                  className="bg-primary absolute top-1.5 right-1.5 cursor-pointer rounded-full p-1 text-white"
                 >
                   <XIcon className="size-3" />
                 </button>
