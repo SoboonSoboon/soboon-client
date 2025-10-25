@@ -158,3 +158,25 @@ h5,
 h6 {
   font-family: 'memomentKkukkkuk', sans-serif;
 }
+
+/* 드롭다운 스크롤바 스타일 */
+.dropdown-scrollbar {
+  scrollbar-color: var(--GreenScale-Green20) var(--color-white);
+}
+
+.dropdown-scrollbar::-webkit-scrollbar {
+  width: 6px;
+}
+
+.dropdown-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.dropdown-scrollbar::-webkit-scrollbar-thumb {
+  background: var(--GreenScale-Green20);
+  border-radius: 4px;
+}
+
+.dropdown-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: var(--GreenScale-Green30);
+}

@@ -32,7 +32,7 @@ export const Header = () => {
       <div className="text-text-main mx-auto flex h-full max-w-[1200px] items-center justify-between bg-white dark:bg-black dark:text-white">
         <div className="flex items-center gap-6">
           {isLoggedIn ? (
-            <Link href="/sharing">
+            <Link href="/">
               <Logo width={75} height={28} />{' '}
             </Link>
           ) : (

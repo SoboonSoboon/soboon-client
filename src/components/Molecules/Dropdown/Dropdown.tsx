@@ -2,22 +2,26 @@
 
 import { useState, useRef, useEffect } from 'react';
 import { cn } from '@/utils/cn';
+import { ChevronDown } from 'lucide-react';
 
 export interface DropdownOption {
-  value: string;
+  value: string | number;
   label: string;
 }
+
+export type DropdownVariant = 'filter' | 'form';
 
 export interface DropdownProps {
   name?: string;
   id?: string;
   options: DropdownOption[];
   placeholder?: string;
-  value?: string;
+  value?: string | number;
   onChange?: (value: string) => void;
   disabled?: boolean;
   required?: boolean;
   className?: string;
+  variant?: DropdownVariant;
 }
 
 export const Dropdown = ({
@@ -30,6 +34,7 @@ export const Dropdown = ({
   disabled = false,
   required = false,
   className,
+  variant = 'filter',
   ...props
 }: DropdownProps) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -60,7 +65,7 @@ export const Dropdown = ({
   };
 
   const handleSelect = (option: DropdownOption) => {
-    onChange?.(option.value);
+    onChange?.(option.value.toString());
     setIsOpen(false);
   };
 
@@ -74,52 +79,59 @@ export const Dropdown = ({
         type="button"
         name={name}
         id={id}
-        className={`flex w-full items-center justify-between gap-2.5 rounded-xl border-2 border-transparent bg-[var(--GrayScale-Gray5)] px-4 py-2.5 text-[var(--GrayScale-Gray40)] focus:outline-none ${
-          disabled ? 'cursor-not-allowed opacity-50' : 'cursor-pointer'
-        } ${isOpen ? 'border-[var(--GreenScale-Green50)]' : ''} `}
+        className={cn(
+          'flex w-full items-center justify-between gap-1.5 rounded-xl',
+          variant === 'filter'
+            ? 'border-gray-10 border bg-white px-3 py-2'
+            : 'border-gray-5 bg-gray-5 border px-4 py-2.5',
+          disabled ? 'cursor-not-allowed opacity-50' : 'cursor-pointer',
+        )}
         onClick={handleToggle}
         disabled={disabled}
       >
         <span
-          className={` ${
-            selectedOption ? 'text-[var(--GrayScale-Gray80)]' : placeholder
-          }`}
+          className={cn(
+            'whitespace-nowrap',
+            selectedOption ? 'text-gray-95' : 'text-gray-40 font-medium',
+          )}
         >
           {selectedOption ? selectedOption.label : placeholder}
         </span>
-        <svg
-          className={`size-4 transition-transform duration-200 ${
-            isOpen ? 'rotate-180' : ''
-          }`}
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth={2}
-            d="M19 9l-7 7-7-7"
-          />
-        </svg>
+        <ChevronDown
+          className={cn(
+            'text-gray-95 size-4 transition-transform duration-200',
+            variant === 'filter' ? 'size-4' : 'size-5',
+            isOpen ? 'rotate-180' : '',
+          )}
+        />
       </button>
 
       {isOpen && options.length > 0 && (
-        <div className="absolute z-50 mt-1 max-h-60 w-full overflow-y-auto rounded-xl border border-[var(--GrayScale-Gray20)] bg-[var(--GrayScale-White)] shadow-lg">
-          {options.map((option) => (
-            <button
-              key={option.value}
-              type="button"
-              className={`w-full cursor-pointer px-4 py-2 text-left first:rounded-t-xl last:rounded-b-xl hover:bg-[var(--GrayScale-Gray5)] focus:bg-[var(--GrayScale-Gray5)] focus:outline-none ${
-                value === option.value
-                  ? 'bg-[var(--GreenScale-Green5)] text-[var(--GreenScale-Green50)]'
-                  : 'text-[var(--GrayScale-Gray80)]'
-              } `}
-              onClick={() => handleSelect(option)}
-            >
-              {option.label}
-            </button>
-          ))}
+        <div
+          className={cn(
+            'border-gray-20 absolute z-50 mt-1 max-h-60 w-fit min-w-full overflow-hidden rounded-xl border bg-white shadow-lg',
+          )}
+        >
+          <div className="dropdown-scrollbar max-h-60 overflow-y-auto">
+            {options.map((option) => (
+              <button
+                key={option.value}
+                type="button"
+                className={cn(
+                  'w-full cursor-pointer text-left whitespace-nowrap focus:outline-none',
+                  variant === 'filter'
+                    ? 'px-4 py-2 hover:bg-[var(--GrayScale-Gray5)] focus:bg-[var(--GrayScale-Gray5)]'
+                    : 'hover:bg-gray-5 focus:bg-gray-5 px-3 py-1.5',
+                  value === option.value
+                    ? 'bg-[var(--GreenScale-Green5)] text-[var(--GreenScale-Green50)]'
+                    : 'text-gray-80',
+                )}
+                onClick={() => handleSelect(option)}
+              >
+                {option.label}
+              </button>
+            ))}
+          </div>
         </div>
       )}
     </div>

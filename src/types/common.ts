@@ -13,6 +13,15 @@ type UsageStatusType = 'UPCOMING' | 'IN_USE' | 'DONE';
 
 type MeetingStatusType = 'RECRUITING' | 'CONFIRMED' | 'COMPLETED';
 
+type DividingProductType =
+  | 'FRESH'
+  | 'EASY_MEAL'
+  | 'MEAT_SEAFOOD'
+  | 'FROZEN'
+  | 'LIVING_KITCHEN'
+  | 'DIGITAL'
+  | 'ETC';
+
 // ===== 위치 정보 =====
 interface LocationType {
   province: string;
@@ -118,7 +127,7 @@ export type {
   StatusString,
   UsageStatusType,
   MeetingStatusType,
-
+  DividingProductType,
   // 위치
   LocationType,
   DetailedLocationType,

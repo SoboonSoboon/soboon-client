@@ -18,7 +18,7 @@ export default function RootLayout({
       </head>
       <body>
         <Header />
-        <div className="mx-auto w-[1200px]">
+        <div className="mx-auto w-full xl:w-[1200px]">
           <Providers>{children}</Providers>
         </div>
         <Footer />
@@ -26,3 +26,11 @@ export default function RootLayout({
     </html>
   );
 }
+
+export const metadata = {
+  title: '소분소분',
+  description: '함께 사서, 알뜰하게 나누는 소비',
+  icons: {
+    icon: '/icons/soboon-logo.svg',
+  },
+};

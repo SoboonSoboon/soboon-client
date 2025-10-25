@@ -27,7 +27,7 @@ describe('Carousel', () => {
   const singleImage = ['/single-image.jpg'];
 
   describe('기본 렌더링', () => {
-    it('캐러셀이 정상적으로 렌더링된다', () => {
+    test('캐러셀이 정상적으로 렌더링된다', () => {
       render(<Carousel carouselImages={mockImages} />);
 
       const images = screen.getAllByAltText('캐러셀 이미지');
@@ -38,7 +38,7 @@ describe('Carousel', () => {
   // todo: 이미지가 없을 때 대체 이미지 사용 테스트 추가하기.
 
   describe('이미지가 1장일 때', () => {
-    it('이미지가 1장일 때 버튼이 렌더링되지 않는다.', () => {
+    test('이미지가 1장일 때 버튼이 렌더링되지 않는다.', () => {
       render(<Carousel carouselImages={singleImage} />);
 
       expect(
@@ -49,7 +49,7 @@ describe('Carousel', () => {
       ).not.toBeInTheDocument();
     });
 
-    it('단일 이미지일 때 이미지가 정상적으로 표시된다', () => {
+    test('단일 이미지일 때 이미지가 정상적으로 표시된다', () => {
       render(<Carousel carouselImages={singleImage} />);
 
       expect(screen.getByAltText('캐러셀 이미지')).toHaveAttribute(
@@ -60,7 +60,7 @@ describe('Carousel', () => {
   });
 
   describe('이미지가 여러장일 때', () => {
-    it('버튼을 누르면 0.3ms동안 disabled 상태가 된다.', () => {
+    test('버튼을 누르면 0.3ms동안 disabled 상태가 된다.', () => {
       jest.useFakeTimers();
 
       render(<Carousel carouselImages={mockImages} />);
@@ -83,7 +83,7 @@ describe('Carousel', () => {
       jest.useRealTimers();
     });
 
-    it('다음 버튼을 클릭하면 다음 이미지로 이동한다', async () => {
+    test('다음 버튼을 클릭하면 다음 이미지로 이동한다', async () => {
       render(<Carousel carouselImages={mockImages} />);
 
       const nextButton = screen.getByTestId('carousel-next-button');
@@ -94,7 +94,7 @@ describe('Carousel', () => {
       );
     });
 
-    it('첫 번째 이미지에서 이전 버튼을 클릭하면 마지막 이미지로 이동한다', async () => {
+    test('첫 번째 이미지에서 이전 버튼을 클릭하면 마지막 이미지로 이동한다', async () => {
       render(<Carousel carouselImages={mockImages} />);
       const prevButton = screen.getByTestId('carousel-prev-button');
 
@@ -117,7 +117,7 @@ describe('Carousel', () => {
       );
     });
 
-    it('마지막 이미지에서 다음 버튼을 클릭하면 첫 번째 이미지로 이동한다', async () => {
+    test('마지막 이미지에서 다음 버튼을 클릭하면 첫 번째 이미지로 이동한다', async () => {
       render(<Carousel carouselImages={mockImages} />);
       const nextButton = screen.getByTestId('carousel-next-button');
 

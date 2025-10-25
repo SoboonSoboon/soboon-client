@@ -7,7 +7,6 @@ export const PROVINCE_OPTIONS = [
 ];
 
 export const MODEL_PROVINCE_OPTIONS = [
-  { value: '', label: '지역 선택' },
   { value: '서울특별시', label: '서울특별시' },
   { value: '경기도', label: '경기도' },
   { value: '인천광역시', label: '인천광역시' },
@@ -139,64 +138,47 @@ export const CITY_OPTIONS = [
 // 선택된 시/도에 따라 시/군/구 옵션을 반환하는 함수
 export const GET_CITY_OPTIONS = (province) => {
   if (!province || province === '') {
-    return [{ value: '', label: '시/군/구' }];
+    return [];
   }
   const cities = CITY_OPTIONS_BY_PROVINCE[province] || [];
-  return [{ value: '', label: '시/군/구' }, ...cities];
+  return cities;
 };
 
 // 선택된 시/군/구에 따라 동/읍/면 옵션을 반환하는 함수
 export const GET_DISTRICT_OPTIONS = (city) => {
   if (!city || city === '') {
-    return [{ value: '', label: '동/읍/면' }];
+    return [];
   }
   const districts = DISTRICT_OPTIONS_BY_CITY[city] || DEFAULT_DISTRICT_OPTIONS;
-  return [{ value: '', label: '동/읍/면' }, ...districts];
+  return districts;
 };
 
 // 모델용 (초기 label이 다름)
 export const GET_MODEL_CITY_OPTIONS = (province) => {
   if (!province || province === '') {
-    return [{ value: '', label: '시/군/구' }];
+    return [];
   }
   const cities = CITY_OPTIONS_BY_PROVINCE[province] || [];
-  return [{ value: '', label: '시/군/구' }, ...cities];
+  return cities;
 };
 
 export const GET_MODEL_DISTRICT_OPTIONS = (city) => {
   if (!city || city === '') {
-    return [{ value: '', label: '동/읍/면' }];
+    return [];
   }
   const districts = DISTRICT_OPTIONS_BY_CITY[city] || DEFAULT_DISTRICT_OPTIONS;
-  return [{ value: '', label: '동/읍/면' }, ...districts];
+  return districts;
 };
 
 // 하위 호환성을 위해 기존 변수명 유지 (deprecated)
-export const MODEL_CITY_OPTIONS = [{ value: '', label: '시/군/구' }];
-export const MODEL_DISTRICT_OPTIONS = [{ value: '', label: '동/읍/면' }];
+export const MODEL_CITY_OPTIONS = [];
+export const MODEL_DISTRICT_OPTIONS = [];
 export const DISTRICT_OPTIONS = [{ value: '', label: '전체' }];
 
 // 모임 인원 옵션
 export const CAPACITY_OPTIONS = [
-  { value: '', label: '몇 명을 모을까요?' },
-  { value: '1', label: '1' },
-  { value: '2', label: '2' },
-  { value: '3', label: '3' },
-  { value: '4', label: '4' },
-  { value: '5', label: '5' },
-  { value: '6', label: '6' },
-  { value: '7', label: '7' },
-  { value: '8', label: '8' },
-  { value: '9', label: '9' },
-  { value: '10', label: '10' },
-  { value: '11', label: '11' },
-  { value: '12', label: '12' },
-  { value: '13', label: '13' },
-  { value: '14', label: '14' },
-  { value: '15', label: '15' },
-  { value: '16', label: '16' },
-  { value: '17', label: '17' },
-  { value: '18', label: '18' },
-  { value: '19', label: '19' },
-  { value: '20', label: '20' },
+  { value: 2, label: '2명' },
+  { value: 3, label: '3명' },
+  { value: 4, label: '4명' },
+  { value: 5, label: '5명' },
 ];

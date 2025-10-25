@@ -8,14 +8,14 @@ describe('CreateButton 컴포넌트', () => {
     sharing: jest.fn(),
   };
 
-  it('컴포넌트가 렌더링되어야 한다', () => {
+  test('컴포넌트가 렌더링되어야 한다', () => {
     render(<CreateButton actionHandlers={mockActionHandlers} />);
     const button = screen.getByRole('button');
     expect(button).toBeInTheDocument();
   });
 
   describe('초기 상태', () => {
-    it('처음에는 메뉴가 숨겨져 있어야 한다', () => {
+    test('처음에는 메뉴가 숨겨져 있어야 한다', () => {
       const { container } = render(
         <CreateButton actionHandlers={mockActionHandlers} />,
       );
@@ -24,7 +24,7 @@ describe('CreateButton 컴포넌트', () => {
       expect(menuContainer).toHaveClass('pointer-events-none');
     });
 
-    it('Plus 아이콘이 표시되어야 한다', () => {
+    test('Plus 아이콘이 표시되어야 한다', () => {
       const { container } = render(
         <CreateButton actionHandlers={mockActionHandlers} />,
       );
@@ -34,7 +34,7 @@ describe('CreateButton 컴포넌트', () => {
   });
 
   describe('버튼 클릭', () => {
-    it('버튼 클릭 시 메뉴가 열려야 한다', async () => {
+    test('버튼 클릭 시 메뉴가 열려야 한다', async () => {
       const user = userEvent.setup();
       const { container } = render(
         <CreateButton actionHandlers={mockActionHandlers} />,
@@ -51,7 +51,7 @@ describe('CreateButton 컴포넌트', () => {
   });
 
   describe('onClick 핸들러', () => {
-    it('장보기 클릭 시 shopping onClick이 호출되어야 한다', async () => {
+    test('장보기 클릭 시 shopping onClick이 호출되어야 한다', async () => {
       const handleShoppingClick = jest.fn();
       const user = userEvent.setup();
 
@@ -71,7 +71,7 @@ describe('CreateButton 컴포넌트', () => {
       expect(handleShoppingClick).toHaveBeenCalledTimes(1);
     });
 
-    it('소분하기 클릭 시 sharing onClick이 호출되어야 한다', async () => {
+    test('소분하기 클릭 시 sharing onClick이 호출되어야 한다', async () => {
       const handleSharingClick = jest.fn();
       const user = userEvent.setup();
 

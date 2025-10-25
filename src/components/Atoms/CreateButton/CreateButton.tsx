@@ -67,11 +67,13 @@ export const CreateButton = ({ actionHandlers }: CreateButtonProps) => {
         <button
           type="button"
           onClick={() => setOpen(!open)}
-          className="border-primary bg-primary flex size-11 cursor-pointer items-center justify-center rounded-full border-1 shadow-[0_0_0.25rem_0_var(--GreenScale-Green20)]"
+          className={`border-primary bg-primary flex size-11 cursor-pointer items-center justify-center rounded-full border-1 shadow-[0_0_0.25rem_0_var(--GreenScale-Green20)] transition-all duration-300 ease-out ${open ? 'scale-105 shadow-[0_0_0.5rem_0_var(--GreenScale-Green20)]' : 'scale-100'}`}
           aria-label={open ? '메뉴 닫기' : '메뉴 열기'}
           aria-expanded={open}
         >
-          <Plus className="text-white" />
+          <Plus
+            className={`text-white transition-all duration-300 ease-out ${open ? 'scale-110 rotate-45' : 'scale-100 rotate-0'}`}
+          />
         </button>
       </div>
     </div>
