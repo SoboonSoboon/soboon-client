@@ -23,7 +23,7 @@ export const createComment = async (_: unknown, formData: FormData) => {
       throw new Error('댓글 생성 실패');
     }
 
-    revalidatePath(`/sharing/${meetingId}`);
+    revalidatePath(`comments-${meetingId}`);
 
     const responseData = await response.json();
     return responseData.message;
@@ -55,8 +55,7 @@ export const createReply = async (_: unknown, formData: FormData) => {
       throw new Error('대댓글 생성 실패');
     }
 
-    revalidatePath(`/sharing/${meetingId}`);
-
+    revalidatePath(`comments-${meetingId}`);
     const responseData = await response.json();
     return responseData.message;
   } catch (error) {
@@ -84,8 +83,7 @@ export const deleteComment = async (_: unknown, formData: FormData) => {
       throw new Error('댓글 삭제 실패');
     }
 
-    revalidatePath(`/sharing/${meetingId}`);
-
+    revalidatePath(`comments-${meetingId}`);
     return response.json();
   } catch (error) {
     console.error('댓글 삭제 실패', error);
@@ -118,7 +116,7 @@ export const updateComment = async (
       throw new Error('댓글 수정 실패');
     }
 
-    revalidatePath(`/sharing/${meetingId}`);
+    revalidatePath(`comments-${meetingId}`);
 
     return response.json();
   } catch (error) {
