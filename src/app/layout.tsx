@@ -18,7 +18,7 @@ export default function RootLayout({
       </head>
       <body>
         <Header />
-        <div className="mx-auto w-full xl:w-[1200px]">
+        <div className="mx-auto w-full max-w-[1200px] px-4">
           <Providers>{children}</Providers>
         </div>
         <Footer />
