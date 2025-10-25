@@ -146,6 +146,8 @@ export const handleCloseMeeting = async (meetingId: string) => {
     throw new Error('모임 마감 실패');
   }
   const responseData = await response.json();
+
   revalidateTag(`meeting-${meetingId}`);
+
   return responseData;
 };
