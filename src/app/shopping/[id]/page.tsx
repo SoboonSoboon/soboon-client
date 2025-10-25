@@ -30,6 +30,9 @@ async function getMeetingDetail({
       `${process.env.NEXT_PUBLIC_SOBOON_API_URL}/v1/meetings/${id}`,
       {
         cache: 'no-store',
+        next: {
+          tags: [`meeting-${id}`],
+        },
         headers: {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${process.env.NEXT_PUBLIC_SOBOON_API_TOKEN}`,

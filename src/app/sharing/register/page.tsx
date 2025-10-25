@@ -289,7 +289,7 @@ export default function DividingRegisterPage() {
           </div>
 
           <div className="flex flex-col gap-3">
-            <Label htmlFor="imageUrls" className="font-semibold" required>
+            <Label htmlFor="imageUrls" className="font-semibold">
               이미지를 추가할까요?
             </Label>
             <div className="flex flex-col gap-3">

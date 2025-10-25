@@ -17,85 +17,133 @@ import { DividingMeetingsType } from '@/types/meetingsType';
 import { timeFormatter } from '@/utils';
 import { NonDividingList } from './NonDividingList';
 import { useBookmark } from '@/hooks';
+import { useInfiniteScrollTrigger } from '@/hooks/useScroll';
+import { useInfiniteQuery } from '@tanstack/react-query';
+import { getDividingListApi } from '@/apis/meetings/getDividingListApi';
+import { useEffect } from 'react';
 
 export const SharingListSection = ({
-  sharingMeetingList,
+  initialDividingList,
+  query,
 }: {
-  sharingMeetingList: DividingMeetingsType | null;
+  query: URLSearchParams;
+  initialDividingList: DividingMeetingsType | null;
 }) => {
   const router = useRouter();
   const { handleBookmark } = useBookmark();
+  const { isBottom } = useInfiniteScrollTrigger();
+
+  const {
+    data: dividingList,
+    fetchNextPage,
+    isFetchingNextPage,
+    hasNextPage,
+  } = useInfiniteQuery<DividingMeetingsType>({
+    queryKey: ['dividingList', query.toString()],
+    queryFn: async ({ pageParam }) => {
+      const urlParams = new URLSearchParams(query);
+      urlParams.set('page', (pageParam as number).toString());
+
+      const response = await getDividingListApi(urlParams);
+
+      const responseData = response.data;
+
+      return responseData;
+    },
+    getNextPageParam: (lastPage) => {
+      if (lastPage?.sliceInfo?.hasNext) {
+        const nextPage = lastPage.sliceInfo.currentPage;
+        return nextPage;
+      }
+
+      return undefined;
+    },
+    initialData: initialDividingList
+      ? {
+          pages: [initialDividingList],
+          pageParams: [0],
+        }
+      : undefined,
+    initialPageParam: 0,
+  });
+
+  useEffect(() => {
+    if (isBottom && !isFetchingNextPage) {
+      fetchNextPage();
+    }
+  }, [isBottom, fetchNextPage, isFetchingNextPage]);
 
   const onClickCard = (id: string) => {
     router.push(`/sharing/${id}`);
   };
-  const meetingList = sharingMeetingList?.content || [];
 
-  if (meetingList?.length === 0) {
+  if (!dividingList || dividingList.pages[0]?.content.length === 0) {
     return <NonDividingList />;
   }
 
   return (
-    <div className="grid grid-cols-3 gap-8">
-      {meetingList?.length === 0 ? (
-        <div>
-          <p>
-            아직 모임이 없어요, <br />
-            지금 바로 모임을 만들어보세요
-          </p>
-        </div>
-      ) : (
-        meetingList?.map((meeting) => (
-          <Card
-            key={meeting.groupId}
-            onClick={() => onClickCard(meeting.groupId.toString())}
-            className="cursor-pointer"
-          >
-            <CardContent>
-              <StatusTag
-                status={meeting.status}
-                className="absolute top-3 left-3"
-              />
-              <BookmarkButton
-                className="absolute top-4 right-0"
-                liked={meeting.bookmarked}
-                onChange={() =>
-                  handleBookmark(meeting.groupId.toString(), meeting.bookmarked)
-                }
-              />
-              <CardImage
-                alt="기본 카드"
-                src={
-                  !meeting.image ||
-                  (Array.isArray(meeting.image) &&
-                    meeting.image.length === 0) ||
-                  (typeof meeting.image === 'string' &&
-                    meeting.image.includes('example'))
-                    ? '/images/notFound_image.png'
-                    : meeting.image
-                }
-                className="border-gray-10 bg-gray-5 h-[200px] w-full rounded-lg border-1"
-              />
+    <>
+      <div className="grid grid-cols-3 gap-8">
+        {dividingList.pages
+          .flatMap((page) => page.content)
+          .map((dividing) => (
+            <Card
+              key={dividing.groupId}
+              onClick={() => onClickCard(dividing.groupId.toString())}
+              className="cursor-pointer"
+            >
+              <CardContent>
+                <StatusTag
+                  status={dividing.status}
+                  className="absolute top-3 left-3"
+                />
+                <BookmarkButton
+                  className="absolute top-4 right-0"
+                  liked={dividing.bookmarked}
+                  onChange={() =>
+                    handleBookmark(
+                      dividing.groupId.toString(),
+                      dividing.bookmarked,
+                    )
+                  }
+                />
+                <CardImage
+                  alt="기본 카드"
+                  src={
+                    !dividing.image ||
+                    (Array.isArray(dividing.image) &&
+                      dividing.image.length === 0) ||
+                    (typeof dividing.image === 'string' &&
+                      dividing.image.includes('example'))
+                      ? '/images/notFound_image.png'
+                      : dividing.image
+                  }
+                  className="border-gray-10 bg-gray-5 h-[200px] w-full rounded-lg border-1"
+                />
 
-              <CardTitle className="font-memomentKkukkkuk line-clamp-1">
-                {meeting.item}
-              </CardTitle>
-              <CardSubtitle className="text-text-sub2 flex items-center gap-1 text-sm">
-                <span>{meeting.user.userName}</span>
-                <span>・</span>
-                <span>{timeFormatter(meeting.createdAt)}</span>
-              </CardSubtitle>
-            </CardContent>
-            <Line />
-            <CardFooter>
-              <div className="mb-2 flex items-center gap-1 text-sm">
-                <MapPin className="text-gray-40 size-4" />
-                <p>{meeting.location.detail}</p>
-              </div>
-            </CardFooter>
-          </Card>
-        ))
-      )}
-    </div>
+                <CardTitle className="font-memomentKkukkkuk line-clamp-1">
+                  {dividing.item}
+                </CardTitle>
+                <CardSubtitle className="text-text-sub2 flex items-center gap-1 text-sm">
+                  <span>{dividing.user.userName}</span>
+                  <span>・</span>
+                  <span>{timeFormatter(dividing.createdAt)}</span>
+                </CardSubtitle>
+              </CardContent>
+              <Line />
+              <CardFooter>
+                <div className="mb-2 flex items-center gap-1 text-sm">
+                  <MapPin className="text-gray-40 size-4" />
+                  <p>{dividing.location.detail}</p>
+                </div>
+              </CardFooter>
+            </Card>
+          ))}
+      </div>
+      <p className="text-text-sub2 mt-6 text-center text-sm">
+        {isFetchingNextPage && '로딩 중이예요 ...'}
+        {!hasNextPage && '모든 게시글을 불러왔어요.'}
+      </p>
+    </>
   );
 };
