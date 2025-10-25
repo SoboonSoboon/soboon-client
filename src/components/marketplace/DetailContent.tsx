@@ -1,7 +1,13 @@
+import { convertUrlsToLinks } from '@/utils';
+
 export const DetailContent = ({ description }: { description: string }) => {
   return (
-    <div className="mt-8 flex w-full flex-col gap-8 break-words">
-      <p>{description}</p>
+    <div className="flex w-full flex-col break-words">
+      <div
+        dangerouslySetInnerHTML={{
+          __html: convertUrlsToLinks(description),
+        }}
+      />
     </div>
   );
 };
