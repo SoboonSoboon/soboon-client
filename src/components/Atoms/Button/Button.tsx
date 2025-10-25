@@ -38,8 +38,7 @@ export const Button = ({
   const disabledVariants = {
     filled:
       'bg-[var(--GrayScale-Gray30)] text-white cursor-not-allowed font-normal',
-    outline:
-      'bg-white text-[var(--GrayScale-Gray30)] border-[var(--GrayScale-Gray40)] cursor-not-allowed font-normal',
+    outline: 'bg-gray-30 text-white cursor-not-allowed font-normal',
   } as const;
 
   const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {

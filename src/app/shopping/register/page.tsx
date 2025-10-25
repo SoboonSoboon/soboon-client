@@ -97,20 +97,20 @@ export default function ShoppingRegisterPage() {
         </div>
         <span className="text-text-sub2">목록</span>
       </div>
-      <div className="rounded-xl border border-[var(--GrayScale-Gray10)] bg-white p-4 sm:p-6">
-        <p className="text-pry mb-6 text-xl font-bold sm:mb-8 sm:text-2xl lg:mb-9">
-          <strong className="text-primary font-memomentKkukkkuk">
-            장보기{' '}
-          </strong>
+      <div className="border-gray-10 flex flex-col gap-6 rounded-xl border bg-white p-4 sm:gap-8 sm:p-6 lg:gap-10">
+        <span className="text-2xl font-bold sm:text-2xl">
+          <strong className="text-primary">장보기 </strong>
           모임 만들기
-        </p>
+        </span>
         <form
           className="flex flex-col gap-6 sm:gap-8 lg:gap-10"
           onSubmit={handleSubmit(onSubmit)}
         >
           <div>
             <div className="flex flex-col gap-3">
-              <Label htmlFor="title">어떤 장보기 모임을 만들까요?</Label>
+              <Label htmlFor="title" className="font-semibold">
+                어떤 장보기 모임을 만들까요?
+              </Label>
               <TextInput
                 id="title"
                 {...register('title')}
@@ -123,7 +123,7 @@ export default function ShoppingRegisterPage() {
           </div>
 
           <div className="flex flex-col gap-3">
-            <Label htmlFor="capacity" required>
+            <Label htmlFor="capacity" className="font-semibold" required>
               몇 명을 모을까요?
             </Label>
             <Dropdown
@@ -142,7 +142,7 @@ export default function ShoppingRegisterPage() {
           </div>
 
           <div className="flex flex-col gap-3">
-            <Label htmlFor="province" required>
+            <Label htmlFor="province" className="font-semibold" required>
               어디서 만날까요??
             </Label>
             <div className="flex flex-col gap-3 sm:items-center">
@@ -211,7 +211,7 @@ export default function ShoppingRegisterPage() {
           </div>
 
           <div className="flex flex-col gap-3">
-            <Label htmlFor="detail" required>
+            <Label htmlFor="detail" className="font-semibold" required>
               모임의 설명 글을 작성해보세요!
             </Label>
             <Textarea
