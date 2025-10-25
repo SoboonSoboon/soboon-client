@@ -14,7 +14,8 @@ export const ReviewItemBar = ({
   label,
 }: ReviewItemBarProps) => {
   const [animatedPercentage, setAnimatedPercentage] = useState(0);
-  const targetPercentage = (count / maxCount) * 100;
+  // 모든 항목은 기본 8%를 가지고 시작, 그 위에 실제 비율 추가
+  const targetPercentage = 6 + (count / maxCount) * 100;
 
   useEffect(() => {
     const startTime = Date.now();
@@ -41,7 +42,9 @@ export const ReviewItemBar = ({
         {label && (
           <Label className="text-[var(--color-gray-95)]">{label}</Label>
         )}
-        <span className="text-[var(--color-gray-95)]">{count}</span>
+        {count > 0 && (
+          <span className="text-[var(--color-gray-95)]">{count}</span>
+        )}
       </div>
 
       <div className="relative w-full">
