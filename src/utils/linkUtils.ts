@@ -25,7 +25,7 @@ export const splitTextByUrls = (
 
   matches.forEach((match) => {
     if (match.index !== undefined) {
-      // URL 이전의 텍스트 추가
+      // URL 앞에 일반 텍스트가 있다면 잘라서 추가
       if (match.index > lastIndex) {
         const textContent = text.slice(lastIndex, match.index).trim();
         if (textContent) {
@@ -39,7 +39,7 @@ export const splitTextByUrls = (
     }
   });
 
-  // 마지막 텍스트 추가
+  // 마지막 URL 뒤에 남은 일반 텍스트가 있다면 추가
   if (lastIndex < text.length) {
     const remainingText = text.slice(lastIndex).trim();
     if (remainingText) {

@@ -3,7 +3,7 @@ export { Button } from './Button';
 export { Chip } from './Chip';
 export { DateFilter, type DateFilterProps } from './DateFilter';
 export { Label } from './Label';
-export { LinkPreview } from './LinkPreview/LinkPreview';
+export { LinkRenderer } from './LinkRenderer/LinkRenderer';
 export { Logo } from './Logo';
 export { ProfileImg } from './ProfileImg';
 export { Textarea } from './Textarea';

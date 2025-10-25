@@ -3,11 +3,11 @@
 import { containsUrls, extractUrls, splitTextByUrls } from '@/utils';
 import { ExternalLink } from 'lucide-react';
 
-interface LinkPreviewProps {
+interface LinkRendererProps {
   text: string;
 }
 
-export const LinkPreview = ({ text }: LinkPreviewProps) => {
+export const LinkRenderer = ({ text }: LinkRendererProps) => {
   if (!text || !containsUrls(text)) {
     return null;
   }
