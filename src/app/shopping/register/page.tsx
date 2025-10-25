@@ -110,7 +110,9 @@ export default function ShoppingRegisterPage() {
         >
           <div>
             <div className="flex flex-col gap-3">
-              <Label htmlFor="title">어떤 장보기 모임을 만들까요?</Label>
+              <Label htmlFor="title" className="font-semibold">
+                어떤 장보기 모임을 만들까요?
+              </Label>
               <TextInput
                 id="title"
                 {...register('title')}
@@ -123,7 +125,7 @@ export default function ShoppingRegisterPage() {
           </div>
 
           <div className="flex flex-col gap-3">
-            <Label htmlFor="capacity" required>
+            <Label htmlFor="capacity" className="font-semibold" required>
               몇 명을 모을까요?
             </Label>
             <Dropdown
@@ -142,7 +144,7 @@ export default function ShoppingRegisterPage() {
           </div>
 
           <div className="flex flex-col gap-3">
-            <Label htmlFor="province" required>
+            <Label htmlFor="province" className="font-semibold" required>
               어디서 만날까요??
             </Label>
             <div className="flex flex-col gap-3 sm:items-center">
@@ -211,7 +213,7 @@ export default function ShoppingRegisterPage() {
           </div>
 
           <div className="flex flex-col gap-3">
-            <Label htmlFor="detail" required>
+            <Label htmlFor="detail" className="font-semibold" required>
               모임의 설명 글을 작성해보세요!
             </Label>
             <Textarea
