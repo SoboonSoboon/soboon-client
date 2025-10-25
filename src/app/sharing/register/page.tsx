@@ -130,11 +130,11 @@ export default function DividingRegisterPage() {
         </div>
         <span className="text-text-sub2">목록</span>
       </div>
-      <div className="rounded-xl border border-[var(--GrayScale-Gray10)] bg-white p-4 sm:p-6">
-        <p className="text-pry mb-6 text-xl font-bold sm:mb-8 sm:text-2xl lg:mb-9">
-          <strong className="text-primary font-memomentKkukkkuk">소분 </strong>
+      <div className="border-gray-10 flex flex-col gap-6 rounded-xl border bg-white p-4 sm:gap-8 sm:p-6 lg:gap-10">
+        <span className="text-2xl font-bold sm:text-2xl">
+          <strong className="text-primary">소분 </strong>
           모임 만들기
-        </p>
+        </span>
         <form
           className="flex flex-col gap-6 sm:gap-8 lg:gap-10"
           onSubmit={handleSubmit(onSubmit)}
