@@ -123,7 +123,7 @@ describe('TextInput 컴포넌트', () => {
         'w-full',
         'flex-1',
         'items-center',
-        'rounded-xl',
+        'rounded-lg',
         'border-2',
         'border-transparent',
         'px-4',
@@ -140,7 +140,7 @@ describe('TextInput 컴포넌트', () => {
     test('기본 스타일과 커스텀 className이 함께 적용되어야 한다', () => {
       render(<TextInput className="bg-blue-100" />);
       const input = screen.getByRole('textbox');
-      expect(input).toHaveClass('bg-blue-100', 'flex', 'rounded-xl');
+      expect(input).toHaveClass('bg-blue-100', 'flex', 'rounded-lg');
     });
   });
 
