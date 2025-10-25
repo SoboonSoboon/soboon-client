@@ -91,8 +91,9 @@ async function getParticipants({
     const response = await fetch(
       `${process.env.NEXT_PUBLIC_SOBOON_API_URL}/v1/meetings/${meetingId}/applicants`,
       {
-        cache: 'no-store',
+        cache: 'force-cache',
         next: {
+          revalidate: 10,
           tags: [`participants-${meetingId}`],
         },
         headers: {
