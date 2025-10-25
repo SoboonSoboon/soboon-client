@@ -1,11 +1,14 @@
+// 리뷰 키워드 타입
+export type ReviewKeywordString =
+  | 'TIME_PROMISE'
+  | 'KIND_AND_CARING'
+  | 'SAME_AS_PHOTO'
+  | 'FAST_RESPONSE'
+  | 'GOOD_DISTRIBUTION';
+
 export interface ReviewKeyword {
-  keyword:
-    | 'TIME_PROMISE'
-    | 'KIND_AND_CARING'
-    | 'SAME_AS_PHOTO'
-    | 'FAST_RESPONSE'
-    | 'GOOD_DISTRIBUTION';
-  count: number;
+  keyword: ReviewKeywordString;
+  count?: number;
 }
 
 export interface ReviewResponse {
@@ -35,31 +38,30 @@ export interface ReviewerListData {
 export interface ParticipantReviewData {
   eventId: number;
   userId: number;
-  selectedReviews: ReviewKeyword[];
+  selectedReviews: ReviewKeywordString[];
 }
 
 export interface HostReviewData {
   eventId: number;
   userId: number;
-  selectedReviews: ReviewKeyword[];
+  selectedReviews: ReviewKeywordString[];
 }
 
 // 리뷰 작성 요청 데이터 타입
-export interface CreateHostReviewRequest {
+export interface HostReviewRequest {
   eventId: number;
   userId: number;
-  selectedReviews: ReviewKeyword[];
+  selectedReviews: ReviewKeywordString[];
 }
 
-export interface CreateParticipantReviewRequest {
+export interface ParticipantReviewRequest {
   eventId: number;
   userId: number;
-  selectedReviews: ReviewKeyword[];
+  selectedReviews: ReviewKeywordString[];
 }
 
 // 리뷰 대상 목록 응답 타입
 export interface ReviewTargetsResponse {
-  message: string | null;
   data: {
     eventId: number;
     category: 'SHOPPING' | 'DIVIDING';

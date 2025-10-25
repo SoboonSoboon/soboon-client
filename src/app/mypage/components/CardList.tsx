@@ -3,7 +3,7 @@ import { MeetingCard } from './MeetingCard';
 
 export interface CardListProps {
   data: MeetingItem[];
-  activeMainTab: string;
+  activeMainTab: 'host' | 'participate' | 'bookmark';
 }
 export const CardList = ({ data, activeMainTab }: CardListProps) => {
   return (

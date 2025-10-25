@@ -1,5 +1,5 @@
 export type ModalPosition = 'center' | 'top' | 'bottom' | 'left' | 'right';
-export type ModalSize = 'sm' | 'md' | 'lg';
+export type ModalSize = 'sm' | 'md' | 'lg' | 'custom';
 
 export interface ModalProps {
   isOpen: boolean;

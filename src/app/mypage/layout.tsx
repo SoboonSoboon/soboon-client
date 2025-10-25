@@ -8,9 +8,9 @@ export default async function MyPageLayout({
 }) {
   const reviews = await getReceivedReview();
   return (
-    <div className="h-screen pt-8">
-      <div className="mx-auto h-full max-w-[1200px]">
-        <div className="flex h-full w-full gap-10">
+    <div className="min-h-screen pt-8">
+      <div className="mx-auto max-w-[1200px]">
+        <div className="flex w-full gap-10">
           {/* 왼쪽 고정 프로필 */}
           <div className="w-[340px] flex-shrink-0">
             <div className="sticky top-20">

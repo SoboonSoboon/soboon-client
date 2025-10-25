@@ -1,17 +1,5 @@
 import { LocationType } from '@/types/common';
 
-//리뷰 임시 데이터
-export const reviewData = {
-  meetingId: 1001,
-  category: 'DIVIDING' as const,
-  targets: {
-    userId: 101,
-    nickname: '홍길동',
-    profileImageUrl: '',
-  },
-  reviewer: true,
-};
-
 // API 응답 타입 정의
 export interface MypageMeetingApiResponse {
   message: string | null;

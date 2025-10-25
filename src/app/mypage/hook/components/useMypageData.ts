@@ -2,13 +2,13 @@
 
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useMemo } from 'react';
-import { MainTabType, SubTabType } from '../components';
+import { MainTabType, SubTabType } from '../../components';
 import {
   useBookmarkMeetingList,
   useHostMeetingList,
   useParticipateMeetingList,
-} from './useMeetings';
-import { Storage } from '../utils/mypageType';
+} from '../api/useMeetings';
+import { Storage } from '../../utils/mypageType';
 
 export const useMyPageData = () => {
   const router = useRouter();
