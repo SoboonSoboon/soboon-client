@@ -14,6 +14,7 @@ import { ApiResponse } from '@/types/common';
 import { useToast } from '@/components/Atoms';
 import { useRouter } from 'next/navigation';
 import { ChevronLeft } from 'lucide-react';
+import Image from 'next/image';
 
 const DIVIDING_PRODUCT_TYPE_OPTIONS = [
   { value: 'FRESH', label: '신선식품' },
@@ -143,26 +144,41 @@ export default function DividingRegisterPage() {
             <Label htmlFor="productType" className="font-semibold" required>
               어떤 품목을 소분하세요?
             </Label>
-            <div className="mt-3 flex flex-wrap gap-1.5 xl:gap-2.5">
+            <div className="mt-3 flex flex-wrap gap-1.5 sm:flex-nowrap xl:gap-2.5">
               {DIVIDING_PRODUCT_TYPE_OPTIONS.map((option) => (
-                <button
+                <div
                   key={option.value}
-                  type="button"
-                  onClick={() => {
-                    setValue('productType', option.value);
-                    clearErrors('productType');
-                  }}
-                  className={`flex flex-col items-center gap-0.5 rounded-lg p-2 transition-all duration-200 hover:bg-gray-50 ${
-                    watch('productType') === option.value
-                      ? 'border-primary bg-primary/5 border-2'
-                      : 'border-2 border-gray-200 hover:border-gray-300'
-                  }`}
+                  className="flex w-[80px] flex-col items-center gap-1 sm:flex-1"
                 >
-                  <div className="size-[80px] rounded-lg bg-gray-200"></div>
-                  <span className="text-text-sub2 text-xs sm:text-sm">
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setValue('productType', option.value);
+                      clearErrors('productType');
+                    }}
+                    className={`hover:border-primary relative flex h-[70px] w-[70px] cursor-pointer items-center justify-center rounded-lg transition-colors duration-200 ${
+                      watch('productType') === option.value
+                        ? 'border-primary border-2'
+                        : 'border-gray-10 border-1'
+                    }`}
+                  >
+                    <Image
+                      src={`/images/category_${option.value}.png`}
+                      alt={option.label}
+                      fill
+                      className="object-contain"
+                    />
+                  </button>
+                  <span
+                    className={`w-full text-center text-sm ${
+                      watch('productType') === option.value
+                        ? 'text-primary font-semibold'
+                        : 'text-text-main'
+                    }`}
+                  >
                     {option.label}
                   </span>
-                </button>
+                </div>
               ))}
             </div>
             {errors.productType && (
