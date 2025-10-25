@@ -74,24 +74,26 @@ export default function ImageUploadForm({
       </div>
 
       {imageFiles.length > 0 && (
-        <div className="flex gap-2.5">
-          {imageFiles.map((image, index) => (
-            <div key={index} className="group relative">
-              <Image
-                src={imagePreviews[index]}
-                alt={`미리보기 ${index + 1}`}
-                className="size-25 rounded-lg object-cover"
-                width={100}
-                height={100}
-              />
-              <button
-                onClick={() => handleRemoveImage(index)}
-                className="bg-primary absolute top-1.5 right-1.5 rounded-full p-1 text-white"
-              >
-                <XIcon className="size-3" />
-              </button>
-            </div>
-          ))}
+        <div className="overflow-x-auto">
+          <div className="flex min-w-max gap-2.5">
+            {imageFiles.map((image, index) => (
+              <div key={index} className="group relative flex-shrink-0">
+                <Image
+                  src={imagePreviews[index]}
+                  alt={`미리보기 ${index + 1}`}
+                  className="size-25 rounded-lg object-cover"
+                  width={100}
+                  height={100}
+                />
+                <button
+                  onClick={() => handleRemoveImage(index)}
+                  className="bg-primary absolute top-1.5 right-1.5 rounded-full p-1 text-white"
+                >
+                  <XIcon className="size-3" />
+                </button>
+              </div>
+            ))}
+          </div>
         </div>
       )}
     </div>
