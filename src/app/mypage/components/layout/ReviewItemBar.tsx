@@ -42,9 +42,7 @@ export const ReviewItemBar = ({
         {label && (
           <Label className="text-[var(--color-gray-95)]">{label}</Label>
         )}
-        {count > 0 && (
-          <span className="text-[var(--color-gray-95)]">{count}</span>
-        )}
+        <span className="text-primary">{count}</span>
       </div>
 
       <div className="relative w-full">
