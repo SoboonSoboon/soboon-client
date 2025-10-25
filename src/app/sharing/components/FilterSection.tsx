@@ -101,8 +101,8 @@ export const FilterSection = () => {
               onClick={() => handleProductTypeChange(category.value)}
               className={`w-fit shrink-0 cursor-pointer rounded-md px-4 py-2 ${
                 activeProductType === category.value
-                  ? 'border-primary border bg-white'
-                  : 'hover:border-primary hover:text-primary border border-[#f3f1ef] bg-[#f3f1ef]'
+                  ? 'bg-[var(--GreenScale-Green10)]'
+                  : 'bg-gray-5'
               }`}
             >
               {category.label}
