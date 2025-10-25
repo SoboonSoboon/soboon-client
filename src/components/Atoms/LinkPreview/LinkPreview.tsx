@@ -12,7 +12,7 @@ export const LinkPreview = ({ text }: LinkPreviewProps) => {
   }
 
   return (
-    <div>
+    <div className="text-primary border-gray-10 hover:bg-gray-5 cursor-pointer rounded-lg border bg-white p-3">
       <div
         dangerouslySetInnerHTML={{
           __html: convertUrlsToLinks(text),
