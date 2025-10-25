@@ -11,7 +11,6 @@ import {
 import { MeetingItem } from '../utils/mypageType';
 import { Button, StatusTag } from '@/components';
 import { cn, timeFormatter } from '@/utils';
-import { useModal } from '@/components/Molecules/modal';
 import { useRouter } from 'next/navigation';
 
 import { ReviewModal } from './ReviewModal';
