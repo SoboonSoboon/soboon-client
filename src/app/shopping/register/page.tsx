@@ -13,7 +13,6 @@ import { ChevronLeft } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { useForm } from 'react-hook-form';
 import z from 'zod';
-import { convertUrlsToLinks, containsUrls } from '@/utils';
 
 const shoppingFormSchema = z.object({
   title: z
@@ -227,14 +226,6 @@ ex) 대량 고기를 사서 나누고 싶어요.
             />
             {errors.detail && (
               <p className="text-sm text-red-500">{errors.detail.message}</p>
-            )}
-
-            {watch('detail') && containsUrls(watch('detail')) && (
-              <div
-                dangerouslySetInnerHTML={{
-                  __html: convertUrlsToLinks(watch('detail')),
-                }}
-              />
             )}
           </div>
 
