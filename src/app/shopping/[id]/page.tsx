@@ -4,7 +4,7 @@ import {
   DetailContentFooter,
   CommentSection,
   DetailAside,
-} from '@/app/(marketplace)/components';
+} from '@/components/marketplace';
 import { MeetingDetailType } from '@/types/meetingsType';
 import { CommentsListType } from '@/types/commentType';
 import { ApplicantsMemberType } from '@/types/applicantsType';

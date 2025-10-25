@@ -9,6 +9,7 @@ import { GET_MODEL_DISTRICT_OPTIONS } from '@/constants/locations';
 import { ApiResponse } from '@/types/common';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useMutation } from '@tanstack/react-query';
+import { ChevronLeft } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { useForm } from 'react-hook-form';
 import z from 'zod';
@@ -86,10 +87,21 @@ export default function ShoppingRegisterPage() {
   };
 
   return (
-    <div className="mx-auto mt-4 w-full max-w-[760px] px-4 sm:mt-6 sm:px-6 lg:mt-10">
+    <div className="mx-auto w-full max-w-[760px] px-4 sm:mt-6 sm:px-6 lg:mt-6">
+      <div
+        className="flex cursor-pointer items-center gap-2 pb-4"
+        onClick={() => router.back()}
+      >
+        <div>
+          <ChevronLeft className="text-text-sub2 size-6" />
+        </div>
+        <span className="text-text-sub2">목록</span>
+      </div>
       <div className="rounded-xl border border-[var(--GrayScale-Gray10)] bg-white p-4 sm:p-6">
         <p className="text-pry mb-6 text-xl font-bold sm:mb-8 sm:text-2xl lg:mb-9">
-          <span className="text-primary font-memomentKkukkkuk">장보기 </span>
+          <strong className="text-primary font-memomentKkukkkuk">
+            장보기{' '}
+          </strong>
           모임 만들기
         </p>
         <form
@@ -217,13 +229,11 @@ ex) 대량 고기를 사서 나누고 싶어요.
             )}
           </div>
 
-          <div className="flex justify-center sm:justify-start">
-            <Button
-              label="확인"
-              type="submit"
-              className="w-full sm:w-auto sm:min-w-[120px]"
-            />
-          </div>
+          <Button
+            label="확인"
+            type="submit"
+            className="w-full sm:w-auto sm:min-w-[120px]"
+          />
         </form>
       </div>
     </div>
