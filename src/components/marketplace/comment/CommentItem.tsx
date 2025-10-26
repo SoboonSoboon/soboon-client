@@ -3,7 +3,7 @@
 import { EllipsisVertical } from 'lucide-react';
 import { timeFormatter } from '@/utils';
 import { CommentType, ReplyType } from '@/types/commentType';
-import { Button, ProfileImg, TextInput } from '@/components';
+import { Button, ProfileImg, ProfilePopover, TextInput } from '@/components';
 import { CommentActionMenu } from '../ActionMenu/CommentActionMenu';
 import { useState } from 'react';
 import { useParams } from 'next/navigation';
@@ -62,9 +62,17 @@ export const CommentItem = ({
               profileImageUrl={comment.authorProfileImageUrl}
               size={32}
             />
-            <span className="text-text-main font-bold">
-              {comment.authorNickname}
-            </span>
+            <ProfilePopover
+              nickname={comment.authorNickname}
+              profileImage={comment.authorProfileImageUrl}
+              keywords={[]}
+              contentClassName="top-full left-44 z-50"
+            >
+              <span className="text-text-main cursor-pointer font-bold hover:underline">
+                {comment.authorNickname}
+              </span>
+            </ProfilePopover>
+
             <span className="text-sm text-gray-50">
               {timeFormatter(comment.createdAt)}
             </span>

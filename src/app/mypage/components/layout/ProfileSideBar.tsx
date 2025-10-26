@@ -1,11 +1,11 @@
 'use client';
-import { Button, ProfileImg } from '@/components/Atoms';
-import { ReviewItemBar } from './ReviewItemBar';
+import { Button, ProfileImg, ReviewItemBar } from '@/components/Atoms';
 import { useAuthStore } from '@/apis/auth/hooks/authStore';
 import { ReviewData } from '../../utils/review';
 import { useModal } from '@/components/Molecules/modal';
 import { ProfileEditModal } from './profileModal/ProfileEditModal';
 import { REVIEW_KEYWORD_LABELS } from '@/constants';
+import { useReviewStats } from '@/hooks';
 
 interface ProfileSideBar {
   reviewData: ReviewData;
@@ -16,26 +16,15 @@ export const ProfileSideBar = ({ reviewData }: ProfileSideBar) => {
   const userNickname = useAuthStore((state) => state.userNickname);
   const userImage = useAuthStore((state) => state.userImage);
 
-  // 리뷰 키워드 중 최대 count에 20% 여유를 더한 값 계산
-  // count가 0인 경우를 제외한 실제 최대값을 기준으로 계산
-  const positiveCounts = reviewData.keywords
-    .filter((k) => k.count && k.count > 0)
-    .map((k) => k.count || 0);
-  const actualMaxCount =
-    positiveCounts.length > 0 ? Math.max(...positiveCounts) : 1;
-  // 0인 항목은 8% 표시, 나머지는 최대값의 1.2배를 기준으로 계산
-  const maxCount = actualMaxCount * 1.2;
-
   // 모든 키워드를 키워드 순서대로 표시 (데이터에 없는 키워드도 표시)
   const allKeywords = Object.keys(REVIEW_KEYWORD_LABELS) as Array<
     keyof typeof REVIEW_KEYWORD_LABELS
   >;
 
-  // 데이터에서 해당 키워드의 count를 찾는 함수
-  const getCountForKeyword = (keyword: string) => {
-    const found = reviewData.keywords.find((k) => k.keyword === keyword);
-    return found?.count || 0;
-  };
+  // 공용 훅 사용
+  const { maxCount, getCountForKeyword } = useReviewStats({
+    reviewKeywords: reviewData.keywords,
+  });
 
   return (
     <div className="border-gray-10 flex w-full flex-col gap-5 rounded-lg border bg-white px-8 py-15">
