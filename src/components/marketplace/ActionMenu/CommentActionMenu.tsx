@@ -6,15 +6,15 @@ import { cn } from '@/utils/cn';
 import { useParams } from 'next/navigation';
 export const CommentActionMenu = ({
   className,
-  onClose,
   onEditClick,
   commentId,
+  onClose,
   ...props
 }: {
   className?: string;
-  onClose?: () => void;
   onEditClick?: () => void;
   commentId: string;
+  onClose?: () => void;
 }) => {
   const menuRef = useClickOutside(onClose as () => void);
   const deleteModal = useModal();
@@ -76,11 +76,11 @@ export const CommentActionMenu = ({
           className="flex flex-col items-center gap-4"
           onPointerDown={(e) => e.stopPropagation()}
         >
-          <h2 className="text-lg font-semibold">게시글 삭제</h2>
+          <h2 className="text-lg font-semibold">댓글 삭제</h2>
           <p className="text-center text-gray-600">
-            정말로 이 게시글을 삭제하시겠습니까?
+            정말로 이 댓글을 삭제하시겠습니까?
             <br />
-            삭제된 게시글은 복구가 어려워요.
+            삭제된 댓글은 복구가 어려워요.
           </p>
           <div className="mt-2 flex w-full gap-3">
             <button

@@ -16,7 +16,7 @@ export const CommentListContainer = ({
 }) => {
   const [openReply, setOpenReply] = useState<number | null>(null);
   const meetingId = useParams<{ id: string }>().id;
-  const { success } = useToast();
+  const { success, error } = useToast();
   const handleToggleReply = (commentId: number) => {
     setOpenReply(commentId);
   };
@@ -28,8 +28,17 @@ export const CommentListContainer = ({
 
   useEffect(() => {
     if (state) {
-      handleCloseReply();
-      success(state);
+      // 성공 메시지인지 에러 메시지인지 판단
+      if (typeof state === 'string' && state.includes('작성')) {
+        success(state);
+        handleCloseReply();
+      } else if (typeof state === 'string') {
+        // 에러 메시지
+        error(state);
+      } else if (state === null) {
+        // 서버 에러
+        error('댓글 작성에 실패했습니다.');
+      }
     }
   }, [state]);
 

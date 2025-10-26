@@ -1,10 +1,16 @@
 'use server';
 
 import { revalidateTag } from 'next/cache';
+import { commentSchema } from '@/schemas/commentSchema';
 
 export const createComment = async (_: unknown, formData: FormData) => {
   const meetingId = formData.get('meetingId') as string;
   const commentContent = formData.get('comment') as string;
+
+  const validated = commentSchema.safeParse({ comment: commentContent });
+  if (!validated.success) {
+    return validated.error.issues[0].message;
+  }
 
   try {
     const response = await fetch(
@@ -37,6 +43,11 @@ export const createReply = async (_: unknown, formData: FormData) => {
   const meetingId = formData.get('meetingId') as string;
   const commentId = formData.get('commentId') as string;
   const replyContent = formData.get('reply') as string;
+
+  const validated = commentSchema.safeParse({ comment: replyContent });
+  if (!validated.success) {
+    return validated.error.issues[0].message;
+  }
 
   try {
     const response = await fetch(
