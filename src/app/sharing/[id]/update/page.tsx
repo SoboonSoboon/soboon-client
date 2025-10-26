@@ -106,12 +106,11 @@ export default function UpdateDividingPage() {
   const { success, error: showError } = useToast();
   const router = useRouter();
 
-  // 기존 데이터 불러오기
   const { data: existingData, isLoading } = useQuery({
     queryKey: ['dividing-meeting', meetingId],
     queryFn: async () => {
       const response = await fetch(
-        `${process.env.NEXT_PUBLIC_SOBOON_API_URL}/v1/meetings/dividing/${meetingId}`,
+        `${process.env.NEXT_PUBLIC_SOBOON_API_URL}/v1/meetings/${meetingId}`,
         {
           headers: {
             'Content-Type': 'application/json',
@@ -125,22 +124,22 @@ export default function UpdateDividingPage() {
     enabled: !!meetingId,
   });
 
-  // 기존 데이터로 폼 초기화
   useEffect(() => {
     if (existingData?.data) {
       const meeting = existingData.data;
+
       reset({
-        productType: meeting.productType || '',
-        itemName: meeting.itemName || '',
-        capacity: meeting.capacity || 0,
+        productType: meeting.category || '',
+        itemName: meeting.item || '',
+        capacity: meeting.total_member || 0,
         location: {
-          province: meeting.location?.province || '',
-          city: meeting.location?.city || '',
-          district: meeting.location?.district || '',
-          detail: meeting.location?.detail || '',
+          province: meeting.location_dep0 || meeting.location?.province || '',
+          city: meeting.location_dep1 || meeting.location?.city || '',
+          district: meeting.location_dep2 || meeting.location?.district || '',
+          detail: meeting.detail_address || meeting.location?.detail || '',
         },
         description: meeting.description || '',
-        imageUrls: [], // 기존 이미지는 별도 처리 필요
+        imageUrls: [],
       });
     }
   }, [existingData, reset]);
@@ -149,17 +148,15 @@ export default function UpdateDividingPage() {
     mutationFn: async (formatData: DividingFormData) => {
       let imageUrls: string[] = [];
 
-      // 이미지가 있는 경우 업로드 처리
       if (formatData.imageUrls.length > 0) {
         imageUrls = await imageUploader(formatData.imageUrls);
       }
 
-      // 등록 API와 동일한 형식으로 데이터 변환
       const requestData = {
         ...formatData,
-        title: '', // 소분 모임은 title이 빈 문자열
-        price: 0, // 소분 모임은 price가 0
-        imageUrls: imageUrls, // 업로드된 이미지 URL 배열
+        title: '',
+        price: 0,
+        imageUrls: imageUrls,
       };
 
       const response = await fetch(
