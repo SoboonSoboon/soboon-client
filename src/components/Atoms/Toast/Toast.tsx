@@ -76,9 +76,11 @@ export const ToastContainer = ({
 }) => {
   return (
     <div className="fixed right-1/2 bottom-0 z-[100] flex max-h-screen translate-x-1/2 p-4">
-      {toasts.map((toast) => (
-        <Toast key={toast.id} toast={toast} remove={removeToast} />
-      ))}
+      <div className="flex flex-col gap-2">
+        {toasts.map((toast) => (
+          <Toast key={toast.id} toast={toast} remove={removeToast} />
+        ))}
+      </div>
     </div>
   );
 };
