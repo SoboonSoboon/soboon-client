@@ -6,6 +6,7 @@ import { Button, Logo, ProfileImg, UserMenuModal } from '../../Atoms';
 import { redirectToKakao } from '@/apis/auth/authApi';
 import { useAuthStore } from '@/apis/auth/hooks/authStore';
 import { useState } from 'react';
+import Image from 'next/image';
 
 export const Header = () => {
   const pathname = usePathname() || '/';
@@ -30,14 +31,14 @@ export const Header = () => {
   return (
     <header className="border-gray-10 h-15 border-b bg-white dark:bg-black">
       <div className="text-text-main mx-auto flex h-full max-w-[1200px] items-center justify-between bg-white dark:bg-black dark:text-white">
-        <div className="flex items-center gap-6">
+        <div className="flex items-center gap-10">
           {isLoggedIn ? (
             <Link href="/">
-              <Logo width={75} height={28} />{' '}
+              <Logo />
             </Link>
           ) : (
             <>
-              <Logo width={75} height={28} />
+              <Logo />
             </>
           )}
 
@@ -46,19 +47,31 @@ export const Header = () => {
               <>
                 <Link
                   href="/sharing"
-                  className={`font-memomentKkukkkuk hover:text-primary whitespace-nowrap ${
+                  className={`hover:text-primary flex items-center gap-1 whitespace-nowrap ${
                     pathname.startsWith('/sharing') ? 'text-primary' : ''
                   }`}
                 >
-                  함께 소분하기
+                  <Image
+                    src="/icons/sharing_cart.svg"
+                    alt="Sharing Cart"
+                    width={24}
+                    height={24}
+                  />
+                  <span className="font-memomentKkukkkuk">함께 소분하기</span>
                 </Link>
                 <Link
                   href="/shopping"
-                  className={`font-memomentKkukkkuk hover:text-primary whitespace-nowrap ${
+                  className={`hover:text-primary flex items-center gap-1 whitespace-nowrap ${
                     pathname.startsWith('/shopping') ? 'text-primary' : ''
                   }`}
                 >
-                  함께 장보기
+                  <Image
+                    src="/icons/shopping_basket.svg"
+                    alt="Shopping Basket"
+                    width={24}
+                    height={24}
+                  />
+                  <span className="font-memomentKkukkkuk">함께 장보기</span>
                 </Link>
               </>
             ) : (

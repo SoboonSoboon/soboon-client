@@ -5,8 +5,8 @@ import { Plus } from 'lucide-react';
 import Image from 'next/image';
 
 const CREATE_MENU_OPTIONS = {
-  shopping: { label: '장보기', icon: '/icons/create-button-shopping.svg' },
-  sharing: { label: '소분하기', icon: '/icons/create-button-sharing.svg' },
+  shopping: { label: '장보기', icon: '/icons/shopping_basket.svg' },
+  sharing: { label: '소분하기', icon: '/icons/sharing_cart.svg' },
 } as const;
 
 type CreateMenuKey = keyof typeof CREATE_MENU_OPTIONS;
