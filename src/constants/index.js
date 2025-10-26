@@ -3,4 +3,8 @@ export * from './categories';
 export * from './locations';
 export * from './queryKey';
 export * from './status';
+
+export * from './tags';
+
 export * from './reviewKeywords';
+

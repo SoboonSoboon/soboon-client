@@ -2,10 +2,14 @@
 
 import { shoppingRegisterApi } from '@/apis';
 import { Button, Dropdown, Label, Textarea, TextInput } from '@/components';
-import { useToast } from '@/components/Atoms';
-import { CAPACITY_OPTIONS, MODEL_PROVINCE_OPTIONS } from '@/constants';
-import { GET_MODEL_CITY_OPTIONS } from '@/constants/locations';
-import { GET_MODEL_DISTRICT_OPTIONS } from '@/constants/locations';
+import { useToast, KeywordChip } from '@/components/Atoms';
+import { MODEL_PROVINCE_OPTIONS, SHOPPING_TAGS } from '@/constants';
+import { ShoppingTagType } from '@/types/common';
+import {
+  GET_MODEL_CITY_OPTIONS,
+  GET_MODEL_DISTRICT_OPTIONS,
+  CAPACITY_OPTIONS,
+} from '@/constants/locations';
 import { ApiResponse } from '@/types/common';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useMutation } from '@tanstack/react-query';
@@ -18,26 +22,29 @@ const shoppingFormSchema = z.object({
   title: z
     .string()
     .min(1, { message: '제목을 입력해주세요.' })
-    .max(50, { message: '제목은 50자 이하로 입력해주세요.' }),
+    .max(50, { message: '제목은 50자 이하로 입력해 주세요.' }),
   capacity: z
     .number()
-    .min(1, { message: '모집 인원을 선택해주세요.' })
+    .min(1, { message: '모집 인원을 선택해 주세요.' })
     .min(2, { message: '모집 인원은 2명 이상이어야 합니다.' })
     .max(5, { message: '모집 인원은 5명 이하로 입력해주세요.' }),
+  tags: z
+    .array(z.string())
+    .min(1, { message: '1개 이상의 태그를 선택해 주세요.' }),
   location: z.object({
-    province: z.string().min(1, { message: '주소를 선택해주세요.' }),
-    city: z.string().min(1, { message: '주소를 선택해주세요.' }),
-    district: z.string().min(1, { message: '주소를 선택해주세요.' }),
+    province: z.string().min(1, { message: '주소를 선택해 주세요.' }),
+    city: z.string().min(1, { message: '주소를 선택해 주세요.' }),
+    district: z.string().min(1, { message: '주소를 선택해 주세요.' }),
     detail: z
       .string()
-      .min(1, { message: '상세 주소를 입력해주세요.' })
-      .min(3, { message: '상세 주소는 3자 이상 입력해주세요.' })
-      .max(50, { message: '상세 주소는 50자 이하로 입력해주세요.' }),
+      .min(1, { message: '상세 주소를 입력해 주세요.' })
+      .min(3, { message: '상세 주소는 3자 이상 입력해 주세요.' })
+      .max(50, { message: '상세 주소는 50자 이하로 입력해 주세요.' }),
   }),
   detail: z
     .string()
-    .min(10, { message: '모임의 설명은 10자 이상 입력해주세요.' })
-    .max(500, { message: '모임의 설명은 500자 이하로 입력해주세요.' }),
+    .min(10, { message: '모임의 설명은 10자 이상 입력해 주세요.' })
+    .max(500, { message: '모임의 설명은 500자 이하로 입력해 주세요.' }),
 });
 
 type ShoppingFormData = z.infer<typeof shoppingFormSchema>;
@@ -55,6 +62,7 @@ export default function ShoppingRegisterPage() {
     defaultValues: {
       title: '',
       capacity: 0,
+      tags: [],
       location: {
         province: '',
         city: '',
@@ -108,7 +116,7 @@ export default function ShoppingRegisterPage() {
         >
           <div>
             <div className="flex flex-col gap-3">
-              <Label htmlFor="title" className="font-semibold">
+              <Label htmlFor="title" className="font-semibold" required>
                 어떤 장보기 모임을 만들까요?
               </Label>
               <TextInput
@@ -118,6 +126,41 @@ export default function ShoppingRegisterPage() {
               />
               {errors.title && (
                 <p className="text-sm text-red-500">{errors.title.message}</p>
+              )}
+            </div>
+          </div>
+
+          <div>
+            <div className="flex flex-col gap-3">
+              <Label htmlFor="tags" className="font-semibold" required>
+                모임 태그를 붙여볼까요?
+              </Label>
+              <div className="flex flex-wrap gap-2">
+                {SHOPPING_TAGS.map((tag: ShoppingTagType) => {
+                  const isSelected = watch('tags')?.includes(tag.value);
+
+                  return (
+                    <KeywordChip
+                      key={`# ${tag.value}`}
+                      label={`# ${tag.label}`}
+                      onClick={() => {
+                        const currentTags = watch('tags') || [];
+                        if (isSelected) {
+                          setValue(
+                            'tags',
+                            currentTags.filter((t) => t !== tag.value),
+                          );
+                        } else {
+                          setValue('tags', [...currentTags, tag.value]);
+                        }
+                      }}
+                      variant={isSelected ? 'active' : 'inactive'}
+                    />
+                  );
+                })}
+              </div>
+              {errors.tags && (
+                <p className="text-sm text-red-500">{errors.tags.message}</p>
               )}
             </div>
           </div>

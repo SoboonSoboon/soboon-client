@@ -16,3 +16,4 @@ export { Carousel } from './Carousel';
 export { StatusTag } from './StatusTag';
 export { UserMenuModal, type UserMenuModalProps } from './UserMenuModal';
 export { Footer } from './Footer';
+export { KeywordChip } from './KeywordChip/KeywordChip';
