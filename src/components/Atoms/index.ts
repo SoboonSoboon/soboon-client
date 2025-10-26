@@ -17,3 +17,4 @@ export { StatusTag } from './StatusTag';
 export { UserMenuModal, type UserMenuModalProps } from './UserMenuModal';
 export { Footer } from './Footer';
 export { KeywordChip } from './KeywordChip/KeywordChip';
+export { ReviewItemBar } from './ReviewItemBar';

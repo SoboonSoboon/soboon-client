@@ -13,6 +13,7 @@ export {
   StatusTag,
   UserMenuModal,
   type UserMenuModalProps,
+  ReviewItemBar,
 } from './Atoms';
 export {
   Card,
@@ -29,4 +30,5 @@ export {
   type DropdownProps,
   Header,
   SideButtonSection,
+  ProfilePopover,
 } from './Molecules';
