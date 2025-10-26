@@ -4,7 +4,7 @@ import { shoppingRegisterApi } from '@/apis';
 import { Button, Dropdown, Label, Textarea, TextInput } from '@/components';
 import { useToast, KeywordChip } from '@/components/Atoms';
 import { MODEL_PROVINCE_OPTIONS } from '@/constants';
-import { TAGS } from '@/constants/tags';
+import { SHOPPING_TAGS } from '@/constants';
 import {
   GET_MODEL_CITY_OPTIONS,
   GET_MODEL_DISTRICT_OPTIONS,
@@ -136,7 +136,7 @@ export default function ShoppingRegisterPage() {
                 모임 태그를 붙여볼까요?
               </Label>
               <div className="flex flex-wrap gap-2">
-                {TAGS.map((tag: { value: string; label: string }) => {
+                {SHOPPING_TAGS.map((tag: ShoppingTagType) => {
                   const isSelected = watch('tags')?.includes(tag.value);
 
                   return (

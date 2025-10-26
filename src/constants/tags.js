@@ -1,4 +1,4 @@
-export const TAGS = [
+export const SHOPPING_TAGS = [
   { value: '비건', label: '비건' },
   { value: '페스코', label: '페스코' },
   { value: '육식주의', label: '육식주의' },
