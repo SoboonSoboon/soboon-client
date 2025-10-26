@@ -221,7 +221,7 @@ export function UpdateShoppingForm({
                 options={CAPACITY_OPTIONS}
                 value={watch('capacity')}
                 onChange={(value) => {
-                  setValue('capacity', value);
+                  setValue('capacity', Number(value));
                   clearErrors('capacity');
                 }}
                 placeholder="인원을 선택해주세요"
@@ -273,7 +273,7 @@ export function UpdateShoppingForm({
                       setValue('location.province', value);
                       setValue('location.city', '');
                       setValue('location.district', '');
-                      clearErrors('location');
+                      clearErrors('location.province');
                     }}
                     placeholder="시/도"
                   />
@@ -285,7 +285,7 @@ export function UpdateShoppingForm({
                     onChange={(value) => {
                       setValue('location.city', value);
                       setValue('location.district', '');
-                      clearErrors('location');
+                      clearErrors('location.city');
                     }}
                     placeholder="시/군/구"
                     disabled={!watch('location.province')}
@@ -293,14 +293,11 @@ export function UpdateShoppingForm({
                 </div>
                 <div className="flex-1">
                   <Dropdown
-                    options={GET_MODEL_DISTRICT_OPTIONS(
-                      watch('location.province'),
-                      watch('location.city'),
-                    )}
+                    options={GET_MODEL_DISTRICT_OPTIONS(watch('location.city'))}
                     value={watch('location.district')}
                     onChange={(value) => {
                       setValue('location.district', value);
-                      clearErrors('location');
+                      clearErrors('location.district');
                     }}
                     placeholder="동/읍/면"
                     disabled={!watch('location.city')}
