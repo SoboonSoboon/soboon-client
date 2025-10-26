@@ -6,15 +6,15 @@ import { cn } from '@/utils/cn';
 import { useParams } from 'next/navigation';
 export const CommentActionMenu = ({
   className,
-  onClose,
   onEditClick,
   commentId,
+  onClose,
   ...props
 }: {
   className?: string;
-  onClose?: () => void;
   onEditClick?: () => void;
   commentId: string;
+  onClose?: () => void;
 }) => {
   const menuRef = useClickOutside(onClose as () => void);
   const deleteModal = useModal();

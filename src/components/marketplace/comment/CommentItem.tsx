@@ -26,6 +26,10 @@ export const CommentItem = ({
     setIsOpen(false);
   };
 
+  const handleCloseMenu = () => {
+    setIsOpen(false);
+  };
+
   const handleCancelClick = () => {
     setIsEditing(false);
     setIsOpen(false);
@@ -79,6 +83,7 @@ export const CommentItem = ({
                   ''
                 }
                 onEditClick={() => handleEditClick()}
+                onClose={handleCloseMenu}
               />
             )}
           </div>
@@ -88,7 +93,6 @@ export const CommentItem = ({
             <form onSubmit={handleSubmit} className="flex items-center gap-2">
               <TextInput
                 className="!border-text-line1 !border-1 bg-white"
-                placeholder="댓글을 수정해주세요."
                 value={currentComment}
                 onChange={(e) => setCurrentComment(e.target.value)}
                 name="comment"
@@ -96,7 +100,7 @@ export const CommentItem = ({
               <Button label="수정" className="text-primary" type="submit" />
               <Button
                 label="취소"
-                className="bg-gray-200 text-gray-700"
+                className="!bg-gray-200 !text-gray-700"
                 type="button"
                 onClick={() => handleCancelClick()}
               />
