@@ -25,6 +25,7 @@ const shoppingFormSchema = z.object({
     .min(1, { message: '모집 인원을 선택해주세요.' })
     .min(2, { message: '모집 인원은 2명 이상이어야 합니다.' })
     .max(5, { message: '모집 인원은 5명 이하로 입력해주세요.' }),
+  tags: z.array(z.string()).optional(),
   location: z.object({
     province: z.string().min(1, { message: '주소를 선택해주세요.' }),
     city: z.string().min(1, { message: '주소를 선택해주세요.' }),
@@ -56,6 +57,7 @@ export default function ShoppingRegisterPage() {
     defaultValues: {
       title: '',
       capacity: 0,
+      tags: [],
       location: {
         province: '',
         city: '',
@@ -129,19 +131,28 @@ export default function ShoppingRegisterPage() {
                 모임 태그를 붙여볼까요?
               </Label>
               <div className="flex flex-wrap gap-2">
-                {TAGS.map((tag: { value: string; label: string }) => (
-                  <KeywordChip
-                    key={`# ${tag.value}`}
-                    label={`# ${tag.label}`}
-                    onClick={() => {
-                      setValue('tags', [...(watch('tags') || []), tag.value]);
-                    }}
-                    variant={
-                      watch('tags')?.includes(tag.value) ? 'active' : 'inactive'
-                    }
-                    disabled={watch('tags')?.includes(tag.value)}
-                  />
-                ))}
+                {TAGS.map((tag: { value: string; label: string }) => {
+                  const isSelected = watch('tags')?.includes(tag.value);
+
+                  return (
+                    <KeywordChip
+                      key={`# ${tag.value}`}
+                      label={`# ${tag.label}`}
+                      onClick={() => {
+                        const currentTags = watch('tags') || [];
+                        if (isSelected) {
+                          setValue(
+                            'tags',
+                            currentTags.filter((t) => t !== tag.value),
+                          );
+                        } else {
+                          setValue('tags', [...currentTags, tag.value]);
+                        }
+                      }}
+                      variant={isSelected ? 'active' : 'inactive'}
+                    />
+                  );
+                })}
               </div>
               {errors.tags && (
                 <p className="text-sm text-red-500">{errors.tags.message}</p>
