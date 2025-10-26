@@ -22,27 +22,29 @@ const shoppingFormSchema = z.object({
   title: z
     .string()
     .min(1, { message: '제목을 입력해주세요.' })
-    .max(50, { message: '제목은 50자 이하로 입력해주세요.' }),
+    .max(50, { message: '제목은 50자 이하로 입력해 주세요.' }),
   capacity: z
     .number()
-    .min(1, { message: '모집 인원을 선택해주세요.' })
+    .min(1, { message: '모집 인원을 선택해 주세요.' })
     .min(2, { message: '모집 인원은 2명 이상이어야 합니다.' })
     .max(5, { message: '모집 인원은 5명 이하로 입력해주세요.' }),
-  tags: z.array(z.string()).optional(),
+  tags: z
+    .array(z.string())
+    .min(1, { message: '1개 이상의 태그를 선택해 주세요.' }),
   location: z.object({
-    province: z.string().min(1, { message: '주소를 선택해주세요.' }),
-    city: z.string().min(1, { message: '주소를 선택해주세요.' }),
-    district: z.string().min(1, { message: '주소를 선택해주세요.' }),
+    province: z.string().min(1, { message: '주소를 선택해 주세요.' }),
+    city: z.string().min(1, { message: '주소를 선택해 주세요.' }),
+    district: z.string().min(1, { message: '주소를 선택해 주세요.' }),
     detail: z
       .string()
-      .min(1, { message: '상세 주소를 입력해주세요.' })
-      .min(3, { message: '상세 주소는 3자 이상 입력해주세요.' })
-      .max(50, { message: '상세 주소는 50자 이하로 입력해주세요.' }),
+      .min(1, { message: '상세 주소를 입력해 주세요.' })
+      .min(3, { message: '상세 주소는 3자 이상 입력해 주세요.' })
+      .max(50, { message: '상세 주소는 50자 이하로 입력해 주세요.' }),
   }),
   detail: z
     .string()
-    .min(10, { message: '모임의 설명은 10자 이상 입력해주세요.' })
-    .max(500, { message: '모임의 설명은 500자 이하로 입력해주세요.' }),
+    .min(10, { message: '모임의 설명은 10자 이상 입력해 주세요.' })
+    .max(500, { message: '모임의 설명은 500자 이하로 입력해 주세요.' }),
 });
 
 type ShoppingFormData = z.infer<typeof shoppingFormSchema>;
@@ -163,27 +165,23 @@ export default function ShoppingRegisterPage() {
             </div>
           </div>
 
-          <div>
-            <div className="flex flex-col gap-3">
-              <Label htmlFor="capacity" className="font-semibold" required>
-                몇 명이 함께 장보기를 할까요?
-              </Label>
-              <Dropdown
-                name="capacity"
-                id="capacity"
-                options={CAPACITY_OPTIONS}
-                value={watch('capacity')?.toString() || ''}
-                onChange={(value) => {
-                  setValue('capacity', parseInt(value));
-                  clearErrors('capacity');
-                }}
-              />
-              {errors.capacity && (
-                <p className="text-sm text-red-500">
-                  {errors.capacity.message}
-                </p>
-              )}
-            </div>
+          <div className="flex flex-col gap-3">
+            <Label htmlFor="capacity" className="font-semibold" required>
+              몇 명을 모을까요?
+            </Label>
+            <Dropdown
+              name="capacity"
+              id="capacity"
+              options={CAPACITY_OPTIONS}
+              value={watch('capacity')}
+              onChange={(value) => {
+                setValue('capacity', +value);
+                clearErrors('capacity');
+              }}
+            />
+            {errors.capacity && (
+              <p className="text-sm text-red-500">{errors.capacity.message}</p>
+            )}
           </div>
 
           <div className="flex flex-col gap-3">
