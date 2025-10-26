@@ -114,8 +114,10 @@ export function UpdateDividingForm({
 
   useEffect(() => {
     if (meetingDetail) {
+      const productTypeValue = meetingDetail.productTypes?.[0];
+
       reset({
-        productType: meetingDetail.category || '',
+        productType: productTypeValue,
         itemName: meetingDetail.item || '',
         capacity: meetingDetail.total_member || 0,
         location: {
@@ -138,8 +140,8 @@ export function UpdateDividingForm({
         imageUrls: [],
       });
 
-      if (meetingDetail.category) {
-        setValue('productType', meetingDetail.category);
+      if (productTypeValue) {
+        setValue('productType', productTypeValue);
         clearErrors('productType');
       }
     }
@@ -200,41 +202,45 @@ export function UpdateDividingForm({
           어떤 품목을 소분하세요?
         </Label>
         <div className="mt-3 flex flex-wrap gap-1.5 sm:flex-nowrap xl:gap-2.5">
-          {DIVIDING_PRODUCT_TYPE_OPTIONS.map((option) => (
-            <div
-              key={option.value}
-              className="flex w-[80px] flex-col items-center gap-1 sm:flex-1"
-            >
-              <button
-                type="button"
-                onClick={() => {
-                  setValue('productType', option.value);
-                  clearErrors('productType');
-                }}
-                className={`hover:border-primary relative flex h-[70px] w-[70px] cursor-pointer items-center justify-center rounded-lg transition-colors duration-200 ${
-                  watch('productType') === option.value
-                    ? 'border-primary border-2'
-                    : 'border-gray-10 border-1'
-                }`}
+          {DIVIDING_PRODUCT_TYPE_OPTIONS.map((option) => {
+            const isSelected = watch('productType') === option.value;
+
+            return (
+              <div
+                key={option.value}
+                className="flex w-[80px] flex-col items-center gap-1 sm:flex-1"
               >
-                <Image
-                  src={`/images/category_${option.value}.png`}
-                  alt={option.label}
-                  fill
-                  className="object-contain"
-                />
-              </button>
-              <span
-                className={`w-full text-center text-sm ${
-                  watch('productType') === option.value
-                    ? 'text-primary font-semibold'
-                    : 'text-text-main'
-                }`}
-              >
-                {option.label}
-              </span>
-            </div>
-          ))}
+                <button
+                  type="button"
+                  onClick={() => {
+                    setValue('productType', option.value);
+                    clearErrors('productType');
+                  }}
+                  className={`hover:border-primary relative flex h-[70px] w-[70px] cursor-pointer items-center justify-center rounded-lg transition-colors duration-200 ${
+                    watch('productType') === option.value
+                      ? 'border-primary border-2'
+                      : 'border-gray-10 border-1'
+                  }`}
+                >
+                  <Image
+                    src={`/images/category_${option.value}.png`}
+                    alt={option.label}
+                    fill
+                    className="object-contain"
+                  />
+                </button>
+                <span
+                  className={`w-full text-center text-sm ${
+                    watch('productType') === option.value
+                      ? 'text-primary font-semibold'
+                      : 'text-text-main'
+                  }`}
+                >
+                  {option.label}
+                </span>
+              </div>
+            );
+          })}
         </div>
         {errors.productType && (
           <p className="mt-2 text-sm text-red-500">

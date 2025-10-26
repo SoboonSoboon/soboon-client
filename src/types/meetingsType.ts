@@ -26,6 +26,7 @@ type MeetingDetailType = {
   current_member: number;
   total_member: number;
   category: string;
+  productTypes: string[];
   createdAt: string;
   bookmarked: boolean;
   user: {

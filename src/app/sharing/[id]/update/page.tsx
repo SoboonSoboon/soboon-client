@@ -48,8 +48,8 @@ export default async function UpdateDividingPage({
   }
 
   return (
-    <div className="mx-auto w-full max-w-[760px] px-4 sm:mt-6 sm:px-6 lg:mt-6">
-      <div className="border-gray-10 flex flex-col gap-6 rounded-xl border bg-white p-4 sm:gap-8 sm:p-6 lg:gap-10">
+    <div className="mx-auto w-full max-w-[760px] sm:mt-6 lg:mt-6">
+      <div className="border-gray-10 mt-4 flex flex-col gap-6 rounded-xl border bg-white p-4 sm:gap-8 sm:p-6 lg:gap-10">
         <span className="text-2xl font-bold sm:text-2xl">
           <strong className="text-primary">소분 </strong>
           모임 수정하기
