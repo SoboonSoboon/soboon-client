@@ -3,6 +3,8 @@ import { Button, ProfileImg } from '@/components/Atoms';
 import { ReviewItemBar } from './ReviewItemBar';
 import { useAuthStore } from '@/apis/auth/hooks/authStore';
 import { ReviewData } from '../../utils/review';
+import { useModal } from '@/components/Molecules/modal';
+import { ProfileEditModal } from './profileModal/ProfileEditModal';
 import { REVIEW_KEYWORD_LABELS } from '@/constants';
 
 interface ProfileSideBar {
@@ -10,6 +12,7 @@ interface ProfileSideBar {
 }
 
 export const ProfileSideBar = ({ reviewData }: ProfileSideBar) => {
+  const profileModal = useModal();
   const userNickname = useAuthStore((state) => state.userNickname);
   const userImage = useAuthStore((state) => state.userImage);
 
@@ -40,7 +43,12 @@ export const ProfileSideBar = ({ reviewData }: ProfileSideBar) => {
         <ProfileImg profileImageUrl={userImage || ''} size={118} />
         <h2 className="font-memomentKkukkkuk text-2xl">{userNickname}</h2>
       </div>
-      <Button label="프로필 수정" variant="outline" className="w-full" />
+      <Button
+        label="프로필 수정"
+        variant="outline"
+        className="w-full"
+        onClick={profileModal.open}
+      />
       <div className="flex flex-col gap-4">
         {allKeywords.map((keyword, index) => (
           <ReviewItemBar
@@ -51,6 +59,10 @@ export const ProfileSideBar = ({ reviewData }: ProfileSideBar) => {
           />
         ))}
       </div>
+      <ProfileEditModal
+        isOpen={profileModal.isOpen}
+        onClose={profileModal.close}
+      />
     </div>
   );
 };

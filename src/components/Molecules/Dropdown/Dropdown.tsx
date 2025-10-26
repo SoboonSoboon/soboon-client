@@ -9,7 +9,7 @@ export interface DropdownOption {
   label: string;
 }
 
-export type DropdownVariant = 'filter' | 'form';
+export type DropdownVariant = 'filter' | 'form' | 'gray';
 
 export interface DropdownProps {
   name?: string;
@@ -69,6 +69,24 @@ export const Dropdown = ({
     setIsOpen(false);
   };
 
+  const buttonStyles = {
+    filter: 'border-gray-10 border bg-white px-3 py-2',
+    form: 'border-gray-5 bg-gray-5 border px-4 py-2.5',
+    gray: 'bg-gray-5 border-0 px-4 py-2.5',
+  };
+
+  const dropdownStyles = {
+    filter: 'border-gray-20 border bg-white',
+    form: 'border-gray-20 border bg-white',
+    gray: 'bg-gray-5 border-0',
+  };
+
+  const itemStyles = {
+    filter: 'px-4 py-2 hover:bg-gray-5  focus:bg-gray-5',
+    form: 'hover:bg-gray-5 focus:bg-gray-5 px-3 py-1.5',
+    gray: 'hover:bg-Green-10 focus:bg-Green-10 px-3 py-1.5',
+  };
+
   return (
     <div
       className={cn('relative w-full', className)}
@@ -81,9 +99,7 @@ export const Dropdown = ({
         id={id}
         className={cn(
           'flex w-full items-center justify-between gap-1.5 rounded-xl',
-          variant === 'filter'
-            ? 'border-gray-10 border bg-white px-3 py-2'
-            : 'border-gray-5 bg-gray-5 border px-4 py-2.5',
+          buttonStyles[variant],
           disabled ? 'cursor-not-allowed opacity-50' : 'cursor-pointer',
         )}
         onClick={handleToggle}
@@ -109,7 +125,8 @@ export const Dropdown = ({
       {isOpen && options.length > 0 && (
         <div
           className={cn(
-            'border-gray-20 absolute z-50 mt-1 max-h-60 w-fit min-w-full overflow-hidden rounded-xl border bg-white shadow-lg',
+            'absolute z-50 mt-1 max-h-60 w-fit min-w-full overflow-hidden rounded-xl shadow-lg',
+            dropdownStyles[variant],
           )}
         >
           <div className="dropdown-scrollbar max-h-60 overflow-y-auto">
@@ -119,11 +136,9 @@ export const Dropdown = ({
                 type="button"
                 className={cn(
                   'w-full cursor-pointer text-left whitespace-nowrap focus:outline-none',
-                  variant === 'filter'
-                    ? 'px-4 py-2 hover:bg-[var(--GrayScale-Gray5)] focus:bg-[var(--GrayScale-Gray5)]'
-                    : 'hover:bg-gray-5 focus:bg-gray-5 px-3 py-1.5',
+                  itemStyles[variant],
                   value === option.value
-                    ? 'bg-[var(--GreenScale-Green5)] text-[var(--GreenScale-Green50)]'
+                    ? 'bg-Green-5 text-Green-50'
                     : 'text-gray-80',
                 )}
                 onClick={() => handleSelect(option)}
