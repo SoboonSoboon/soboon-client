@@ -8,8 +8,12 @@ interface LinkRendererProps {
 }
 
 export const LinkRenderer = ({ text }: LinkRendererProps) => {
-  if (!text || !containsUrls(text)) {
+  if (!text) {
     return null;
+  }
+
+  if (!containsUrls(text)) {
+    return <div className="p-2 text-gray-700">{text}</div>;
   }
 
   const urls = extractUrls(text);
