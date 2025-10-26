@@ -4,5 +4,4 @@ export interface ProfileUpdateData {
   province: string;
   city: string;
   district: string;
-  detail: string;
 }

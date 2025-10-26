@@ -84,7 +84,7 @@ export const Dropdown = ({
   const itemStyles = {
     filter: 'px-4 py-2 hover:bg-gray-5  focus:bg-gray-5',
     form: 'hover:bg-gray-5 focus:bg-gray-5 px-3 py-1.5',
-    gray: 'hover:bg-Green-10 focus:bg-Green-10 ',
+    gray: 'hover:bg-Green-10 focus:bg-Green-10 px-3 py-1.5',
   };
 
   return (
