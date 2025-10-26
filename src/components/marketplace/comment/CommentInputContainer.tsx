@@ -15,10 +15,20 @@ export const CommentInputContainer = ({
 }) => {
   const meetingId = useParams<{ id: string }>().id;
   const [state, formAction] = useActionState(createComment, null);
-  const { success } = useToast();
+  const { success, error } = useToast();
+
   useEffect(() => {
     if (state) {
-      success(state);
+      // 성공 메시지인지 에러 메시지인지 판단
+      if (typeof state === 'string' && state.includes('작성')) {
+        success(state);
+      } else if (typeof state === 'string') {
+        // 에러 메시지
+        error(state);
+      } else if (state === null) {
+        // 서버 에러
+        error('댓글 작성에 실패했습니다.');
+      }
     }
   }, [state]);
 
