@@ -4,6 +4,7 @@ import { shoppingRegisterApi } from '@/apis';
 import { Button, Dropdown, Label, Textarea, TextInput } from '@/components';
 import { useToast } from '@/components/Atoms';
 import { CAPACITY_OPTIONS, MODEL_PROVINCE_OPTIONS } from '@/constants';
+import { TAGS } from '@/constants/tags';
 import { GET_MODEL_CITY_OPTIONS } from '@/constants/locations';
 import { GET_MODEL_DISTRICT_OPTIONS } from '@/constants/locations';
 import { ApiResponse } from '@/types/common';
@@ -108,7 +109,7 @@ export default function ShoppingRegisterPage() {
         >
           <div>
             <div className="flex flex-col gap-3">
-              <Label htmlFor="title" className="font-semibold">
+              <Label htmlFor="title" className="font-semibold" required>
                 어떤 장보기 모임을 만들까요?
               </Label>
               <TextInput
@@ -122,23 +123,20 @@ export default function ShoppingRegisterPage() {
             </div>
           </div>
 
-          <div className="flex flex-col gap-3">
-            <Label htmlFor="capacity" className="font-semibold" required>
-              몇 명을 모을까요?
-            </Label>
-            <Dropdown
-              name="capacity"
-              id="capacity"
-              options={CAPACITY_OPTIONS}
-              value={watch('capacity')}
-              onChange={(value) => {
-                setValue('capacity', +value);
-                clearErrors('capacity');
-              }}
-            />
-            {errors.capacity && (
-              <p className="text-sm text-red-500">{errors.capacity.message}</p>
-            )}
+          <div>
+            <div className="flex flex-col gap-3">
+              <Label htmlFor="title" className="font-semibold" required>
+                모임 태그를 붙여볼까요?
+              </Label>
+              <div className="flex flex-wrap gap-2">
+                {TAGS.map((tag: { value: string; label: string }) => (
+                  <Button key={`# ${tag.value}`} label={`# ${tag.label}`} />
+                ))}
+              </div>
+              {errors.title && (
+                <p className="text-sm text-red-500">{errors.title.message}</p>
+              )}
+            </div>
           </div>
 
           <div className="flex flex-col gap-3">
