@@ -121,7 +121,7 @@ export default function DividingRegisterPage() {
   };
 
   return (
-    <div className="mx-auto w-full max-w-[760px] px-4 sm:mt-6 sm:px-6 lg:mt-6">
+    <div className="mx-auto w-full max-w-[760px] sm:mt-6 sm:px-6 lg:mt-6">
       <div
         className="flex cursor-pointer items-center gap-2 pb-4"
         onClick={() => router.back()}

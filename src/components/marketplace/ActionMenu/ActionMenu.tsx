@@ -39,6 +39,17 @@ export const ActionMenu = ({
     deleteModal.open();
   };
 
+  const handleUpdateMeetingClick = (event: React.MouseEvent<HTMLLIElement>) => {
+    event.stopPropagation();
+    onClose?.();
+
+    if (pathname.includes('/sharing')) {
+      router.push(`/sharing/${meetingId}/update`);
+    } else if (pathname.includes('/shopping')) {
+      router.push(`/shopping/${meetingId}/update`);
+    }
+  };
+
   const handleConfirmDelete = async (
     event: React.MouseEvent<HTMLButtonElement>,
   ) => {
@@ -73,7 +84,10 @@ export const ActionMenu = ({
         {...props}
       >
         <ul className="text-gray-90 flex flex-col">
-          <li className="text-text-main flex cursor-pointer items-center justify-center border-b border-[var(--GrayScale-Gray10)] px-4 py-2.5 transition-all duration-200 hover:rounded-t-xl">
+          <li
+            className="text-text-main flex cursor-pointer items-center justify-center border-b border-[var(--GrayScale-Gray10)] px-4 py-2.5 transition-all duration-200 hover:rounded-t-xl"
+            onClick={handleUpdateMeetingClick}
+          >
             <span>수정</span>
           </li>
           <li
