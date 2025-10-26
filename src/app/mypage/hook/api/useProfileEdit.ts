@@ -18,16 +18,24 @@ export const useProfileEdit = () => {
     mutationFn: async (data: ProfileUpdateData) => {
       return await putProfile(data);
     },
-    onSuccess: (response) => {
-      // ✅ Hook에서 전역 상태 업데이트
-      setUserNickname(response.data.nickname);
-      setUserImage(response.data.image);
-      setUserLocation(response.data.location);
+    onSuccess: (response, variables) => {
+      if (variables.nickname) {
+        setUserNickname(variables.nickname);
+      }
+      if (variables.image) {
+        setUserImage(variables.image);
+      }
+      setUserLocation({
+        province: variables.province,
+        city: variables.city || null,
+        district: variables.district || null,
+        detail: null,
+      });
 
       queryClient.invalidateQueries({ queryKey: ['profile'] });
     },
     onError: (error) => {
-      console.error(' 프로필 수정 실패:', error);
+      console.error('프로필 수정 실패:', error);
     },
   });
 

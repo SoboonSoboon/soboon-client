@@ -19,7 +19,7 @@ export interface DropdownProps {
   value?: string | number;
   onChange?: (value: string) => void;
   disabled?: boolean;
-
+  required?: boolean;
   className?: string;
   variant?: DropdownVariant;
 }
@@ -32,7 +32,7 @@ export const Dropdown = ({
   value,
   onChange,
   disabled = false,
-
+  required = false,
   className,
   variant = 'filter',
   ...props
