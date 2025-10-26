@@ -118,6 +118,11 @@ type ReviewKeyword =
   | 'FAST_RESPONSE'
   | 'GOOD_DISTRIBUTION';
 
+type ShoppingTagType = {
+  value: string;
+  label: string;
+};
+
 export type {
   // API 응답
   ApiResponse,
@@ -150,4 +155,7 @@ export type {
   // 리뷰
   ReviewOptionsType,
   ReviewKeyword,
+
+  // 장보기 태그
+  ShoppingTagType,
 };

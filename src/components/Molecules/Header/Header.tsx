@@ -6,6 +6,19 @@ import { Button, Logo, ProfileImg, UserMenuModal } from '../../Atoms';
 import { redirectToKakao } from '@/apis/auth/authApi';
 import { useAuthStore } from '@/apis/auth/hooks/authStore';
 import { useState } from 'react';
+import Image from 'next/image';
+
+// TODO: 과도한 Image 태그 사용으로 추후 리팩토링 예정
+const MENU_ICONS = {
+  SHARING: {
+    DEFAULT: '/icons/sharing_cart.svg',
+    GREEN: '/icons/sharing_cart_green.svg',
+  },
+  SHOPPING: {
+    DEFAULT: '/icons/shopping_basket.svg',
+    GREEN: '/icons/shopping_basket_green.svg',
+  },
+} as const;
 
 export const Header = () => {
   const pathname = usePathname() || '/';
@@ -30,14 +43,14 @@ export const Header = () => {
   return (
     <header className="border-gray-10 h-15 border-b bg-white px-4 dark:bg-black">
       <div className="text-text-main mx-auto flex h-full max-w-[1200px] items-center justify-between bg-white dark:bg-black dark:text-white">
-        <div className="flex items-center gap-6">
+        <div className="flex items-center gap-10">
           {isLoggedIn ? (
             <Link href="/">
-              <Logo width={75} height={28} />{' '}
+              <Logo />
             </Link>
           ) : (
             <>
-              <Logo width={75} height={28} />
+              <Logo />
             </>
           )}
 
@@ -46,19 +59,59 @@ export const Header = () => {
               <>
                 <Link
                   href="/sharing"
-                  className={`font-memomentKkukkkuk hover:text-primary whitespace-nowrap ${
+                  className={`group hover:text-primary flex items-center gap-1 whitespace-nowrap ${
                     pathname.startsWith('/sharing') ? 'text-primary' : ''
                   }`}
                 >
-                  함께 소분하기
+                  <div className="relative">
+                    <Image
+                      src={
+                        pathname.startsWith('/sharing')
+                          ? MENU_ICONS.SHARING.GREEN
+                          : MENU_ICONS.SHARING.DEFAULT
+                      }
+                      alt="Sharing Cart"
+                      width={24}
+                      height={24}
+                      className="transition-opacity duration-200 group-hover:opacity-0"
+                    />
+                    <Image
+                      src={MENU_ICONS.SHARING.GREEN}
+                      alt="Sharing Cart"
+                      width={24}
+                      height={24}
+                      className="absolute top-0 left-0 opacity-0 transition-opacity duration-200 group-hover:opacity-100"
+                    />
+                  </div>
+                  <span className="font-memomentKkukkkuk">함께 소분하기</span>
                 </Link>
                 <Link
                   href="/shopping"
-                  className={`font-memomentKkukkkuk hover:text-primary whitespace-nowrap ${
+                  className={`group hover:text-primary flex items-center gap-1 whitespace-nowrap ${
                     pathname.startsWith('/shopping') ? 'text-primary' : ''
                   }`}
                 >
-                  함께 장보기
+                  <div className="relative">
+                    <Image
+                      src={
+                        pathname.startsWith('/shopping')
+                          ? MENU_ICONS.SHOPPING.GREEN
+                          : MENU_ICONS.SHOPPING.DEFAULT
+                      }
+                      alt="Shopping Basket"
+                      width={20}
+                      height={20}
+                      className="transition-opacity duration-200 group-hover:opacity-0"
+                    />
+                    <Image
+                      src={MENU_ICONS.SHOPPING.GREEN}
+                      alt="Shopping Basket"
+                      width={20}
+                      height={20}
+                      className="absolute top-0 left-0 opacity-0 transition-opacity duration-200 group-hover:opacity-100"
+                    />
+                  </div>
+                  <span className="font-memomentKkukkkuk">함께 장보기</span>
                 </Link>
               </>
             ) : (
