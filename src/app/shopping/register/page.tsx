@@ -5,8 +5,11 @@ import { Button, Dropdown, Label, Textarea, TextInput } from '@/components';
 import { useToast, KeywordChip } from '@/components/Atoms';
 import { MODEL_PROVINCE_OPTIONS } from '@/constants';
 import { TAGS } from '@/constants/tags';
-import { GET_MODEL_CITY_OPTIONS } from '@/constants/locations';
-import { GET_MODEL_DISTRICT_OPTIONS } from '@/constants/locations';
+import {
+  GET_MODEL_CITY_OPTIONS,
+  GET_MODEL_DISTRICT_OPTIONS,
+  CAPACITY_OPTIONS,
+} from '@/constants/locations';
 import { ApiResponse } from '@/types/common';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useMutation } from '@tanstack/react-query';
@@ -156,6 +159,29 @@ export default function ShoppingRegisterPage() {
               </div>
               {errors.tags && (
                 <p className="text-sm text-red-500">{errors.tags.message}</p>
+              )}
+            </div>
+          </div>
+
+          <div>
+            <div className="flex flex-col gap-3">
+              <Label htmlFor="capacity" className="font-semibold" required>
+                몇 명이 함께 장보기를 할까요?
+              </Label>
+              <Dropdown
+                name="capacity"
+                id="capacity"
+                options={CAPACITY_OPTIONS}
+                value={watch('capacity')?.toString() || ''}
+                onChange={(value) => {
+                  setValue('capacity', parseInt(value));
+                  clearErrors('capacity');
+                }}
+              />
+              {errors.capacity && (
+                <p className="text-sm text-red-500">
+                  {errors.capacity.message}
+                </p>
               )}
             </div>
           </div>

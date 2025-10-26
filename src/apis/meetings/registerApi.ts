@@ -12,6 +12,7 @@ export interface ShoppingRegisterData {
   location: LocationType;
   detail: string;
   capacity: number;
+  tags?: string[];
 }
 
 // 추후에 삭제될 예정

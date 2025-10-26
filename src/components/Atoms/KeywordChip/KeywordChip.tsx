@@ -19,11 +19,11 @@ export const KeywordChip = ({
   ...props
 }: KeywordChipProps) => {
   const baseStyles =
-    'text-text-main py-2 px-4 cursor-pointer rounded-lg text-sm font-medium';
+    'text-text-main py-2 px-4 cursor-pointer rounded-lg text-sm font-medium transition-colors';
 
   const variants = {
     active: 'bg-Green-10',
-    inactive: 'bg-gray-5',
+    inactive: 'bg-gray-5 hover:bg-Green-5',
   } as const;
 
   const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
