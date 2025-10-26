@@ -20,10 +20,11 @@ import { useEffect } from 'react';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import { getShoppingListApi } from '@/apis/meetings/getShoppingListApi';
 import { useInfiniteScrollTrigger } from '@/hooks/useScroll';
+import { useSearchParams } from 'next/navigation';
 
 export const ShoppingListSection = ({
   initialShoppingList,
-  query,
+  query: initialQuery,
 }: {
   query: URLSearchParams;
   initialShoppingList: ShoppingMeetingsType | null;
@@ -31,6 +32,18 @@ export const ShoppingListSection = ({
   const router = useRouter();
   const { handleBookmark } = useBookmark();
   const { isBottom } = useInfiniteScrollTrigger();
+  const searchParams = useSearchParams();
+
+  const query = new URLSearchParams({
+    province: searchParams.get('province') || '',
+    city: searchParams.get('city') || '',
+    district: searchParams.get('district') || '',
+    status: searchParams.get('status') || '',
+    sortType: searchParams.get('sortType') || '',
+    tags: searchParams.get('tag') || '',
+    size: searchParams.get('size') || '10',
+    page: searchParams.get('page') || '0',
+  });
 
   const {
     data: shoppingList,
