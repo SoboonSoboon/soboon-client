@@ -28,7 +28,7 @@ export const Header = () => {
   // };
 
   return (
-    <header className="border-gray-10 h-15 border-b bg-white dark:bg-black">
+    <header className="border-gray-10 h-15 border-b bg-white px-4 dark:bg-black">
       <div className="text-text-main mx-auto flex h-full max-w-[1200px] items-center justify-between bg-white dark:bg-black dark:text-white">
         <div className="flex items-center gap-6">
           {isLoggedIn ? (

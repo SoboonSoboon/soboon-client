@@ -49,10 +49,10 @@ export default async function SharingPage({
     productType: (params.productType as string) || '',
     sortType: (params.sortType as string) || '',
     page: (params.page as string) || '0',
-    size: (params.size as string) || '20',
+    size: (params.size as string) || '10',
     status: (params.status as string) || '',
   });
-  const sharingMeetingList = await getSharingMeeting(query);
+  const initialDividingList = await getSharingMeeting(query);
 
   return (
     <main className="flex flex-col gap-8 py-8">
@@ -62,7 +62,10 @@ export default async function SharingPage({
           <FilterSection />
         </aside>
         <div className="flex-1">
-          <SharingListSection sharingMeetingList={sharingMeetingList} />
+          <SharingListSection
+            initialDividingList={initialDividingList}
+            query={query}
+          />
         </div>
       </section>
       <SideButtonSection />

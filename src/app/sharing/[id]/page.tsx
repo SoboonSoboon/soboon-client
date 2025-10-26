@@ -22,7 +22,7 @@ const dummyUser = {
 };
 
 // 소분하기 모임 상세 데이터 조회
-async function getSharingMeetingDetail({
+async function getMeetingDetail({
   id,
 }: {
   id: string;
@@ -64,7 +64,11 @@ async function getComments({
     const response = await fetch(
       `${process.env.NEXT_PUBLIC_SOBOON_API_URL}/v1/meetings/${id}/comments`,
       {
-        cache: 'no-store',
+        cache: 'force-cache',
+        next: {
+          revalidate: 30,
+          tags: [`comments-${id}`],
+        },
         headers: {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${process.env.NEXT_PUBLIC_SOBOON_API_TOKEN}`,
@@ -92,8 +96,9 @@ async function getParticipants({
     const response = await fetch(
       `${process.env.NEXT_PUBLIC_SOBOON_API_URL}/v1/meetings/${meetingId}/applicants`,
       {
-        cache: 'no-store',
+        cache: 'force-cache',
         next: {
+          revalidate: 10,
           tags: [`participants-${meetingId}`],
         },
         headers: {
@@ -119,7 +124,7 @@ export default async function SharingDetailPage({
 }) {
   const id = (await params).id;
   // 소분하기 모임 상세 데이터 조회
-  const meetingDetail = await getSharingMeetingDetail({
+  const meetingDetail = await getMeetingDetail({
     id,
   });
 
@@ -133,8 +138,16 @@ export default async function SharingDetailPage({
   return (
     <section>
       <DetailHeader />
-      <div className="flex gap-10">
-        <article className="w-[730px]">
+      <div className="flex flex-col gap-6 lg:flex-row lg:gap-10">
+        <div className="w-full lg:sticky lg:top-6 lg:order-2 lg:w-[300px] xl:w-[350px]">
+          <DetailAside
+            meetingDetail={meetingDetail!}
+            isAuthor={isAuthor}
+            participants={participants || []}
+          />
+        </div>
+
+        <article className="flex-1 lg:order-1">
           {/* 추후에 DB에 실제 이미지가 추가되면 연동 필요 */}
           <Carousel carouselImages={meetingDetail!.images} className="mb-8" />
           <DetailContent description={meetingDetail!.description} />
@@ -146,14 +159,6 @@ export default async function SharingDetailPage({
             status={meetingDetail!.status}
           />
         </article>
-
-        <div className="sticky top-6 h-[95vh]">
-          <DetailAside
-            meetingDetail={meetingDetail!}
-            isAuthor={isAuthor}
-            participants={participants || []}
-          />
-        </div>
       </div>
     </section>
   );

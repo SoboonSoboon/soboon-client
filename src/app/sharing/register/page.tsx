@@ -14,6 +14,7 @@ import { ApiResponse } from '@/types/common';
 import { useToast } from '@/components/Atoms';
 import { useRouter } from 'next/navigation';
 import { ChevronLeft } from 'lucide-react';
+import Image from 'next/image';
 
 const DIVIDING_PRODUCT_TYPE_OPTIONS = [
   { value: 'FRESH', label: '신선식품' },
@@ -130,39 +131,54 @@ export default function DividingRegisterPage() {
         </div>
         <span className="text-text-sub2">목록</span>
       </div>
-      <div className="rounded-xl border border-[var(--GrayScale-Gray10)] bg-white p-4 sm:p-6">
-        <p className="text-pry mb-6 text-xl font-bold sm:mb-8 sm:text-2xl lg:mb-9">
-          <strong className="text-primary font-memomentKkukkkuk">소분 </strong>
+      <div className="border-gray-10 flex flex-col gap-6 rounded-xl border bg-white p-4 sm:gap-8 sm:p-6 lg:gap-10">
+        <span className="text-2xl font-bold sm:text-2xl">
+          <strong className="text-primary">소분 </strong>
           모임 만들기
-        </p>
+        </span>
         <form
           className="flex flex-col gap-6 sm:gap-8 lg:gap-10"
           onSubmit={handleSubmit(onSubmit)}
         >
           <div>
-            <Label htmlFor="productType" required>
+            <Label htmlFor="productType" className="font-semibold" required>
               어떤 품목을 소분하세요?
             </Label>
-            <div className="mt-3 flex flex-wrap gap-1.5 xl:gap-2.5">
+            <div className="mt-3 flex flex-wrap gap-1.5 sm:flex-nowrap xl:gap-2.5">
               {DIVIDING_PRODUCT_TYPE_OPTIONS.map((option) => (
-                <button
+                <div
                   key={option.value}
-                  type="button"
-                  onClick={() => {
-                    setValue('productType', option.value);
-                    clearErrors('productType');
-                  }}
-                  className={`flex flex-col items-center gap-0.5 rounded-lg p-2 transition-all duration-200 hover:bg-gray-50 ${
-                    watch('productType') === option.value
-                      ? 'border-primary bg-primary/5 border-2'
-                      : 'border-2 border-gray-200 hover:border-gray-300'
-                  }`}
+                  className="flex w-[80px] flex-col items-center gap-1 sm:flex-1"
                 >
-                  <div className="size-[80px] rounded-lg bg-gray-200"></div>
-                  <span className="text-text-sub2 text-xs sm:text-sm">
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setValue('productType', option.value);
+                      clearErrors('productType');
+                    }}
+                    className={`hover:border-primary relative flex h-[70px] w-[70px] cursor-pointer items-center justify-center rounded-lg transition-colors duration-200 ${
+                      watch('productType') === option.value
+                        ? 'border-primary border-2'
+                        : 'border-gray-10 border-1'
+                    }`}
+                  >
+                    <Image
+                      src={`/images/category_${option.value}.png`}
+                      alt={option.label}
+                      fill
+                      className="object-contain"
+                    />
+                  </button>
+                  <span
+                    className={`w-full text-center text-sm ${
+                      watch('productType') === option.value
+                        ? 'text-primary font-semibold'
+                        : 'text-text-main'
+                    }`}
+                  >
                     {option.label}
                   </span>
-                </button>
+                </div>
               ))}
             </div>
             {errors.productType && (
@@ -185,7 +201,7 @@ export default function DividingRegisterPage() {
           </div>
 
           <div className="flex flex-col gap-3">
-            <Label htmlFor="capacity" required>
+            <Label htmlFor="capacity" className="font-semibold" required>
               몇 명을 모을까요?
             </Label>
             <Dropdown
@@ -204,7 +220,7 @@ export default function DividingRegisterPage() {
           </div>
 
           <div className="flex flex-col gap-3">
-            <Label htmlFor="province" required>
+            <Label htmlFor="province" className="font-semibold" required>
               어디서 만날까요??
             </Label>
             <div className="flex flex-col gap-3 sm:items-center">
@@ -273,7 +289,7 @@ export default function DividingRegisterPage() {
           </div>
 
           <div className="flex flex-col gap-3">
-            <Label htmlFor="imageUrls" required>
+            <Label htmlFor="imageUrls" className="font-semibold">
               이미지를 추가할까요?
             </Label>
             <div className="flex flex-col gap-3">
@@ -292,7 +308,7 @@ export default function DividingRegisterPage() {
           </div>
 
           <div className="flex flex-col gap-3">
-            <Label htmlFor="description" required>
+            <Label htmlFor="description" className="font-semibold" required>
               상세 설명
             </Label>
             <Textarea

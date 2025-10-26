@@ -51,16 +51,21 @@ export default async function ShoppingPage({
     district: (params.district as string) || '',
     status: (params.status as string) || '',
     sortType: (params.sortType as string) || '',
+    size: (params.size as string) || '10',
+    page: (params.page as string) || '0',
   });
 
-  const shoppingList = await getShoppingList(query);
+  const initialShoppingList = await getShoppingList(query);
 
   return (
     <main className="flex flex-col gap-8 py-8">
       <IntroSection />
       <section className="flex flex-col gap-6">
         <FilterSection />
-        <ShoppingListSection shoppingList={shoppingList!.content} />
+        <ShoppingListSection
+          initialShoppingList={initialShoppingList}
+          query={query}
+        />
       </section>
       <SideButtonSection />
     </main>
