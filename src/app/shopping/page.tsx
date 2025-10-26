@@ -3,7 +3,11 @@ import {
   meetingSearchParamsType,
   ShoppingMeetingsType,
 } from '@/types/meetingsType';
-import { FilterSection, ShoppingListSection } from './components';
+import {
+  FilterSection,
+  ShoppingListSection,
+  ShoppingTagsSection,
+} from './components';
 import { SideButtonSection } from '@/components';
 
 // const token = localStorage.getItem('accessToken'); //todo: 전역상태관리로 관리하기로 변경
@@ -61,6 +65,7 @@ export default async function ShoppingPage({
     <main className="flex flex-col gap-8 py-8">
       <IntroSection />
       <section className="flex flex-col gap-6">
+        <ShoppingTagsSection />
         <FilterSection />
         <ShoppingListSection
           initialShoppingList={initialShoppingList}

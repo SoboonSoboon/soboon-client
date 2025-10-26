@@ -11,6 +11,7 @@ export const useFilterParams = () => {
   const activeCity = searchParams.get('city') || '';
   const activeStatus = searchParams.get('status') || '';
   const activeProductType = searchParams.get('productType') || '';
+  const activeTag = searchParams.get('tag') || '';
 
   const updateParams = useCallback(
     (updates: Record<string, string>) => {
@@ -36,5 +37,6 @@ export const useFilterParams = () => {
     activeCity,
     activeStatus,
     activeProductType,
+    activeTag,
   };
 };
