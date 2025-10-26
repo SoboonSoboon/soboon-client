@@ -52,7 +52,11 @@ export const Header = () => {
                   }`}
                 >
                   <Image
-                    src="/icons/sharing_cart.svg"
+                    src={
+                      pathname.startsWith('/sharing')
+                        ? '/icons/sharing_cart_green.svg'
+                        : '/icons/sharing_cart.svg'
+                    }
                     alt="Sharing Cart"
                     width={24}
                     height={24}
@@ -66,10 +70,14 @@ export const Header = () => {
                   }`}
                 >
                   <Image
-                    src="/icons/shopping_basket.svg"
+                    src={
+                      pathname.startsWith('/shopping')
+                        ? '/icons/shopping_basket_green.svg'
+                        : '/icons/shopping_basket.svg'
+                    }
                     alt="Shopping Basket"
-                    width={24}
-                    height={24}
+                    width={20}
+                    height={20}
                   />
                   <span className="font-memomentKkukkkuk">함께 장보기</span>
                 </Link>
