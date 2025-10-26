@@ -2,8 +2,8 @@
 
 import { shoppingRegisterApi } from '@/apis';
 import { Button, Dropdown, Label, Textarea, TextInput } from '@/components';
-import { useToast } from '@/components/Atoms';
-import { CAPACITY_OPTIONS, MODEL_PROVINCE_OPTIONS } from '@/constants';
+import { useToast, KeywordChip } from '@/components/Atoms';
+import { MODEL_PROVINCE_OPTIONS } from '@/constants';
 import { TAGS } from '@/constants/tags';
 import { GET_MODEL_CITY_OPTIONS } from '@/constants/locations';
 import { GET_MODEL_DISTRICT_OPTIONS } from '@/constants/locations';
@@ -125,16 +125,26 @@ export default function ShoppingRegisterPage() {
 
           <div>
             <div className="flex flex-col gap-3">
-              <Label htmlFor="title" className="font-semibold" required>
+              <Label htmlFor="tags" className="font-semibold" required>
                 모임 태그를 붙여볼까요?
               </Label>
               <div className="flex flex-wrap gap-2">
                 {TAGS.map((tag: { value: string; label: string }) => (
-                  <Button key={`# ${tag.value}`} label={`# ${tag.label}`} />
+                  <KeywordChip
+                    key={`# ${tag.value}`}
+                    label={`# ${tag.label}`}
+                    onClick={() => {
+                      setValue('tags', [...(watch('tags') || []), tag.value]);
+                    }}
+                    variant={
+                      watch('tags')?.includes(tag.value) ? 'active' : 'inactive'
+                    }
+                    disabled={watch('tags')?.includes(tag.value)}
+                  />
                 ))}
               </div>
-              {errors.title && (
-                <p className="text-sm text-red-500">{errors.title.message}</p>
+              {errors.tags && (
+                <p className="text-sm text-red-500">{errors.tags.message}</p>
               )}
             </div>
           </div>
