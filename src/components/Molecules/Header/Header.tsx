@@ -8,6 +8,18 @@ import { useAuthStore } from '@/apis/auth/hooks/authStore';
 import { useState } from 'react';
 import Image from 'next/image';
 
+// TODO: 과도한 Image 태그 사용으로 추후 리팩토링 예정
+const MENU_ICONS = {
+  SHARING: {
+    DEFAULT: '/icons/sharing_cart.svg',
+    GREEN: '/icons/sharing_cart_green.svg',
+  },
+  SHOPPING: {
+    DEFAULT: '/icons/shopping_basket.svg',
+    GREEN: '/icons/shopping_basket_green.svg',
+  },
+} as const;
+
 export const Header = () => {
   const pathname = usePathname() || '/';
   const isLoggedIn = useAuthStore((state) => state.isLoggedIn);
@@ -47,38 +59,58 @@ export const Header = () => {
               <>
                 <Link
                   href="/sharing"
-                  className={`hover:text-primary flex items-center gap-1 whitespace-nowrap ${
+                  className={`group hover:text-primary flex items-center gap-1 whitespace-nowrap ${
                     pathname.startsWith('/sharing') ? 'text-primary' : ''
                   }`}
                 >
-                  <Image
-                    src={
-                      pathname.startsWith('/sharing')
-                        ? '/icons/sharing_cart_green.svg'
-                        : '/icons/sharing_cart.svg'
-                    }
-                    alt="Sharing Cart"
-                    width={24}
-                    height={24}
-                  />
+                  <div className="relative">
+                    <Image
+                      src={
+                        pathname.startsWith('/sharing')
+                          ? MENU_ICONS.SHARING.GREEN
+                          : MENU_ICONS.SHARING.DEFAULT
+                      }
+                      alt="Sharing Cart"
+                      width={24}
+                      height={24}
+                      className="transition-opacity duration-200 group-hover:opacity-0"
+                    />
+                    <Image
+                      src={MENU_ICONS.SHARING.GREEN}
+                      alt="Sharing Cart"
+                      width={24}
+                      height={24}
+                      className="absolute top-0 left-0 opacity-0 transition-opacity duration-200 group-hover:opacity-100"
+                    />
+                  </div>
                   <span className="font-memomentKkukkkuk">함께 소분하기</span>
                 </Link>
                 <Link
                   href="/shopping"
-                  className={`hover:text-primary flex items-center gap-1 whitespace-nowrap ${
+                  className={`group hover:text-primary flex items-center gap-1 whitespace-nowrap ${
                     pathname.startsWith('/shopping') ? 'text-primary' : ''
                   }`}
                 >
-                  <Image
-                    src={
-                      pathname.startsWith('/shopping')
-                        ? '/icons/shopping_basket_green.svg'
-                        : '/icons/shopping_basket.svg'
-                    }
-                    alt="Shopping Basket"
-                    width={20}
-                    height={20}
-                  />
+                  <div className="relative">
+                    <Image
+                      src={
+                        pathname.startsWith('/shopping')
+                          ? MENU_ICONS.SHOPPING.GREEN
+                          : MENU_ICONS.SHOPPING.DEFAULT
+                      }
+                      alt="Shopping Basket"
+                      width={20}
+                      height={20}
+                      className="transition-opacity duration-200 group-hover:opacity-0"
+                    />
+                    <Image
+                      src={MENU_ICONS.SHOPPING.GREEN}
+                      alt="Shopping Basket"
+                      width={20}
+                      height={20}
+                      className="absolute top-0 left-0 opacity-0 transition-opacity duration-200 group-hover:opacity-100"
+                    />
+                  </div>
                   <span className="font-memomentKkukkkuk">함께 장보기</span>
                 </Link>
               </>
