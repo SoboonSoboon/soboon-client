@@ -100,7 +100,7 @@ export const DetailAside = ({
       />
 
       <AsideHeader
-        title={meetingDetail?.title}
+        title={meetingDetail?.item}
         profileImageUrl={meetingDetail?.user.profile}
         userName={meetingDetail?.user.userName}
       />
