@@ -3,8 +3,8 @@
 import { shoppingRegisterApi } from '@/apis';
 import { Button, Dropdown, Label, Textarea, TextInput } from '@/components';
 import { useToast, KeywordChip } from '@/components/Atoms';
-import { MODEL_PROVINCE_OPTIONS } from '@/constants';
-import { SHOPPING_TAGS } from '@/constants';
+import { MODEL_PROVINCE_OPTIONS, SHOPPING_TAGS } from '@/constants';
+import { ShoppingTagType } from '@/types/common';
 import {
   GET_MODEL_CITY_OPTIONS,
   GET_MODEL_DISTRICT_OPTIONS,
