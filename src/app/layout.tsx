@@ -31,6 +31,6 @@ export const metadata = {
   title: '소분소분',
   description: '함께 사서, 알뜰하게 나누는 소비',
   icons: {
-    icon: '/icons/soboon-logo.svg',
+    icon: '/icons/soboon_logo.svg',
   },
 };
