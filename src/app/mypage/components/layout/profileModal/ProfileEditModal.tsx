@@ -1,5 +1,6 @@
 'use client';
 
+import { useEffect } from 'react';
 import { createPortal } from 'react-dom';
 import { Modal } from '@/components/Molecules/modal';
 import { Button, Dropdown, TextInput } from '@/components';
@@ -42,16 +43,23 @@ export const ProfileEditModal = ({
   const userImage = useAuthStore((state) => state.userImage);
   const userLocation = useAuthStore((state) => state.userLocation);
 
-  const { register, handleSubmit, setValue, watch } = useForm<ProfileFormData>({
-    resolver: zodResolver(profileFormSchema),
-    defaultValues: {
-      nickname: userNickname || '',
-      image: userImage || '',
-      province: userLocation.province || '',
-      city: userLocation.city || '',
-      district: userLocation.district || '',
-    },
-  });
+  const { register, handleSubmit, setValue, watch, reset } =
+    useForm<ProfileFormData>({
+      resolver: zodResolver(profileFormSchema),
+    });
+
+  // 모달이 열릴 때마다 최신 전역 상태로 초기화
+  useEffect(() => {
+    if (isOpen) {
+      reset({
+        nickname: userNickname || '',
+        image: userImage || '',
+        province: userLocation.province || '',
+        city: userLocation.city || '',
+        district: userLocation.district || '',
+      });
+    }
+  }, [isOpen, userNickname, userImage, userLocation, reset]);
 
   const { updateProfile, isSubmitting } = useProfileEdit();
   const { success, error: showError } = useToast();
