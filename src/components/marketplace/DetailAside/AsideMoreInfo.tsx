@@ -9,11 +9,13 @@ export const AsideMoreInfo = ({
   isBookmarked,
   handleBookmarkClick,
   meetingId,
+  isAuthor,
 }: {
   status: StatusType;
   isBookmarked: boolean;
   handleBookmarkClick: () => void;
   meetingId: string;
+  isAuthor: boolean;
 }) => {
   const [open, setOpen] = useState(false);
   const buttonRef = useRef<HTMLDivElement>(null);
@@ -43,7 +45,7 @@ export const AsideMoreInfo = ({
         >
           <EllipsisVertical className="text-gray-30 size-6" />
         </div>
-        {open && (
+        {open && isAuthor && (
           <div className="absolute top-8 right-0 z-50">
             <ActionMenu
               onClose={() => setOpen(false)}
