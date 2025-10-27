@@ -1,6 +1,12 @@
+'use client';
+
+import { useRouter } from 'next/navigation';
+
 export const HashTag = ({ tags }: { tags: string[] }) => {
+  const router = useRouter();
+
   const handleTagClick = (tag: string) => {
-    console.log(tag);
+    router.push(`/shopping?tag=${encodeURIComponent(tag)}`);
   };
 
   return (
