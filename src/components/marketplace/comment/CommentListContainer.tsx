@@ -85,7 +85,7 @@ export const CommentListContainer = ({
                         htmlFor="replySecret"
                         className="text-gray-60 cursor-pointer text-sm"
                       >
-                        비밀 댓글
+                        비공개
                       </label>
                     </div>
                   </div>
