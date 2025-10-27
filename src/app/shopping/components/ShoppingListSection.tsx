@@ -21,6 +21,7 @@ import { useInfiniteQuery } from '@tanstack/react-query';
 import { getShoppingListApi } from '@/apis/meetings/getShoppingListApi';
 import { useInfiniteScrollTrigger } from '@/hooks/useScroll';
 import { useSearchParams } from 'next/navigation';
+import { HashTag } from './HashTag';
 
 export const ShoppingListSection = ({
   initialShoppingList,
@@ -125,6 +126,11 @@ export const ShoppingListSection = ({
                   <span>・</span>
                   <span>{timeFormatter(shopping.createdAt)}</span>
                 </CardSubtitle>
+                <div className="flex flex-wrap gap-2">
+                  {shopping.tags && shopping.tags.length > 0 && (
+                    <HashTag tags={shopping.tags} />
+                  )}
+                </div>
               </CardContent>
               <Line className="mt-6" />
               <CardFooter className="text-text-sub2 text-sm">
