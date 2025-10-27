@@ -50,9 +50,13 @@ export const Toast = ({ toast }: ToastProps) => {
       className={`flex flex-col gap-2 rounded border bg-black px-4 py-2 shadow`}
     >
       <div className="flex items-center">
-        <div className="mr-4">{icons[toast.option || 'default']}</div>
+        <div className="mr-4 flex-shrink-0">
+          {icons[toast.option || 'default']}
+        </div>
         <div className="flex flex-col gap-1 text-left">
-          <p className="text-sm text-white">{toast.description}</p>
+          <p className="text-sm whitespace-nowrap text-white">
+            {toast.description}
+          </p>
         </div>
       </div>
     </div>

@@ -53,7 +53,7 @@ export const CommentInputContainer = ({
               htmlFor="secret"
               className="text-gray-60 cursor-pointer text-sm"
             >
-              비밀 댓글
+              비공개
             </label>
           </div>
         </div>

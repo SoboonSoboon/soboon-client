@@ -23,8 +23,8 @@ export const HashTag = ({
       {tags.map((tag) => (
         <span
           className={cn(
-            'cursor-pointer text-sm font-medium',
-            status === 'RECRUITING' ? 'text-primary' : 'text-Green-30',
+            'text-primary cursor-pointer text-sm font-medium',
+            // status === 'RECRUITING' ? 'text-primary' : 'text-Green-30',
             className,
           )}
           onClick={() => handleTagClick(tag)}
