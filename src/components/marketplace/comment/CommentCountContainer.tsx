@@ -1,12 +1,20 @@
+'use client';
+
 import { DateFilter } from '@/components/Atoms';
+import { useRouter } from 'next/navigation';
 
 export const CommentCountContainer = ({
   commentCount,
-  handleSortTypeChange,
 }: {
   commentCount: number;
-  handleSortTypeChange: (value: 'RECENT' | 'OLDEST') => void;
 }) => {
+  const router = useRouter();
+
+  const handleSortTypeChange = (value: 'RECENT' | 'OLDEST') => {
+    const formattedValue = value === 'OLDEST' ? 'RECENT' : 'OLDEST';
+    router.push(`?sortType=${formattedValue}`, { scroll: false });
+  };
+
   return (
     <div className="mb-6 flex items-center justify-between">
       <p className="font-memomentKkukkkuk">
