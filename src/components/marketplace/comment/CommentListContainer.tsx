@@ -77,7 +77,7 @@ export const CommentListContainer = ({
                     <TextInput
                       placeholder="대댓글을 입력해주세요."
                       name="reply"
-                      className="!border-text-line1 !border-1 bg-white"
+                      className="!border-text-line1 !border-1 bg-white pr-[90px]"
                     />
                     <div className="absolute top-1/2 right-3 flex translate-y-[-50%] items-center gap-1 select-none">
                       <input type="checkbox" id="replySecret" name="secret" />

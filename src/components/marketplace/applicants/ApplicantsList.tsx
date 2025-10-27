@@ -77,7 +77,7 @@ export const ApplicantsList = ({
                   <div className="flex gap-2">
                     <Button
                       label="수락"
-                      className="text-primary border-primary"
+                      className="!text-primary !border-primary !bg-white"
                       size="small"
                       onClick={() =>
                         handleApproveApplicants(participant.participantId)
@@ -85,7 +85,7 @@ export const ApplicantsList = ({
                     />
                     <Button
                       label="거절"
-                      className="border-text-sub1 text-text-sub1"
+                      className="!border-warning !bg-warning !border"
                       size="small"
                       onClick={() =>
                         handleRejectApplicants(participant.participantId)
@@ -102,7 +102,7 @@ export const ApplicantsList = ({
                     </div>
                     <Button
                       label="강퇴"
-                      className="text-primary border-primary"
+                      className="!text-text-sub1 !border-text-sub1 !bg-white" // 보더 컬러가 적용이 안되는 문제
                       size="small"
                       onClick={() =>
                         handleKickApplicants(participant.participantId)

@@ -171,7 +171,6 @@ export default async function SharingDetailPage({
         </div>
 
         <article className="flex-1 lg:order-1">
-          {/* 추후에 DB에 실제 이미지가 추가되면 연동 필요 */}
           <Carousel carouselImages={meetingDetail!.images} className="mb-8" />
           <DetailContent description={meetingDetail!.description} />
           <DetailContentFooter createdAt={meetingDetail!.createdAt} />
