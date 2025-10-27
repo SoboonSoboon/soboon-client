@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import { cn } from '@/utils/cn';
-import type { IconType } from '@/components/Atoms';
+import type { IconType } from './iconType';
 
 interface IconProps {
   type: IconType;
