@@ -112,23 +112,26 @@ export const ProfileEditModal = ({
       onClose={onClose}
       size="custom"
       className="z-50"
-      contentClassName="w-[510px] h-[572px] p-[52px]"
+      contentClassName="w-full max-w-[510px] h-auto max-h-[90vh] p-4 sm:p-8 lg:p-[52px] mx-4"
     >
-      <div className="flex flex-col gap-8">
+      <div className="flex flex-col gap-4 sm:gap-6 lg:gap-8">
         <div className="text-center">
-          <div className="text-gray-95 text-2xl font-bold">프로필 편집</div>
+          <div className="text-gray-95 text-xl font-bold sm:text-2xl">
+            프로필 편집
+          </div>
         </div>
         <form
           onSubmit={handleSubmit(onSubmit)}
-          className="flex flex-col gap-10"
+          className="flex flex-col gap-6 sm:gap-8 lg:gap-10"
         >
-          <div className="flex flex-col gap-6">
+          <div className="flex flex-col gap-4 sm:gap-6">
             <div className="flex items-center justify-center">
               <ProfileImageUploader
                 imageUrl={watchImage}
                 onImageChange={handleImageChange}
               />
             </div>
+
             {/* 닉네임 */}
             <div className="flex flex-col gap-2">
               <label className="text-gray-95 text-sm font-semibold">
@@ -141,11 +144,12 @@ export const ProfileEditModal = ({
                 className="bg-gray-5 border-0"
               />
             </div>
+
             {/* 관심지역 */}
             <div className="flex flex-col gap-2">
               <label className="block text-sm font-semibold">관심 지역</label>
 
-              <div className="flex w-full flex-col gap-2.5 sm:flex-row sm:items-center sm:gap-2.5">
+              <div className="flex w-full flex-col gap-2 sm:flex-row sm:items-center sm:gap-2.5">
                 <div className="flex-1">
                   <Dropdown
                     name="province"

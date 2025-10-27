@@ -14,7 +14,7 @@ import { ShoppingMeetingsType } from '@/types/meetingsType';
 import { timeFormatter } from '@/utils';
 import { MapPin } from 'lucide-react';
 import { useRouter } from 'next/navigation';
-import { NonShoppingList } from './NonShoppingList';
+
 // import { useBookmark } from '@/hooks';
 import { useEffect } from 'react';
 import { useInfiniteQuery } from '@tanstack/react-query';
@@ -22,6 +22,7 @@ import { getShoppingListApi } from '@/apis/meetings/getShoppingListApi';
 import { useInfiniteScrollTrigger } from '@/hooks/useScroll';
 import { useSearchParams } from 'next/navigation';
 import { HashTag } from './HashTag';
+import { EmptyState } from '@/components/Molecules';
 
 export const ShoppingListSection = ({
   initialShoppingList,
@@ -89,18 +90,34 @@ export const ShoppingListSection = ({
   };
 
   if (!shoppingList || shoppingList.pages[0]?.content.length === 0) {
-    return <NonShoppingList />;
+    return (
+      <EmptyState
+        type="main-shopping"
+        title="아직 장보기 모임이 없어요"
+        description="첫 번째 장보기 모임을 만들어보세요!"
+        primaryButton={{
+          text: '장보기 모임 만들기',
+          href: '/shopping/register',
+          variant: 'filled',
+        }}
+        secondaryButton={{
+          text: '소분하기 모임 둘러보기',
+          href: '/sharing',
+          variant: 'outline',
+        }}
+      />
+    );
   }
 
   return (
     <>
-      <div className="grid grid-cols-4 gap-5">
+      <div className="columns-1 gap-4 space-y-4 md:columns-2 md:gap-5 md:space-y-5 xl:columns-4">
         {shoppingList.pages
           .flatMap((page) => page.content)
           .map((shopping) => (
             <Card
               key={shopping.id}
-              className="border-gray-10 flex cursor-pointer flex-col gap-3 rounded-xl border p-6"
+              className="border-gray-10 flex cursor-pointer break-inside-avoid flex-col gap-3 rounded-xl border p-6"
               onClick={() => onClickCard(shopping.id.toString())}
             >
               <StatusTag status={shopping.status} />
@@ -112,7 +129,10 @@ export const ShoppingListSection = ({
                     handleBookmark(shopping.id.toString(), shopping.bookmarked)
                   }
                 /> */}
-                <CardTitle className="font-memomentKkukkkuk line-clamp-2">
+                <CardTitle
+                  className="font-memomentKkukkkuk line-clamp-2"
+                  status={shopping.status as 'RECRUITING'}
+                >
                   {shopping.title}
                 </CardTitle>
                 <CardSubtitle className="text-text-sub2 flex items-center gap-1 text-sm">
@@ -122,7 +142,10 @@ export const ShoppingListSection = ({
                 </CardSubtitle>
                 <div className="flex flex-wrap gap-x-2">
                   {shopping.tags && shopping.tags.length > 0 && (
-                    <HashTag tags={shopping.tags} />
+                    <HashTag
+                      tags={shopping.tags}
+                      status={shopping.status as 'RECRUITING'}
+                    />
                   )}
                 </div>
               </CardContent>
@@ -138,7 +161,7 @@ export const ShoppingListSection = ({
       </div>
       <p className="text-text-sub2 mt-6 text-center text-sm">
         {isFetchingNextPage && '로딩 중이예요 ...'}
-        {!hasNextPage && '모든 게시글을 불러왔어요.'}
+        {!hasNextPage && '모든 게시글을 불러왔어요 👋'}
       </p>
     </>
   );
