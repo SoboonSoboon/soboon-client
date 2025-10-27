@@ -112,7 +112,10 @@ export const ShoppingListSection = ({
                     handleBookmark(shopping.id.toString(), shopping.bookmarked)
                   }
                 /> */}
-                <CardTitle className="font-memomentKkukkkuk line-clamp-2">
+                <CardTitle
+                  className="font-memomentKkukkkuk line-clamp-2"
+                  status={shopping.status as 'RECRUITING'}
+                >
                   {shopping.title}
                 </CardTitle>
                 <CardSubtitle className="text-text-sub2 flex items-center gap-1 text-sm">
@@ -122,7 +125,10 @@ export const ShoppingListSection = ({
                 </CardSubtitle>
                 <div className="flex flex-wrap gap-x-2">
                   {shopping.tags && shopping.tags.length > 0 && (
-                    <HashTag tags={shopping.tags} />
+                    <HashTag
+                      tags={shopping.tags}
+                      status={shopping.status as 'RECRUITING'}
+                    />
                   )}
                 </div>
               </CardContent>
