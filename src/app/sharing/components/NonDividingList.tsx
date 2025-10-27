@@ -19,7 +19,7 @@ export const NonDividingList = () => {
 
   return (
     <>
-      <div className="flex flex-col items-center justify-center py-20">
+      <div className="flex flex-col items-center justify-center py-40">
         <div className="text-center">
           <h3 className="text-text-main mb-2 text-xl font-semibold">
             아직 소분하기 모임이 없어요
