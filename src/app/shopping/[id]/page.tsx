@@ -73,14 +73,16 @@ async function getMeetingDetail({
 // 댓글 조회
 async function getComments({
   id,
+  sortType = 'OLDEST',
 }: {
   id: string;
+  sortType?: 'RECENT' | 'OLDEST';
 }): Promise<CommentsListType | null> {
   const cookieStore = await cookies();
   const accessToken = cookieStore.get('accessToken')?.value || '';
   try {
     const response = await fetch(
-      `${process.env.NEXT_PUBLIC_SOBOON_API_URL}/v1/meetings/${id}/comments`,
+      `${process.env.NEXT_PUBLIC_SOBOON_API_URL}/v1/meetings/${id}/comments?sort=${sortType}`,
       {
         cache: 'force-cache',
         next: {
@@ -141,18 +143,20 @@ async function getParticipants({
 
 export default async function ShoppingDetailPage({
   params,
+  searchParams,
 }: {
   params: Promise<{ id: string }>;
+  searchParams: Promise<{ sortType: 'RECENT' | 'OLDEST' }>;
 }) {
   const id = (await params).id;
-
+  const sortType = (await searchParams).sortType;
   const userInfo = await getUserInfo();
 
   const shoppingMeetingDetail = await getMeetingDetail({ id });
 
   const isAuthor = shoppingMeetingDetail?.user.userId === userInfo?.id;
 
-  const commentsList = await getComments({ id });
+  const commentsList = await getComments({ id, sortType });
 
   const participants = isAuthor ? await getParticipants({ meetingId: id }) : [];
 
@@ -176,6 +180,7 @@ export default async function ShoppingDetailPage({
           <CommentSection
             commentsList={commentsList}
             status={shoppingMeetingDetail!.status}
+            isAuthor={isAuthor}
           />
         </article>
       </div>

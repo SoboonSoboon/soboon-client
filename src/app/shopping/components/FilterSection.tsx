@@ -5,11 +5,15 @@ import { DateFilter } from '@/components';
 import { PROVINCE_OPTIONS, GET_CITY_OPTIONS } from '@/constants';
 import { statusOptions } from '@/constants/status';
 import { useFilterParams } from '@/hooks/useFilterParams';
-import { useMemo } from 'react';
+import { useEffect, useMemo } from 'react';
+import { GoToTopScroll } from '@/utils';
+import { useSearchParams } from 'next/navigation';
 
 export const FilterSection = () => {
   const { activeProvince, activeCity, activeStatus, updateParams } =
     useFilterParams();
+
+  const searchParams = useSearchParams();
 
   const availableCityOptions = useMemo(() => {
     if (activeProvince === '') {
@@ -41,6 +45,10 @@ export const FilterSection = () => {
   const handleDateChange = (value: 'RECENT' | 'OLDEST') => {
     updateParams({ sortType: value });
   };
+
+  useEffect(() => {
+    GoToTopScroll(300);
+  }, [searchParams]);
 
   return (
     <div className="flex justify-between">

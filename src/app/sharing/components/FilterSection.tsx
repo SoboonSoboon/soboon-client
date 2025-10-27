@@ -5,7 +5,9 @@ import { Checkbox, Label } from '@/components';
 import { PROVINCE_OPTIONS, GET_CITY_OPTIONS } from '@/constants';
 import categories from '@/constants/categories';
 import { useFilterParams } from '@/hooks/useFilterParams';
-import { useMemo } from 'react';
+import { useEffect, useMemo } from 'react';
+import { GoToTopScroll } from '@/utils';
+import { useSearchParams } from 'next/navigation';
 
 const Line = () => {
   return <div className="bg-gray-10 my-5 h-[1px] w-full" />;
@@ -14,6 +16,8 @@ const Line = () => {
 export const FilterSection = () => {
   const { updateParams, activeProductType, activeProvince, activeCity } =
     useFilterParams();
+
+  const searchParams = useSearchParams();
 
   const availableCityOptions = useMemo(() => {
     if (activeProvince === '') {
@@ -45,6 +49,10 @@ export const FilterSection = () => {
   const handleStatusChange = (status: string) => {
     updateParams({ status });
   };
+
+  useEffect(() => {
+    GoToTopScroll(300);
+  }, [searchParams]);
 
   return (
     <div>

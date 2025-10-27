@@ -1,7 +1,7 @@
-export const GoToTopScroll = () => {
+export const GoToTopScroll = (offset: number = 300) => {
   requestAnimationFrame(() => {
     window.scrollTo({
-      top: 0,
+      top: offset,
       behavior: 'smooth',
     });
   });
