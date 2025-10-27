@@ -67,10 +67,7 @@ export default async function ShoppingPage({
       <section className="flex flex-col gap-6">
         <ShoppingTagsSection />
         <FilterSection />
-        <ShoppingListSection
-          initialShoppingList={initialShoppingList}
-          query={query}
-        />
+        <ShoppingListSection initialShoppingList={initialShoppingList} />
       </section>
       <SideButtonSection />
     </main>

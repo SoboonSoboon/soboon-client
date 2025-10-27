@@ -24,9 +24,7 @@ import { useSearchParams } from 'next/navigation';
 
 export const ShoppingListSection = ({
   initialShoppingList,
-  query: initialQuery,
 }: {
-  query: URLSearchParams;
   initialShoppingList: ShoppingMeetingsType | null;
 }) => {
   const router = useRouter();
