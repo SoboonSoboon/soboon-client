@@ -94,13 +94,13 @@ export const ShoppingListSection = ({
 
   return (
     <>
-      <div className="grid grid-cols-4 gap-5">
+      <div className="columns-1 gap-4 space-y-4 md:columns-2 md:gap-5 md:space-y-5 xl:columns-4">
         {shoppingList.pages
           .flatMap((page) => page.content)
           .map((shopping) => (
             <Card
               key={shopping.id}
-              className="border-gray-10 flex cursor-pointer flex-col gap-3 rounded-xl border p-6"
+              className="border-gray-10 flex cursor-pointer break-inside-avoid flex-col gap-3 rounded-xl border p-6"
               onClick={() => onClickCard(shopping.id.toString())}
             >
               <StatusTag status={shopping.status} />
@@ -138,7 +138,7 @@ export const ShoppingListSection = ({
       </div>
       <p className="text-text-sub2 mt-6 text-center text-sm">
         {isFetchingNextPage && '로딩 중이예요 ...'}
-        {!hasNextPage && '모든 게시글을 불러왔어요.'}
+        {!hasNextPage && '모든 게시글을 불러왔어요 👋'}
       </p>
     </>
   );
