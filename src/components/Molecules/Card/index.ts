@@ -7,4 +7,4 @@ export { CardTitle } from './Card';
 export { BookmarkButton } from './Card';
 export { Line } from './Card';
 export { MainCard } from './Card';
-export type { cardProps } from './Card';
+export type { CardProps } from './Card';

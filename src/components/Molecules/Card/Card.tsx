@@ -9,9 +9,7 @@ interface cardContentProps {
   children?: React.ReactNode;
 }
 
-export interface cardProps extends cardContentProps {
-  width?: string;
-  height?: string;
+export interface CardProps extends cardContentProps {
   onClick?: () => void;
   href?: string;
 }
@@ -59,32 +57,17 @@ const BookmarkButtonComponent = memo(
 BookmarkButtonComponent.displayName = 'BookmarkButton';
 export const BookmarkButton = BookmarkButtonComponent;
 
-export const Card = ({
-  className,
-  children,
-  width = '306px',
-  height = '376px',
-  onClick,
-  href,
-}: cardProps) => {
+export const Card = ({ className, children, onClick, href }: CardProps) => {
   if (href) {
     return (
-      <a
-        href={href}
-        className={`${className} block select-none`}
-        style={{ width: `${width}`, height: `${height}` }}
-      >
+      <a href={href} className={`${className} block select-none`}>
         {children}
       </a>
     );
   }
 
   return (
-    <div
-      className={`${className} select-none`}
-      style={{ width: `${width}`, height: `${height}` }}
-      onClick={onClick}
-    >
+    <div className={`${className} select-none`} onClick={onClick}>
       {children}
     </div>
   );
