@@ -1,5 +1,5 @@
-import Image from 'next/image';
 import { cn } from '@/utils/cn';
+import { Icon } from '@/components/Atoms';
 
 interface LogoProps {
   className?: string;
@@ -10,18 +10,8 @@ interface LogoProps {
 export function Logo({ className, width = 75, height = 28 }: LogoProps) {
   return (
     <div className={cn('flex items-center gap-1 p-1', className)}>
-      <Image
-        src="/icons/soboon_letters.svg"
-        alt="Soboon Letters"
-        width={width}
-        height={height}
-      />
-      <Image
-        src="/icons/soboon_logo.svg"
-        alt="Soboon Logo"
-        width={height}
-        height={height}
-      />
+      <Icon type="soboon-letters" size={width} alt="Soboon Letters" />
+      <Icon type="soboon-logo" size={height} alt="Soboon Logo" />
     </div>
   );
 }

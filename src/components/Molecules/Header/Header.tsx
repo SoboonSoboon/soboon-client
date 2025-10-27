@@ -2,23 +2,18 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Button, Logo, ProfileImg, UserMenuModal } from '../../Atoms';
+import {
+  Button,
+  Logo,
+  ProfileImg,
+  UserMenuModal,
+  Icon,
+  type IconType,
+} from '@/components/Atoms';
 import { redirectToKakao } from '@/apis/auth/authApi';
 import { useAuthStore } from '@/apis/auth/hooks/authStore';
 import { useState } from 'react';
-import Image from 'next/image';
-
-// TODO: 과도한 Image 태그 사용으로 추후 리팩토링 예정
-const MENU_ICONS = {
-  SHARING: {
-    DEFAULT: '/icons/sharing_cart.svg',
-    GREEN: '/icons/sharing_cart_green.svg',
-  },
-  SHOPPING: {
-    DEFAULT: '/icons/shopping_basket.svg',
-    GREEN: '/icons/shopping_basket_green.svg',
-  },
-} as const;
+import { HEADER_MENU } from '@/constants';
 
 export const Header = () => {
   const pathname = usePathname() || '/';
@@ -43,88 +38,54 @@ export const Header = () => {
   return (
     <header className="border-gray-10 h-15 border-b bg-white px-4 dark:bg-black">
       <div className="text-text-main mx-auto flex h-full max-w-[1200px] items-center justify-between bg-white dark:bg-black dark:text-white">
-        <div className="flex items-center gap-10">
-          {isLoggedIn ? (
-            <Link href="/">
-              <Logo />
-            </Link>
-          ) : (
-            <>
-              <Logo />
-            </>
-          )}
+        <div className="flex items-center gap-4 sm:gap-6 md:gap-8 lg:gap-10">
+          <Link href="/">
+            <Logo />
+          </Link>
 
-          <nav className="flex items-center gap-6 text-base font-normal">
-            {isLoggedIn ? (
+          <nav className="flex items-center gap-3 text-base font-normal sm:gap-4 md:gap-5 lg:gap-6">
+            {isLoggedIn && (
               <>
-                <Link
-                  href="/sharing"
-                  className={`group hover:text-primary flex items-center gap-1 whitespace-nowrap ${
-                    pathname.startsWith('/sharing') ? 'text-primary' : ''
-                  }`}
-                >
-                  <div className="relative">
-                    <Image
-                      src={
-                        pathname.startsWith('/sharing')
-                          ? MENU_ICONS.SHARING.GREEN
-                          : MENU_ICONS.SHARING.DEFAULT
-                      }
-                      alt="Sharing Cart"
-                      width={24}
-                      height={24}
-                      className="transition-opacity duration-200 group-hover:opacity-0"
-                    />
-                    <Image
-                      src={MENU_ICONS.SHARING.GREEN}
-                      alt="Sharing Cart"
-                      width={24}
-                      height={24}
-                      className="absolute top-0 left-0 opacity-0 transition-opacity duration-200 group-hover:opacity-100"
-                    />
-                  </div>
-                  <span className="font-memomentKkukkkuk">함께 소분하기</span>
-                </Link>
-                <Link
-                  href="/shopping"
-                  className={`group hover:text-primary flex items-center gap-1 whitespace-nowrap ${
-                    pathname.startsWith('/shopping') ? 'text-primary' : ''
-                  }`}
-                >
-                  <div className="relative">
-                    <Image
-                      src={
-                        pathname.startsWith('/shopping')
-                          ? MENU_ICONS.SHOPPING.GREEN
-                          : MENU_ICONS.SHOPPING.DEFAULT
-                      }
-                      alt="Shopping Basket"
-                      width={20}
-                      height={20}
-                      className="transition-opacity duration-200 group-hover:opacity-0"
-                    />
-                    <Image
-                      src={MENU_ICONS.SHOPPING.GREEN}
-                      alt="Shopping Basket"
-                      width={20}
-                      height={20}
-                      className="absolute top-0 left-0 opacity-0 transition-opacity duration-200 group-hover:opacity-100"
-                    />
-                  </div>
-                  <span className="font-memomentKkukkkuk">함께 장보기</span>
-                </Link>
+                {Object.entries(HEADER_MENU).map(([key, headerMenu]) => (
+                  <Link
+                    key={key}
+                    href={headerMenu.PATH}
+                    className={`group hover:text-primary flex items-center gap-1 whitespace-nowrap ${
+                      pathname.startsWith(headerMenu.PATH) ? 'text-primary' : ''
+                    }`}
+                  >
+                    <div className="relative hidden sm:flex sm:items-center">
+                      <Icon
+                        type={
+                          pathname.startsWith(headerMenu.PATH)
+                            ? (headerMenu.ICON.GREEN as IconType)
+                            : (headerMenu.ICON.DEFAULT as IconType)
+                        }
+                        size={headerMenu.SIZE}
+                        className="transition-opacity duration-150 ease-in-out group-hover:opacity-0"
+                      />
+                      <Icon
+                        type={headerMenu.ICON.GREEN as IconType}
+                        size={headerMenu.SIZE}
+                        className="absolute top-0 left-0 opacity-0 transition-opacity duration-150 ease-in-out group-hover:opacity-100"
+                      />
+                    </div>
+                    <span className="font-memomentKkukkkuk leading-none">
+                      {headerMenu.LABEL}
+                    </span>
+                  </Link>
+                ))}
               </>
-            ) : (
-              <></>
             )}
           </nav>
         </div>
-        <div className="flex items-center gap-5">
+
+        <div className="flex items-center gap-2 sm:gap-3 md:gap-4 lg:gap-5">
           {isLoggedIn ? (
             <>
               <div className="relative">
                 <span
-                  className="flex items-center gap-[10px]"
+                  className="flex items-center gap-1 sm:gap-2 md:gap-[10px]"
                   onClick={() => {
                     setIsOpen(true);
                   }}
