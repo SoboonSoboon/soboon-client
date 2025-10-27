@@ -9,11 +9,9 @@ export const axiosInstance = axios.create({
   withCredentials: true,
 });
 
-// Request interceptor - 인증 토큰 추가 등 (향후 로그인 기능 구현 시 수정 필요)
 axiosInstance.interceptors.request.use(
   (config) => {
-    const token = process.env.NEXT_PUBLIC_SOBOON_API_TOKEN;
-    // const token = localStorage.getItem('accessToken'); //todo: 전역상태관리로 관리하기로 변경
+    const token = localStorage.getItem('accessToken');
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }

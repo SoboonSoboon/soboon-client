@@ -56,7 +56,7 @@ export const ApplicantsList = ({
         <div className="border-gray-10 mb-5 w-full rounded-xl border bg-white">
           {participants.length === 0 ? (
             <div className="text-text-sub2 flex min-h-[143px] items-center justify-center">
-              <p>아직 참여 신청한 사람이 없어요 .. !</p>
+              <p>아직 참여 신청한 사람이 없어요 ... !</p>
             </div>
           ) : (
             participants.map((participant) => (
@@ -98,7 +98,7 @@ export const ApplicantsList = ({
                 {participant.status === 'APPROVED' && (
                   <div className="flex items-center gap-2">
                     <div className="text-text-sub2 text-sm">
-                      수락된 참여자에요.
+                      수락된 참여자예요.
                     </div>
                     <Button
                       label="강퇴"
@@ -114,14 +114,14 @@ export const ApplicantsList = ({
                 {/* 참여자 강퇴 상태 */}
                 {participant.status === 'KICKED' && (
                   <div className="text-text-sub2 text-sm">
-                    강퇴된 참여자에요.
+                    강퇴된 참여자예요.
                   </div>
                 )}
 
                 {/* 참여자 거절 상태 */}
                 {participant.status === 'REJECTED' && (
                   <div className="text-text-sub2 text-sm">
-                    거절된 참여자에요.
+                    거절된 참여자예요.
                   </div>
                 )}
               </div>
