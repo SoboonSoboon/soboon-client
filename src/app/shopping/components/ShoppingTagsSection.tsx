@@ -33,20 +33,18 @@ export const ShoppingTagsSection = () => {
     }
   };
 
-  if (loading) {
+  if (loading || popularTags.length === 0) {
     return null;
   }
 
   return (
     <div className="flex flex-wrap justify-center gap-2">
-      {popularTags.length > 0 && (
-        <KeywordChip
-          label="전체"
-          variant={activeTag === '' ? 'active' : 'inactive'}
-          aria-label="전체"
-          onClick={() => handleTagClick('')}
-        />
-      )}
+      <KeywordChip
+        label="전체"
+        variant={activeTag === '' ? 'active' : 'inactive'}
+        aria-label="전체"
+        onClick={() => handleTagClick('')}
+      />
       {popularTags.map((tag, index) => (
         <KeywordChip
           key={index}
