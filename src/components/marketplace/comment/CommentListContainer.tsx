@@ -98,10 +98,14 @@ export const CommentListContainer = ({
     }
   }, [isBottom, fetchNextPage, isFetchingNextPage]);
 
+  if (!commentList || !commentList.pages[0]?.content) {
+    return null;
+  }
+
   return (
     <>
       <div className="space-y-6">
-        {commentList?.pages
+        {commentList.pages
           .flatMap((page) => page.content)
           .map((comment) => (
             <div
