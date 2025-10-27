@@ -13,31 +13,27 @@ const STATUS_LABEL: Record<StatusTagProps['status'], string> = {
 };
 
 const STATUS_STYLE: Record<StatusTagProps['status'], string> = {
-  RECRUITING:
-    'bg-[var(--GreenScale-Green1)] border-[var(--Keycolor-primary)] text-[var(--Keycolor-primary)]',
-  COMPLETED:
-    'bg-[var(--GrayScale-Gray5)] border-[var(--text-inactive)] text-[var(--text-sub2)]',
-  CLOSED:
-    'bg-[var(--GrayScale-Gray5)] border-[var(--text-inactive)] text-[var(--text-sub2)]',
-  ReviewOpen:
-    'bg-[var(--GreenScale-Green1)] border-[var(--Keycolor-primary)] text-[var(--Keycolor-primary)]',
+  RECRUITING: 'bg-Green-1 border-primary text-primary',
+  COMPLETED: 'bg-[var(--GrayScale-Gray5)] border-text-inactive text-text-sub2',
+  CLOSED: 'bg-[var(--GrayScale-Gray5)] border-text-inactive text-text-sub2',
+  ReviewOpen: 'bg-[var(--GreenScale-Green1)] border-primary text-primary',
   ReviewClosed:
-    'bg-[var(--GrayScale-Gray5)] border-[var(--text-inactive)] text-[var(--text-sub2)]',
+    'bg-[var(--GrayScale-Gray5)] border-[var(--text-inactive)] text-text-sub2',
 };
 
 export const StatusTag = ({ status, className, ...props }: StatusTagProps) => {
   return (
-    <div
+    <span
       role="status"
       aria-label={`${STATUS_LABEL[status]} 상태`}
       className={cn(
-        'mx-auto flex items-center justify-center rounded-3xl border px-3 py-1.5 text-sm font-medium',
+        'w-fit rounded-3xl border px-3 py-1.5 text-sm font-medium',
         STATUS_STYLE[status],
         className,
       )}
       {...props}
     >
       {STATUS_LABEL[status]}
-    </div>
+    </span>
   );
 };

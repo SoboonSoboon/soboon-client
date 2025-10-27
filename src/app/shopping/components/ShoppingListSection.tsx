@@ -6,7 +6,7 @@ import {
   CardFooter,
   CardSubtitle,
   CardTitle,
-  BookmarkButton,
+  // BookmarkButton,
   Line,
   StatusTag,
 } from '@/components';
@@ -15,22 +15,21 @@ import { timeFormatter } from '@/utils';
 import { MapPin } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { NonShoppingList } from './NonShoppingList';
-import { useBookmark } from '@/hooks';
+// import { useBookmark } from '@/hooks';
 import { useEffect } from 'react';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import { getShoppingListApi } from '@/apis/meetings/getShoppingListApi';
 import { useInfiniteScrollTrigger } from '@/hooks/useScroll';
 import { useSearchParams } from 'next/navigation';
+import { HashTag } from './HashTag';
 
 export const ShoppingListSection = ({
   initialShoppingList,
-  query: initialQuery,
 }: {
-  query: URLSearchParams;
   initialShoppingList: ShoppingMeetingsType | null;
 }) => {
   const router = useRouter();
-  const { handleBookmark } = useBookmark();
+  // const { handleBookmark } = useBookmark();
   const { isBottom } = useInfiniteScrollTrigger();
   const searchParams = useSearchParams();
 
@@ -101,24 +100,18 @@ export const ShoppingListSection = ({
           .map((shopping) => (
             <Card
               key={shopping.id}
-              className="border-gray-10 cursor-pointer rounded-xl border p-6"
-              height="auto"
-              width="auto"
+              className="border-gray-10 flex cursor-pointer flex-col gap-3 rounded-xl border p-6"
               onClick={() => onClickCard(shopping.id.toString())}
             >
-              <CardContent className="pt-16">
-                <StatusTag
-                  status={shopping.status}
-                  className="absolute top-0 left-0"
-                />
-
-                <BookmarkButton
+              <StatusTag status={shopping.status} />
+              <CardContent className="flex flex-col gap-3">
+                {/* <BookmarkButton
                   className="absolute top-[4px] right-0"
                   liked={shopping.bookmarked}
                   onChange={() =>
                     handleBookmark(shopping.id.toString(), shopping.bookmarked)
                   }
-                />
+                /> */}
                 <CardTitle className="font-memomentKkukkkuk line-clamp-2">
                   {shopping.title}
                 </CardTitle>
@@ -127,10 +120,15 @@ export const ShoppingListSection = ({
                   <span>・</span>
                   <span>{timeFormatter(shopping.createdAt)}</span>
                 </CardSubtitle>
+                <div className="flex flex-wrap gap-x-2">
+                  {shopping.tags && shopping.tags.length > 0 && (
+                    <HashTag tags={shopping.tags} />
+                  )}
+                </div>
               </CardContent>
-              <Line className="mt-6" />
+              <Line />
               <CardFooter className="text-text-sub2 text-sm">
-                <div className="mb-2 flex items-center gap-1 text-sm">
+                <div className="flex items-center gap-1 text-sm">
                   <MapPin className="size-4" />
                   <p>{shopping.location.district}</p>
                 </div>

@@ -9,9 +9,7 @@ interface cardContentProps {
   children?: React.ReactNode;
 }
 
-export interface cardProps extends cardContentProps {
-  width?: string;
-  height?: string;
+export interface CardProps extends cardContentProps {
   onClick?: () => void;
   href?: string;
 }
@@ -59,32 +57,17 @@ const BookmarkButtonComponent = memo(
 BookmarkButtonComponent.displayName = 'BookmarkButton';
 export const BookmarkButton = BookmarkButtonComponent;
 
-export const Card = ({
-  className,
-  children,
-  width = '306px',
-  height = '376px',
-  onClick,
-  href,
-}: cardProps) => {
+export const Card = ({ className, children, onClick, href }: CardProps) => {
   if (href) {
     return (
-      <a
-        href={href}
-        className={`${className} block select-none`}
-        style={{ width: `${width}`, height: `${height}` }}
-      >
+      <a href={href} className={`${className} block select-none`}>
         {children}
       </a>
     );
   }
 
   return (
-    <div
-      className={`${className} select-none`}
-      style={{ width: `${width}`, height: `${height}` }}
-      onClick={onClick}
-    >
+    <div className={`${className} select-none`} onClick={onClick}>
       {children}
     </div>
   );
@@ -98,15 +81,13 @@ export const CardImage = ({ className, src, alt }: cardImageProps) => {
       alt={alt}
       width={276}
       height={200}
-      className={`${className} mb-5 h-[200px] w-full rounded-lg object-cover`}
+      className={`${className} h-[200px] w-full rounded-lg object-cover`}
     />
   );
 };
 
 export const CardTitle = ({ className, children }: cardContentProps) => {
-  return (
-    <h3 className={`${className} mb-2 text-2xl text-[#1a1a1a]`}>{children}</h3>
-  );
+  return <h3 className={`${className} text-2xl text-[#1a1a1a]`}>{children}</h3>;
 };
 
 export const CardSubtitle = ({ className, children }: cardContentProps) => {
@@ -122,9 +103,7 @@ export const CardFooter = ({ className, children }: cardContentProps) => {
 };
 
 export const Line = ({ className }: cardContentProps) => {
-  return (
-    <div className={`${className} mt-3 mb-5 h-[1px] w-full bg-gray-200`}></div>
-  );
+  return <div className={`${className} h-[1px] w-full bg-gray-200`}></div>;
 };
 
 interface mainCardProps {

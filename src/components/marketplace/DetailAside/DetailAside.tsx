@@ -103,6 +103,7 @@ export const DetailAside = ({
         title={meetingDetail?.title}
         profileImageUrl={meetingDetail?.user.profile}
         userName={meetingDetail?.user.userName}
+        tags={meetingDetail?.tags}
       />
 
       <div className="bg-gray-10 h-[1px] w-full"></div>

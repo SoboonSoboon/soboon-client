@@ -25,7 +25,7 @@ export {
   BookmarkButton,
   Line,
   MainCard,
-  type cardProps,
+  type CardProps,
   Dropdown,
   type DropdownProps,
   Header,

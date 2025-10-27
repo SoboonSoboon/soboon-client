@@ -56,7 +56,6 @@ export const CheckboxWithForm: Story = {
 
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
       event.preventDefault();
-      console.log('체크 상태:', checked);
     };
 
     return (

@@ -115,9 +115,7 @@ export const MeetingCard = ({
   return (
     <div className="w-[calc(33.333%-21.33px)] flex-shrink-0">
       <Card
-        width="100%"
-        height="384px"
-        className="cursor-pointer overflow-hidden bg-white"
+        className="h-[384px] w-full cursor-pointer overflow-hidden bg-white"
         onClick={handleCardClick}
       >
         <CardContent>
