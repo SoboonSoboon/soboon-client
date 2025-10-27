@@ -158,8 +158,6 @@ export default async function SharingDetailPage({
 
   const participants = isAuthor ? await getParticipants({ meetingId: id }) : [];
 
-  console.log('meetingDetail', meetingDetail);
-
   return (
     <section>
       <DetailHeader />

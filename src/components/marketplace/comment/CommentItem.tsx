@@ -9,6 +9,7 @@ import { useState } from 'react';
 import { useParams } from 'next/navigation';
 import { updateComment } from '@/action/commentAction';
 import { useToast } from '@/components/Atoms';
+import { useAuthStore } from '@/apis/auth/hooks/authStore';
 
 export const CommentItem = ({
   comment,
@@ -34,6 +35,11 @@ export const CommentItem = ({
     setIsEditing(false);
     setIsOpen(false);
   };
+
+  const userId = useAuthStore((state) => state.userId);
+
+  console.log('userId', userId);
+  console.log('comment.authorId', comment.authorId);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -82,7 +88,7 @@ export const CommentItem = ({
               className="size-6 text-gray-50"
               onClick={() => setIsOpen(!isOpen)}
             />
-            {isOpen && (
+            {isOpen && userId === comment.authorId && (
               <CommentActionMenu
                 className="absolute top-5 right-0 z-50"
                 commentId={
