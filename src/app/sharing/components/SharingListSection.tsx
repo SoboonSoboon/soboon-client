@@ -123,7 +123,10 @@ export const SharingListSection = ({
                   />
                 </div>
                 <div className="flex flex-col gap-2">
-                  <CardTitle className="font-memomentKkukkkuk line-clamp-1">
+                  <CardTitle
+                    className="font-memomentKkukkkuk line-clamp-1"
+                    status={dividing.status as 'RECRUITING'}
+                  >
                     {dividing.item}
                   </CardTitle>
                   <CardSubtitle className="text-text-sub2 flex items-center gap-1 text-sm">
