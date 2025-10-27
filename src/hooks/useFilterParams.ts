@@ -1,4 +1,4 @@
-import { GoToTopScroll } from '@/utils/goToTopScroll';
+// import { GoToTopScroll } from '@/utils/goToTopScroll';
 import { useSearchParams } from 'next/navigation';
 import { useRouter } from 'next/navigation';
 import { useCallback } from 'react';
@@ -25,8 +25,7 @@ export const useFilterParams = () => {
         }
       });
 
-      GoToTopScroll();
-      router.push(`?${params.toString()}`);
+      router.push(`?${params.toString()}`, { scroll: false });
     },
     [router, searchParams],
   );
