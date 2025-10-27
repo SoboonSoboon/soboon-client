@@ -93,8 +93,12 @@ export const SharingListSection = ({
               className="cursor-pointer"
             >
               <CardContent>
-                <StatusTag status={dividing.status} />
-                {/* <BookmarkButton
+                <div className="relative mb-5">
+                  <StatusTag
+                    status={dividing.status}
+                    className="absolute top-3 left-3 z-10"
+                  />
+                  {/* <BookmarkButton
                   className="absolute top-4 right-0"
                   liked={dividing.bookmarked}
                   onChange={() =>
@@ -104,19 +108,20 @@ export const SharingListSection = ({
                     )
                   }
                 /> */}
-                <CardImage
-                  alt="기본 카드"
-                  src={
-                    !dividing.image ||
-                    (Array.isArray(dividing.image) &&
-                      dividing.image.length === 0) ||
-                    (typeof dividing.image === 'string' &&
-                      dividing.image.includes('example'))
-                      ? '/images/notFound_image.png'
-                      : dividing.image
-                  }
-                  className="border-gray-10 bg-gray-5 mb-5 h-[200px] w-full rounded-lg border-1"
-                />
+                  <CardImage
+                    alt="기본 카드"
+                    src={
+                      !dividing.image ||
+                      (Array.isArray(dividing.image) &&
+                        dividing.image.length === 0) ||
+                      (typeof dividing.image === 'string' &&
+                        dividing.image.includes('example'))
+                        ? '/images/notFound_image.png'
+                        : dividing.image
+                    }
+                    className="border-gray-10 bg-gray-5 h-[200px] w-full rounded-lg border-1"
+                  />
+                </div>
                 <div className="flex flex-col gap-2">
                   <CardTitle className="font-memomentKkukkkuk line-clamp-1">
                     {dividing.item}
