@@ -2,6 +2,7 @@ export { Badge } from './Badge';
 export { Button } from './Button';
 export { Chip } from './Chip';
 export { DateFilter, type DateFilterProps } from './DateFilter';
+export { Icon, type IconType } from './Icon/Icon';
 export { Label } from './Label';
 export { LinkRenderer } from './LinkRenderer/LinkRenderer';
 export { Logo } from './Logo';

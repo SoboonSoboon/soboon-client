@@ -2,21 +2,34 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Button, Logo, ProfileImg, UserMenuModal } from '../../Atoms';
+import {
+  Button,
+  Logo,
+  ProfileImg,
+  UserMenuModal,
+  Icon,
+} from '@/components/Atoms';
 import { redirectToKakao } from '@/apis/auth/authApi';
 import { useAuthStore } from '@/apis/auth/hooks/authStore';
 import { useState } from 'react';
-import Image from 'next/image';
 
 // TODO: 과도한 Image 태그 사용으로 추후 리팩토링 예정
 const MENU_ICONS = {
   SHARING: {
-    DEFAULT: '/icons/shopping_basket.svg',
-    GREEN: '/icons/shopping_basket_green.svg',
+    LABEL: '함께 소분하기',
+    PATH: '/sharing',
+    ICON: {
+      DEFAULT: 'shopping-basket' as const,
+      GREEN: 'shopping-basket-green' as const,
+    },
   },
   SHOPPING: {
-    DEFAULT: '/icons/sharing_cart.svg',
-    GREEN: '/icons/sharing_cart_green.svg',
+    LABEL: '함께 장보기',
+    PATH: '/shopping',
+    ICON: {
+      DEFAULT: 'sharing-cart' as const,
+      GREEN: 'sharing-cart-green' as const,
+    },
   },
 } as const;
 
@@ -58,60 +71,46 @@ export const Header = () => {
             {isLoggedIn ? (
               <>
                 <Link
-                  href="/sharing"
+                  href={MENU_ICONS.SHARING.PATH}
                   className={`group hover:text-primary flex items-center gap-1 whitespace-nowrap ${
-                    pathname.startsWith('/sharing') ? 'text-primary' : ''
+                    pathname.startsWith(MENU_ICONS.SHARING.PATH)
+                      ? 'text-primary'
+                      : ''
                   }`}
                 >
-                  <div className="relative">
-                    <Image
-                      src={
-                        pathname.startsWith('/sharing')
-                          ? MENU_ICONS.SHARING.GREEN
-                          : MENU_ICONS.SHARING.DEFAULT
-                      }
-                      alt="Sharing Cart"
-                      width={20}
-                      height={20}
-                      className="transition-opacity duration-200 group-hover:opacity-0"
-                    />
-                    <Image
-                      src={MENU_ICONS.SHARING.GREEN}
-                      alt="Sharing Cart"
-                      width={20}
-                      height={20}
-                      className="absolute top-0 left-0 opacity-0 transition-opacity duration-200 group-hover:opacity-100"
-                    />
-                  </div>
-                  <span className="font-memomentKkukkkuk">함께 소분하기</span>
+                  <Icon
+                    type={
+                      pathname.startsWith(MENU_ICONS.SHARING.PATH)
+                        ? MENU_ICONS.SHARING.ICON.GREEN
+                        : MENU_ICONS.SHARING.ICON.DEFAULT
+                    }
+                    size={20}
+                    className="transition-colors duration-200 group-hover:opacity-80"
+                  />
+                  <span className="font-memomentKkukkkuk">
+                    {MENU_ICONS.SHARING.LABEL}
+                  </span>
                 </Link>
                 <Link
-                  href="/shopping"
+                  href={MENU_ICONS.SHOPPING.PATH}
                   className={`group hover:text-primary flex items-center gap-1 whitespace-nowrap ${
-                    pathname.startsWith('/shopping') ? 'text-primary' : ''
+                    pathname.startsWith(MENU_ICONS.SHOPPING.PATH)
+                      ? 'text-primary'
+                      : ''
                   }`}
                 >
-                  <div className="relative">
-                    <Image
-                      src={
-                        pathname.startsWith('/shopping')
-                          ? MENU_ICONS.SHOPPING.GREEN
-                          : MENU_ICONS.SHOPPING.DEFAULT
-                      }
-                      alt="Shopping Basket"
-                      width={24}
-                      height={24}
-                      className="transition-opacity duration-200 group-hover:opacity-0"
-                    />
-                    <Image
-                      src={MENU_ICONS.SHOPPING.GREEN}
-                      alt="Shopping Basket"
-                      width={24}
-                      height={24}
-                      className="absolute top-0 left-0 opacity-0 transition-opacity duration-200 group-hover:opacity-100"
-                    />
-                  </div>
-                  <span className="font-memomentKkukkkuk">함께 장보기</span>
+                  <Icon
+                    type={
+                      pathname.startsWith(MENU_ICONS.SHOPPING.PATH)
+                        ? MENU_ICONS.SHOPPING.ICON.GREEN
+                        : MENU_ICONS.SHOPPING.ICON.DEFAULT
+                    }
+                    size={24}
+                    className="transition-colors duration-200 group-hover:opacity-80"
+                  />
+                  <span className="font-memomentKkukkkuk">
+                    {MENU_ICONS.SHOPPING.LABEL}
+                  </span>
                 </Link>
               </>
             ) : (
