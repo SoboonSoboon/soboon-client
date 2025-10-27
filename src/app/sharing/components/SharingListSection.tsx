@@ -15,12 +15,13 @@ import {
 import { MapPin } from 'lucide-react';
 import { DividingMeetingsType } from '@/types/meetingsType';
 import { timeFormatter } from '@/utils';
-import { NonDividingList } from './NonDividingList';
+
 // import { useBookmark } from '@/hooks';
 import { useInfiniteScrollTrigger } from '@/hooks/useScroll';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import { getDividingListApi } from '@/apis/meetings/getDividingListApi';
 import { useEffect } from 'react';
+import { EmptyState } from '@/components/Molecules';
 
 export const SharingListSection = ({
   initialDividingList,
@@ -78,7 +79,23 @@ export const SharingListSection = ({
   };
 
   if (!dividingList || dividingList.pages[0]?.content.length === 0) {
-    return <NonDividingList />;
+    return (
+      <EmptyState
+        type="main-dividing"
+        title="아직 소분하기 모임이 없어요"
+        description="첫 번째 소분하기 모임을 만들어보세요!"
+        primaryButton={{
+          text: '소분하기 모임 만들기',
+          href: '/sharing/register',
+          variant: 'filled',
+        }}
+        secondaryButton={{
+          text: '장보기 모임 둘러보기',
+          href: '/shopping',
+          variant: 'outline',
+        }}
+      />
+    );
   }
 
   return (
@@ -93,7 +110,7 @@ export const SharingListSection = ({
               className="cursor-pointer"
             >
               <CardContent>
-                <div className="relative mb-5">
+                <div className="border-gray-10 relative mb-5 overflow-hidden rounded-lg border-1">
                   <StatusTag
                     status={dividing.status}
                     className="absolute top-3 left-3 z-10"
@@ -119,11 +136,14 @@ export const SharingListSection = ({
                         ? '/images/notFound_image.png'
                         : dividing.image
                     }
-                    className="border-gray-10 bg-gray-5 h-[200px] w-full rounded-lg border-1"
+                    className="h-[200px] w-full rounded-lg transition-transform duration-300 hover:scale-110"
                   />
                 </div>
                 <div className="flex flex-col gap-2">
-                  <CardTitle className="font-memomentKkukkkuk line-clamp-1">
+                  <CardTitle
+                    className="font-memomentKkukkkuk line-clamp-1"
+                    status={dividing.status as 'RECRUITING'}
+                  >
                     {dividing.item}
                   </CardTitle>
                   <CardSubtitle className="text-text-sub2 flex items-center gap-1 text-sm">

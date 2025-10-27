@@ -75,14 +75,16 @@ async function getMeetingDetail({
 // 댓글 조회
 async function getComments({
   id,
+  sortType = 'OLDEST',
 }: {
   id: string;
+  sortType?: 'RECENT' | 'OLDEST';
 }): Promise<CommentsListType | null> {
   const cookieStore = await cookies();
   const accessToken = cookieStore.get('accessToken')?.value || '';
   try {
     const response = await fetch(
-      `${process.env.NEXT_PUBLIC_SOBOON_API_URL}/v1/meetings/${id}/comments`,
+      `${process.env.NEXT_PUBLIC_SOBOON_API_URL}/v1/meetings/${id}/comments?sort=${sortType}`,
       {
         cache: 'force-cache',
         next: {
@@ -139,12 +141,16 @@ async function getParticipants({
     return [];
   }
 }
+
 export default async function SharingDetailPage({
   params,
+  searchParams,
 }: {
   params: Promise<{ id: string }>;
+  searchParams: Promise<{ sortType: 'RECENT' | 'OLDEST' }>;
 }) {
   const id = (await params).id;
+  const sortType = (await searchParams).sortType;
   // 소분하기 모임 상세 데이터 조회
   const meetingDetail = await getMeetingDetail({
     id,
@@ -154,11 +160,9 @@ export default async function SharingDetailPage({
 
   const isAuthor = meetingDetail?.user.userId === userInfo?.id;
 
-  const commentsList = await getComments({ id });
+  const commentsList = await getComments({ id, sortType });
 
   const participants = isAuthor ? await getParticipants({ meetingId: id }) : [];
-
-  console.log('meetingDetail', meetingDetail);
 
   return (
     <section>
@@ -173,7 +177,6 @@ export default async function SharingDetailPage({
         </div>
 
         <article className="flex-1 lg:order-1">
-          {/* 추후에 DB에 실제 이미지가 추가되면 연동 필요 */}
           <Carousel carouselImages={meetingDetail!.images} className="mb-8" />
           <DetailContent description={meetingDetail!.description} />
           <DetailContentFooter createdAt={meetingDetail!.createdAt} />
@@ -182,6 +185,7 @@ export default async function SharingDetailPage({
           <CommentSection
             commentsList={commentsList}
             status={meetingDetail!.status}
+            isAuthor={isAuthor}
           />
         </article>
       </div>

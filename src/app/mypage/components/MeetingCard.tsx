@@ -113,7 +113,7 @@ export const MeetingCard = ({
   };
 
   return (
-    <div className="w-[calc(33.333%-21.33px)] flex-shrink-0">
+    <div className="flex-shrink-0">
       <Card
         className="h-[529px] w-full cursor-pointer overflow-hidden bg-white"
         onClick={handleCardClick}
@@ -130,7 +130,7 @@ export const MeetingCard = ({
             </div>
             {/* 이미지 영역 */}
             {meeting.thumbnailUrl ? (
-              <div className="relative h-[199px] w-full rounded-lg">
+              <div className="relative h-full w-full rounded-lg">
                 <CardImage
                   src={meeting.thumbnailUrl}
                   alt={meeting.title}
@@ -161,8 +161,8 @@ export const MeetingCard = ({
             </div>
             <hr className="text-gray-10" />
             <CardFooter className="flex h-6 flex-col gap-3">
-              <div className="flex items-center">
-                <MapPin className="ring-gray-40 tex size-5" />
+              <div className="flex items-center gap-1">
+                <MapPin className="text-gray-40 size-5" />
                 <span className="text-sm">{location}</span>
               </div>
               <Button

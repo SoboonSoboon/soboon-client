@@ -36,16 +36,27 @@ export const CommentInputContainer = ({
     <div className="mb-6">
       <form action={formAction} className="flex items-center gap-2">
         <input name="meetingId" hidden readOnly value={meetingId} />
-        <TextInput
-          placeholder={
-            status === 'COMPLETED' || status === 'CLOSED'
-              ? '모집이 종료된 모임입니다.'
-              : '댓글을 입력해주세요.'
-          }
-          name="comment"
-          className="!border-text-line1 !border-1 bg-white"
-          disabled={status === 'COMPLETED' || status === 'CLOSED'}
-        />
+        <div className="relative flex-1">
+          <TextInput
+            placeholder={
+              status === 'COMPLETED' || status === 'CLOSED'
+                ? '모집이 종료된 모임입니다.'
+                : '댓글을 입력해주세요.'
+            }
+            name="comment"
+            className="!border-text-line1 !border-1 bg-white pr-[90px]"
+            disabled={status === 'COMPLETED' || status === 'CLOSED'}
+          />
+          <div className="absolute top-1/2 right-3 flex translate-y-[-50%] items-center gap-1 select-none">
+            <input type="checkbox" id="secret" name="secret" />
+            <label
+              htmlFor="secret"
+              className="text-gray-60 cursor-pointer text-sm"
+            >
+              비공개
+            </label>
+          </div>
+        </div>
         <Button
           label="작성"
           type="submit"

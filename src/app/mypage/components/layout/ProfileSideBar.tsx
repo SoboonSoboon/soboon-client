@@ -34,10 +34,12 @@ export const ProfileSideBar = () => {
   });
 
   return (
-    <div className="border-gray-10 flex w-full flex-col gap-5 rounded-lg border bg-white px-8 py-15">
+    <div className="border-gray-10 flex w-full flex-col gap-3 rounded-lg border bg-white px-4 py-6 sm:px-6 sm:py-8 lg:px-8 lg:py-15">
       <div className="flex flex-col items-center justify-center gap-2.5">
         <ProfileImg profileImageUrl={userImage || ''} size={118} />
-        <h2 className="font-memomentKkukkkuk text-2xl">{userNickname}</h2>
+        <h2 className="font-memomentKkukkkuk text-lg sm:text-xl lg:text-2xl">
+          {userNickname}
+        </h2>
       </div>
       <Button
         label="프로필 수정"
@@ -45,7 +47,7 @@ export const ProfileSideBar = () => {
         className="w-full"
         onClick={profileModal.open}
       />
-      <div className="flex flex-col gap-4">
+      <div className="flex flex-col gap-3 sm:gap-4">
         {allKeywords.map((keyword, index) => (
           <ReviewItemBar
             key={index}

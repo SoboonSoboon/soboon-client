@@ -6,18 +6,18 @@ export default function MyPageLayout({
   children: React.ReactNode;
 }) {
   return (
-    <div className="min-h-screen pt-8">
+    <div className="min-h-screen">
       <div className="mx-auto max-w-[1200px]">
-        <div className="flex w-full gap-10">
+        <div className="flex w-full flex-col gap-6 md:flex-row md:gap-10">
           {/* 왼쪽 고정 프로필 */}
-          <div className="w-[340px] flex-shrink-0">
-            <div className="sticky top-20">
+          <div className="w-full md:w-[340px] md:flex-shrink-0">
+            <div className="md:sticky md:top-20">
               <ProfileSideBar />
             </div>
           </div>
 
-          {/* 오른쪽 동적 콘텐츠 */}
-          <div className="flex-1">{children}</div>
+          {/* 메인 콘텐츠 영역 */}
+          <div className="min-w-0 flex-1">{children}</div>
         </div>
       </div>
     </div>

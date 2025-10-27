@@ -2,11 +2,11 @@
 
 import { useState } from 'react';
 import { Plus } from 'lucide-react';
-import Image from 'next/image';
+import { Icon } from '@/components/Atoms';
 
 const CREATE_MENU_OPTIONS = {
-  shopping: { label: '장보기', icon: '/icons/shopping_basket.svg' },
-  sharing: { label: '소분하기', icon: '/icons/sharing_cart.svg' },
+  shopping: { label: '장보기', icon: 'sharing-cart' as const },
+  sharing: { label: '소분하기', icon: 'shopping-basket' as const },
 } as const;
 
 type CreateMenuKey = keyof typeof CREATE_MENU_OPTIONS;
@@ -48,13 +48,7 @@ export const CreateButton = ({ actionHandlers }: CreateButtonProps) => {
               className="flex size-11 cursor-pointer items-center justify-center rounded-full border-1 border-[var(--GrayScale-Gray50)] bg-white drop-shadow-[0_0_4px_var(--Gray-Scale-Gray-20,#C8C8C8)]"
               aria-label={`${value.label} 만들기`}
             >
-              <Image
-                src={value.icon}
-                alt={value.label}
-                width={24}
-                height={24}
-                aria-hidden
-              />
+              <Icon type={value.icon} size={24} alt={value.label} aria-hidden />
             </button>
             <span className="font-memomentKkukkkuk text-[var(--GrayScale-Gray70)]">
               {value.label}

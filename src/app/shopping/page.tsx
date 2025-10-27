@@ -62,9 +62,9 @@ export default async function ShoppingPage({
   const initialShoppingList = await getShoppingList(query);
 
   return (
-    <main className="flex flex-col gap-8 py-8">
+    <main className="flex flex-col gap-8">
       <IntroSection />
-      <section className="flex flex-col gap-6">
+      <section className="flex flex-col gap-4 md:gap-6">
         <ShoppingTagsSection />
         <FilterSection />
         <ShoppingListSection initialShoppingList={initialShoppingList} />

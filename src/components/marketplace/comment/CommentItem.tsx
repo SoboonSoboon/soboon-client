@@ -9,11 +9,14 @@ import { useState } from 'react';
 import { useParams } from 'next/navigation';
 import { updateComment } from '@/action/commentAction';
 import { useToast } from '@/components/Atoms';
+import { useAuthStore } from '@/apis/auth/hooks/authStore';
 
 export const CommentItem = ({
+  isAuthor,
   comment,
 }: {
   comment: CommentType | ReplyType;
+  isAuthor: boolean;
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
@@ -34,6 +37,8 @@ export const CommentItem = ({
     setIsEditing(false);
     setIsOpen(false);
   };
+
+  const userId = useAuthStore((state) => state.userId);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -82,7 +87,7 @@ export const CommentItem = ({
               className="size-6 text-gray-50"
               onClick={() => setIsOpen(!isOpen)}
             />
-            {isOpen && (
+            {isOpen && userId === comment.authorId && (
               <CommentActionMenu
                 className="absolute top-5 right-0 z-50"
                 commentId={
@@ -113,6 +118,14 @@ export const CommentItem = ({
                 onClick={() => handleCancelClick()}
               />
             </form>
+          ) : comment.secret ? (
+            userId === comment.authorId || isAuthor ? (
+              <p className="text-gray-95">{comment.content}</p>
+            ) : (
+              <p className="text-gray-60">
+                비밀 댓글입니다. 작성자만 확인할 수 있습니다.
+              </p>
+            )
           ) : (
             <p className="text-gray-95">{comment.content}</p>
           )}
