@@ -9,17 +9,32 @@ import { MeetingDetailType } from '@/types/meetingsType';
 import { CommentsListType } from '@/types/commentType';
 import { ApplicantsMemberType } from '@/types/applicantsType';
 import { cookies } from 'next/headers';
+import { UserInfoType } from '@/types/authType';
 
-const dummyUser = {
-  id: Number(process.env.NEXT_PUBLIC_DUMMY_USER_ID),
-  name: '테스트유저5',
-  nickname: null,
-  image: 'https://example.com/profile5.jpg',
-  province: '부산광역시',
-  city: '해운대구',
-  district: '우동',
-  detail: '901-23',
-};
+async function getUserInfo(): Promise<UserInfoType | null> {
+  const cookieStore = await cookies();
+  const accessToken = cookieStore.get('accessToken')?.value || '';
+  try {
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_SOBOON_API_URL}/v1/auth/me`,
+      {
+        cache: 'no-store',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${accessToken}`,
+        },
+      },
+    );
+    if (!response.ok) {
+      throw new Error('사용자 정보 조회 실패');
+    }
+    const responseData = await response.json();
+    return responseData;
+  } catch (error) {
+    console.error('사용자 정보 조회 실패', error);
+    return null;
+  }
+}
 
 async function getMeetingDetail({
   id,
@@ -131,16 +146,13 @@ export default async function ShoppingDetailPage({
 }) {
   const id = (await params).id;
 
-  const shoppingMeetingDetail = await getMeetingDetail({
-    id,
-  });
+  const userInfo = await getUserInfo();
 
-  // 댓글 조회
+  const shoppingMeetingDetail = await getMeetingDetail({ id });
+
+  const isAuthor = shoppingMeetingDetail?.user.userId === userInfo?.id;
+
   const commentsList = await getComments({ id });
-
-  // 작성자 여부 판단 로직
-  // 추후 실제 사용자 데이터로 변경 필요
-  const isAuthor = shoppingMeetingDetail?.user.userId === dummyUser.id;
 
   const participants = isAuthor ? await getParticipants({ meetingId: id }) : [];
 
