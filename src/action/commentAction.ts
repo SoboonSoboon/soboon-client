@@ -7,6 +7,7 @@ import { cookies } from 'next/headers';
 export const createComment = async (_: unknown, formData: FormData) => {
   const meetingId = formData.get('meetingId') as string;
   const commentContent = formData.get('comment') as string;
+  const secret = Boolean(formData.get('secret'));
 
   const validated = commentSchema.safeParse({ comment: commentContent });
   if (!validated.success) {
@@ -20,7 +21,7 @@ export const createComment = async (_: unknown, formData: FormData) => {
       `${process.env.NEXT_PUBLIC_SOBOON_API_URL}/v1/meetings/${meetingId}/comments`,
       {
         method: 'POST',
-        body: JSON.stringify({ content: commentContent, secret: false }),
+        body: JSON.stringify({ content: commentContent, secret }),
         headers: {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${accessToken}`,

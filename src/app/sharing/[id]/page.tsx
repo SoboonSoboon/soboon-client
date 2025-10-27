@@ -180,6 +180,7 @@ export default async function SharingDetailPage({
           <CommentSection
             commentsList={commentsList}
             status={meetingDetail!.status}
+            isAuthor={isAuthor}
           />
         </article>
       </div>

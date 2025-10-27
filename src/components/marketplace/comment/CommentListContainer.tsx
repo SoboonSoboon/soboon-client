@@ -11,8 +11,10 @@ import { CornerDownRight } from 'lucide-react';
 
 export const CommentListContainer = ({
   commentList,
+  isAuthor,
 }: {
   commentList: CommentsType['content'];
+  isAuthor: boolean;
 }) => {
   const [openReply, setOpenReply] = useState<number | null>(null);
   const meetingId = useParams<{ id: string }>().id;
@@ -49,7 +51,7 @@ export const CommentListContainer = ({
           {/* 메인 댓글 */}
           <div>
             <div className="flex flex-col gap-2">
-              <CommentItem comment={comment} />
+              <CommentItem comment={comment} isAuthor={isAuthor} />
               {!openReply && (
                 <div>
                   <span
@@ -71,11 +73,22 @@ export const CommentListContainer = ({
                     readOnly
                     value={comment.commentId}
                   />
-                  <TextInput
-                    placeholder="대댓글을 입력해주세요."
-                    name="reply"
-                    className="!border-text-line1 !border-1 bg-white"
-                  />
+                  <div className="relative flex-1">
+                    <TextInput
+                      placeholder="대댓글을 입력해주세요."
+                      name="reply"
+                      className="!border-text-line1 !border-1 bg-white"
+                    />
+                    <div className="absolute top-1/2 right-3 flex translate-y-[-50%] items-center gap-1 select-none">
+                      <input type="checkbox" id="replySecret" name="secret" />
+                      <label
+                        htmlFor="replySecret"
+                        className="text-gray-60 cursor-pointer text-sm"
+                      >
+                        비밀 댓글
+                      </label>
+                    </div>
+                  </div>
                   <div className="flex gap-2">
                     <Button
                       label="작성"
@@ -103,7 +116,11 @@ export const CommentListContainer = ({
               </div>
               <div className="mt-3 ml-11 flex flex-col gap-2">
                 {comment.replies.map((reply) => (
-                  <CommentItem key={reply.replyId} comment={reply} />
+                  <CommentItem
+                    key={reply.replyId}
+                    comment={reply}
+                    isAuthor={isAuthor}
+                  />
                 ))}
               </div>
             </div>

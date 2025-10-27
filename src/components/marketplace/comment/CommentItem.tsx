@@ -12,9 +12,11 @@ import { useToast } from '@/components/Atoms';
 import { useAuthStore } from '@/apis/auth/hooks/authStore';
 
 export const CommentItem = ({
+  isAuthor,
   comment,
 }: {
   comment: CommentType | ReplyType;
+  isAuthor: boolean;
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
@@ -37,9 +39,6 @@ export const CommentItem = ({
   };
 
   const userId = useAuthStore((state) => state.userId);
-
-  console.log('userId', userId);
-  console.log('comment.authorId', comment.authorId);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -119,6 +118,14 @@ export const CommentItem = ({
                 onClick={() => handleCancelClick()}
               />
             </form>
+          ) : comment.secret ? (
+            userId === comment.authorId || isAuthor ? (
+              <p className="text-gray-95">{comment.content}</p>
+            ) : (
+              <p className="text-gray-60">
+                비밀 댓글입니다. 작성자만 확인할 수 있습니다.
+              </p>
+            )
           ) : (
             <p className="text-gray-95">{comment.content}</p>
           )}
