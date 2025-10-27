@@ -1,6 +1,6 @@
 'use client';
 
-import { Bookmark, MapPin } from 'lucide-react';
+import { MapPin } from 'lucide-react';
 import {
   Card,
   CardContent,
@@ -8,13 +8,11 @@ import {
   CardImage,
   CardTitle,
 } from '@/components/Molecules/Card/Card';
-import { MeetingItem } from '../utils/mypageType';
+
 import { Button, StatusTag } from '@/components';
 import { cn, timeFormatter } from '@/utils';
 import { useRouter } from 'next/navigation';
 
-import { ReviewModal } from './ReviewModal';
-import { useReviewTargets } from '../hook/api/useReview';
 import {
   postHostReview,
   postParticipantReview,
@@ -23,9 +21,12 @@ import { useQueryClient } from '@tanstack/react-query';
 import { useModal } from '@/components/Molecules/modal';
 import { ReviewKeyword } from '@/types/common';
 import { useToast } from '@/components/Atoms/Toast/useToast';
+import { useReviewTargets } from '../../hook/api/useReview';
+import { ReviewModal } from '../ReviewModal';
+import { MeetingItem } from '../../utils/mypageType';
 
 // 모임 카드 컴포넌트
-export const MeetingCard = ({
+export const MeetingDividingCard = ({
   meeting,
   activeMainTab,
 }: {
@@ -129,17 +130,13 @@ export const MeetingCard = ({
               </div>
             </div>
             {/* 이미지 영역 */}
-            {meeting.thumbnailUrl ? (
-              <div className="relative h-full w-full rounded-lg">
-                <CardImage
-                  src={meeting.thumbnailUrl}
-                  alt={meeting.title}
-                  className="h-full w-full object-cover"
-                />
-              </div>
-            ) : (
-              <div className="bg-gray-5 border-gray-10 relative h-[199px] w-full rounded-lg border" />
-            )}
+            <div className="relative h-full w-full rounded-lg">
+              <CardImage
+                src={meeting.thumbnailUrl}
+                alt={meeting.title}
+                className="h-full w-full object-cover"
+              />
+            </div>
           </div>
           {/* 컨텐츠 영역 */}
           <div className="flex flex-col gap-3">
