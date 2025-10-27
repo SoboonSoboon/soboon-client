@@ -1,6 +1,3 @@
-'use server';
-
-import { cookies } from 'next/headers';
 import {
   HostReviewRequest,
   ParticipantReviewRequest,
@@ -8,17 +5,19 @@ import {
 
 const baseUrl = process.env.NEXT_PUBLIC_SOBOON_API_URL;
 
-// 서버 사이드에서 쿠키에서 토큰을 가져오기
-const getServerToken = async () => {
-  const cookieStore = await cookies();
-  return cookieStore.get('accessToken')?.value || null;
+// 클라이언트 사이드에서 localStorage에서 토큰을 가져오기
+const getClientToken = () => {
+  if (typeof window !== 'undefined') {
+    return localStorage.getItem('accessToken');
+  }
+  return null;
 };
 
 export const postHostReview = async (
   data: HostReviewRequest,
 ): Promise<{ success: boolean; error?: string }> => {
   try {
-    const token = await getServerToken();
+    const token = getClientToken();
 
     if (!token) {
       return { success: false, error: 'No authentication token found' };
@@ -55,7 +54,7 @@ export const postParticipantReview = async (
   data: ParticipantReviewRequest,
 ): Promise<{ success: boolean; error?: string }> => {
   try {
-    const token = await getServerToken();
+    const token = getClientToken();
 
     if (!token) {
       return { success: false, error: 'No authentication token found' };

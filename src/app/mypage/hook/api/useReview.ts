@@ -26,8 +26,8 @@ export const useReviewTargets = (
       attendees: data.data.attendees,
       eventId: data.data.eventId,
     }),
-    staleTime: 5 * 60 * 1000,
-    enabled, // enabled 옵션 추가
+    staleTime: 5 * 60 * 1000, // 5분간 캐시 유지
+    enabled, // 토큰이 있을 때만 실행
   });
 };
 
