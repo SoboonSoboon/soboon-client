@@ -97,10 +97,11 @@ export const DetailAside = ({
         isBookmarked={isBookmarked}
         handleBookmarkClick={handleBookmarkClick}
         meetingId={meetingId}
+        isAuthor={isAuthor}
       />
 
       <AsideHeader
-        title={meetingDetail?.title}
+        title={meetingDetail?.item}
         profileImageUrl={meetingDetail?.user.profile}
         userName={meetingDetail?.user.userName}
         tags={meetingDetail?.tags}
