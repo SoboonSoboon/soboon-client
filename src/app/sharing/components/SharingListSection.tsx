@@ -15,12 +15,13 @@ import {
 import { MapPin } from 'lucide-react';
 import { DividingMeetingsType } from '@/types/meetingsType';
 import { timeFormatter } from '@/utils';
-import { NonDividingList } from './NonDividingList';
+
 // import { useBookmark } from '@/hooks';
 import { useInfiniteScrollTrigger } from '@/hooks/useScroll';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import { getDividingListApi } from '@/apis/meetings/getDividingListApi';
 import { useEffect } from 'react';
+import { EmptyState } from '@/components/Molecules';
 
 export const SharingListSection = ({
   initialDividingList,
@@ -78,7 +79,23 @@ export const SharingListSection = ({
   };
 
   if (!dividingList || dividingList.pages[0]?.content.length === 0) {
-    return <NonDividingList />;
+    return (
+      <EmptyState
+        type="main-dividing"
+        title="아직 소분하기 모임이 없어요"
+        description="첫 번째 소분하기 모임을 만들어보세요!"
+        primaryButton={{
+          text: '소분하기 모임 만들기',
+          href: '/sharing/register',
+          variant: 'filled',
+        }}
+        secondaryButton={{
+          text: '장보기 모임 둘러보기',
+          href: '/shopping',
+          variant: 'outline',
+        }}
+      />
+    );
   }
 
   return (

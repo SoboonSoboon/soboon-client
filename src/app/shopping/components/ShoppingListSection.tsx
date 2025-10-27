@@ -14,7 +14,7 @@ import { ShoppingMeetingsType } from '@/types/meetingsType';
 import { timeFormatter } from '@/utils';
 import { MapPin } from 'lucide-react';
 import { useRouter } from 'next/navigation';
-import { NonShoppingList } from './NonShoppingList';
+
 // import { useBookmark } from '@/hooks';
 import { useEffect } from 'react';
 import { useInfiniteQuery } from '@tanstack/react-query';
@@ -22,6 +22,7 @@ import { getShoppingListApi } from '@/apis/meetings/getShoppingListApi';
 import { useInfiniteScrollTrigger } from '@/hooks/useScroll';
 import { useSearchParams } from 'next/navigation';
 import { HashTag } from './HashTag';
+import { EmptyState } from '@/components/Molecules';
 
 export const ShoppingListSection = ({
   initialShoppingList,
@@ -89,7 +90,23 @@ export const ShoppingListSection = ({
   };
 
   if (!shoppingList || shoppingList.pages[0]?.content.length === 0) {
-    return <NonShoppingList />;
+    return (
+      <EmptyState
+        type="main-shopping"
+        title="아직 장보기 모임이 없어요"
+        description="첫 번째 장보기 모임을 만들어보세요!"
+        primaryButton={{
+          text: '장보기 모임 만들기',
+          href: '/shopping/register',
+          variant: 'filled',
+        }}
+        secondaryButton={{
+          text: '소분하기 모임 둘러보기',
+          href: '/sharing',
+          variant: 'outline',
+        }}
+      />
+    );
   }
 
   return (
