@@ -110,7 +110,7 @@ export const SharingListSection = ({
               className="cursor-pointer"
             >
               <CardContent>
-                <div className="relative mb-5">
+                <div className="border-gray-10 relative mb-5 overflow-hidden rounded-lg border-1">
                   <StatusTag
                     status={dividing.status}
                     className="absolute top-3 left-3 z-10"
@@ -136,7 +136,7 @@ export const SharingListSection = ({
                         ? '/images/notFound_image.png'
                         : dividing.image
                     }
-                    className="border-gray-10 bg-gray-5 h-[200px] w-full rounded-lg border-1"
+                    className="h-[200px] w-full rounded-lg transition-transform duration-300 hover:scale-110"
                   />
                 </div>
                 <div className="flex flex-col gap-2">

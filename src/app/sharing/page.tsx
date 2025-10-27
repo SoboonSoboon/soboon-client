@@ -58,7 +58,7 @@ export default async function SharingPage({
   const initialDividingList = await getSharingMeeting(query);
 
   return (
-    <main className="flex flex-col gap-8 py-8">
+    <main className="flex flex-col gap-8">
       <IntroSection />
       <section className="flex gap-10">
         <aside className="sticky top-6 h-[95vh] w-[200px]">

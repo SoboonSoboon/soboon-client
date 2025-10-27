@@ -16,7 +16,7 @@ function MyPageContent() {
     handleSubTabChange,
   } = useMyPageData();
   return (
-    <div className="min-h-screen w-full">
+    <div className="w-full">
       <div className="flex flex-1 flex-col bg-white">
         <TabSection
           activeMainTab={activeMainTab}

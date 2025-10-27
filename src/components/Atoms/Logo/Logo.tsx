@@ -1,17 +1,20 @@
-import { cn } from '@/utils/cn';
-import { Icon } from '@/components/Atoms';
+import Image from 'next/image';
 
-interface LogoProps {
-  className?: string;
-  width?: number;
-  height?: number;
-}
-
-export function Logo({ className, width = 75, height = 28 }: LogoProps) {
+export function Logo() {
   return (
-    <div className={cn('flex items-center gap-1 p-1', className)}>
-      <Icon type="soboon-letters" size={width} alt="Soboon Letters" />
-      <Icon type="soboon-logo" size={height} alt="Soboon Logo" />
+    <div className="flex w-auto items-center gap-1 p-1">
+      <Image
+        src="/icons/soboon_letters.svg"
+        width={80}
+        height={23}
+        alt="Soboon Letters"
+      />
+      <Image
+        src="/icons/soboon_logo.svg"
+        width={23}
+        height={23}
+        alt="Soboon Logo"
+      />
     </div>
   );
 }
