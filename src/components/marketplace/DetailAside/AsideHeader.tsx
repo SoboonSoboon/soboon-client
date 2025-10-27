@@ -4,10 +4,12 @@ export const AsideHeader = ({
   title,
   profileImageUrl,
   userName,
+  tags,
 }: {
   title: string;
   profileImageUrl: string;
   userName: string;
+  tags?: string[];
 }) => {
   return (
     <div className="flex flex-col gap-3">
@@ -16,6 +18,14 @@ export const AsideHeader = ({
         <ProfileImg profileImageUrl={profileImageUrl} size={24} />
         <span className="text-text-sub2">{userName}</span>
       </div>
+
+      {tags && tags.length > 0 && (
+        <div className="flex flex-wrap gap-2">
+          {tags.map((tag) => (
+            <span key={tag}>{tag}</span>
+          ))}
+        </div>
+      )}
     </div>
   );
 };
