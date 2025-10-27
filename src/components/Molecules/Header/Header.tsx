@@ -11,12 +11,12 @@ import Image from 'next/image';
 // TODO: 과도한 Image 태그 사용으로 추후 리팩토링 예정
 const MENU_ICONS = {
   SHARING: {
-    DEFAULT: '/icons/sharing_cart.svg',
-    GREEN: '/icons/sharing_cart_green.svg',
-  },
-  SHOPPING: {
     DEFAULT: '/icons/shopping_basket.svg',
     GREEN: '/icons/shopping_basket_green.svg',
+  },
+  SHOPPING: {
+    DEFAULT: '/icons/sharing_cart.svg',
+    GREEN: '/icons/sharing_cart_green.svg',
   },
 } as const;
 
@@ -71,15 +71,15 @@ export const Header = () => {
                           : MENU_ICONS.SHARING.DEFAULT
                       }
                       alt="Sharing Cart"
-                      width={24}
-                      height={24}
+                      width={20}
+                      height={20}
                       className="transition-opacity duration-200 group-hover:opacity-0"
                     />
                     <Image
                       src={MENU_ICONS.SHARING.GREEN}
                       alt="Sharing Cart"
-                      width={24}
-                      height={24}
+                      width={20}
+                      height={20}
                       className="absolute top-0 left-0 opacity-0 transition-opacity duration-200 group-hover:opacity-100"
                     />
                   </div>
@@ -99,15 +99,15 @@ export const Header = () => {
                           : MENU_ICONS.SHOPPING.DEFAULT
                       }
                       alt="Shopping Basket"
-                      width={20}
-                      height={20}
+                      width={24}
+                      height={24}
                       className="transition-opacity duration-200 group-hover:opacity-0"
                     />
                     <Image
                       src={MENU_ICONS.SHOPPING.GREEN}
                       alt="Shopping Basket"
-                      width={20}
-                      height={20}
+                      width={24}
+                      height={24}
                       className="absolute top-0 left-0 opacity-0 transition-opacity duration-200 group-hover:opacity-100"
                     />
                   </div>
