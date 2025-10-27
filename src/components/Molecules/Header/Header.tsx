@@ -36,8 +36,8 @@ export const Header = () => {
   // };
 
   return (
-    <header className="border-gray-10 fixed top-0 right-0 left-0 z-50 h-15 border-b bg-white px-4 dark:bg-black">
-      <div className="text-text-main mx-auto flex h-full max-w-[1200px] items-center justify-between bg-white dark:bg-black dark:text-white">
+    <header className="border-gray-10 fixed top-0 right-0 left-0 z-50 h-15 border-b bg-white px-4">
+      <div className="text-text-main mx-auto flex h-full max-w-[1200px] items-center justify-between bg-white">
         <div className="flex items-center gap-4 sm:gap-6 md:gap-8 lg:gap-10">
           <Link href="/">
             <Logo />
@@ -96,7 +96,7 @@ export const Header = () => {
                       size={40}
                     />
                   </div>
-                  <span className="hidden text-base font-semibold md:block dark:text-white">
+                  <span className="hidden text-base font-semibold md:block">
                     {userNickname || userName}
                   </span>
                 </span>
