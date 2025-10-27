@@ -8,7 +8,7 @@ import {
   CardImage,
   CardSubtitle,
   CardTitle,
-  BookmarkButton,
+  // BookmarkButton,
   Line,
   StatusTag,
 } from '@/components';
@@ -16,7 +16,7 @@ import { MapPin } from 'lucide-react';
 import { DividingMeetingsType } from '@/types/meetingsType';
 import { timeFormatter } from '@/utils';
 import { NonDividingList } from './NonDividingList';
-import { useBookmark } from '@/hooks';
+// import { useBookmark } from '@/hooks';
 import { useInfiniteScrollTrigger } from '@/hooks/useScroll';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import { getDividingListApi } from '@/apis/meetings/getDividingListApi';
@@ -30,7 +30,7 @@ export const SharingListSection = ({
   initialDividingList: DividingMeetingsType | null;
 }) => {
   const router = useRouter();
-  const { handleBookmark } = useBookmark();
+  // const { handleBookmark } = useBookmark();
   const { isBottom } = useInfiniteScrollTrigger();
 
   const {
@@ -93,11 +93,8 @@ export const SharingListSection = ({
               className="cursor-pointer"
             >
               <CardContent>
-                <StatusTag
-                  status={dividing.status}
-                  className="absolute top-3 left-3"
-                />
-                <BookmarkButton
+                <StatusTag status={dividing.status} />
+                {/* <BookmarkButton
                   className="absolute top-4 right-0"
                   liked={dividing.bookmarked}
                   onChange={() =>
@@ -106,7 +103,7 @@ export const SharingListSection = ({
                       dividing.bookmarked,
                     )
                   }
-                />
+                /> */}
                 <CardImage
                   alt="기본 카드"
                   src={
@@ -118,21 +115,22 @@ export const SharingListSection = ({
                       ? '/images/notFound_image.png'
                       : dividing.image
                   }
-                  className="border-gray-10 bg-gray-5 h-[200px] w-full rounded-lg border-1"
+                  className="border-gray-10 bg-gray-5 mb-5 h-[200px] w-full rounded-lg border-1"
                 />
-
-                <CardTitle className="font-memomentKkukkkuk line-clamp-1">
-                  {dividing.item}
-                </CardTitle>
-                <CardSubtitle className="text-text-sub2 flex items-center gap-1 text-sm">
-                  <span>{dividing.user.userName}</span>
-                  <span>・</span>
-                  <span>{timeFormatter(dividing.createdAt)}</span>
-                </CardSubtitle>
+                <div className="flex flex-col gap-2">
+                  <CardTitle className="font-memomentKkukkkuk line-clamp-1">
+                    {dividing.item}
+                  </CardTitle>
+                  <CardSubtitle className="text-text-sub2 flex items-center gap-1 text-sm">
+                    <span>{dividing.user.userName}</span>
+                    <span>・</span>
+                    <span>{timeFormatter(dividing.createdAt)}</span>
+                  </CardSubtitle>
+                </div>
               </CardContent>
-              <Line />
+              <Line className="mt-3 mb-3" />
               <CardFooter>
-                <div className="mb-2 flex items-center gap-1 text-sm">
+                <div className="flex items-center gap-1 text-sm">
                   <MapPin className="text-gray-40 size-4" />
                   <p>{dividing.location.detail}</p>
                 </div>

@@ -98,7 +98,7 @@ export const CardImage = ({ className, src, alt }: cardImageProps) => {
       alt={alt}
       width={276}
       height={200}
-      className={`${className} mb-5 h-[200px] w-full rounded-lg object-cover`}
+      className={`${className} h-[200px] w-full rounded-lg object-cover`}
     />
   );
 };
