@@ -19,14 +19,14 @@ export const CommentListContainer = ({
   const [openReply, setOpenReply] = useState<number | null>(null);
   const meetingId = useParams<{ id: string }>().id;
   const { success, error } = useToast();
+  const [state, formAction] = useActionState(createReply, null);
+
   const handleToggleReply = (commentId: number) => {
     setOpenReply(commentId);
   };
   const handleCloseReply = () => {
     setOpenReply(null);
   };
-
-  const [state, formAction] = useActionState(createReply, null);
 
   useEffect(() => {
     if (state) {
