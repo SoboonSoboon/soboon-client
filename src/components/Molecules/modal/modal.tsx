@@ -4,6 +4,7 @@ import { useModalEscape } from './hooks/useModalEscape';
 import { useModalScrollLock } from './hooks/useModalScrollLock';
 import { ModalProps } from './utils/modalTypes';
 import { getPositionClass, getSizeClass } from './utils/modalUtils';
+import { X } from 'lucide-react';
 /**
  * 재사용 가능한 모달 컴포넌트
  *
@@ -32,8 +33,7 @@ export const Modal: React.FC<ModalProps> = ({
   position = 'center',
   className,
   contentClassName,
-  showCloseButton = false,
-  closeButtonText = '닫기',
+  showCloseButton = true,
   closeButtonClassName,
   lockScroll = true,
   scrollable = false,
@@ -63,7 +63,7 @@ export const Modal: React.FC<ModalProps> = ({
     >
       <div
         className={cn(
-          'rounded-lg border border-gray-200 bg-white shadow-lg',
+          'relative rounded-lg border border-gray-200 bg-white shadow-lg',
           getSizeClass(size),
           scrollable && 'overflow-y-auto',
           contentClassName,
@@ -71,20 +71,19 @@ export const Modal: React.FC<ModalProps> = ({
         style={scrollable ? { maxHeight } : {}}
         onClick={(e) => e.stopPropagation()}
       >
-        {children}
         {showCloseButton && (
-          <div className="mt-4 flex justify-end">
-            <button
-              onClick={onClose}
-              className={cn(
-                'hover:bg-gray-80 rounded bg-gray-50 px-4 py-2 text-white',
-                closeButtonClassName,
-              )}
-            >
-              {closeButtonText}
-            </button>
-          </div>
+          <button
+            onClick={onClose}
+            className={cn(
+              'absolute top-6 right-6 z-10 cursor-pointer',
+              closeButtonClassName,
+            )}
+            aria-label="닫기"
+          >
+            <X size={24} />
+          </button>
         )}
+        {children}
       </div>
     </div>
   );
