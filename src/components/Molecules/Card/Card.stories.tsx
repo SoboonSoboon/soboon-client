@@ -14,17 +14,13 @@ const meta = {
   title: 'Molecules/Card',
   component: Card,
   args: {
-    width: '376px',
-    height: '306px',
-    className: '',
+    className: 'w-[376px] h-[306px]',
   },
   parameters: {
     layout: 'centered',
   },
   tags: ['autodocs'],
   argTypes: {
-    width: { control: 'text', description: '카드의 너비 px' },
-    height: { control: 'text', description: '카드의 높이 px' },
     className: { control: 'text', description: '카드의 클래스명' },
   },
 } satisfies Meta<typeof Card>;

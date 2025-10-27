@@ -101,8 +101,6 @@ export const ShoppingListSection = ({
             <Card
               key={shopping.id}
               className="border-gray-10 flex cursor-pointer flex-col gap-3 rounded-xl border p-6"
-              height="auto"
-              width="auto"
               onClick={() => onClickCard(shopping.id.toString())}
             >
               <StatusTag status={shopping.status} />
