@@ -8,7 +8,7 @@ export interface CardListProps {
 export const CardList = ({ data, activeMainTab }: CardListProps) => {
   return (
     <div className="h-full">
-      <div className="flex flex-wrap gap-8 gap-y-6">
+      <div className="grid grid-cols-1 gap-4 sm:gap-6 lg:grid-cols-2 lg:gap-8">
         {data.map((meeting) => (
           <MeetingCard
             key={meeting.groupId}

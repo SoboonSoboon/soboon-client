@@ -23,18 +23,22 @@ export const ReviewItemBar = ({
   const finalPercentage = animated ? animatedPercentage : targetPercentage;
 
   return (
-    <div className="flex w-full flex-col gap-1">
-      <div className="flex gap-1">
+    <div className="flex w-full flex-col gap-1 sm:gap-1.5">
+      <div className="flex gap-1 sm:gap-2">
         {label && (
-          <Label className="text-[var(--color-gray-95)]">{label}</Label>
+          <Label className="text-sm text-[var(--color-gray-95)] sm:text-base">
+            {label}
+          </Label>
         )}
-        <span className="text-primary">{count}</span>
+        <span className="text-primary text-sm font-medium sm:text-base">
+          {count}
+        </span>
       </div>
 
       <div className="relative w-full">
-        <div className="bg-gray-10 h-4.5 w-full rounded-lg"></div>
+        <div className="bg-gray-10 h-3.5 w-full rounded-lg sm:h-4.5"></div>
         <div
-          className="bg-primary absolute top-0 left-0 h-4.5 rounded-lg transition-all duration-300"
+          className="bg-primary absolute top-0 left-0 h-3.5 rounded-lg transition-all duration-300 sm:h-4.5"
           style={{ width: `${finalPercentage}%` }}
         ></div>
       </div>
