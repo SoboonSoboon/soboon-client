@@ -120,14 +120,14 @@ export const MeetingCard = ({
       >
         <CardContent>
           <div className="pb-4 sm:pb-5">
-            <div className="absolute top-4 left-0 z-10 w-full px-3">
-              <div className="flex items-center justify-between">
-                <StatusTag
-                  status={meeting.status}
-                  className="!mx-0 h-8 whitespace-nowrap"
-                />
-                <Bookmark className="fill-gray-40 text-gray-40 size-5 border-none" />
-              </div>
+            <div className="absolute top-4 left-3 z-10 w-full">
+              {/* <div className="flex items-center justify-between"> */}
+              <StatusTag
+                status={meeting.status}
+                className="!mx-0 h-8 whitespace-nowrap"
+              />
+              {/* <Bookmark className="fill-gray-40 text-gray-40 size-5 border-none" /> */}
+              {/* </div> */}
             </div>
             {/* 이미지 영역 */}
             {meeting.thumbnailUrl ? (
