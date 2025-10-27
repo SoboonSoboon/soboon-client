@@ -1,6 +1,7 @@
 'use client';
 
 import { MYPAGE_TAB_LABELS, MYPAGE_SUB_TAB_LABELS } from '@/constants';
+import { KeywordChip } from '@/components/Atoms';
 
 export type MainTabType = 'host' | 'participate' | 'bookmark';
 export type SubTabType = 'SHOPPING' | 'DIVIDING';
@@ -48,18 +49,14 @@ export const TabSection = ({
       {/* 서브 탭 */}
       <div className="flex gap-2 sm:gap-2.5">
         {MYPAGE_SUB_TAB_LABELS.map((tab) => (
-          <button
+          <KeywordChip
             key={tab.key}
             onClick={() => onSubTabChange(tab.value as SubTabType)}
-            className={`h-8 w-auto rounded-lg border px-3 text-xs font-medium transition-colors sm:h-9 sm:px-4 sm:text-sm ${
-              activeSubTab === tab.value
-                ? 'bg-gray-70 text-white'
-                : 'bg-gray-5 cursor-pointer border-none'
-            }`}
-            disabled={activeSubTab === tab.value}
+            variant={activeSubTab === tab.value ? 'active' : 'inactive'}
+            className="text-xs sm:text-sm"
           >
             {tab.label}
-          </button>
+          </KeywordChip>
         ))}
       </div>
     </div>
