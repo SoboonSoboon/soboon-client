@@ -25,31 +25,29 @@ export const DateFilter = memo(({ className, onChange }: DateFilterProps) => {
     <div
       data-testid="date-filter-button"
       onClick={() => handleOptionChange()}
-      className={`flex h-[40px] w-[110px] cursor-pointer items-center justify-between gap-1 rounded-xl border-2 border-[#F3F4F6] px-3 py-2 select-none ${className}`}
+      className={`border-gray-10 flex h-10 cursor-pointer items-center justify-center gap-0.5 rounded-xl border-1 p-1.5 select-none md:justify-between md:gap-1 md:px-3 md:py-2 ${className}`}
     >
-      <div className="flex h-6 w-6 items-center gap-[1px]">
-        <div>
-          <ArrowUp
-            width="16"
-            height="18"
-            className={`relative left-0.5 transition-all duration-200 ease-in-out ${
-              optionValue === 'RECENT' ? 'text-[#9CA3AF]' : 'text-[#111827]'
-            }`}
-            strokeWidth="3"
-          />
-        </div>
-        <div>
-          <ArrowDown
-            width="16"
-            height="18"
-            className={`relative right-0.5 transition-all duration-200 ease-in-out ${
-              optionValue === 'OLDEST' ? 'text-[#9CA3AF]' : 'text-[#111827]'
-            }`}
-            strokeWidth="3"
-          />
-        </div>
+      <div className="flex items-center gap-[1px]">
+        <ArrowUp
+          width="16"
+          height="18"
+          className={`relative left-0.5 transition-all duration-200 ease-in-out ${
+            optionValue === 'RECENT' ? 'text-[#9CA3AF]' : 'text-[#111827]'
+          }`}
+          strokeWidth="3"
+        />
+        <ArrowDown
+          width="16"
+          height="18"
+          className={`relative right-0.5 transition-all duration-200 ease-in-out ${
+            optionValue === 'OLDEST' ? 'text-[#9CA3AF]' : 'text-[#111827]'
+          }`}
+          strokeWidth="3"
+        />
       </div>
-      <span className="text-sm font-medium text-[#1F2937]">작성일</span>
+      <span className="hidden text-sm font-medium text-[#1F2937] md:block">
+        작성일
+      </span>
     </div>
   );
 });
