@@ -104,9 +104,7 @@ export const CardImage = ({ className, src, alt }: cardImageProps) => {
 };
 
 export const CardTitle = ({ className, children }: cardContentProps) => {
-  return (
-    <h3 className={`${className} mb-2 text-2xl text-[#1a1a1a]`}>{children}</h3>
-  );
+  return <h3 className={`${className} text-2xl text-[#1a1a1a]`}>{children}</h3>;
 };
 
 export const CardSubtitle = ({ className, children }: cardContentProps) => {
@@ -122,9 +120,7 @@ export const CardFooter = ({ className, children }: cardContentProps) => {
 };
 
 export const Line = ({ className }: cardContentProps) => {
-  return (
-    <div className={`${className} mt-3 mb-5 h-[1px] w-full bg-gray-200`}></div>
-  );
+  return <div className={`${className} h-[1px] w-full bg-gray-200`}></div>;
 };
 
 interface mainCardProps {

@@ -1,8 +1,15 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
+import { cn } from '@/utils/cn';
 
-export const HashTag = ({ tags }: { tags: string[] }) => {
+export const HashTag = ({
+  tags,
+  className,
+}: {
+  tags: string[];
+  className?: string;
+}) => {
   const router = useRouter();
 
   const handleTagClick = (tag: string) => {
@@ -13,7 +20,10 @@ export const HashTag = ({ tags }: { tags: string[] }) => {
     <>
       {tags.map((tag) => (
         <span
-          className="text-primary cursor-pointer text-sm font-medium hover:underline"
+          className={cn(
+            'text-primary cursor-pointer text-sm font-medium',
+            className,
+          )}
           onClick={() => handleTagClick(tag)}
           key={tag}
         >

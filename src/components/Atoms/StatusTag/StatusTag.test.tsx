@@ -2,11 +2,11 @@ import { render, screen } from '@testing-library/react';
 import { StatusTag } from './StatusTag';
 
 describe('StatusTag 컴포넌트', () => {
-  test('div 엘리먼트로 렌더링되어야 한다', () => {
+  test('span 엘리먼트로 렌더링되어야 한다', () => {
     render(<StatusTag status="RECRUITING" />);
     const tag = screen.getByRole('status');
     expect(tag).toBeInTheDocument();
-    expect(tag.nodeName).toBe('DIV');
+    expect(tag.nodeName).toBe('SPAN');
   });
 
   describe('status prop', () => {
@@ -30,25 +30,25 @@ describe('StatusTag 컴포넌트', () => {
     test('RECRUITING 상태일 때 올바른 스타일이 적용되어야 한다', () => {
       render(<StatusTag status="RECRUITING" />);
       const tag = screen.getByRole('status');
-      expect(tag).toHaveClass('bg-[var(--GreenScale-Green1)]');
-      expect(tag).toHaveClass('border-[var(--Keycolor-primary)]');
-      expect(tag).toHaveClass('text-[var(--Keycolor-primary)]');
+      expect(tag).toHaveClass('bg-Green-1');
+      expect(tag).toHaveClass('border-primary');
+      expect(tag).toHaveClass('text-primary');
     });
 
     test('COMPLETED 상태일 때 올바른 스타일이 적용되어야 한다', () => {
       render(<StatusTag status="COMPLETED" />);
       const tag = screen.getByRole('status');
       expect(tag).toHaveClass('bg-[var(--GrayScale-Gray5)]');
-      expect(tag).toHaveClass('border-[var(--text-inactive)]');
-      expect(tag).toHaveClass('text-[var(--text-sub2)]');
+      expect(tag).toHaveClass('border-text-inactive');
+      expect(tag).toHaveClass('text-text-sub2');
     });
 
     test('CLOSED 상태일 때 올바른 스타일이 적용되어야 한다', () => {
       render(<StatusTag status="CLOSED" />);
       const tag = screen.getByRole('status');
       expect(tag).toHaveClass('bg-[var(--GrayScale-Gray5)]');
-      expect(tag).toHaveClass('border-[var(--text-inactive)]');
-      expect(tag).toHaveClass('text-[var(--text-sub2)]');
+      expect(tag).toHaveClass('border-text-inactive');
+      expect(tag).toHaveClass('text-text-sub2');
     });
   });
 
@@ -56,10 +56,6 @@ describe('StatusTag 컴포넌트', () => {
     test('공통 스타일이 적용되어야 한다', () => {
       render(<StatusTag status="RECRUITING" />);
       const tag = screen.getByRole('status');
-      expect(tag).toHaveClass('mx-auto');
-      expect(tag).toHaveClass('flex');
-      expect(tag).toHaveClass('items-center');
-      expect(tag).toHaveClass('justify-center');
       expect(tag).toHaveClass('rounded-3xl');
       expect(tag).toHaveClass('border');
       expect(tag).toHaveClass('px-3');
@@ -80,7 +76,6 @@ describe('StatusTag 컴포넌트', () => {
       render(<StatusTag status="RECRUITING" className="bg-red-500" />);
       const tag = screen.getByRole('status');
       expect(tag).toHaveClass('bg-red-500');
-      expect(tag).toHaveClass('flex');
       expect(tag).toHaveClass('rounded-3xl');
     });
   });

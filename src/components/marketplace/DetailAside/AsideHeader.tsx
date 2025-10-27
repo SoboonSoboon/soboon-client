@@ -22,7 +22,7 @@ export const AsideHeader = ({
 
       {tags && tags.length > 0 && (
         <div className="flex flex-wrap gap-2">
-          <HashTag tags={tags} />
+          <HashTag tags={tags} className="hover:underline" />
         </div>
       )}
     </div>

@@ -100,17 +100,13 @@ export const ShoppingListSection = ({
           .map((shopping) => (
             <Card
               key={shopping.id}
-              className="border-gray-10 cursor-pointer rounded-xl border p-6"
+              className="border-gray-10 flex cursor-pointer flex-col gap-3 rounded-xl border p-6"
               height="auto"
               width="auto"
               onClick={() => onClickCard(shopping.id.toString())}
             >
-              <CardContent className="pt-16">
-                <StatusTag
-                  status={shopping.status}
-                  className="absolute top-0 left-0"
-                />
-
+              <StatusTag status={shopping.status} />
+              <CardContent className="flex flex-col gap-3">
                 {/* <BookmarkButton
                   className="absolute top-[4px] right-0"
                   liked={shopping.bookmarked}
@@ -126,15 +122,15 @@ export const ShoppingListSection = ({
                   <span>・</span>
                   <span>{timeFormatter(shopping.createdAt)}</span>
                 </CardSubtitle>
-                <div className="flex flex-wrap gap-2">
+                <div className="flex flex-wrap gap-x-2">
                   {shopping.tags && shopping.tags.length > 0 && (
                     <HashTag tags={shopping.tags} />
                   )}
                 </div>
               </CardContent>
-              <Line className="mt-6" />
+              <Line />
               <CardFooter className="text-text-sub2 text-sm">
-                <div className="mb-2 flex items-center gap-1 text-sm">
+                <div className="flex items-center gap-1 text-sm">
                   <MapPin className="size-4" />
                   <p>{shopping.location.district}</p>
                 </div>
