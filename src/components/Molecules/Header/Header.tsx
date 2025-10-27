@@ -13,11 +13,11 @@ import { redirectToKakao } from '@/apis/auth/authApi';
 import { useAuthStore } from '@/apis/auth/hooks/authStore';
 import { useState } from 'react';
 
-// TODO: 과도한 Image 태그 사용으로 추후 리팩토링 예정
 const MENU_ICONS = {
   SHARING: {
     LABEL: '함께 소분하기',
     PATH: '/sharing',
+    SIZE: 20,
     ICON: {
       DEFAULT: 'shopping-basket' as const,
       GREEN: 'shopping-basket-green' as const,
@@ -26,6 +26,7 @@ const MENU_ICONS = {
   SHOPPING: {
     LABEL: '함께 장보기',
     PATH: '/shopping',
+    SIZE: 24,
     ICON: {
       DEFAULT: 'sharing-cart' as const,
       GREEN: 'sharing-cart-green' as const,
@@ -57,64 +58,34 @@ export const Header = () => {
     <header className="border-gray-10 h-15 border-b bg-white px-4 dark:bg-black">
       <div className="text-text-main mx-auto flex h-full max-w-[1200px] items-center justify-between bg-white dark:bg-black dark:text-white">
         <div className="flex items-center gap-10">
-          {isLoggedIn ? (
-            <Link href="/">
-              <Logo />
-            </Link>
-          ) : (
-            <>
-              <Logo />
-            </>
-          )}
+          <Link href="/">
+            <Logo />
+          </Link>
 
           <nav className="flex items-center gap-6 text-base font-normal">
-            {isLoggedIn ? (
+            {isLoggedIn && (
               <>
-                <Link
-                  href={MENU_ICONS.SHARING.PATH}
-                  className={`group hover:text-primary flex items-center gap-1 whitespace-nowrap ${
-                    pathname.startsWith(MENU_ICONS.SHARING.PATH)
-                      ? 'text-primary'
-                      : ''
-                  }`}
-                >
-                  <Icon
-                    type={
-                      pathname.startsWith(MENU_ICONS.SHARING.PATH)
-                        ? MENU_ICONS.SHARING.ICON.GREEN
-                        : MENU_ICONS.SHARING.ICON.DEFAULT
-                    }
-                    size={20}
-                    className="transition-colors duration-200 group-hover:opacity-80"
-                  />
-                  <span className="font-memomentKkukkkuk">
-                    {MENU_ICONS.SHARING.LABEL}
-                  </span>
-                </Link>
-                <Link
-                  href={MENU_ICONS.SHOPPING.PATH}
-                  className={`group hover:text-primary flex items-center gap-1 whitespace-nowrap ${
-                    pathname.startsWith(MENU_ICONS.SHOPPING.PATH)
-                      ? 'text-primary'
-                      : ''
-                  }`}
-                >
-                  <Icon
-                    type={
-                      pathname.startsWith(MENU_ICONS.SHOPPING.PATH)
-                        ? MENU_ICONS.SHOPPING.ICON.GREEN
-                        : MENU_ICONS.SHOPPING.ICON.DEFAULT
-                    }
-                    size={24}
-                    className="transition-colors duration-200 group-hover:opacity-80"
-                  />
-                  <span className="font-memomentKkukkkuk">
-                    {MENU_ICONS.SHOPPING.LABEL}
-                  </span>
-                </Link>
+                {Object.entries(MENU_ICONS).map(([key, menu]) => (
+                  <Link
+                    key={key}
+                    href={menu.PATH}
+                    className={`group hover:text-primary flex items-center gap-1 whitespace-nowrap ${
+                      pathname.startsWith(menu.PATH) ? 'text-primary' : ''
+                    }`}
+                  >
+                    <Icon
+                      type={
+                        pathname.startsWith(menu.PATH)
+                          ? menu.ICON.GREEN
+                          : menu.ICON.DEFAULT
+                      }
+                      size={menu.SIZE}
+                      className="transition-colors duration-200 group-hover:opacity-80"
+                    />
+                    <span className="font-memomentKkukkkuk">{menu.LABEL}</span>
+                  </Link>
+                ))}
               </>
-            ) : (
-              <></>
             )}
           </nav>
         </div>
