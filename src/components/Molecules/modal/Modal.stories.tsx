@@ -175,10 +175,6 @@ function ListModal() {
       control: 'boolean',
       description: '내부 닫기 버튼 표시 여부',
     },
-    closeButtonText: {
-      control: 'text',
-      description: '닫기 버튼 텍스트',
-    },
     closeButtonClassName: {
       control: 'text',
       description: '닫기 버튼 커스텀 클래스',

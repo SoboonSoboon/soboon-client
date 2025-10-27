@@ -13,7 +13,6 @@ export interface ModalProps {
   className?: string;
   contentClassName?: string;
   showCloseButton?: boolean;
-  closeButtonText?: string;
   closeButtonClassName?: string;
   lockScroll?: boolean;
   scrollable?: boolean;

@@ -20,3 +20,14 @@ export interface profileDataType {
   district?: string;
   detail?: string;
 }
+
+export interface UserInfoType {
+  city: string;
+  detail: string;
+  district: string;
+  id: number;
+  image: string;
+  name: string;
+  nickname: string | null;
+  province: string;
+}
