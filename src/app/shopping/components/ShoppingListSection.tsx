@@ -6,7 +6,7 @@ import {
   CardFooter,
   CardSubtitle,
   CardTitle,
-  BookmarkButton,
+  // BookmarkButton,
   Line,
   StatusTag,
 } from '@/components';
@@ -15,7 +15,7 @@ import { timeFormatter } from '@/utils';
 import { MapPin } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { NonShoppingList } from './NonShoppingList';
-import { useBookmark } from '@/hooks';
+// import { useBookmark } from '@/hooks';
 import { useEffect } from 'react';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import { getShoppingListApi } from '@/apis/meetings/getShoppingListApi';
@@ -29,7 +29,7 @@ export const ShoppingListSection = ({
   initialShoppingList: ShoppingMeetingsType | null;
 }) => {
   const router = useRouter();
-  const { handleBookmark } = useBookmark();
+  // const { handleBookmark } = useBookmark();
   const { isBottom } = useInfiniteScrollTrigger();
   const searchParams = useSearchParams();
 
@@ -111,13 +111,13 @@ export const ShoppingListSection = ({
                   className="absolute top-0 left-0"
                 />
 
-                <BookmarkButton
+                {/* <BookmarkButton
                   className="absolute top-[4px] right-0"
                   liked={shopping.bookmarked}
                   onChange={() =>
                     handleBookmark(shopping.id.toString(), shopping.bookmarked)
                   }
-                />
+                /> */}
                 <CardTitle className="font-memomentKkukkkuk line-clamp-2">
                   {shopping.title}
                 </CardTitle>
