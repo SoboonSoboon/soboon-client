@@ -1,13 +1,6 @@
 import Image from 'next/image';
 import { cn } from '@/utils/cn';
-
-export type IconType =
-  | 'sharing-cart'
-  | 'sharing-cart-green'
-  | 'shopping-basket'
-  | 'shopping-basket-green'
-  | 'soboon-letters'
-  | 'soboon-logo';
+import type { IconType } from '@/components/Atoms';
 
 interface IconProps {
   type: IconType;
@@ -30,19 +23,23 @@ export function Icon({ type, size = 20, className, alt }: IconProps) {
   const defaultAlt = alt || `${type} icon`;
 
   return (
-    <Image
-      src={iconPath}
-      alt={defaultAlt}
-      width={size}
-      height={size}
-      className={cn('object-contain', className)}
-      style={{
-        width: size,
-        height: size,
-        objectFit: 'contain',
-        objectPosition: 'center',
-        display: 'inline-block',
-      }}
-    />
+    <div
+      className={cn('inline-flex items-center justify-center', className)}
+      style={{ width: size, height: size }}
+    >
+      <Image
+        src={iconPath}
+        alt={defaultAlt}
+        width={size}
+        height={size}
+        className="object-contain"
+        style={{
+          width: '100%',
+          height: '100%',
+          objectFit: 'contain',
+          objectPosition: 'center',
+        }}
+      />
+    </div>
   );
 }

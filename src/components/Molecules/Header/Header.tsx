@@ -8,31 +8,12 @@ import {
   ProfileImg,
   UserMenuModal,
   Icon,
+  type IconType,
 } from '@/components/Atoms';
 import { redirectToKakao } from '@/apis/auth/authApi';
 import { useAuthStore } from '@/apis/auth/hooks/authStore';
 import { useState } from 'react';
-
-const MENU_ICONS = {
-  SHARING: {
-    LABEL: '함께 소분하기',
-    PATH: '/sharing',
-    SIZE: 20,
-    ICON: {
-      DEFAULT: 'shopping-basket' as const,
-      GREEN: 'shopping-basket-green' as const,
-    },
-  },
-  SHOPPING: {
-    LABEL: '함께 장보기',
-    PATH: '/shopping',
-    SIZE: 24,
-    ICON: {
-      DEFAULT: 'sharing-cart' as const,
-      GREEN: 'sharing-cart-green' as const,
-    },
-  },
-} as const;
+import { HEADER_MENU } from '@/constants';
 
 export const Header = () => {
   const pathname = usePathname() || '/';
@@ -65,30 +46,40 @@ export const Header = () => {
           <nav className="flex items-center gap-6 text-base font-normal">
             {isLoggedIn && (
               <>
-                {Object.entries(MENU_ICONS).map(([key, menu]) => (
+                {Object.entries(HEADER_MENU).map(([key, headerMenu]) => (
                   <Link
                     key={key}
-                    href={menu.PATH}
+                    href={headerMenu.PATH}
                     className={`group hover:text-primary flex items-center gap-1 whitespace-nowrap ${
-                      pathname.startsWith(menu.PATH) ? 'text-primary' : ''
+                      pathname.startsWith(headerMenu.PATH) ? 'text-primary' : ''
                     }`}
                   >
-                    <Icon
-                      type={
-                        pathname.startsWith(menu.PATH)
-                          ? menu.ICON.GREEN
-                          : menu.ICON.DEFAULT
-                      }
-                      size={menu.SIZE}
-                      className="transition-colors duration-200 group-hover:opacity-80"
-                    />
-                    <span className="font-memomentKkukkkuk">{menu.LABEL}</span>
+                    <div className="relative">
+                      <Icon
+                        type={
+                          pathname.startsWith(headerMenu.PATH)
+                            ? (headerMenu.ICON.GREEN as IconType)
+                            : (headerMenu.ICON.DEFAULT as IconType)
+                        }
+                        size={headerMenu.SIZE}
+                        className="transition-opacity duration-150 ease-in-out group-hover:opacity-0"
+                      />
+                      <Icon
+                        type={headerMenu.ICON.GREEN as IconType}
+                        size={headerMenu.SIZE}
+                        className="absolute top-0 left-0 opacity-0 transition-opacity duration-150 ease-in-out group-hover:opacity-100"
+                      />
+                    </div>
+                    <span className="font-memomentKkukkkuk">
+                      {headerMenu.LABEL}
+                    </span>
                   </Link>
                 ))}
               </>
             )}
           </nav>
         </div>
+
         <div className="flex items-center gap-5">
           {isLoggedIn ? (
             <>
