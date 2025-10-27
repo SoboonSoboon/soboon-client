@@ -1,4 +1,5 @@
 import { ProfileImg } from '@/components';
+import { HashTag } from '@/app/shopping/components/HashTag';
 
 export const AsideHeader = ({
   title,
@@ -21,9 +22,7 @@ export const AsideHeader = ({
 
       {tags && tags.length > 0 && (
         <div className="flex flex-wrap gap-2">
-          {tags.map((tag) => (
-            <span key={tag}>{tag}</span>
-          ))}
+          <HashTag tags={tags} />
         </div>
       )}
     </div>
