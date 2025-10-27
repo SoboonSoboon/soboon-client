@@ -84,7 +84,7 @@ async function getComments({
   const accessToken = cookieStore.get('accessToken')?.value || '';
   try {
     const response = await fetch(
-      `${process.env.NEXT_PUBLIC_SOBOON_API_URL}/v1/meetings/${id}/comments?sort=${sortType}`,
+      `${process.env.NEXT_PUBLIC_SOBOON_API_URL}/v1/meetings/${id}/comments?page=0&size=10&sort=${sortType}`,
       {
         cache: 'force-cache',
         next: {
