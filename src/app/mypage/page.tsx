@@ -25,9 +25,9 @@ function MyPageContent() {
           onSubTabChange={handleSubTabChange}
         />
 
-        <div className="flex-1 pt-6">
+        <div className="flex-1 pt-4 sm:pt-6">
           {currentData.loading ? (
-            <div className="flex items-center justify-center py-20">
+            <div className="flex items-center justify-center py-12 sm:py-20">
               <div className="text-center">
                 <div className="border-gray-90 mx-auto mb-4 h-8 w-8 animate-spin rounded-full border-b-2"></div>
                 <p className="text-gray-60">로딩 중...</p>

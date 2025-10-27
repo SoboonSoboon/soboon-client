@@ -1,6 +1,7 @@
 'use client';
 
 import { MYPAGE_TAB_LABELS, MYPAGE_SUB_TAB_LABELS } from '@/constants';
+import { KeywordChip } from '@/components/Atoms';
 
 export type MainTabType = 'host' | 'participate' | 'bookmark';
 export type SubTabType = 'SHOPPING' | 'DIVIDING';
@@ -19,10 +20,10 @@ export const TabSection = ({
   onSubTabChange,
 }: TabSectionProps) => {
   return (
-    <div className="flex flex-col gap-6">
+    <div className="flex flex-col gap-4 sm:gap-6">
       {/* 메인 탭 */}
       <div className="border-text-line2 border-b">
-        <div className="flex gap-2.5">
+        <div className="flex gap-2 sm:gap-2.5">
           {MYPAGE_TAB_LABELS.map((tab) => (
             <button
               key={tab.value}
@@ -30,7 +31,7 @@ export const TabSection = ({
                 onMainTabChange(tab.value as MainTabType),
                 console.log(tab.value)
               )}
-              className={`font-memomentKkukkkuk relative transition-colors ${
+              className={`font-memomentKkukkkuk relative text-base transition-colors sm:text-lg ${
                 activeMainTab === tab.value
                   ? 'text-quaternary'
                   : 'text-text-sub2 cursor-pointer'
@@ -46,20 +47,16 @@ export const TabSection = ({
       </div>
 
       {/* 서브 탭 */}
-      <div className="flex gap-2.5">
+      <div className="flex gap-2 sm:gap-2.5">
         {MYPAGE_SUB_TAB_LABELS.map((tab) => (
-          <button
+          <KeywordChip
             key={tab.key}
             onClick={() => onSubTabChange(tab.value as SubTabType)}
-            className={`h-9 w-auto rounded-lg border px-4 text-sm font-medium transition-colors ${
-              activeSubTab === tab.value
-                ? 'bg-gray-70 text-white'
-                : 'bg-gray-5 cursor-pointer border-none'
-            }`}
-            disabled={activeSubTab === tab.value}
+            variant={activeSubTab === tab.value ? 'active' : 'inactive'}
+            className="text-xs sm:text-sm"
           >
             {tab.label}
-          </button>
+          </KeywordChip>
         ))}
       </div>
     </div>

@@ -63,7 +63,7 @@ export const Modal: React.FC<ModalProps> = ({
     >
       <div
         className={cn(
-          'relative rounded-lg border border-gray-200 bg-white shadow-lg',
+          'relative rounded-3xl border border-gray-200 bg-white shadow-lg',
           getSizeClass(size),
           scrollable && 'overflow-y-auto',
           contentClassName,
@@ -75,7 +75,7 @@ export const Modal: React.FC<ModalProps> = ({
           <button
             onClick={onClose}
             className={cn(
-              'absolute top-6 right-6 z-10 cursor-pointer',
+              'absolute top-6 right-6 z-10 cursor-pointer p-1',
               closeButtonClassName,
             )}
             aria-label="닫기"
