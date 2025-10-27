@@ -83,7 +83,7 @@ export const SharingListSection = ({
 
   return (
     <>
-      <div className="grid grid-cols-3 gap-8">
+      <div className="grid grid-cols-1 gap-x-4 gap-y-6 sm:grid-cols-2 sm:gap-x-6 sm:gap-y-8 lg:grid-cols-3 lg:gap-x-8 lg:gap-y-10">
         {dividingList.pages
           .flatMap((page) => page.content)
           .map((dividing) => (
