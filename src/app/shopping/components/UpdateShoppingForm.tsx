@@ -90,12 +90,7 @@ export function UpdateShoppingForm({
 
   useEffect(() => {
     if (meetingDetail) {
-      console.log('meetingDetail:', meetingDetail);
-      console.log('tags:', meetingDetail.tags);
-      console.log('category:', meetingDetail.category);
-
       const existingTags = meetingDetail.tags || [];
-      console.log('existingTags:', existingTags);
 
       reset({
         title: meetingDetail.title || '',
@@ -124,10 +119,8 @@ export function UpdateShoppingForm({
         setTimeout(() => {
           setValue('tags', existingTags);
           clearErrors('tags');
-          console.log('태그 설정됨:', existingTags);
         }, 100);
       } else {
-        console.log('태그 데이터가 없음');
       }
     }
   }, [meetingDetail, reset, setValue, clearErrors]);
@@ -165,19 +158,14 @@ export function UpdateShoppingForm({
   };
 
   const handleTagClick = (tagValue: string) => {
-    console.log('태그 클릭됨:', tagValue);
     const currentTags = watch('tags');
-    console.log('현재 태그들:', currentTags);
     const isSelected = currentTags.includes(tagValue);
-    console.log('선택된 상태:', isSelected);
 
     if (isSelected) {
       const newTags = currentTags.filter((t) => t !== tagValue);
-      console.log('태그 제거 후:', newTags);
       setValue('tags', newTags);
     } else {
       const newTags = [...currentTags, tagValue];
-      console.log('태그 추가 후:', newTags);
       setValue('tags', newTags);
     }
     clearErrors('tags');
@@ -241,9 +229,7 @@ export function UpdateShoppingForm({
             <div className="mt-3 flex flex-wrap gap-2">
               {SHOPPING_TAGS.map((tag) => {
                 const isSelected = watch('tags').includes(tag.value);
-                console.log(
-                  `태그 ${tag.value}: 선택됨=${isSelected}, 현재 tags=${JSON.stringify(watch('tags'))}`,
-                );
+
                 return (
                   <KeywordChip
                     key={tag.value}
