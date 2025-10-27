@@ -22,7 +22,7 @@ export const CommentSection = ({
 
       {/* 댓글 리스트 영역 */}
       <CommentListContainer
-        commentList={commentsList?.content || []}
+        initialCommentList={commentsList?.content || []}
         isAuthor={isAuthor}
       />
     </div>
