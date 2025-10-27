@@ -1,12 +1,10 @@
-import { getReceivedReview } from '@/apis/mypage/getReview';
 import { ProfileSideBar } from './components';
 
-export default async function MyPageLayout({
+export default function MyPageLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const reviews = await getReceivedReview();
   return (
     <div className="min-h-screen">
       <div className="mx-auto max-w-[1200px]">
@@ -14,7 +12,7 @@ export default async function MyPageLayout({
           {/* 왼쪽 고정 프로필 */}
           <div className="w-full md:w-[340px] md:flex-shrink-0">
             <div className="md:sticky md:top-20">
-              <ProfileSideBar reviewData={reviews.data} />
+              <ProfileSideBar />
             </div>
           </div>
 

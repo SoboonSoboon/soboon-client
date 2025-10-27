@@ -1,6 +1,6 @@
 'use client';
 
-import { Bookmark, MapPin } from 'lucide-react';
+import { MapPin } from 'lucide-react';
 import {
   Card,
   CardContent,
@@ -8,24 +8,25 @@ import {
   CardImage,
   CardTitle,
 } from '@/components/Molecules/Card/Card';
-import { MeetingItem } from '../utils/mypageType';
+
 import { Button, StatusTag } from '@/components';
 import { cn, timeFormatter } from '@/utils';
 import { useRouter } from 'next/navigation';
 
-import { ReviewModal } from './ReviewModal';
 import {
-  useReviewTargets,
-  usePostHostReview,
-  usePostParticipantReview,
-} from '../hook/api/useReview';
+  postHostReview,
+  postParticipantReview,
+} from '@/apis/mypage/postReview';
 import { useQueryClient } from '@tanstack/react-query';
 import { useModal } from '@/components/Molecules/modal';
 import { ReviewKeyword } from '@/types/common';
 import { useToast } from '@/components/Atoms/Toast/useToast';
+import { useReviewTargets } from '../../hook/api/useReview';
+import { ReviewModal } from '../ReviewModal';
+import { MeetingItem } from '../../utils/mypageType';
 
 // 모임 카드 컴포넌트
-export const MeetingCard = ({
+export const MeetingDividingCard = ({
   meeting,
   activeMainTab,
 }: {
@@ -35,11 +36,13 @@ export const MeetingCard = ({
   const router = useRouter();
   const queryClient = useQueryClient();
   const toast = useToast();
+
+  // 완료된 모임에 대해서만 리뷰 대상 데이터를 가져옴
   const {
     data: reviewTargetData,
     isLoading,
     error,
-  } = useReviewTargets(meeting.groupId);
+  } = useReviewTargets(meeting.groupId, meeting.status === 'COMPLETED');
   const reviewTargetList = reviewTargetData?.attendees || [];
 
   // 지역표기
@@ -48,58 +51,56 @@ export const MeetingCard = ({
   // 리뷰 모달 관리
   const reviewModal = useModal();
 
-  // 리뷰 제출 훅들
-  const postHostReview = usePostHostReview();
-  const postParticipantReview = usePostParticipantReview();
+  // 리뷰 모달 열기 핸들러
+  const handleReviewModalOpen = () => {
+    if (meeting.status !== 'COMPLETED') return;
+    reviewModal.open();
+  };
 
   // 리뷰 제출 핸들러
-  const handleReviewSubmit = (
+  const handleReviewSubmit = async (
     targetUserId: number,
     selectedKeywords: ReviewKeyword[],
   ) => {
     const eventId = reviewTargetData?.eventId;
     if (!eventId) return;
 
-    if (activeMainTab === 'host') {
-      postHostReview.mutate(
-        {
+    try {
+      let result;
+
+      if (activeMainTab === 'host') {
+        result = await postHostReview({
           eventId,
           userId: targetUserId,
           selectedReviews: selectedKeywords,
-        },
-        {
-          onSuccess: () => {
-            // 리뷰 제출 성공 후 캐시 무효화
-            queryClient.invalidateQueries({
-              queryKey: ['reviewTargets', meeting.groupId],
-            });
-            // 리뷰 제출 성공 Toast 메시지
-            toast.success('리뷰해주셔서 감사합니다');
-          },
-        },
-      );
-    } else {
-      postParticipantReview.mutate(
-        {
+        });
+      } else {
+        result = await postParticipantReview({
           eventId,
           userId: targetUserId,
           selectedReviews: selectedKeywords,
-        },
-        {
-          onSuccess: () => {
-            // 리뷰 제출 성공 후 캐시 무효화
-            queryClient.invalidateQueries({
-              queryKey: ['reviewTargets', meeting.groupId],
-            });
-            // 리뷰 제출 성공 Toast 메시지
-            toast.success('리뷰해주셔서 감사합니다');
-            // 참여자가 리뷰 제출 시 모달 닫기
-            if (activeMainTab === 'participate') {
-              reviewModal.close();
-            }
-          },
-        },
-      );
+        });
+      }
+
+      if (result.success) {
+        // 리뷰 제출 성공 후 캐시 무효화
+        queryClient.invalidateQueries({
+          queryKey: ['reviewTargets', meeting.groupId],
+        });
+        // 리뷰 제출 성공 Toast 메시지
+        toast.success('리뷰해주셔서 감사합니다');
+
+        // 참여자가 리뷰 제출 시 모달 닫기
+        if (activeMainTab === 'participate') {
+          reviewModal.close();
+        }
+      } else {
+        // 에러 처리
+        toast.error(result.error || '리뷰 제출에 실패했습니다');
+      }
+    } catch (error) {
+      console.error('Review submission error:', error);
+      toast.error('리뷰 제출 중 오류가 발생했습니다');
     }
   };
 
@@ -115,32 +116,27 @@ export const MeetingCard = ({
   return (
     <div className="flex-shrink-0">
       <Card
-        className="h-full w-full cursor-pointer overflow-hidden bg-white"
+        className="h-[529px] w-full cursor-pointer overflow-hidden bg-white"
         onClick={handleCardClick}
       >
         <CardContent>
-          <div className="pb-4 sm:pb-5">
-            <div className="absolute top-4 left-3 z-10 w-full">
-              {/* <div className="flex items-center justify-between"> */}
-              <StatusTag
-                status={meeting.status}
-                className="!mx-0 h-8 whitespace-nowrap"
-              />
-              {/* <Bookmark className="fill-gray-40 text-gray-40 size-5 border-none" /> */}
-              {/* </div> */}
-            </div>
-            {/* 이미지 영역 */}
-            {meeting.thumbnailUrl ? (
-              <div className="relative h-full w-full rounded-lg">
-                <CardImage
-                  src={meeting.thumbnailUrl}
-                  alt={meeting.title}
-                  className="h-full w-full object-cover"
+          <div className="pb-5">
+            <div className="absolute top-4 left-0 z-10 w-full px-3">
+              <div className="flex items-center justify-start">
+                <StatusTag
+                  status={meeting.status}
+                  className="!mx-0 h-8 whitespace-nowrap"
                 />
               </div>
-            ) : (
-              <div className="bg-gray-5 border-gray-10 relative h-[199px] w-full rounded-lg border" />
-            )}
+            </div>
+            {/* 이미지 영역 */}
+            <div className="relative h-full w-full rounded-lg">
+              <CardImage
+                src={meeting.thumbnailUrl}
+                alt={meeting.title}
+                className="h-full w-full object-cover"
+              />
+            </div>
           </div>
           {/* 컨텐츠 영역 */}
           <div className="flex flex-col gap-3">
@@ -169,7 +165,7 @@ export const MeetingCard = ({
               <Button
                 variant={
                   meeting.status === 'RECRUITING' ||
-                  reviewTargetList.length === 0 ||
+                  meeting.status !== 'COMPLETED' ||
                   (activeMainTab === 'participate' &&
                     reviewTargetList[0]?.alreadyReviewed) ||
                   (activeMainTab === 'host' &&
@@ -178,8 +174,7 @@ export const MeetingCard = ({
                     : 'outline'
                 }
                 label={
-                  meeting.status === 'RECRUITING' ||
-                  reviewTargetList.length === 0
+                  meeting.status === 'RECRUITING'
                     ? '모집중'
                     : (activeMainTab === 'participate' &&
                           reviewTargetList[0]?.alreadyReviewed) ||
@@ -194,11 +189,11 @@ export const MeetingCard = ({
                 size="small"
                 onClick={(e) => {
                   e.stopPropagation();
-                  reviewModal.open();
+                  handleReviewModalOpen();
                 }}
                 disabled={
                   meeting.status === 'RECRUITING' ||
-                  reviewTargetList.length === 0 ||
+                  meeting.status !== 'COMPLETED' ||
                   (activeMainTab === 'participate' &&
                     reviewTargetList[0]?.alreadyReviewed) ||
                   (activeMainTab === 'host' &&
@@ -214,9 +209,9 @@ export const MeetingCard = ({
         modal={reviewModal}
         reviewTargetList={reviewTargetList}
         activeMainTab={activeMainTab}
+        handleReviewSubmit={handleReviewSubmit}
         isLoading={isLoading}
         error={error}
-        handleReviewSubmit={handleReviewSubmit}
       />
     </div>
   );
