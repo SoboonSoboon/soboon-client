@@ -3,6 +3,7 @@
 import { memo, useState, useEffect } from 'react';
 import Image from 'next/image';
 import { Bookmark } from 'lucide-react';
+import { cn } from '@/utils/cn';
 
 interface cardContentProps {
   className?: string;
@@ -86,8 +87,23 @@ export const CardImage = ({ className, src, alt }: cardImageProps) => {
   );
 };
 
-export const CardTitle = ({ className, children }: cardContentProps) => {
-  return <h3 className={`${className} text-2xl text-[#1a1a1a]`}>{children}</h3>;
+export const CardTitle = ({
+  className,
+  children,
+  status,
+}: cardContentProps & {
+  status?: 'RECRUITING';
+}) => {
+  return (
+    <h3
+      className={cn(
+        `${className} text-2xl`,
+        status === 'RECRUITING' ? 'text-text-main' : 'text-text-sub2',
+      )}
+    >
+      {children}
+    </h3>
+  );
 };
 
 export const CardSubtitle = ({ className, children }: cardContentProps) => {
