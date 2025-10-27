@@ -2,6 +2,7 @@
 
 import { Suspense } from 'react';
 import { TabSection, CardList } from '@/app/mypage/components';
+import { EmptyState, ErrorPage } from '@/components/Molecules';
 
 import { useMyPageData } from './hook/components/useMypageData';
 
@@ -33,20 +34,13 @@ function MyPageContent() {
               </div>
             </div>
           ) : currentData.error ? (
-            <div className="flex items-center justify-center py-20">
-              <div className="text-center">
-                <h2 className="mb-2 text-xl font-bold text-red-500">
-                  데이터를 불러올 수 없습니다
-                </h2>
-                <p className="text-gray-60 mb-4">{currentData.error.message}</p>
-                <button
-                  onClick={() => window.location.reload()}
-                  className="hover:bg-blue-60 rounded bg-blue-700 px-4 py-2 text-white"
-                >
-                  다시 시도
-                </button>
-              </div>
-            </div>
+            <ErrorPage />
+          ) : filteredData.length === 0 ? (
+            <EmptyState
+              type="mypage"
+              mainTab={activeMainTab}
+              subTab={activeSubTab === 'SHOPPING' ? 'shopping' : 'dividing'}
+            />
           ) : (
             <CardList data={filteredData} activeMainTab={activeMainTab} />
           )}
