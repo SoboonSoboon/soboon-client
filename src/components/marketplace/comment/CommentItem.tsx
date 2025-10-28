@@ -61,14 +61,11 @@ export const CommentItem = ({
       '';
     const response = await updateComment(null, formData, commentId, meetingId);
     if (response) {
-      success('댓글 수정 성공');
+      success(response.message || '댓글 수정을 완료했어요.');
       handleCancelClick();
     } else {
-      error('댓글 수정 실패');
+      error(response.message || '댓글 수정에 실패했어요.');
     }
-
-    setIsOpen(false);
-    setIsEditing(false);
   };
   return (
     <div>
