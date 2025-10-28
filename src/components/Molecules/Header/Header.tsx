@@ -83,7 +83,7 @@ export const Header = () => {
         <div className="flex items-center gap-2 sm:gap-3 md:gap-4 lg:gap-5">
           {isLoggedIn ? (
             <>
-              <div className="relative">
+              <div className="relative cursor-pointer">
                 <span
                   className="flex items-center gap-1 sm:gap-2 md:gap-[10px]"
                   onClick={() => {
