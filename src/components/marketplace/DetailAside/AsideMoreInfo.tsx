@@ -1,7 +1,7 @@
 import { StatusTag } from '@/components';
 import { Bookmark, EllipsisVertical } from 'lucide-react';
 import { useRef, useState } from 'react';
-import { ActionMenu } from '../ActionMenu/ActionMenu';
+import { PostActionMenu } from '@/components/marketplace/ActionMenu/PostActionMenu';
 import { StatusType } from '@/types/common';
 
 export const AsideMoreInfo = ({
@@ -18,7 +18,7 @@ export const AsideMoreInfo = ({
   isAuthor: boolean;
 }) => {
   const [open, setOpen] = useState(false);
-  const buttonRef = useRef<HTMLDivElement>(null);
+  const buttonRef = useRef<HTMLElement>(null);
 
   return (
     <div className="flex w-full justify-between">
@@ -47,9 +47,9 @@ export const AsideMoreInfo = ({
         </div>
         {open && isAuthor && (
           <div className="absolute top-8 right-0 z-50">
-            <ActionMenu
+            <PostActionMenu
               onClose={() => setOpen(false)}
-              buttonRef={buttonRef as React.RefObject<HTMLElement>}
+              buttonRef={buttonRef}
               meetingId={+meetingId}
             />
           </div>
