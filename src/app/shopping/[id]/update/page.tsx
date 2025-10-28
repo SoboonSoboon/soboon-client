@@ -43,7 +43,7 @@ export default async function UpdateShoppingPage({
 
   if (!meetingDetail) {
     return (
-      <div className="mx-auto w-full max-w-[760px] px-4 sm:mt-6 sm:px-6 lg:mt-6">
+      <div className="mx-auto w-full max-w-[760px] px-4 sm:px-6">
         <div className="flex items-center justify-center py-8">
           <div className="text-text-sub2">
             모임 데이터를 불러올 수 없습니다.

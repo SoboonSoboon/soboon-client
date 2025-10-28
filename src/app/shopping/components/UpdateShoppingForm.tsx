@@ -18,7 +18,6 @@ import { ApiResponse } from '@/types/common';
 import { useToast, KeywordChip } from '@/components/Atoms';
 import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
-import { ChevronLeft } from 'lucide-react';
 import { MeetingDetailType } from '@/types/meetingsType';
 
 const shoppingFormSchema = z.object({
@@ -172,7 +171,7 @@ export function UpdateShoppingForm({
   };
 
   return (
-    <div className="mx-auto mt-4 w-full max-w-[760px] sm:mt-6 lg:mt-6">
+    <div className="mx-auto w-full max-w-[760px]">
       <div className="border-gray-10 flex flex-col gap-6 rounded-xl border bg-white p-4 sm:gap-8 sm:p-6 lg:gap-10">
         <span className="text-2xl font-bold sm:text-2xl">
           <strong className="text-primary">장보기 </strong>
