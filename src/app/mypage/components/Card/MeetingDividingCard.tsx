@@ -130,11 +130,11 @@ export const MeetingDividingCard = ({
               </div>
             </div>
             {/* 이미지 영역 */}
-            <div className="relative aspect-[3/2] w-full rounded-lg">
+            <div className="border-gray-10 relative aspect-[3/2] w-full overflow-hidden rounded-lg border-1">
               <CardImage
                 src={meeting.thumbnailUrl}
                 alt={meeting.title}
-                className="absolute inset-0 h-full w-full object-cover"
+                className="absolute inset-0 h-full w-full object-cover transition-transform duration-300 hover:scale-110"
               />
             </div>
           </div>
