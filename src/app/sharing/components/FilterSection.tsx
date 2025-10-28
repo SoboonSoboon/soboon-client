@@ -2,6 +2,7 @@
 
 import { Dropdown } from '@/components/Molecules/Dropdown';
 import { Checkbox, Label } from '@/components';
+import { KeywordChip } from '@/components/Atoms';
 import { PROVINCE_OPTIONS, GET_CITY_OPTIONS } from '@/constants';
 import categories from '@/constants/categories';
 import { useFilterParams } from '@/hooks/useFilterParams';
@@ -104,17 +105,14 @@ export const FilterSection = () => {
         <h5 className="mb-4 text-lg">카테고리</h5>
         <div className="flex flex-col gap-2">
           {categories.map((category) => (
-            <button
+            <KeywordChip
               key={category.value}
               onClick={() => handleProductTypeChange(category.value)}
-              className={`w-fit shrink-0 cursor-pointer rounded-md px-4 py-2 ${
-                activeProductType === category.value
-                  ? 'bg-[var(--GreenScale-Green10)]'
-                  : 'bg-gray-5'
-              }`}
-            >
-              {category.label}
-            </button>
+              label={category.label}
+              variant={
+                activeProductType === category.value ? 'active' : 'inactive'
+              }
+            />
           ))}
         </div>
       </div>

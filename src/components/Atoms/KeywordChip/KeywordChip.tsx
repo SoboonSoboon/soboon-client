@@ -19,7 +19,7 @@ export const KeywordChip = ({
   ...props
 }: KeywordChipProps) => {
   const baseStyles =
-    'text-text-main py-2 px-4 cursor-pointer rounded-lg text-sm font-medium transition-colors';
+    'text-text-main py-2 px-4 cursor-pointer rounded-lg text-sm font-medium transition-colors w-fit shrink-0';
 
   const variants = {
     active: 'bg-Green-10',
