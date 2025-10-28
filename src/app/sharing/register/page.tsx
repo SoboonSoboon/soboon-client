@@ -7,13 +7,15 @@ import { GET_MODEL_DISTRICT_OPTIONS } from '@/constants/locations';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import z from 'zod';
-import ImageUploadForm from '../../../components/marketplace/registerModal/imageLoader';
+import ImageUploadForm from '@/components/marketplace/registerModal/imageLoader';
 import { useMutation } from '@tanstack/react-query';
 import { dividingRegisterApi } from '@/apis';
 import { ApiResponse } from '@/types/common';
 import { useToast } from '@/components/Atoms';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
+import { useUserLocation } from '@/hooks';
+import { useEffect } from 'react';
 
 const DIVIDING_PRODUCT_TYPE_OPTIONS = [
   { value: 'FRESH', label: '신선식품' },
@@ -84,6 +86,7 @@ const dividingFormSchema = z.object({
 type DividingFormData = z.infer<typeof dividingFormSchema>;
 
 export default function DividingRegisterPage() {
+  const { userLocation, hasLocation } = useUserLocation();
   const {
     register,
     handleSubmit,
@@ -110,6 +113,15 @@ export default function DividingRegisterPage() {
   });
   const { success, error } = useToast();
   const router = useRouter();
+
+  useEffect(() => {
+    if (hasLocation && userLocation) {
+      setValue('location.province', userLocation.province || '');
+      setValue('location.city', userLocation.city || '');
+      setValue('location.district', userLocation.district || '');
+      setValue('location.detail', userLocation.detail || '');
+    }
+  }, [hasLocation, userLocation, setValue]);
 
   const { mutate: dividingRegister } = useMutation({
     mutationFn: async (formatData: DividingFormData) => {

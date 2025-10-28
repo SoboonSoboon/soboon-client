@@ -6,7 +6,7 @@ import {
   GET_MODEL_DISTRICT_OPTIONS,
   CAPACITY_OPTIONS,
 } from '@/constants';
-import { useMemo, useState } from 'react';
+import { useMemo, useState, useEffect } from 'react';
 import { shoppingRegisterApi } from '@/apis/meetings/registerApi';
 import { useMutation } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
@@ -20,6 +20,7 @@ import {
   Label,
 } from '@/components/Atoms';
 import { Dropdown } from '@/components/Molecules';
+import { useUserLocation } from '@/hooks';
 
 interface ShoppingRegisterFormProps {
   handleClose: () => void;
@@ -30,6 +31,7 @@ export function ShoppingRegisterForm({
 }: ShoppingRegisterFormProps) {
   const { success, error } = useToast();
   const router = useRouter();
+  const { userLocation, hasLocation } = useUserLocation();
 
   const [formData, setFormData] = useState({
     title: '',
@@ -43,6 +45,20 @@ export function ShoppingRegisterForm({
     description: '',
     capacity: 0,
   });
+
+  useEffect(() => {
+    if (hasLocation && userLocation) {
+      setFormData((prev) => ({
+        ...prev,
+        location: {
+          province: userLocation.province || '',
+          city: userLocation.city || '',
+          district: userLocation.district || '',
+          detail: userLocation.detail || '',
+        },
+      }));
+    }
+  }, [hasLocation, userLocation]);
 
   const isValid = useMemo(() => {
     return (

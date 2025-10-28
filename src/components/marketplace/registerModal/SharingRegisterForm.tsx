@@ -5,7 +5,7 @@ import {
   GET_MODEL_CITY_OPTIONS,
   GET_MODEL_DISTRICT_OPTIONS,
 } from '@/constants';
-import { useMemo, useState } from 'react';
+import { useMemo, useState, useEffect } from 'react';
 import { sharingRegisterApi } from '@/apis/meetings/registerApi';
 import {
   useToast,
@@ -21,6 +21,7 @@ import { ApiResponse } from '@/types/common';
 import categories from '@/constants/categories';
 import ImageUploadForm from './imageLoader';
 import RegisterModalHeader from './RegisterModalHeader';
+import { useUserLocation } from '@/hooks';
 
 interface SharingRegisterFormProps {
   handleClose: () => void;
@@ -29,6 +30,7 @@ interface SharingRegisterFormProps {
 export function SharingRegisterForm({ handleClose }: SharingRegisterFormProps) {
   const { success, error } = useToast();
   const router = useRouter();
+  const { userLocation, hasLocation } = useUserLocation();
 
   const [formData, setFormData] = useState({
     title: '',
@@ -43,6 +45,18 @@ export function SharingRegisterForm({ handleClose }: SharingRegisterFormProps) {
     productType: '',
     imageUrls: [] as File[],
   });
+
+  useEffect(() => {
+    if (hasLocation && userLocation) {
+      setFormData((prev) => ({
+        ...prev,
+        province: userLocation.province || '',
+        city: userLocation.city || '',
+        district: userLocation.district || '',
+        detail: userLocation.detail || '',
+      }));
+    }
+  }, [hasLocation, userLocation]);
 
   const isValid = useMemo(() => {
     return (

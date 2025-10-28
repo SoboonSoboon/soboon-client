@@ -16,6 +16,8 @@ import { useMutation } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
 import { useForm } from 'react-hook-form';
 import z from 'zod';
+import { useUserLocation } from '@/hooks';
+import { useEffect } from 'react';
 
 const shoppingFormSchema = z.object({
   title: z
@@ -61,6 +63,7 @@ const shoppingFormSchema = z.object({
 type ShoppingFormData = z.infer<typeof shoppingFormSchema>;
 
 export default function ShoppingRegisterPage() {
+  const { userLocation, hasLocation } = useUserLocation();
   const {
     register,
     handleSubmit,
@@ -86,6 +89,15 @@ export default function ShoppingRegisterPage() {
   });
   const { success, error } = useToast();
   const router = useRouter();
+
+  useEffect(() => {
+    if (hasLocation && userLocation) {
+      setValue('location.province', userLocation.province || '');
+      setValue('location.city', userLocation.city || '');
+      setValue('location.district', userLocation.district || '');
+      setValue('location.detail', userLocation.detail || '');
+    }
+  }, [hasLocation, userLocation, setValue]);
 
   const { mutate: shoppingRegister } = useMutation({
     mutationFn: async (formData: ShoppingFormData) => {
