@@ -165,7 +165,7 @@ export const SharingListSection = ({
       </div>
       <p className="text-text-sub2 mt-6 text-center text-sm">
         {isFetchingNextPage && '로딩 중이예요 ...'}
-        {!hasNextPage && '모든 게시글을 불러왔어요.'}
+        {!hasNextPage && '모든 게시글을 불러왔어요 👋'}
       </p>
     </>
   );
