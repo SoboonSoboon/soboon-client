@@ -1,6 +1,6 @@
 'use client';
 
-import { EllipsisVertical } from 'lucide-react';
+import { EllipsisVertical, LockKeyhole } from 'lucide-react';
 import { timeFormatter } from '@/utils';
 import { CommentType, ReplyType } from '@/types/commentType';
 import { Button, ProfileImg, ProfilePopover, TextInput } from '@/components';
@@ -140,7 +140,10 @@ export const CommentItem = ({
             </form>
           ) : comment.secret ? (
             userId === comment.authorId || isAuthor ? (
-              <p className="text-gray-95">{comment.content}</p>
+              <div className="flex items-center gap-2">
+                <LockKeyhole className="size-4 text-gray-50" />
+                <p className="text-gray-95">{comment.content}</p>
+              </div>
             ) : (
               <p className="text-gray-60">
                 비밀 댓글입니다. 작성자만 확인할 수 있습니다.
