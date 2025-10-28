@@ -72,6 +72,17 @@ export const PostActionMenu = ({
     }
   };
 
+  const handleCancelButtonClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.stopPropagation();
+    deleteModal.close();
+  };
+
+  const handleConfirmButtonClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    e.stopPropagation();
+    handleDeleteConfirmClick();
+  };
+
   const POST_ACTION_MENU_OPTIONS: {
     id: string;
     label: string;
@@ -129,20 +140,13 @@ export const PostActionMenu = ({
           <div className="flex justify-center gap-2">
             <Button
               variant="outline"
-              onClick={(e) => {
-                e.stopPropagation();
-                deleteModal.close();
-              }}
+              onClick={handleCancelButtonClick}
               label={MODAL_MESSAGES.DELETE_POST.BUTTONS.CANCEL}
               className="w-28"
             />
             <Button
               variant="filled"
-              onClick={(e) => {
-                e.preventDefault();
-                e.stopPropagation();
-                handleDeleteConfirmClick();
-              }}
+              onClick={handleConfirmButtonClick}
               disabled={isDeleting}
               label={
                 isDeleting
