@@ -13,10 +13,11 @@ import {
 import { ApiResponse } from '@/types/common';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useMutation } from '@tanstack/react-query';
-import { ChevronLeft } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { useForm } from 'react-hook-form';
 import z from 'zod';
+import { useUserLocation } from '@/hooks';
+import { useEffect } from 'react';
 
 const shoppingFormSchema = z.object({
   title: z
@@ -62,6 +63,7 @@ const shoppingFormSchema = z.object({
 type ShoppingFormData = z.infer<typeof shoppingFormSchema>;
 
 export default function ShoppingRegisterPage() {
+  const { userLocation, hasLocation } = useUserLocation();
   const {
     register,
     handleSubmit,
@@ -88,6 +90,15 @@ export default function ShoppingRegisterPage() {
   const { success, error } = useToast();
   const router = useRouter();
 
+  useEffect(() => {
+    if (hasLocation && userLocation) {
+      setValue('location.province', userLocation.province || '');
+      setValue('location.city', userLocation.city || '');
+      setValue('location.district', userLocation.district || '');
+      setValue('location.detail', userLocation.detail || '');
+    }
+  }, [hasLocation, userLocation, setValue]);
+
   const { mutate: shoppingRegister } = useMutation({
     mutationFn: async (formData: ShoppingFormData) => {
       const response = await shoppingRegisterApi(formData);
@@ -107,16 +118,7 @@ export default function ShoppingRegisterPage() {
   };
 
   return (
-    <div className="mx-auto w-full max-w-[760px] px-4 sm:mt-6 sm:px-6 lg:mt-6">
-      <div
-        className="flex cursor-pointer items-center gap-2 pb-4"
-        onClick={() => router.back()}
-      >
-        <div>
-          <ChevronLeft className="text-text-sub2 size-6" />
-        </div>
-        <span className="text-text-sub2">목록</span>
-      </div>
+    <div className="mx-auto w-full max-w-[760px]">
       <div className="border-gray-10 flex flex-col gap-6 rounded-xl border bg-white p-4 sm:gap-8 sm:p-6 lg:gap-10">
         <span className="text-2xl font-bold sm:text-2xl">
           <strong className="text-primary">장보기 </strong>

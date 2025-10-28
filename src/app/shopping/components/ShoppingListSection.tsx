@@ -6,7 +6,6 @@ import {
   CardFooter,
   CardSubtitle,
   CardTitle,
-  // BookmarkButton,
   Line,
   StatusTag,
 } from '@/components';
@@ -15,7 +14,6 @@ import { timeFormatter } from '@/utils';
 import { MapPin } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 
-// import { useBookmark } from '@/hooks';
 import { useEffect } from 'react';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import { getShoppingListApi } from '@/apis/meetings/getShoppingListApi';
@@ -31,7 +29,6 @@ export const ShoppingListSection = ({
   initialShoppingList: ShoppingMeetingsType | null;
 }) => {
   const router = useRouter();
-  // const { handleBookmark } = useBookmark();
   const { isBottom } = useInfiniteScrollTrigger();
   const searchParams = useSearchParams();
   const { search } = useShoppingSearch();
@@ -121,7 +118,7 @@ export const ShoppingListSection = ({
 
   return (
     <>
-      <div className="columns-1 gap-4 space-y-4 md:columns-2 md:gap-5 md:space-y-5 xl:columns-4">
+      <div className="columns-1 gap-4 space-y-4 sm:columns-2 md:columns-3 md:gap-5 md:space-y-5 xl:columns-4">
         {shoppingList.pages
           .flatMap((page) => page.content)
           .map((shopping) => (
@@ -132,13 +129,6 @@ export const ShoppingListSection = ({
             >
               <StatusTag status={shopping.status} />
               <CardContent className="flex flex-col gap-3">
-                {/* <BookmarkButton
-                  className="absolute top-[4px] right-0"
-                  liked={shopping.bookmarked}
-                  onChange={() =>
-                    handleBookmark(shopping.id.toString(), shopping.bookmarked)
-                  }
-                /> */}
                 <CardTitle
                   className="font-memomentKkukkkuk line-clamp-2"
                   status={shopping.status as 'RECRUITING'}
