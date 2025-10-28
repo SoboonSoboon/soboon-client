@@ -142,7 +142,9 @@ export const CommentItem = ({
             userId === comment.authorId || isAuthor ? (
               <div className="flex items-center gap-2">
                 <LockKeyhole className="size-4 text-gray-50" />
-                <p className="text-gray-95">{comment.content}</p>
+                <p className="text-gray-95 relative top-[1px]">
+                  {comment.content}
+                </p>
               </div>
             ) : (
               <p className="text-gray-60">
