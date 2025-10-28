@@ -157,7 +157,7 @@ export default async function ShoppingDetailPage({
 
   const commentsList = await getComments({ id, sortType });
 
-  const participants = isAuthor ? await getParticipants({ meetingId: id }) : [];
+  const participants = await getParticipants({ meetingId: id });
   return (
     <section>
       <DetailHeader />

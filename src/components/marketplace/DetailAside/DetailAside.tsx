@@ -132,6 +132,12 @@ export const DetailAside = ({
         />
       </div>
 
+      <ApplicantsList
+        isAuthor={isAuthor}
+        participants={participants}
+        status={meetingDetail?.status}
+      />
+
       {!isAuthor && (
         <ApplyStatusButtonSection
           status={meetingDetail?.status}
@@ -141,8 +147,6 @@ export const DetailAside = ({
           meetingId={meetingId}
         />
       )}
-
-      <ApplicantsList isAuthor={isAuthor} participants={participants} />
 
       {isAuthor && (
         <AuthorStatusButtonSection

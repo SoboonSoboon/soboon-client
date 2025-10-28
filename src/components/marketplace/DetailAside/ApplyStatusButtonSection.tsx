@@ -74,7 +74,7 @@ export const ApplyStatusButtonSection = ({
           />
         )}
 
-        {isCompletedOrClosed && (
+        {isCompletedOrClosed && !filteredStatus?.participationStatus && (
           <Button
             label="모집 완료"
             variant="filled"
