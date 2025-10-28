@@ -10,6 +10,7 @@ import { useParams } from 'next/navigation';
 import { updateComment } from '@/action/commentAction';
 import { useToast } from '@/components/Atoms';
 import { useAuthStore } from '@/apis/auth/hooks/authStore';
+import { usePopoverReview } from '@/hooks/usePopoverReview';
 
 export const CommentItem = ({
   isAuthor,
@@ -39,6 +40,17 @@ export const CommentItem = ({
   };
 
   const userId = useAuthStore((state) => state.userId);
+
+  // 댓글 작성자의 인기 리뷰 키워드 가져오기
+  const { data: popKeywords } = usePopoverReview(comment.authorId);
+
+  // 키워드 데이터 변환
+  const keywords = Array.isArray(popKeywords?.data?.keywords)
+    ? popKeywords.data.keywords.map((item) => ({
+        keyword: item.keyword,
+        count: item.count,
+      }))
+    : [];
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -70,7 +82,7 @@ export const CommentItem = ({
             <ProfilePopover
               nickname={comment.authorNickname}
               profileImage={comment.authorProfileImageUrl}
-              keywords={[]}
+              keywords={keywords}
               contentClassName="top-full left-44 z-50"
             >
               <span className="text-text-main cursor-pointer font-bold hover:underline">

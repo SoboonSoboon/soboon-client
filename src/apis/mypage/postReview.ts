@@ -1,48 +1,44 @@
+'use server';
+
+import { cookies } from 'next/headers';
 import {
   HostReviewRequest,
   ParticipantReviewRequest,
 } from '@/app/mypage/utils/review';
 
-const baseUrl = process.env.NEXT_PUBLIC_SOBOON_API_URL;
-
-// 클라이언트 사이드에서 localStorage에서 토큰을 가져오기
-const getClientToken = () => {
-  if (typeof window !== 'undefined') {
-    return localStorage.getItem('accessToken');
-  }
-  return null;
+const getServerToken = async () => {
+  const cookieStore = await cookies();
+  return cookieStore.get('accessToken')?.value || null;
 };
 
 export const postHostReview = async (
   data: HostReviewRequest,
 ): Promise<{ success: boolean; error?: string }> => {
   try {
-    const token = getClientToken();
-
+    const token = await getServerToken();
     if (!token) {
-      return { success: false, error: 'No authentication token found' };
+      return { success: false, error: 'No authentication token' };
     }
 
-    const response = await fetch(`${baseUrl}/v1/reviews/host`, {
-      method: 'POST',
-      headers: {
-        Authorization: `Bearer ${token}`,
-        'Content-Type': 'application/json',
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_SOBOON_API_URL}/v1/reviews/host`,
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(data),
       },
-      body: JSON.stringify(data),
-    });
+    );
 
     if (!response.ok) {
-      const errorText = await response.text().catch(() => 'Unknown error');
-      return {
-        success: false,
-        error: `Failed to post host review: ${response.status} ${response.statusText} - ${errorText}`,
-      };
+      throw new Error(`HTTP error! status: ${response.status}`);
     }
 
     return { success: true };
   } catch (error) {
-    console.error('Server - Failed to post host review:', error);
+    console.error('Failed to post host review:', error);
     return {
       success: false,
       error: error instanceof Error ? error.message : 'Unknown error',
@@ -54,32 +50,30 @@ export const postParticipantReview = async (
   data: ParticipantReviewRequest,
 ): Promise<{ success: boolean; error?: string }> => {
   try {
-    const token = getClientToken();
-
+    const token = await getServerToken();
     if (!token) {
-      return { success: false, error: 'No authentication token found' };
+      return { success: false, error: 'No authentication token' };
     }
 
-    const response = await fetch(`${baseUrl}/v1/reviews/participant`, {
-      method: 'POST',
-      headers: {
-        Authorization: `Bearer ${token}`,
-        'Content-Type': 'application/json',
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_SOBOON_API_URL}/v1/reviews/participant`,
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(data),
       },
-      body: JSON.stringify(data),
-    });
+    );
 
     if (!response.ok) {
-      const errorText = await response.text().catch(() => 'Unknown error');
-      return {
-        success: false,
-        error: `Failed to post participant review: ${response.status} ${response.statusText} - ${errorText}`,
-      };
+      throw new Error(`HTTP error! status: ${response.status}`);
     }
 
     return { success: true };
   } catch (error) {
-    console.error('Server - Failed to post participant review:', error);
+    console.error('Failed to post participant review:', error);
     return {
       success: false,
       error: error instanceof Error ? error.message : 'Unknown error',
