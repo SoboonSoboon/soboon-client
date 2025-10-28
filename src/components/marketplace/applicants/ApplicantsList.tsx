@@ -77,15 +77,16 @@ export const ApplicantsList = ({
                   <div className="flex gap-2">
                     <Button
                       label="수락"
-                      className="!text-primary !border-primary !bg-white"
                       size="small"
+                      variant="outline"
                       onClick={() =>
                         handleApproveApplicants(participant.participantId)
                       }
                     />
                     <Button
                       label="거절"
-                      className="!border-warning !bg-warning !border"
+                      className="!border-text-sub2 !text-text-sub2"
+                      variant="outline"
                       size="small"
                       onClick={() =>
                         handleRejectApplicants(participant.participantId)
@@ -96,14 +97,15 @@ export const ApplicantsList = ({
 
                 {/* 참여자 수락 상태 */}
                 {participant.status === 'APPROVED' && (
-                  <div className="flex items-center gap-2">
-                    <div className="text-text-sub2 text-sm">
-                      수락된 참여자예요.
+                  <div className="flex items-center gap-2.5">
+                    <div className="text-primary text-sm font-semibold">
+                      참여 확정
                     </div>
                     <Button
                       label="강퇴"
-                      className="!text-text-sub1 !border-text-sub1 !bg-white" // 보더 컬러가 적용이 안되는 문제
                       size="small"
+                      className="!border-text-sub2 !text-text-sub2"
+                      variant="outline"
                       onClick={() =>
                         handleKickApplicants(participant.participantId)
                       }
@@ -113,16 +115,12 @@ export const ApplicantsList = ({
 
                 {/* 참여자 강퇴 상태 */}
                 {participant.status === 'KICKED' && (
-                  <div className="text-text-sub2 text-sm">
-                    강퇴된 참여자예요.
-                  </div>
+                  <div className="text-text-sub2 text-sm">강퇴된 참여자</div>
                 )}
 
                 {/* 참여자 거절 상태 */}
                 {participant.status === 'REJECTED' && (
-                  <div className="text-text-sub2 text-sm">
-                    거절된 참여자예요.
-                  </div>
+                  <div className="text-text-sub2 text-sm">거절된 참여자</div>
                 )}
               </div>
             ))
