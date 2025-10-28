@@ -13,13 +13,13 @@ import {
 } from '@/constants/locations';
 import { ApiResponse } from '@/types/common';
 import { MeetingDetailType } from '@/types/meetingsType';
-import { axiosInstance } from '@/apis/axiosInstance';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import z from 'zod';
 import { useMutation } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
+import { updateShoppingMeeting } from '@/action/meetingAction';
 
 const shoppingFormSchema = z.object({
   title: z
@@ -127,11 +127,7 @@ export function UpdateShoppingForm({
 
   const { mutate: shoppingUpdate } = useMutation({
     mutationFn: async (formatData: ShoppingFormData) => {
-      const response = await axiosInstance.put(
-        `/v1/meetings/${meetingId}`,
-        formatData,
-      );
-      return response.data;
+      return await updateShoppingMeeting(meetingId, formatData);
     },
     onSuccess: (data: ApiResponse<string>) => {
       success(data.message || '장보기 모임이 성공적으로 수정되었습니다.');
@@ -161,7 +157,7 @@ export function UpdateShoppingForm({
   };
 
   return (
-    <div className="mx-auto mt-4 w-full max-w-[760px] sm:mt-6 lg:mt-6">
+    <div className="mx-auto w-full max-w-[760px]">
       <div className="border-gray-10 flex flex-col gap-6 rounded-xl border bg-white p-4 sm:gap-8 sm:p-6 lg:gap-10">
         <span className="text-2xl font-bold sm:text-2xl">
           <strong className="text-primary">장보기 </strong>

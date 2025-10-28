@@ -13,7 +13,6 @@ import { dividingRegisterApi } from '@/apis';
 import { ApiResponse } from '@/types/common';
 import { useToast } from '@/components/Atoms';
 import { useRouter } from 'next/navigation';
-import { ChevronLeft } from 'lucide-react';
 import Image from 'next/image';
 
 const DIVIDING_PRODUCT_TYPE_OPTIONS = [
@@ -132,16 +131,7 @@ export default function DividingRegisterPage() {
   };
 
   return (
-    <div className="mx-auto w-full max-w-[760px] sm:mt-6 sm:px-6 lg:mt-6">
-      <div
-        className="flex cursor-pointer items-center gap-2 pb-4"
-        onClick={() => router.back()}
-      >
-        <div>
-          <ChevronLeft className="text-text-sub2 size-6" />
-        </div>
-        <span className="text-text-sub2">목록</span>
-      </div>
+    <div className="mx-auto w-full max-w-[760px]">
       <div className="border-gray-10 flex flex-col gap-6 rounded-xl border bg-white p-4 sm:gap-8 sm:p-6 lg:gap-10">
         <span className="text-2xl font-bold sm:text-2xl">
           <strong className="text-primary">소분 </strong>

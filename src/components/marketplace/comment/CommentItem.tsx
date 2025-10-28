@@ -1,6 +1,6 @@
 'use client';
 
-import { EllipsisVertical } from 'lucide-react';
+import { EllipsisVertical, LockKeyhole } from 'lucide-react';
 import { timeFormatter } from '@/utils';
 import { CommentType, ReplyType } from '@/types/commentType';
 import { Button, ProfileImg, ProfilePopover, TextInput } from '@/components';
@@ -61,14 +61,11 @@ export const CommentItem = ({
       '';
     const response = await updateComment(null, formData, commentId, meetingId);
     if (response) {
-      success('댓글 수정 성공');
+      success(response.message || '댓글 수정을 완료했어요.');
       handleCancelClick();
     } else {
-      error('댓글 수정 실패');
+      error(response.message || '댓글 수정에 실패했어요.');
     }
-
-    setIsOpen(false);
-    setIsEditing(false);
   };
   return (
     <div>
@@ -116,12 +113,23 @@ export const CommentItem = ({
         <div>
           {isEditing ? (
             <form onSubmit={handleSubmit} className="flex items-center gap-2">
-              <TextInput
-                className="!border-text-line1 !border-1 bg-white"
-                value={currentComment}
-                onChange={(e) => setCurrentComment(e.target.value)}
-                name="comment"
-              />
+              <div className="relative flex-1">
+                <TextInput
+                  className="!border-text-line1 !border-1 bg-white pr-[90px]"
+                  value={currentComment}
+                  onChange={(e) => setCurrentComment(e.target.value)}
+                  name="comment"
+                />
+                <div className="absolute top-1/2 right-3 flex translate-y-[-50%] items-center gap-1 select-none">
+                  <input type="checkbox" id="editCommentSecret" name="secret" />
+                  <label
+                    htmlFor="editCommentSecret"
+                    className="text-gray-60 cursor-pointer text-sm"
+                  >
+                    비밀 댓글
+                  </label>
+                </div>
+              </div>
               <Button label="수정" className="text-primary" type="submit" />
               <Button
                 label="취소"
@@ -132,7 +140,12 @@ export const CommentItem = ({
             </form>
           ) : comment.secret ? (
             userId === comment.authorId || isAuthor ? (
-              <p className="text-gray-95">{comment.content}</p>
+              <div className="flex items-center gap-2">
+                <LockKeyhole className="size-4 text-gray-50" />
+                <p className="text-gray-95 relative top-[1px]">
+                  {comment.content}
+                </p>
+              </div>
             ) : (
               <p className="text-gray-60">
                 비밀 댓글입니다. 작성자만 확인할 수 있습니다.

@@ -117,14 +117,24 @@ export const updateComment = async (
   meetingId: string,
 ) => {
   const commentContent = formData.get('comment') as string;
+
+  const validated = commentSchema.safeParse({ comment: commentContent });
+
+  if (!validated.success) {
+    return validated.error.issues[0].message;
+  }
+
+  const secret = Boolean(formData.get('secret'));
+
   const cookieStore = await cookies();
   const accessToken = cookieStore.get('accessToken')?.value || '';
+
   try {
     const response = await fetch(
       `${process.env.NEXT_PUBLIC_SOBOON_API_URL}/v1/meetings/${meetingId}/comments/${commentId}`,
       {
         method: 'PUT',
-        body: JSON.stringify({ content: commentContent, secret: false }),
+        body: JSON.stringify({ content: commentContent, secret }),
         headers: {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${accessToken}`,

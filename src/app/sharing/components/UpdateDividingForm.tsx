@@ -16,7 +16,7 @@ import Image from 'next/image';
 import { useEffect } from 'react';
 import { imageUploader } from '@/utils';
 import { MeetingDetailType } from '@/types/meetingsType';
-import { axiosInstance } from '@/apis/axiosInstance';
+import { updateDividingMeeting } from '@/action/meetingAction';
 
 // TODO: 상수값으로 선언 되어있음. 상수값 수정 후 삭제 필요
 const DIVIDING_PRODUCT_TYPE_OPTIONS = [
@@ -163,11 +163,7 @@ export function UpdateDividingForm({
         imageUrls: imageUrls,
       };
 
-      const response = await axiosInstance.put(
-        `/v1/meetings/${meetingId}`,
-        requestData,
-      );
-      return response.data;
+      return await updateDividingMeeting(meetingId, requestData);
     },
     onSuccess: (data: ApiResponse<string>) => {
       success(data.message || '소분 모임이 성공적으로 수정되었습니다.');
@@ -193,8 +189,6 @@ export function UpdateDividingForm({
         </Label>
         <div className="mt-3 flex flex-wrap gap-1.5 sm:flex-nowrap xl:gap-2.5">
           {DIVIDING_PRODUCT_TYPE_OPTIONS.map((option) => {
-            const isSelected = watch('productType') === option.value;
-
             return (
               <div
                 key={option.value}
