@@ -113,12 +113,23 @@ export const CommentItem = ({
         <div>
           {isEditing ? (
             <form onSubmit={handleSubmit} className="flex items-center gap-2">
-              <TextInput
-                className="!border-text-line1 !border-1 bg-white"
-                value={currentComment}
-                onChange={(e) => setCurrentComment(e.target.value)}
-                name="comment"
-              />
+              <div className="relative flex-1">
+                <TextInput
+                  className="!border-text-line1 !border-1 bg-white pr-[90px]"
+                  value={currentComment}
+                  onChange={(e) => setCurrentComment(e.target.value)}
+                  name="comment"
+                />
+                <div className="absolute top-1/2 right-3 flex translate-y-[-50%] items-center gap-1 select-none">
+                  <input type="checkbox" id="editCommentSecret" name="secret" />
+                  <label
+                    htmlFor="editCommentSecret"
+                    className="text-gray-60 cursor-pointer text-sm"
+                  >
+                    비밀 댓글
+                  </label>
+                </div>
+              </div>
               <Button label="수정" className="text-primary" type="submit" />
               <Button
                 label="취소"
