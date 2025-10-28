@@ -5,6 +5,7 @@ import {
 import { IntroSection } from '@/components/marketplace';
 import { FilterSection, SharingListSection } from '@/app/sharing/components';
 import { SideButtonSection } from '@/components';
+import { SearchInput } from '@/components/Molecules/Search/SearchInput';
 import { cookies } from 'next/headers';
 
 async function getSharingMeeting(
@@ -54,12 +55,19 @@ export default async function SharingPage({
     page: (params.page as string) || '0',
     size: (params.size as string) || '10',
     status: (params.status as string) || '',
+    search: (params.search as string) || '',
   });
+
   const initialDividingList = await getSharingMeeting(query);
 
   return (
-    <main className="flex flex-col gap-8">
+    <main className="flex w-full flex-col gap-8">
       <IntroSection />
+      <div className="flex w-full justify-end">
+        <div className="w-[300px]">
+          <SearchInput className="h-[44px]" />
+        </div>
+      </div>
       <section className="flex gap-10">
         <aside className="sticky top-6 h-[95vh] w-[200px]">
           <FilterSection />
