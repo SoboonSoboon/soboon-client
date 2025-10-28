@@ -1,9 +1,9 @@
 'use client';
 
-// import { useClickOutside } from '@/hooks/useClickOutside';
 import { ActionMenu, useToast } from '@/components/Atoms';
 import { Modal, useModal } from '@/components/Molecules/modal';
 import { deleteMeetingsApi } from '@/apis/meetings/deleteMeetingsApi';
+import { TOAST_MESSAGES } from '@/constants/toastMessages';
 import { usePathname, useRouter } from 'next/navigation';
 import { useState } from 'react';
 
@@ -18,7 +18,6 @@ export interface PostActionMenuProps
 export const PostActionMenu = ({
   className,
   onClose,
-  // buttonRef,
   meetingId,
 }: PostActionMenuProps) => {
   const deleteModal = useModal();
@@ -27,18 +26,13 @@ export const PostActionMenu = ({
   const pathname = usePathname();
   const [isDeleting, setIsDeleting] = useState(false);
 
-  // const actionMenuRef = useClickOutside(
-  //   deleteModal.isOpen ? () => {} : () => onClose?.(),
-  //   buttonRef,
-  // );
-
   const handleShareMenuClick = (event: React.MouseEvent<HTMLLIElement>) => {
     event.stopPropagation();
     navigator.clipboard.writeText(
       `${window.location.origin}/${pathname.includes('/sharing') ? 'sharing' : 'shopping'}/${meetingId}`,
     );
     onClose?.();
-    success('링크 복사에 성공했어요.');
+    success(TOAST_MESSAGES.POST.SHARE.SUCCESS);
   };
 
   const handleUpdateMenuClick = (event: React.MouseEvent<HTMLLIElement>) => {
@@ -72,7 +66,7 @@ export const PostActionMenu = ({
       router.push(`/${pathname.includes('/sharing') ? 'sharing' : 'shopping'}`);
       router.refresh();
     } catch {
-      error('게시글 삭제에 실패했습니다. 다시 시도해 주세요.');
+      error(TOAST_MESSAGES.POST.DELETE.ERROR);
       setIsDeleting(false);
     }
   };
@@ -106,7 +100,6 @@ export const PostActionMenu = ({
   return (
     <>
       <div>
-        {/* <div ref={actionMenuRef}> */}
         <ActionMenu
           className={className}
           onClose={onClose}
