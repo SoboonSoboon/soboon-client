@@ -6,6 +6,7 @@ import { deleteMeetingsApi } from '@/apis/meetings/deleteMeetingsApi';
 import { TOAST_MESSAGES } from '@/constants/toastMessages';
 import { usePathname, useRouter } from 'next/navigation';
 import { useState } from 'react';
+import { MODAL_MESSAGES } from '@/constants/modal';
 
 export interface PostActionMenuProps
   extends React.HTMLAttributes<HTMLDivElement> {
@@ -107,16 +108,21 @@ export const PostActionMenu = ({
         />
       </div>
 
-      <Modal isOpen={deleteModal.isOpen} onClose={deleteModal.close} size="sm">
+      <Modal
+        isOpen={deleteModal.isOpen}
+        onClose={deleteModal.close}
+        size="sm"
+        className="!z-[100000]"
+      >
         <div
           className="flex flex-col items-center gap-4"
           onPointerDown={(e) => e.stopPropagation()}
         >
-          <h2 className="text-lg font-semibold">게시글 삭제</h2>
+          <h2 className="text-[22px] font-semibold">
+            {MODAL_MESSAGES.DELETE_POST.TITLE}
+          </h2>
           <p className="text-center text-gray-600">
-            정말로 이 게시글을 삭제하시겠습니까?
-            <br />
-            삭제된 게시글은 복구가 어려워요.
+            {MODAL_MESSAGES.DELETE_POST.CONTENT}
           </p>
           <div className="mt-2 flex w-full gap-3">
             <button
@@ -127,7 +133,7 @@ export const PostActionMenu = ({
               }}
               className="flex-1 cursor-pointer rounded-lg bg-gray-200 px-4 py-2 text-gray-700 transition-colors hover:bg-gray-300"
             >
-              취소
+              {MODAL_MESSAGES.DELETE_POST.BUTTONS.CANCEL}
             </button>
             <button
               type="button"
@@ -139,7 +145,9 @@ export const PostActionMenu = ({
               disabled={isDeleting}
               className="bg-primary flex-1 cursor-pointer rounded-lg px-4 py-2 text-white transition-colors disabled:cursor-not-allowed disabled:opacity-50"
             >
-              {isDeleting ? '삭제 중...' : '삭제'}
+              {isDeleting
+                ? '삭제 중...'
+                : MODAL_MESSAGES.DELETE_POST.BUTTONS.CONFIRM}
             </button>
           </div>
         </div>
