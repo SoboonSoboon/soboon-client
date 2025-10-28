@@ -57,20 +57,13 @@ export const PostActionMenu = ({
   };
 
   const handleDeleteConfirmClick = async () => {
-    console.log('삭제 확인 버튼 클릭됨');
-    console.log('isDeleting:', isDeleting);
-    console.log('meetingId:', meetingId);
-
     if (isDeleting) {
-      console.log('이미 삭제 중이므로 리턴');
       return;
     }
 
     try {
-      console.log('삭제 API 호출 시작');
       setIsDeleting(true);
       await deleteMeetingsApi(meetingId);
-      console.log('삭제 API 호출 성공');
 
       deleteModal.close();
       onClose?.();
@@ -78,7 +71,6 @@ export const PostActionMenu = ({
       router.push(`/${pathname.includes('/sharing') ? 'sharing' : 'shopping'}`);
       router.refresh();
     } catch (error) {
-      console.error('게시글 삭제 실패:', error);
       alert('게시글 삭제에 실패했습니다. 다시 시도해주세요.');
       setIsDeleting(false);
     }
@@ -122,8 +114,6 @@ export const PostActionMenu = ({
       </div>
 
       <Modal isOpen={deleteModal.isOpen} onClose={deleteModal.close} size="sm">
-        {console.log('Modal 렌더링됨, isOpen:', deleteModal.isOpen)}
-        {console.log('Modal children 렌더링됨')}
         <div
           className="flex flex-col items-center gap-4"
           onPointerDown={(e) => e.stopPropagation()}
@@ -148,7 +138,6 @@ export const PostActionMenu = ({
             <button
               type="button"
               onClick={(e) => {
-                console.log('삭제 버튼 클릭됨!');
                 e.preventDefault();
                 e.stopPropagation();
                 handleDeleteConfirmClick();

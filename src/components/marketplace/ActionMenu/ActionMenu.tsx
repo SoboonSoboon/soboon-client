@@ -41,7 +41,6 @@ export const ActionMenu = ({
             <li
               key={menu.id}
               onClick={(e) => {
-                console.log('메뉴 아이템 클릭됨:', menu.id, menu.label);
                 e.stopPropagation();
                 menu.onClick(e);
               }}

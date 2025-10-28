@@ -27,10 +27,7 @@ export const TabSection = ({
           {MYPAGE_TAB_LABELS.map((tab) => (
             <button
               key={tab.value}
-              onClick={() => (
-                onMainTabChange(tab.value as MainTabType),
-                console.log(tab.value)
-              )}
+              onClick={() => onMainTabChange(tab.value as MainTabType)}
               className={`font-memomentKkukkkuk relative text-base transition-colors sm:text-lg ${
                 activeMainTab === tab.value
                   ? 'text-quaternary'
