@@ -5,14 +5,17 @@ import {
   kickApplicants,
   rejectApplicants,
 } from '@/action/applicantsAction';
+import { getUserApplyStatus, UserApplyStatusType } from '@/apis';
 import { useAuthStore } from '@/apis/auth/hooks/authStore';
+import { axiosInstance } from '@/apis/axiosInstance';
 
 import { Button, ProfileImg } from '@/components';
 import { useToast } from '@/components/Atoms';
 import { ApplicantsMemberType } from '@/types/applicantsType';
 import { StatusString } from '@/types/common';
+import { useQuery } from '@tanstack/react-query';
 import { useParams } from 'next/navigation';
-import { useEffect, useMemo } from 'react';
+import { useMemo } from 'react';
 
 interface ApplicantsListProps {
   isAuthor: boolean;
@@ -64,19 +67,36 @@ export const ApplicantsList = ({
       participant.userId === userId && participant.status === 'APPROVED',
   );
 
-  useEffect(() => {
-    console.log('userId', userId);
-    console.log('participants', participants);
-    console.log('isAuthor', isAuthor);
-    console.log('isApprovedParticipant', isApprovedParticipant);
-    console.log('isCompletedOrClosed', isCompletedOrClosed);
-  }, []);
+  // 내가 이 모임에 신청한 상태를 조회
+  const { data: myApplyStatus } = useQuery({
+    queryKey: ['myApplyStatus', meetingId],
+    queryFn: async () => {
+      const response = await getUserApplyStatus();
+      return response.find((status) => status.meetingId === +meetingId) || null;
+    },
+  });
 
+  // 이 모임에 신청한 사람들을 조회
+  const { data: approvedParticipants } = useQuery<
+    ApplicantsMemberType['data'][]
+  >({
+    queryKey: ['approvedParticipants', meetingId],
+    queryFn: async () => {
+      const response = await axiosInstance.get(
+        `/v1/meetings/${meetingId}/applicants`,
+      );
+      return response.data.data || [];
+    },
+    enabled:
+      isCompletedOrClosed && myApplyStatus?.participationStatus === 'APPROVED',
+  });
+
+  // 이 모임에 신청한 사람들 중 참여 확정된 사람들만 필터링
   const filteredParticipants = useMemo(() => {
-    return participants.filter(
+    return approvedParticipants?.filter(
       (participant) => participant.status === 'APPROVED',
     );
-  }, [participants]);
+  }, [approvedParticipants]);
 
   return (
     <>
@@ -85,15 +105,6 @@ export const ApplicantsList = ({
           {participants.length === 0 && (
             <div className="text-text-sub2 flex min-h-[143px] items-center justify-center">
               <p>아직 참여 신청한 사람이 없어요 ... !</p>
-            </div>
-          )}
-
-          {isCompletedOrClosed && !isApprovedParticipant && !isAuthor && (
-            <div className="text-text-sub2 flex min-h-[143px] items-center justify-center">
-              <div>
-                <p>모집이 종료되었어요.</p>
-                <p>참여가 확정된 사람만 볼 수 있어요.</p>
-              </div>
             </div>
           )}
 
@@ -176,29 +187,44 @@ export const ApplicantsList = ({
         </div>
       )}
 
-      {!isAuthor && isApprovedParticipant && isCompletedOrClosed && (
-        <div className="border-gray-10 mb-5 w-full rounded-xl border bg-white">
-          {filteredParticipants.map((participant) => (
-            <div
-              key={participant.participantId}
-              className="flex items-center justify-between px-6 py-3"
-            >
-              <div className="flex items-center gap-2 py-2">
-                <ProfileImg
-                  profileImageUrl={participant.profileImageUrl}
-                  size={32}
-                />
-                <p>{participant.userNickname}</p>
-              </div>
-              <div className="flex items-center gap-2.5">
-                <div className="text-primary text-sm font-semibold">
-                  참여 확정
+      {!isAuthor &&
+        myApplyStatus?.participationStatus === 'APPROVED' &&
+        isCompletedOrClosed && (
+          <div className="border-gray-10 mb-5 w-full rounded-xl border bg-white">
+            {filteredParticipants?.map((participant) => (
+              <div
+                key={participant.participantId}
+                className="flex items-center justify-between px-6 py-3"
+              >
+                <div className="flex items-center gap-2 py-2">
+                  <ProfileImg
+                    profileImageUrl={participant.profileImageUrl}
+                    size={32}
+                  />
+                  <p>{participant.userNickname}</p>
+                </div>
+                <div className="flex items-center gap-2.5">
+                  <div className="text-primary text-sm font-semibold">
+                    참여 확정
+                  </div>
                 </div>
               </div>
+            ))}
+          </div>
+        )}
+
+      {!isAuthor &&
+        myApplyStatus?.participationStatus !== 'APPROVED' &&
+        isCompletedOrClosed && (
+          <div className="border-gray-10 mb-5 w-full rounded-xl border bg-white">
+            <div className="text-text-sub2 flex min-h-[143px] items-center justify-center">
+              <div>
+                <p>모집이 종료되었어요.</p>
+                <p>참여가 확정된 사람만 볼 수 있어요.</p>
+              </div>
             </div>
-          ))}
-        </div>
-      )}
+          </div>
+        )}
     </>
   );
 };
