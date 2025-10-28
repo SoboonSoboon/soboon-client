@@ -19,8 +19,8 @@ export interface ActionMenuProps extends React.HTMLAttributes<HTMLDivElement> {
 
 export const ActionMenu = ({
   className,
-  onClose,
-  buttonRef,
+  // onClose,
+  // buttonRef,
   menuOptions,
   ...props
 }: ActionMenuProps) => {

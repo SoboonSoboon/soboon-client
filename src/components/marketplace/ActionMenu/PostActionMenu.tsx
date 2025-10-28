@@ -1,13 +1,11 @@
 'use client';
 
-import { cn } from '@/utils/cn';
 // import { useClickOutside } from '@/hooks/useClickOutside';
+import { ActionMenu, useToast } from '@/components/Atoms';
 import { Modal, useModal } from '@/components/Molecules/modal';
 import { deleteMeetingsApi } from '@/apis/meetings/deleteMeetingsApi';
 import { usePathname, useRouter } from 'next/navigation';
 import { useState } from 'react';
-import { ActionMenu, ActionMenuVariant } from './ActionMenu';
-import { useToast } from '@/components/Atoms';
 
 export interface PostActionMenuProps
   extends React.HTMLAttributes<HTMLDivElement> {
@@ -24,7 +22,7 @@ export const PostActionMenu = ({
   meetingId,
 }: PostActionMenuProps) => {
   const deleteModal = useModal();
-  const { success } = useToast();
+  const { success, error } = useToast();
   const router = useRouter();
   const pathname = usePathname();
   const [isDeleting, setIsDeleting] = useState(false);
@@ -73,7 +71,7 @@ export const PostActionMenu = ({
 
       router.push(`/${pathname.includes('/sharing') ? 'sharing' : 'shopping'}`);
       router.refresh();
-    } catch (error) {
+    } catch {
       error('게시글 삭제에 실패했습니다. 다시 시도해 주세요.');
       setIsDeleting(false);
     }
@@ -83,7 +81,7 @@ export const PostActionMenu = ({
     id: string;
     label: string;
     onClick: (event: React.MouseEvent<HTMLLIElement>) => void;
-    variant?: ActionMenuVariant;
+    variant?: 'default' | 'danger';
   }[] = [
     {
       id: 'share',
