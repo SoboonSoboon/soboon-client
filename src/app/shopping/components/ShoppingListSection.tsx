@@ -23,6 +23,7 @@ import { useInfiniteScrollTrigger } from '@/hooks/useScroll';
 import { useSearchParams } from 'next/navigation';
 import { HashTag } from './HashTag';
 import { EmptyState } from '@/components/Molecules';
+import { useShoppingSearch } from '@/hooks/useSearch/useShoppingSearch';
 
 export const ShoppingListSection = ({
   initialShoppingList,
@@ -33,6 +34,10 @@ export const ShoppingListSection = ({
   // const { handleBookmark } = useBookmark();
   const { isBottom } = useInfiniteScrollTrigger();
   const searchParams = useSearchParams();
+  const { search } = useShoppingSearch();
+
+  const keyword = searchParams.get('keyword');
+  const isSearchMode = !!keyword;
 
   const query = new URLSearchParams({
     province: searchParams.get('province') || '',
@@ -40,9 +45,10 @@ export const ShoppingListSection = ({
     district: searchParams.get('district') || '',
     status: searchParams.get('status') || '',
     sortType: searchParams.get('sortType') || '',
-    tags: searchParams.get('tag') || '',
+    tags: searchParams.get('tags') || '',
     size: searchParams.get('size') || '10',
     page: searchParams.get('page') || '0',
+    keyword: keyword || '',
   });
 
   const {
@@ -53,14 +59,17 @@ export const ShoppingListSection = ({
   } = useInfiniteQuery<ShoppingMeetingsType>({
     queryKey: ['shoppingList', query.toString()],
     queryFn: async ({ pageParam }) => {
-      const urlParams = new URLSearchParams(query);
-      urlParams.set('page', (pageParam as number).toString());
-
-      const response = await getShoppingListApi(urlParams);
-
-      const responseData = response.data;
-
-      return responseData;
+      // 검색 모드일 때는 검색 API 사용
+      if (isSearchMode) {
+        const response = await search(keyword, pageParam as number);
+        return response.data;
+      } else {
+        // 일반 모드일 때는 기존 API 사용
+        const urlParams = new URLSearchParams(query);
+        urlParams.set('page', (pageParam as number).toString());
+        const response = await getShoppingListApi(urlParams);
+        return response.data;
+      }
     },
     getNextPageParam: (lastPage) => {
       if (lastPage?.pageInfo?.hasNext) {
@@ -70,12 +79,13 @@ export const ShoppingListSection = ({
 
       return undefined;
     },
-    initialData: initialShoppingList
-      ? {
-          pages: [initialShoppingList],
-          pageParams: [0],
-        }
-      : undefined,
+    initialData:
+      !isSearchMode && initialShoppingList
+        ? {
+            pages: [initialShoppingList],
+            pageParams: [0],
+          }
+        : undefined,
     initialPageParam: 0,
   });
 

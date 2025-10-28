@@ -148,22 +148,22 @@ export default function ShoppingRegisterPage() {
                 모임 태그를 붙여볼까요?
               </Label>
               <div className="flex flex-wrap gap-2">
-                {SHOPPING_TAGS.map((tag: ShoppingTagType) => {
-                  const isSelected = watch('tags')?.includes(tag.value);
+                {SHOPPING_TAGS.map((tags: ShoppingTagType) => {
+                  const isSelected = watch('tags')?.includes(tags.value);
 
                   return (
                     <KeywordChip
-                      key={`# ${tag.value}`}
-                      label={`# ${tag.label}`}
+                      key={`# ${tags.value}`}
+                      label={`# ${tags.label}`}
                       onClick={() => {
                         const currentTags = watch('tags') || [];
                         if (isSelected) {
                           setValue(
                             'tags',
-                            currentTags.filter((t) => t !== tag.value),
+                            currentTags.filter((t) => t !== tags.value),
                           );
                         } else {
-                          setValue('tags', [...currentTags, tag.value]);
+                          setValue('tags', [...currentTags, tags.value]);
                         }
                       }}
                       variant={isSelected ? 'active' : 'inactive'}

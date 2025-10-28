@@ -16,13 +16,17 @@ export const SearchInput = ({
   className,
   placeholder = '검색어를 입력하세요',
 }: SearchInputProps) => {
-  const [searchValue, setSearchValue] = useState('');
   const router = useRouter();
   const searchParams = useSearchParams();
 
+  // 초기값을 URL에서 가져오기
+  const [searchValue, setSearchValue] = useState(() => {
+    return searchParams.get('keyword') || '';
+  });
+
   // URL 파라미터와 동기화
   useEffect(() => {
-    const urlSearch = searchParams.get('search') || '';
+    const urlSearch = searchParams.get('keyword') || '';
     setSearchValue(urlSearch);
   }, [searchParams]);
 
@@ -34,7 +38,7 @@ export const SearchInput = ({
       } else {
         // 기본 동작: URL 업데이트
         const params = new URLSearchParams(searchParams.toString());
-        params.set('search', searchValue);
+        params.set('keyword', searchValue);
         router.push(`?${params.toString()}`, { scroll: false });
       }
     }
