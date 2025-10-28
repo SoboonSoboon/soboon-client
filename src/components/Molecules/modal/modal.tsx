@@ -5,6 +5,7 @@ import { useModalScrollLock } from './hooks/useModalScrollLock';
 import { ModalProps } from './utils/modalTypes';
 import { getPositionClass, getSizeClass } from './utils/modalUtils';
 import { X } from 'lucide-react';
+import { createPortal } from 'react-dom';
 /**
  * 재사용 가능한 모달 컴포넌트
  *
@@ -51,7 +52,7 @@ export const Modal: React.FC<ModalProps> = ({
     [closeOnBackdropClick, onClose],
   );
   if (!isOpen) return null;
-  return (
+  return createPortal(
     <div
       className={cn(
         'fixed inset-0 flex',
@@ -85,7 +86,8 @@ export const Modal: React.FC<ModalProps> = ({
         )}
         {children}
       </div>
-    </div>
+    </div>,
+    document.body,
   );
 };
 
