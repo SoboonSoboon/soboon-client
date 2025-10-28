@@ -20,6 +20,8 @@ import { useInfiniteQuery } from '@tanstack/react-query';
 import { getDividingListApi } from '@/apis/meetings/getDividingListApi';
 import { useEffect } from 'react';
 import { EmptyState } from '@/components/Molecules';
+import { useSearchParams } from 'next/navigation';
+import { useDividingSearch } from '@/hooks/useSearch/useDividingSearch';
 
 export const SharingListSection = ({
   initialDividingList,
@@ -30,6 +32,11 @@ export const SharingListSection = ({
 }) => {
   const router = useRouter();
   const { isBottom } = useInfiniteScrollTrigger();
+  const searchParams = useSearchParams();
+  const { search } = useDividingSearch();
+
+  const keyword = searchParams.get('keyword');
+  const isSearchMode = !!keyword;
 
   const {
     data: dividingList,
@@ -39,29 +46,32 @@ export const SharingListSection = ({
   } = useInfiniteQuery<DividingMeetingsType>({
     queryKey: ['dividingList', query.toString()],
     queryFn: async ({ pageParam }) => {
-      const urlParams = new URLSearchParams(query);
-      urlParams.set('page', (pageParam as number).toString());
-
-      const response = await getDividingListApi(urlParams);
-
-      const responseData = response.data;
-
-      return responseData;
+      // 검색 모드일 때는 검색 API 사용
+      if (isSearchMode) {
+        const response = await search(keyword, pageParam as number);
+        return response.data;
+      } else {
+        // 일반 모드일 때는 기존 API 사용 (페이지네이션 지원)
+        const urlParams = new URLSearchParams(query);
+        urlParams.set('page', (pageParam as number).toString());
+        const response = await getDividingListApi(urlParams);
+        return response.data;
+      }
     },
     getNextPageParam: (lastPage) => {
       if (lastPage?.sliceInfo?.hasNext) {
         const nextPage = lastPage.sliceInfo.currentPage;
         return nextPage;
       }
-
       return undefined;
     },
-    initialData: initialDividingList
-      ? {
-          pages: [initialDividingList],
-          pageParams: [0],
-        }
-      : undefined,
+    initialData:
+      !isSearchMode && initialDividingList
+        ? {
+            pages: [initialDividingList],
+            pageParams: [0],
+          }
+        : undefined,
     initialPageParam: 0,
   });
 

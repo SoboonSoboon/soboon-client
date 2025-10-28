@@ -1,4 +1,4 @@
-import { axiosInstance } from '../axiosInstance';
+import { axiosInstance } from '@/apis/axiosInstance';
 
 export const getShoppingListApi = async (query: URLSearchParams) => {
   try {

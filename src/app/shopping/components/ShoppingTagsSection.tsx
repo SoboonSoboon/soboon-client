@@ -25,11 +25,11 @@ export const ShoppingTagsSection = () => {
     fetchPopularTags();
   }, []);
 
-  const handleTagClick = (tag: string) => {
-    if (activeTag === tag) {
-      updateParams({ tag: '' });
+  const handleTagClick = (tags: string) => {
+    if (activeTag === tags) {
+      updateParams({ tags: '' });
     } else {
-      updateParams({ tag });
+      updateParams({ tags });
     }
   };
 
@@ -45,13 +45,13 @@ export const ShoppingTagsSection = () => {
         aria-label="전체"
         onClick={() => handleTagClick('')}
       />
-      {popularTags.map((tag, index) => (
+      {popularTags.map((tags, index) => (
         <KeywordChip
           key={index}
-          label={tag}
-          variant={activeTag === tag ? 'active' : 'inactive'}
-          aria-label={tag}
-          onClick={() => handleTagClick(tag)}
+          label={tags}
+          variant={activeTag === tags ? 'active' : 'inactive'}
+          aria-label={tags}
+          onClick={() => handleTagClick(tags)}
         />
       ))}
     </div>

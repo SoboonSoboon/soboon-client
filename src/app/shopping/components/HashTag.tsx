@@ -14,8 +14,8 @@ export const HashTag = ({
 }) => {
   const router = useRouter();
 
-  const handleTagClick = (tag: string) => {
-    router.push(`/shopping?tag=${encodeURIComponent(tag)}`);
+  const handleTagClick = (tags: string) => {
+    router.push(`/shopping?tag=${encodeURIComponent(tags)}`);
   };
 
   return (

@@ -3,16 +3,18 @@ import {
   meetingSearchParamsType,
 } from '@/types/meetingsType';
 import { IntroSection } from '@/components/marketplace';
-import { FilterSection, SharingListSection } from '@/app/sharing/components';
+import {
+  FilterSection,
+  SharingListSection,
+  SearchSection,
+} from '@/app/sharing/components';
 import { SideButtonSection } from '@/components';
-import { SearchInput } from '@/components/Molecules/Search/SearchInput';
-import { cookies } from 'next/headers';
+import { getServerToken } from '@/utils/serverToken';
 
 async function getSharingMeeting(
   query: URLSearchParams,
 ): Promise<DividingMeetingsType | null> {
-  const cookieStore = await cookies();
-  const accessToken = cookieStore.get('accessToken')?.value || '';
+  const accessToken = await getServerToken();
   try {
     const response = await fetch(
       `${process.env.NEXT_PUBLIC_SOBOON_API_URL}/v1/meetings/dividing?${query.toString()}`,
@@ -55,7 +57,7 @@ export default async function SharingPage({
     page: (params.page as string) || '0',
     size: (params.size as string) || '10',
     status: (params.status as string) || '',
-    search: (params.search as string) || '',
+    keyword: (params.keyword as string) || '',
   });
 
   const initialDividingList = await getSharingMeeting(query);
@@ -64,9 +66,7 @@ export default async function SharingPage({
     <main className="flex w-full flex-col gap-8">
       <IntroSection />
       <div className="flex w-full justify-end">
-        <div className="w-[300px]">
-          <SearchInput className="h-[44px]" />
-        </div>
+        <SearchSection />
       </div>
       <section className="flex gap-10">
         <aside className="sticky top-6 h-[95vh] w-[200px]">
