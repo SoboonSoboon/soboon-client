@@ -158,7 +158,7 @@ export const ApplicantsList = ({
 
                     {/* 참여자 강퇴 상태 */}
                     {participant.status === 'KICKED' && (
-                      <div className="text-text-sub2 text-sm">
+                      <div className="text-text-sub2 text-sm font-semibold">
                         강퇴된 참여자
                       </div>
                     )}

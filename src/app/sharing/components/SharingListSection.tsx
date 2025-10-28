@@ -8,7 +8,6 @@ import {
   CardImage,
   CardSubtitle,
   CardTitle,
-  // BookmarkButton,
   Line,
   StatusTag,
 } from '@/components';
@@ -16,7 +15,6 @@ import { MapPin } from 'lucide-react';
 import { DividingMeetingsType } from '@/types/meetingsType';
 import { timeFormatter } from '@/utils';
 
-// import { useBookmark } from '@/hooks';
 import { useInfiniteScrollTrigger } from '@/hooks/useScroll';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import { getDividingListApi } from '@/apis/meetings/getDividingListApi';
@@ -31,7 +29,6 @@ export const SharingListSection = ({
   initialDividingList: DividingMeetingsType | null;
 }) => {
   const router = useRouter();
-  // const { handleBookmark } = useBookmark();
   const { isBottom } = useInfiniteScrollTrigger();
 
   const {
@@ -115,29 +112,21 @@ export const SharingListSection = ({
                     status={dividing.status}
                     className="absolute top-3 left-3 z-10"
                   />
-                  {/* <BookmarkButton
-                  className="absolute top-4 right-0"
-                  liked={dividing.bookmarked}
-                  onChange={() =>
-                    handleBookmark(
-                      dividing.groupId.toString(),
-                      dividing.bookmarked,
-                    )
-                  }
-                /> */}
-                  <CardImage
-                    alt="기본 카드"
-                    src={
-                      !dividing.image ||
-                      (Array.isArray(dividing.image) &&
-                        dividing.image.length === 0) ||
-                      (typeof dividing.image === 'string' &&
-                        dividing.image.includes('example'))
-                        ? '/images/notFound_image.png'
-                        : dividing.image
-                    }
-                    className="h-[200px] w-full rounded-lg transition-transform duration-300 hover:scale-110"
-                  />
+                  <div className="relative aspect-[3/2] w-full">
+                    <CardImage
+                      alt="기본 카드"
+                      src={
+                        !dividing.image ||
+                        (Array.isArray(dividing.image) &&
+                          dividing.image.length === 0) ||
+                        (typeof dividing.image === 'string' &&
+                          dividing.image.includes('example'))
+                          ? '/images/notFound_image.png'
+                          : dividing.image
+                      }
+                      className="absolute inset-0 h-full w-full rounded-lg object-cover transition-transform duration-300 hover:scale-110"
+                    />
+                  </div>
                 </div>
                 <div className="flex flex-col gap-2">
                   <CardTitle

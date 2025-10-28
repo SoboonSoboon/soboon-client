@@ -116,7 +116,7 @@ export const MeetingDividingCard = ({
   return (
     <div className="flex-shrink-0">
       <Card
-        className="h-[529px] w-full cursor-pointer overflow-hidden bg-white"
+        className="w-full cursor-pointer overflow-hidden bg-white"
         onClick={handleCardClick}
       >
         <CardContent>
@@ -130,11 +130,11 @@ export const MeetingDividingCard = ({
               </div>
             </div>
             {/* 이미지 영역 */}
-            <div className="relative h-full w-full rounded-lg">
+            <div className="border-gray-10 relative aspect-[3/2] w-full overflow-hidden rounded-lg border-1">
               <CardImage
                 src={meeting.thumbnailUrl}
                 alt={meeting.title}
-                className="h-full w-full object-cover"
+                className="absolute inset-0 h-full w-full object-cover transition-transform duration-300 hover:scale-110"
               />
             </div>
           </div>
