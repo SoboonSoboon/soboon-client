@@ -12,7 +12,7 @@ export interface PostActionMenuProps
   extends React.HTMLAttributes<HTMLDivElement> {
   className?: string;
   onClose?: () => void;
-  buttonRef?: React.RefObject<HTMLElement>;
+  buttonRef?: React.RefObject<HTMLElement | null>;
   meetingId: number;
 }
 

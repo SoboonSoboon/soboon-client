@@ -18,7 +18,7 @@ export const AsideMoreInfo = ({
   isAuthor: boolean;
 }) => {
   const [open, setOpen] = useState(false);
-  const buttonRef = useRef<HTMLElement>(null);
+  const buttonRef = useRef<HTMLDivElement>(null);
 
   return (
     <div className="flex w-full justify-between">
