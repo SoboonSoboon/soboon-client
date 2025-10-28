@@ -9,17 +9,21 @@ import {
   ShoppingTagsSection,
 } from './components';
 import { SideButtonSection } from '@/components';
-
-// const token = localStorage.getItem('accessToken'); //todo: 전역상태관리로 관리하기로 변경
-const token = process.env.NEXT_PUBLIC_SOBOON_API_TOKEN;
+import { getServerToken } from '@/utils/serverToken';
 
 async function getShoppingList(
   query: URLSearchParams,
 ): Promise<ShoppingMeetingsType | null> {
   try {
+    const token = await getServerToken();
+
+    if (!token) {
+      console.error('No access token found');
+      return null;
+    }
+
     const response = await fetch(
       `${process.env.NEXT_PUBLIC_SOBOON_API_URL}/v1/meetings/shopping?${query.toString()}`,
-
       {
         cache: 'no-store',
         headers: {
@@ -34,7 +38,6 @@ async function getShoppingList(
     }
 
     const responseData = await response.json();
-
     return responseData.data;
   } catch (error) {
     console.error('Failed to fetch shopping list', error);

@@ -1,15 +1,10 @@
 'use server';
 
-import { cookies } from 'next/headers';
 import {
   HostReviewRequest,
   ParticipantReviewRequest,
 } from '@/app/mypage/utils/review';
-
-const getServerToken = async () => {
-  const cookieStore = await cookies();
-  return cookieStore.get('accessToken')?.value || null;
-};
+import { getServerToken } from '@/utils/serverToken';
 
 export const postHostReview = async (
   data: HostReviewRequest,
