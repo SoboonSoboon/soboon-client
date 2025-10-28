@@ -134,6 +134,7 @@ export const DetailAside = ({
 
       {!isAuthor && (
         <ApplyStatusButtonSection
+          status={meetingDetail?.status}
           filteredStatus={filteredStatus}
           handleApplyMeeting={handleApplyMeeting}
           handleCancelApplyMeeting={handleCancelApplyMeeting}
