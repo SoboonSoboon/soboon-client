@@ -54,7 +54,7 @@ export const Modal: React.FC<ModalProps> = ({
   return (
     <div
       className={cn(
-        'fixed inset-0 flex',
+        'animate-fade-in fixed inset-0 z-50 flex',
         getPositionClass(position),
         showBackdrop ? 'bg-black/50' : 'bg-transparent',
         className,
@@ -71,7 +71,7 @@ export const Modal: React.FC<ModalProps> = ({
         style={scrollable ? { maxHeight } : {}}
         onClick={(e) => e.stopPropagation()}
       >
-        {showCloseButton && (
+        {showCloseButton && position !== 'bottom' && (
           <button
             onClick={onClose}
             className={cn(
