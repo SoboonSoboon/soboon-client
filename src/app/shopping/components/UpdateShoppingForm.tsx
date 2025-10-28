@@ -1,6 +1,7 @@
 'use client';
 
 import { Button, Dropdown, Label, Textarea, TextInput } from '@/components';
+import { useToast, KeywordChip } from '@/components/Atoms';
 import {
   CAPACITY_OPTIONS,
   MODEL_PROVINCE_OPTIONS,
@@ -10,16 +11,15 @@ import {
   GET_MODEL_CITY_OPTIONS,
   GET_MODEL_DISTRICT_OPTIONS,
 } from '@/constants/locations';
+import { ApiResponse } from '@/types/common';
+import { MeetingDetailType } from '@/types/meetingsType';
+import { axiosInstance } from '@/apis/axiosInstance';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import z from 'zod';
 import { useMutation } from '@tanstack/react-query';
-import { ApiResponse } from '@/types/common';
-import { useToast, KeywordChip } from '@/components/Atoms';
 import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
-import { ChevronLeft } from 'lucide-react';
-import { MeetingDetailType } from '@/types/meetingsType';
 
 const shoppingFormSchema = z.object({
   title: z
@@ -127,22 +127,11 @@ export function UpdateShoppingForm({
 
   const { mutate: shoppingUpdate } = useMutation({
     mutationFn: async (formatData: ShoppingFormData) => {
-      const response = await fetch(
-        `${process.env.NEXT_PUBLIC_SOBOON_API_URL}/v1/meetings/${meetingId}`,
-        {
-          method: 'PUT',
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${process.env.NEXT_PUBLIC_SOBOON_API_TOKEN}`,
-          },
-          body: JSON.stringify(formatData),
-        },
+      const response = await axiosInstance.put(
+        `/v1/meetings/${meetingId}`,
+        formatData,
       );
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.message || 'Failed to update meeting');
-      }
-      return response.json();
+      return response.data;
     },
     onSuccess: (data: ApiResponse<string>) => {
       success(data.message || '장보기 모임이 성공적으로 수정되었습니다.');

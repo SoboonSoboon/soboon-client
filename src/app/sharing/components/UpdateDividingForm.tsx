@@ -16,6 +16,7 @@ import Image from 'next/image';
 import { useEffect } from 'react';
 import { imageUploader } from '@/utils';
 import { MeetingDetailType } from '@/types/meetingsType';
+import { axiosInstance } from '@/apis/axiosInstance';
 
 // TODO: 상수값으로 선언 되어있음. 상수값 수정 후 삭제 필요
 const DIVIDING_PRODUCT_TYPE_OPTIONS = [
@@ -162,22 +163,11 @@ export function UpdateDividingForm({
         imageUrls: imageUrls,
       };
 
-      const response = await fetch(
-        `${process.env.NEXT_PUBLIC_SOBOON_API_URL}/v1/meetings/${meetingId}`,
-        {
-          method: 'PUT',
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${process.env.NEXT_PUBLIC_SOBOON_API_TOKEN}`,
-          },
-          body: JSON.stringify(requestData),
-        },
+      const response = await axiosInstance.put(
+        `/v1/meetings/${meetingId}`,
+        requestData,
       );
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.message || 'Failed to update meeting');
-      }
-      return response.json();
+      return response.data;
     },
     onSuccess: (data: ApiResponse<string>) => {
       success(data.message || '소분 모임이 성공적으로 수정되었습니다.');
