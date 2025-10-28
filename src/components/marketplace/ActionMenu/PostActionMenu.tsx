@@ -2,7 +2,7 @@
 
 import { ActionMenu, Button, useToast } from '@/components/Atoms';
 import { Modal, useModal } from '@/components/Molecules/modal';
-import { deleteMeetingsApi } from '@/apis/meetings/deleteMeetingsApi';
+import { deleteMeetingsApi } from '@/apis';
 import { TOAST_MESSAGES } from '@/constants/toastMessages';
 import { usePathname, useRouter } from 'next/navigation';
 import { useState } from 'react';
@@ -53,9 +53,7 @@ export const PostActionMenu = ({
   };
 
   const handleDeleteConfirmClick = async () => {
-    if (isDeleting) {
-      return;
-    }
+    if (isDeleting) return;
 
     try {
       setIsDeleting(true);
@@ -111,13 +109,11 @@ export const PostActionMenu = ({
 
   return (
     <>
-      <div>
-        <ActionMenu
-          className={className}
-          onClose={onClose}
-          menuOptions={POST_ACTION_MENU_OPTIONS}
-        />
-      </div>
+      <ActionMenu
+        className={className}
+        onClose={onClose}
+        menuOptions={POST_ACTION_MENU_OPTIONS}
+      />
 
       <Modal
         isOpen={deleteModal.isOpen}
@@ -126,17 +122,15 @@ export const PostActionMenu = ({
         className="!z-[100000]"
       >
         <div
-          className="flex flex-col items-center gap-8 p-7"
+          className="flex flex-col items-center p-7"
           onPointerDown={(e) => e.stopPropagation()}
         >
-          <div className="flex flex-col items-center gap-2">
-            <h2 className="text-[22px] font-semibold">
-              {MODAL_MESSAGES.DELETE_POST.TITLE}
-            </h2>
-            <p className="text-center text-gray-600">
-              {MODAL_MESSAGES.DELETE_POST.CONTENT}
-            </p>
-          </div>
+          <h2 className="mb-2 text-[22px] font-semibold">
+            {MODAL_MESSAGES.DELETE_POST.TITLE}
+          </h2>
+          <p className="text-text-main mb-8 text-center">
+            {MODAL_MESSAGES.DELETE_POST.CONTENT}
+          </p>
           <div className="flex justify-center gap-2">
             <Button
               variant="outline"
