@@ -37,7 +37,8 @@ export const updateDividingMeeting = async (
     // 캐시 무효화
     revalidateTag(`meeting-${meetingId}`);
 
-    return { success: true };
+    const responseData = await response.json();
+    return responseData;
   } catch (error) {
     console.error('모임 수정 실패:', error);
     throw error;
@@ -78,7 +79,8 @@ export const updateShoppingMeeting = async (
     // 캐시 무효화
     revalidateTag(`meeting-${meetingId}`);
 
-    return { success: true };
+    const responseData = await response.json();
+    return responseData;
   } catch (error) {
     console.error('모임 수정 실패:', error);
     throw error;
