@@ -108,7 +108,7 @@ export const ShoppingListSection = ({
 
   return (
     <>
-      <div className="columns-1 gap-4 space-y-4 md:columns-2 md:gap-5 md:space-y-5 xl:columns-4">
+      <div className="columns-1 gap-4 space-y-4 sm:columns-2 md:columns-3 md:gap-5 md:space-y-5 xl:columns-4">
         {shoppingList.pages
           .flatMap((page) => page.content)
           .map((shopping) => (
