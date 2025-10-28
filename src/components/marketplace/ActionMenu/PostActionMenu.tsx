@@ -20,9 +20,8 @@ export interface PostActionMenuProps
 export const PostActionMenu = ({
   className,
   onClose,
-  buttonRef,
+  // buttonRef,
   meetingId,
-  ...props
 }: PostActionMenuProps) => {
   const deleteModal = useModal();
   const { success } = useToast();
@@ -37,6 +36,10 @@ export const PostActionMenu = ({
 
   const handleShareMenuClick = (event: React.MouseEvent<HTMLLIElement>) => {
     event.stopPropagation();
+    navigator.clipboard.writeText(
+      `${window.location.origin}/${pathname.includes('/sharing') ? 'sharing' : 'shopping'}/${meetingId}`,
+    );
+    onClose?.();
     success('링크 복사에 성공했어요.');
   };
 
@@ -71,7 +74,7 @@ export const PostActionMenu = ({
       router.push(`/${pathname.includes('/sharing') ? 'sharing' : 'shopping'}`);
       router.refresh();
     } catch (error) {
-      alert('게시글 삭제에 실패했습니다. 다시 시도해주세요.');
+      error('게시글 삭제에 실패했습니다. 다시 시도해 주세요.');
       setIsDeleting(false);
     }
   };
@@ -84,7 +87,7 @@ export const PostActionMenu = ({
   }[] = [
     {
       id: 'share',
-      label: '공유',
+      label: '링크 복사',
       onClick: handleShareMenuClick,
       variant: 'default',
     },
