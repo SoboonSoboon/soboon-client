@@ -19,6 +19,7 @@ import { useToast, KeywordChip } from '@/components/Atoms';
 import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 import { MeetingDetailType } from '@/types/meetingsType';
+import { updateShoppingMeeting } from '@/action/meetingAction';
 
 const shoppingFormSchema = z.object({
   title: z
@@ -126,22 +127,7 @@ export function UpdateShoppingForm({
 
   const { mutate: shoppingUpdate } = useMutation({
     mutationFn: async (formatData: ShoppingFormData) => {
-      const response = await fetch(
-        `${process.env.NEXT_PUBLIC_SOBOON_API_URL}/v1/meetings/${meetingId}`,
-        {
-          method: 'PUT',
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${process.env.NEXT_PUBLIC_SOBOON_API_TOKEN}`,
-          },
-          body: JSON.stringify(formatData),
-        },
-      );
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.message || 'Failed to update meeting');
-      }
-      return response.json();
+      return await updateShoppingMeeting(meetingId, formatData);
     },
     onSuccess: (data: ApiResponse<string>) => {
       success(data.message || '장보기 모임이 성공적으로 수정되었습니다.');
