@@ -18,8 +18,8 @@ import { ApiResponse } from '@/types/common';
 import { useToast, KeywordChip } from '@/components/Atoms';
 import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
-import { ChevronLeft } from 'lucide-react';
 import { MeetingDetailType } from '@/types/meetingsType';
+import { updateShoppingMeeting } from '@/action/meetingAction';
 
 const shoppingFormSchema = z.object({
   title: z
@@ -127,22 +127,7 @@ export function UpdateShoppingForm({
 
   const { mutate: shoppingUpdate } = useMutation({
     mutationFn: async (formatData: ShoppingFormData) => {
-      const response = await fetch(
-        `${process.env.NEXT_PUBLIC_SOBOON_API_URL}/v1/meetings/${meetingId}`,
-        {
-          method: 'PUT',
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${process.env.NEXT_PUBLIC_SOBOON_API_TOKEN}`,
-          },
-          body: JSON.stringify(formatData),
-        },
-      );
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.message || 'Failed to update meeting');
-      }
-      return response.json();
+      return await updateShoppingMeeting(meetingId, formatData);
     },
     onSuccess: (data: ApiResponse<string>) => {
       success(data.message || '장보기 모임이 성공적으로 수정되었습니다.');
@@ -172,7 +157,7 @@ export function UpdateShoppingForm({
   };
 
   return (
-    <div className="mx-auto mt-4 w-full max-w-[760px] sm:mt-6 lg:mt-6">
+    <div className="mx-auto w-full max-w-[760px]">
       <div className="border-gray-10 flex flex-col gap-6 rounded-xl border bg-white p-4 sm:gap-8 sm:p-6 lg:gap-10">
         <span className="text-2xl font-bold sm:text-2xl">
           <strong className="text-primary">장보기 </strong>

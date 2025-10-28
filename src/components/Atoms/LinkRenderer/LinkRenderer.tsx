@@ -13,7 +13,7 @@ export const LinkRenderer = ({ text }: LinkRendererProps) => {
   }
 
   if (!containsUrls(text)) {
-    return <div className="p-2 text-gray-700">{text}</div>;
+    return <div className="p-2 whitespace-pre-wrap text-gray-700">{text}</div>;
   }
 
   const urls = extractUrls(text);
@@ -43,7 +43,7 @@ export const LinkRenderer = ({ text }: LinkRendererProps) => {
           );
         } else {
           return (
-            <div key={index} className="p-2 text-gray-700">
+            <div key={index} className="p-2 whitespace-pre-wrap text-gray-700">
               {part.content}
             </div>
           );
