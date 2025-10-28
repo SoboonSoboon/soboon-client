@@ -12,7 +12,7 @@ export const SideButtonSection = () => {
 
   return (
     <>
-      <div className="fixed right-[13%] bottom-20 flex flex-col gap-1.5">
+      <div className="fixed right-4 bottom-20 flex flex-col gap-1.5 lg:right-[5%] 2xl:right-[13%]">
         <CreateButton
           actionHandlers={{
             shopping: () => handleOpen('shopping'),
