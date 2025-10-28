@@ -112,19 +112,21 @@ export const SharingListSection = ({
                     status={dividing.status}
                     className="absolute top-3 left-3 z-10"
                   />
-                  <CardImage
-                    alt="기본 카드"
-                    src={
-                      !dividing.image ||
-                      (Array.isArray(dividing.image) &&
-                        dividing.image.length === 0) ||
-                      (typeof dividing.image === 'string' &&
-                        dividing.image.includes('example'))
-                        ? '/images/notFound_image.png'
-                        : dividing.image
-                    }
-                    className="h-[200px] w-full rounded-lg transition-transform duration-300 hover:scale-110"
-                  />
+                  <div className="relative aspect-[3/2] w-full">
+                    <CardImage
+                      alt="기본 카드"
+                      src={
+                        !dividing.image ||
+                        (Array.isArray(dividing.image) &&
+                          dividing.image.length === 0) ||
+                        (typeof dividing.image === 'string' &&
+                          dividing.image.includes('example'))
+                          ? '/images/notFound_image.png'
+                          : dividing.image
+                      }
+                      className="absolute inset-0 h-full w-full rounded-lg object-cover transition-transform duration-300 hover:scale-110"
+                    />
+                  </div>
                 </div>
                 <div className="flex flex-col gap-2">
                   <CardTitle
