@@ -48,8 +48,7 @@ export const FilterSection = () => {
   };
 
   const handleSearch = (searchText: string) => {
-    console.log('검색어:', searchText);
-    updateParams({ search: searchText });
+    updateParams({ keyword: searchText });
   };
 
   useEffect(() => {
