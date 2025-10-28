@@ -1,6 +1,6 @@
 'use client';
 
-import { ActionMenu, useToast } from '@/components/Atoms';
+import { ActionMenu, Button, useToast } from '@/components/Atoms';
 import { Modal, useModal } from '@/components/Molecules/modal';
 import { deleteMeetingsApi } from '@/apis/meetings/deleteMeetingsApi';
 import { TOAST_MESSAGES } from '@/constants/toastMessages';
@@ -124,31 +124,31 @@ export const PostActionMenu = ({
           <p className="text-center text-gray-600">
             {MODAL_MESSAGES.DELETE_POST.CONTENT}
           </p>
-          <div className="mt-2 flex w-full gap-3">
-            <button
-              type="button"
+          <div className="flex justify-center gap-2">
+            <Button
+              variant="outline"
               onClick={(e) => {
                 e.stopPropagation();
                 deleteModal.close();
               }}
-              className="flex-1 cursor-pointer rounded-lg bg-gray-200 px-4 py-2 text-gray-700 transition-colors hover:bg-gray-300"
-            >
-              {MODAL_MESSAGES.DELETE_POST.BUTTONS.CANCEL}
-            </button>
-            <button
-              type="button"
+              label={MODAL_MESSAGES.DELETE_POST.BUTTONS.CANCEL}
+              className="w-28"
+            />
+            <Button
+              variant="filled"
               onClick={(e) => {
                 e.preventDefault();
                 e.stopPropagation();
                 handleDeleteConfirmClick();
               }}
               disabled={isDeleting}
-              className="bg-primary flex-1 cursor-pointer rounded-lg px-4 py-2 text-white transition-colors disabled:cursor-not-allowed disabled:opacity-50"
-            >
-              {isDeleting
-                ? '삭제 중...'
-                : MODAL_MESSAGES.DELETE_POST.BUTTONS.CONFIRM}
-            </button>
+              label={
+                isDeleting
+                  ? '삭제 중...'
+                  : MODAL_MESSAGES.DELETE_POST.BUTTONS.CONFIRM
+              }
+              className="w-28"
+            />
           </div>
         </div>
       </Modal>
