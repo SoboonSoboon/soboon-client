@@ -18,6 +18,7 @@ import { MeetingDetailType } from '@/types/meetingsType';
 import { CurrentPeople } from './CurrentPeople';
 import { AsideHeader } from './AsideHeader';
 import { AsideMoreInfo } from './AsideMoreInfo';
+import { useAuthStore } from '@/apis/auth/hooks/authStore';
 
 interface DetailAsideProps {
   meetingDetail: MeetingDetailType;
@@ -35,6 +36,7 @@ export const DetailAside = ({
   const { success, error } = useToast();
   const queryClient = useQueryClient();
   const { handleBookmark } = useBookmark();
+  const userId = useAuthStore((state) => state.userId);
 
   const handleBookmarkClick = () => {
     setIsBookmarked(!isBookmarked);
@@ -55,19 +57,28 @@ export const DetailAside = ({
   };
 
   const { mutate: handleCloseMeetingAction } = useMutation({
-    mutationFn: () => handleCloseMeeting(meetingId),
+    mutationFn: async () => {
+      if (meetingDetail?.current_member === 1) {
+        throw new Error('참여자 미달 오류');
+      }
+      const response = await handleCloseMeeting(meetingId);
+      return response;
+    },
     onSuccess: (response) => {
       success(response.message || '모임을 마감했어요.');
     },
     onError: (err) => {
-      error('모임 마감을 실패했어요.');
+      if (err.message === '참여자 미달 오류') {
+        error('참여자가 1명 이상 있어야 모임을 마감할 수 있어요.');
+      } else {
+        error('모임 마감을 실패했어요.');
+      }
       throw err;
     },
   });
 
-  // todo: 쿼리키에 유저 id 넣어서 사용하기
   const { data: userApplyStatus } = useQuery({
-    queryKey: ['userApplyStatus'],
+    queryKey: ['userApplyStatus', userId],
     queryFn: () => getUserApplyStatus(),
   });
 
