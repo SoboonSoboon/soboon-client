@@ -28,63 +28,81 @@ export const FilterBottomSheet = ({
     activeStatus,
   } = useFilterParams();
 
-  const [selectedProductType, setSelectedProductType] = useState('');
-  const [selectedProvince, setSelectedProvince] = useState('');
-  const [selectedCity, setSelectedCity] = useState('');
-  const [selectedStatus, setSelectedStatus] = useState('');
+  const [selectedFilters, setSelectedFilters] = useState({
+    productType: '',
+    province: '',
+    city: '',
+    status: '',
+  });
 
   useEffect(() => {
     if (isOpen) {
-      setSelectedProductType(activeProductType);
-      setSelectedProvince(activeProvince);
-      setSelectedCity(activeCity);
-      setSelectedStatus(activeStatus);
+      setSelectedFilters({
+        productType: activeProductType,
+        province: activeProvince,
+        city: activeCity,
+        status: activeStatus,
+      });
     }
-  }, [isOpen, activeProductType, activeProvince, activeCity, activeStatus]);
+  }, [isOpen]);
 
   const availableCityOptions = useMemo(() => {
-    if (selectedProvince === '') {
+    if (selectedFilters.province === '') {
       return [{ value: '', label: '전체' }];
     }
 
     return [
       { value: '', label: '전체' },
-      ...GET_CITY_OPTIONS(selectedProvince).slice(1),
+      ...GET_CITY_OPTIONS(selectedFilters.province).slice(1),
     ];
-  }, [selectedProvince]);
+  }, [selectedFilters.province]);
 
   const handleProvinceChange = (province: string) => {
-    setSelectedProvince(province);
-    setSelectedCity('');
+    setSelectedFilters((prev) => ({
+      ...prev,
+      province,
+      city: '',
+    }));
   };
 
   const handleCityChange = (city: string) => {
-    setSelectedCity(city);
+    setSelectedFilters((prev) => ({
+      ...prev,
+      city,
+    }));
   };
 
   const handleProductTypeChange = (productType: string) => {
-    setSelectedProductType(productType);
+    setSelectedFilters((prev) => ({
+      ...prev,
+      productType,
+    }));
   };
 
   const handleStatusChange = (status: string) => {
-    setSelectedStatus(status);
+    setSelectedFilters((prev) => ({
+      ...prev,
+      status,
+    }));
   };
 
   const handleApplyButtonClick = () => {
     updateParams({
-      province: selectedProvince,
-      city: selectedCity,
-      productType: selectedProductType,
-      status: selectedStatus,
+      province: selectedFilters.province,
+      city: selectedFilters.city,
+      productType: selectedFilters.productType,
+      status: selectedFilters.status,
     });
     onClose();
   };
 
   const handleResetButtonClick = () => {
-    setSelectedProductType('');
-    setSelectedProvince('');
-    setSelectedCity('');
-    setSelectedStatus('');
+    setSelectedFilters({
+      productType: '',
+      province: '',
+      city: '',
+      status: '',
+    });
   };
 
   const handleClose = () => {
@@ -126,7 +144,7 @@ export const FilterBottomSheet = ({
             id="recruiting"
             name="recruiting"
             className="active:bg-primary checked:border-primary checked:bg-primary size-6 checked:text-white"
-            checked={selectedStatus === 'RECRUITING'}
+            checked={selectedFilters.status === 'RECRUITING'}
             onChange={(checked) =>
               handleStatusChange(checked ? 'RECRUITING' : '')
             }
@@ -141,7 +159,7 @@ export const FilterBottomSheet = ({
           <div className="flex flex-col gap-2">
             <Dropdown
               name="province"
-              value={selectedProvince}
+              value={selectedFilters.province}
               options={PROVINCE_OPTIONS}
               className="w-full"
               onChange={(province) => handleProvinceChange(province)}
@@ -150,7 +168,7 @@ export const FilterBottomSheet = ({
             />
             <Dropdown
               name="city"
-              value={selectedCity}
+              value={selectedFilters.city}
               options={availableCityOptions}
               className="w-full"
               onChange={(city) => handleCityChange(city)}
@@ -171,7 +189,9 @@ export const FilterBottomSheet = ({
                 onClick={() => handleProductTypeChange(category.value)}
                 label={category.label}
                 variant={
-                  selectedProductType === category.value ? 'active' : 'inactive'
+                  selectedFilters.productType === category.value
+                    ? 'active'
+                    : 'inactive'
                 }
               />
             ))}
