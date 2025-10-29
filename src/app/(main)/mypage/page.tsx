@@ -1,7 +1,7 @@
 'use client';
 
 import { Suspense } from 'react';
-import { TabSection, CardList } from '@/app/mypage/components';
+import { TabSection, CardList } from '@/app/(main)/mypage/components';
 import { EmptyState, ErrorPage } from '@/components/Molecules';
 
 import { useMyPageData } from './hook/components/useMypageData';

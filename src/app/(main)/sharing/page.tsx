@@ -7,7 +7,7 @@ import {
   FilterSection,
   SharingListSection,
   SearchSection,
-} from '@/app/sharing/components';
+} from '@/app/(main)/sharing/components';
 import { SideButtonSection } from '@/components';
 import { getServerToken } from '@/utils/serverToken';
 

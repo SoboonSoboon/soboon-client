@@ -14,6 +14,7 @@ import { redirectToKakao } from '@/apis/auth/authApi';
 import { useAuthStore } from '@/apis/auth/hooks/authStore';
 import { useState } from 'react';
 import { HEADER_MENU } from '@/constants';
+import Image from 'next/image';
 
 export const Header = () => {
   const pathname = usePathname() || '/';
@@ -31,12 +32,8 @@ export const Header = () => {
     window.location.href = '/';
   };
 
-  // const onCreateGather = () => {
-  //   window.location.href = '/gather/create';
-  // };
-
   return (
-    <header className="border-gray-10 fixed top-0 right-0 left-0 z-50 h-15 border-b bg-white px-4">
+    <header className="border-gray-10 fixed top-0 right-0 left-0 z-50 h-15 border-b bg-white pr-20 pl-4">
       <div className="text-text-main mx-auto flex h-full max-w-[1200px] items-center justify-between bg-white">
         <div className="flex items-center gap-4 sm:gap-6 md:gap-8 lg:gap-10">
           <Link href="/">
@@ -80,10 +77,10 @@ export const Header = () => {
           </nav>
         </div>
 
-        <div className="flex items-center gap-2 sm:gap-3 md:gap-4 lg:gap-5">
+        <div className="relative flex items-center gap-2 sm:gap-3 md:gap-4 lg:gap-5">
           {isLoggedIn ? (
             <>
-              <div className="relative cursor-pointer">
+              <div className="cursor-pointer">
                 <span
                   className="flex items-center gap-1 sm:gap-2 md:gap-[10px]"
                   onClick={() => {
@@ -109,17 +106,21 @@ export const Header = () => {
                   </div>
                 )}
               </div>
-              {/* <Button
-                primary
-                size="small"
-                onClick={onCreateGather}
-                label="모임 만들기"
-              />
-              <Button size="small" onClick={handleLogout} label="로그아웃" /> */}
             </>
           ) : (
             <>
-              <Button onClick={redirectToKakao} label="시작하기" />
+              <div className="relative">
+                <Button onClick={redirectToKakao} label="시작하기" />
+                <div className="absolute -bottom-[115%] left-1/2 h-[30px] w-[120px] -translate-x-1/2 sm:-bottom-[100%] sm:h-[35px] sm:w-[150px] md:h-[38px] md:w-[170px] lg:h-[40px] lg:w-[188px]">
+                  <Image
+                    src="/images/kakao_login_image.png"
+                    alt="kakao_login"
+                    width={188}
+                    height={40}
+                    className="h-full w-full object-contain"
+                  />
+                </div>
+              </div>
             </>
           )}
         </div>
