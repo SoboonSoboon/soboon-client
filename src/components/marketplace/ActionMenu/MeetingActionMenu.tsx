@@ -142,7 +142,7 @@ export const MeetingActionMenu = ({
             <Button
               variant="outline"
               type="button"
-              onClick={(e) => {
+              onClick={() => {
                 deleteModal.close();
               }}
               className="w-full"
