@@ -8,7 +8,12 @@ import {
 } from '@/components/Atoms';
 import { Modal, useModal } from '@/components/Molecules/modal';
 import { deleteMeetingsApi } from '@/apis/meetings/deleteMeetingsApi';
-import { MODAL_CONTENT, MODAL_TITLE } from '@/constants';
+import {
+  MODAL_CONTENT,
+  MODAL_TITLE,
+  TOAST_SUCCESS_MESSAGE,
+  TOAST_FAILURE_MESSAGE,
+} from '@/constants';
 import { usePathname, useRouter } from 'next/navigation';
 import { useState } from 'react';
 
@@ -33,7 +38,7 @@ export const MeetingActionMenu = ({
   const router = useRouter();
   const pathname = usePathname();
   const [isDeleting, setIsDeleting] = useState(false);
-  const { success } = useToast();
+  const { success, error } = useToast();
 
   const handleOutsideClose = () => {
     if (!deleteModal.isOpen) {
@@ -43,7 +48,7 @@ export const MeetingActionMenu = ({
 
   const handleShareMenuClick = () => {
     navigator.clipboard.writeText(window.location.href);
-    success('링크가 복사되었어요.');
+    success(TOAST_SUCCESS_MESSAGE.SHARE_MEETING);
     onClose?.();
   };
 
@@ -79,9 +84,9 @@ export const MeetingActionMenu = ({
 
       router.push(`/${pathname.includes('/sharing') ? 'sharing' : 'shopping'}`);
       router.refresh();
-    } catch (error) {
-      console.error('게시글 삭제 실패:', error);
-      alert('게시글 삭제에 실패했습니다. 다시 시도해주세요.');
+      success(TOAST_SUCCESS_MESSAGE.DELETE_MEETING);
+    } catch {
+      error(TOAST_FAILURE_MESSAGE.DELETE_MEETING);
       setIsDeleting(false);
     }
   };
