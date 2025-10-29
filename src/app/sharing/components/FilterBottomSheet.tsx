@@ -9,10 +9,7 @@ import categories from '@/constants/categories';
 import { useFilterParams } from '@/hooks/useFilterParams';
 import { useMemo } from 'react';
 import { X } from 'lucide-react';
-
-const Line = () => {
-  return <div className="bg-gray-10 my-5 h-[1px] w-full" />;
-};
+import { createPortal } from 'react-dom';
 
 interface FilterBottomSheetProps {
   isOpen: boolean;
@@ -66,7 +63,7 @@ export const FilterBottomSheet = ({
     onClose();
   };
 
-  return (
+  return createPortal(
     <Modal
       isOpen={isOpen}
       onClose={handleClose}
@@ -105,7 +102,7 @@ export const FilterBottomSheet = ({
           <Label htmlFor="recruiting">가능한 모임만 보기</Label>
         </div>
 
-        <Line />
+        <div className="bg-gray-10 my-5 h-[1px] w-full"></div>
 
         <div className="flex flex-col gap-3">
           <h3 className="text-lg font-semibold">지역</h3>
@@ -131,7 +128,7 @@ export const FilterBottomSheet = ({
           </div>
         </div>
 
-        <Line />
+        <div className="bg-gray-10 my-5 h-[1px] w-full"></div>
 
         <div className="flex flex-col gap-3">
           <h3 className="text-lg font-semibold">카테고리</h3>
@@ -173,6 +170,7 @@ export const FilterBottomSheet = ({
           />
         </div>
       </div>
-    </Modal>
+    </Modal>,
+    document.body,
   );
 };
