@@ -53,6 +53,9 @@ export const CommentActionMenu = ({
       queryClient.invalidateQueries({
         queryKey: ['commentList', meetingId, sortType || 'OLDEST'],
       });
+      queryClient.invalidateQueries({
+        queryKey: ['commentCount', meetingId],
+      });
     },
     onError: () => {
       error(TOAST_FAILURE_MESSAGE.DELETE_COMMENT);

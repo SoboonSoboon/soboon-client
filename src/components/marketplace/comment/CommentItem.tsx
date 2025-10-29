@@ -70,6 +70,9 @@ export const CommentItem = ({
       queryClient.invalidateQueries({
         queryKey: ['commentList', meetingId, sortType || 'OLDEST'],
       });
+      queryClient.invalidateQueries({
+        queryKey: ['commentCount', meetingId],
+      });
     },
     onError: (err: Error) => {
       error(err.message || '댓글 수정에 실패했어요.');

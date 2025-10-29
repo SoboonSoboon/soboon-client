@@ -52,6 +52,9 @@ export const CommentListContainer = ({
       queryClient.invalidateQueries({
         queryKey: ['commentList', meetingId, sortType || 'OLDEST'],
       });
+      queryClient.invalidateQueries({
+        queryKey: ['commentCount', meetingId],
+      });
     },
     onError: (err: Error) => {
       error(err.message || '대댓글 작성에 실패했습니다.');
