@@ -4,7 +4,7 @@ import { Button } from '@/components';
 import {
   type MainTabType,
   type SubTabType,
-} from '@/app/mypage/utils/mypageType';
+} from '@/app/(main)/mypage/utils/mypageType';
 import { EMPTY_STATE_CONFIG } from './constants';
 import Image from 'next/image';
 

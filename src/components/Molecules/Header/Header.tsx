@@ -14,6 +14,7 @@ import { redirectToKakao } from '@/apis/auth/authApi';
 import { useAuthStore } from '@/apis/auth/hooks/authStore';
 import { useState, useEffect } from 'react';
 import { HEADER_MENU } from '@/constants';
+import Image from 'next/image';
 import { cn } from '@/utils/cn';
 
 export const Header = () => {
@@ -42,7 +43,7 @@ export const Header = () => {
   }, [pathname]);
 
   return (
-    <header className="border-gray-10 fixed top-0 right-0 left-0 z-50 h-15 border-b bg-white px-4">
+    <header className="border-gray-10 fixed top-0 right-0 left-0 z-50 h-15 border-b bg-white pr-20 pl-4">
       <div className="text-text-main mx-auto flex h-full max-w-[1200px] items-center justify-between bg-white">
         <div className="flex items-center gap-4 sm:gap-6 md:gap-8 lg:gap-10">
           <Link href="/">
@@ -90,36 +91,51 @@ export const Header = () => {
           </nav>
         </div>
 
-        <div className="flex items-center gap-2 sm:gap-3 md:gap-4 lg:gap-5">
+        <div className="relative flex items-center gap-2 sm:gap-3 md:gap-4 lg:gap-5">
           {isLoggedIn ? (
-            <div className="relative cursor-pointer">
-              <span
-                className="flex items-center gap-1 sm:gap-2 md:gap-[10px]"
-                onClick={() => {
-                  setIsOpen(true);
-                }}
-              >
-                <div className="h-10 w-10 overflow-hidden rounded-full">
-                  <ProfileImg
-                    profileImageUrl={userImage || undefined}
-                    size={40}
-                  />
-                </div>
-                <span className="hidden text-base font-semibold md:block">
-                  {userNickname || userName}
+            <>
+              <div className="cursor-pointer">
+                <span
+                  className="flex items-center gap-1 sm:gap-2 md:gap-[10px]"
+                  onClick={() => {
+                    setIsOpen(true);
+                  }}
+                >
+                  <div className="h-10 w-10 overflow-hidden rounded-full">
+                    <ProfileImg
+                      profileImageUrl={userImage || undefined}
+                      size={40}
+                    />
+                  </div>
+                  <span className="hidden text-base font-semibold md:block">
+                    {userNickname || userName}
+                  </span>
                 </span>
-              </span>
-              {isOpen && (
-                <div className="absolute right-0 z-50">
-                  <UserActionMenu
-                    onClick={handleLogout}
-                    onClose={() => setIsOpen(false)}
+                {isOpen && (
+                  <div className="absolute top-full right-0 z-50 mt-2">
+                    <UserActionMenu
+                      onClick={handleLogout}
+                      onClose={() => setIsOpen(false)}
+                    />
+                  </div>
+                )}
+              </div>
+            </>
+          ) : (
+            <>
+              <div className="relative">
+                <Button onClick={redirectToKakao} label="시작하기" />
+                <div className="absolute -bottom-[115%] left-1/2 h-[30px] w-[120px] -translate-x-1/2 sm:-bottom-[100%] sm:h-[35px] sm:w-[150px] md:h-[38px] md:w-[170px] lg:h-[40px] lg:w-[188px]">
+                  <Image
+                    src="/images/kakao_login_image.png"
+                    alt="kakao_login"
+                    width={188}
+                    height={40}
+                    className="h-full w-full object-contain"
                   />
                 </div>
-              )}
-            </div>
-          ) : (
-            <Button onClick={redirectToKakao} label="시작하기" />
+              </div>
+            </>
           )}
         </div>
       </div>

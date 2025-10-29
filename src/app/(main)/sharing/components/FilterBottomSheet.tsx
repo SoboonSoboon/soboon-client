@@ -44,7 +44,7 @@ export const FilterBottomSheet = ({
         status: activeStatus,
       });
     }
-  }, [isOpen]);
+  }, [isOpen, activeProductType, activeProvince, activeCity, activeStatus]);
 
   const availableCityOptions = useMemo(() => {
     if (selectedFilters.province === '') {

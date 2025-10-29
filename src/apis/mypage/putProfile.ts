@@ -1,4 +1,4 @@
-import { ProfileUpdateData } from '@/app/mypage/utils/profile';
+import { ProfileUpdateData } from '@/app/(main)/mypage/utils/profile';
 import { axiosInstance } from '../axiosInstance';
 
 export const putProfile = async (data: ProfileUpdateData) => {

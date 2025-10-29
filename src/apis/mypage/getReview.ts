@@ -2,7 +2,7 @@ import { axiosInstance } from '../axiosInstance';
 import {
   ReviewResponse,
   ReviewTargetsResponse,
-} from '@/app/mypage/utils/review';
+} from '@/app/(main)/mypage/utils/review';
 
 export const getReceivedReview = async (): Promise<ReviewResponse> => {
   try {

@@ -1,5 +1,5 @@
 import { ProfileImg } from '@/components';
-import { HashTag } from '@/app/shopping/components/HashTag';
+import { HashTag } from '@/app/(main)/shopping/components/HashTag';
 
 export const AsideHeader = ({
   title,

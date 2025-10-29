@@ -189,7 +189,7 @@ export function UpdateDividingForm({
         </Label>
         <div className="mt-3 flex flex-wrap gap-1.5 sm:flex-nowrap xl:gap-2.5">
           {DIVIDING_PRODUCT_TYPE_OPTIONS.map((option) => {
-            const isSelected = watch('productType') === option.value;
+            // const isSelected = watch('productType') === option.value;
 
             return (
               <div

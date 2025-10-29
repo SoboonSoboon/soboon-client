@@ -208,3 +208,18 @@ h6 {
 .dropdown-scrollbar::-webkit-scrollbar-thumb:hover {
   background: var(--GreenScale-Green30);
 }
+
+/* 스크롤 애니메이션 */
+.animate-fade-in-up {
+  opacity: 1 !important;
+  transform: translateY(0) !important;
+}
+
+/* 패럴랙스 효과를 위한 클래스 */
+.parallax-slow {
+  transform: translateY(var(--parallax-offset, 0));
+}
+
+.parallax-fast {
+  transform: translateY(calc(var(--parallax-offset, 0) * 0.5));
+}

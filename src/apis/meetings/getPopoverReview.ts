@@ -1,5 +1,5 @@
 import { axiosInstance } from '../axiosInstance';
-import { ReviewResponse } from '@/app/mypage/utils/review';
+import { ReviewResponse } from '@/app/(main)/mypage/utils/review';
 
 export const getPopoverReview = async (
   userId: number,

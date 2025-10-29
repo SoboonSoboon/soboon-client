@@ -28,3 +28,8 @@ export {
 export { Footer } from './Footer';
 export { KeywordChip } from './KeywordChip/KeywordChip';
 export { ReviewItemBar } from './ReviewItemBar';
+export {
+  Accordion,
+  type AccordionItem,
+  type AccordionProps,
+} from './Accordion/Accordion';

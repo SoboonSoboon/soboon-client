@@ -5,7 +5,7 @@ import { ProfileImg, ReviewItemBar } from '@/components';
 import { cn } from '@/utils/cn';
 import { useReviewStats } from '@/hooks';
 import { REVIEW_KEYWORD_LABELS } from '@/constants';
-import { ReviewKeywordString } from '@/app/mypage/utils/review';
+import { ReviewKeywordString } from '@/app/(main)/mypage/utils/review';
 
 interface ProfilePopoverProps {
   nickname: string;

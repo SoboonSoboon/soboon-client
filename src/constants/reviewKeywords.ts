@@ -1,4 +1,4 @@
-import { ReviewKeywordString } from '@/app/mypage/utils/review';
+import { ReviewKeywordString } from '@/app/(main)/mypage/utils/review';
 
 export const REVIEW_KEYWORD_LABELS: Record<ReviewKeywordString, string> = {
   TIME_PROMISE: '시간을 잘 지켜요',

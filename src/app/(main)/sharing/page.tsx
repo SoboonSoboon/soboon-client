@@ -2,6 +2,7 @@ import {
   DividingMeetingsType,
   meetingSearchParamsType,
 } from '@/types/meetingsType';
+
 import { getServerToken } from '@/utils/serverToken';
 import SharingPageContent from './SharingPageContent';
 
