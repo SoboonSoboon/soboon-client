@@ -46,7 +46,7 @@ export const ActionMenu = ({
           <li
             key={item.id}
             className={cn(
-              'flex cursor-pointer items-center justify-center px-4 py-2.5 transition-all duration-200',
+              'flex cursor-pointer items-center justify-center px-4 py-2.5 transition-all duration-200 hover:bg-green-50',
               item.disabled && 'cursor-not-allowed opacity-50',
               item.variant === 'danger' ? 'text-warning' : 'text-text-main',
               index === 0 &&
