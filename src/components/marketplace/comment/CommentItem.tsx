@@ -68,7 +68,7 @@ export const CommentItem = ({
       success(data.message || '댓글 수정을 완료했어요.');
       handleCancelClick();
       queryClient.invalidateQueries({
-        queryKey: ['commentList', meetingId, sortType],
+        queryKey: ['commentList', meetingId, sortType || 'OLDEST'],
       });
     },
     onError: (err: Error) => {

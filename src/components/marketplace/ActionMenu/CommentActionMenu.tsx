@@ -51,7 +51,7 @@ export const CommentActionMenu = ({
       deleteModal.close();
       onClose?.();
       queryClient.invalidateQueries({
-        queryKey: ['commentList', meetingId, sortType],
+        queryKey: ['commentList', meetingId, sortType || 'OLDEST'],
       });
     },
     onError: () => {

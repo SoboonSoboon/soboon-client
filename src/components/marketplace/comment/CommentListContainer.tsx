@@ -50,7 +50,7 @@ export const CommentListContainer = ({
       success(data.message);
       handleCloseReply();
       queryClient.invalidateQueries({
-        queryKey: ['commentList', meetingId, sortType],
+        queryKey: ['commentList', meetingId, sortType || 'OLDEST'],
       });
     },
     onError: (err: Error) => {
@@ -64,7 +64,7 @@ export const CommentListContainer = ({
     hasNextPage,
     isFetchingNextPage,
   } = useInfiniteQuery({
-    queryKey: ['commentList', meetingId, sortType],
+    queryKey: ['commentList', meetingId, sortType || 'OLDEST'],
     queryFn: async ({ pageParam }) => {
       const urlParams = new URLSearchParams();
 

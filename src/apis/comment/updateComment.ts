@@ -1,4 +1,5 @@
 import { axiosInstance } from '../axiosInstance';
+import { commentSchema } from '@/schemas/commentSchema';
 
 export const updateCommentApi = async ({
   meetingId,
@@ -11,6 +12,12 @@ export const updateCommentApi = async ({
   content: string;
   secret: boolean;
 }) => {
+  const validated = commentSchema.safeParse({ comment: content });
+
+  if (!validated.success) {
+    throw new Error(validated.error.issues[0].message);
+  }
+
   try {
     const response = await axiosInstance.put(
       `/v1/meetings/${meetingId}/comments/${commentId}`,

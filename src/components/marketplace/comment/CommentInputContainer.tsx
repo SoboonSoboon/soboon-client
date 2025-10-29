@@ -27,10 +27,10 @@ export const CommentInputContainer = ({
     onSuccess: (data) => {
       const sortType = searchParams.get('sortType');
 
-      queryClient.invalidateQueries({
-        queryKey: ['commentList', meetingId, sortType],
-      });
       success(data.message);
+      queryClient.invalidateQueries({
+        queryKey: ['commentList', meetingId, sortType || 'OLDEST'],
+      });
     },
     onError: (err: Error) => {
       error(err.message || '댓글 작성에 실패했습니다.');
