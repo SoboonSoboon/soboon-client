@@ -1,6 +1,11 @@
 'use client';
 
-import { ActionMenu, ActionMenuItem, Button } from '@/components/Atoms';
+import {
+  ActionMenu,
+  ActionMenuItem,
+  Button,
+  useToast,
+} from '@/components/Atoms';
 import { Modal, useModal } from '@/components/Molecules/modal';
 import { deleteMeetingsApi } from '@/apis/meetings/deleteMeetingsApi';
 import { MODAL_CONTENT, MODAL_TITLE } from '@/constants';
@@ -26,11 +31,18 @@ export const MeetingActionMenu = ({
   const router = useRouter();
   const pathname = usePathname();
   const [isDeleting, setIsDeleting] = useState(false);
+  const { success } = useToast();
 
   const handleOutsideClose = () => {
     if (!deleteModal.isOpen) {
       onClose?.();
     }
+  };
+
+  const handleShareMenuClick = (event: React.MouseEvent<HTMLLIElement>) => {
+    navigator.clipboard.writeText(window.location.href);
+    success('링크가 복사되었어요.');
+    onClose?.();
   };
 
   const handleUpdateMenuClick = (event: React.MouseEvent<HTMLLIElement>) => {
@@ -73,6 +85,12 @@ export const MeetingActionMenu = ({
   };
 
   const menuItems: ActionMenuItem[] = [
+    {
+      id: 'share',
+      label: '링크 공유',
+      onClick: handleShareMenuClick,
+      variant: 'default',
+    },
     {
       id: 'update',
       label: '수정',
