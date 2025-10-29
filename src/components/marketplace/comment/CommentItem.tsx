@@ -4,7 +4,7 @@ import { EllipsisVertical, LockKeyhole } from 'lucide-react';
 import { timeFormatter } from '@/utils';
 import { CommentType, ReplyType } from '@/types/commentType';
 import { Button, ProfileImg, ProfilePopover, TextInput } from '@/components';
-import { CommentActionMenu } from '../ActionMenu/CommentActionMenu';
+import { CommentActionMenu } from '@/components/marketplace/ActionMenu/CommentActionMenu';
 import { useState } from 'react';
 import { useParams } from 'next/navigation';
 import { updateComment } from '@/action/commentAction';
@@ -87,28 +87,31 @@ export const CommentItem = ({
               </span>
             </ProfilePopover>
 
-            <span className="text-sm text-gray-50">
+            <span className="text-gray-40 text-sm">
               {timeFormatter(comment.createdAt)}
             </span>
           </div>
-          <div className="cursor-pointer">
-            <EllipsisVertical
-              className="size-6 text-gray-50"
-              onClick={() => setIsOpen(!isOpen)}
-            />
-            {isOpen && userId === comment.authorId && (
-              <CommentActionMenu
-                className="absolute top-5 right-0 z-50"
-                commentId={
-                  (comment as CommentType)?.commentId?.toString() ||
-                  (comment as ReplyType)?.replyId?.toString() ||
-                  ''
-                }
-                onEditClick={() => handleEditClick()}
-                onClose={handleCloseMenu}
+          {userId === comment.authorId && (
+            <div className="hover:bg-gray-5 flex cursor-pointer items-center justify-center rounded-lg p-1.5">
+              <EllipsisVertical
+                className="size-6 text-gray-50"
+                onClick={() => setIsOpen(!isOpen)}
               />
-            )}
-          </div>
+              {isOpen && userId === comment.authorId && (
+                <div className="absolute top-8 right-0 z-50">
+                  <CommentActionMenu
+                    commentId={
+                      (comment as CommentType)?.commentId?.toString() ||
+                      (comment as ReplyType)?.replyId?.toString() ||
+                      ''
+                    }
+                    onEditClick={() => handleEditClick()}
+                    onClose={handleCloseMenu}
+                  />
+                </div>
+              )}
+            </div>
+          )}
         </div>
         <div>
           {isEditing ? (
@@ -133,7 +136,7 @@ export const CommentItem = ({
               <Button label="수정" className="text-primary" type="submit" />
               <Button
                 label="취소"
-                className="!bg-gray-200 !text-gray-700"
+                variant="outline"
                 type="button"
                 onClick={() => handleCancelClick()}
               />

@@ -6,7 +6,7 @@ import {
   Button,
   Logo,
   ProfileImg,
-  UserMenuModal,
+  UserActionMenu,
   Icon,
   type IconType,
 } from '@/components/Atoms';
@@ -110,8 +110,8 @@ export const Header = () => {
                 </span>
               </span>
               {isOpen && (
-                <div className="absolute top-full right-0 z-50 mt-2">
-                  <UserMenuModal
+                <div className="absolute right-0 z-50">
+                  <UserActionMenu
                     onClick={handleLogout}
                     onClose={() => setIsOpen(false)}
                   />
