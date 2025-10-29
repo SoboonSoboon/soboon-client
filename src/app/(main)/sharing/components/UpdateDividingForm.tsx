@@ -189,7 +189,7 @@ export function UpdateDividingForm({
         </Label>
         <div className="mt-3 flex flex-wrap gap-1.5 sm:flex-nowrap xl:gap-2.5">
           {DIVIDING_PRODUCT_TYPE_OPTIONS.map((option) => {
-            const isSelected = watch('productType') === option.value;
+            // const isSelected = watch('productType') === option.value;
 
             return (
               <div
@@ -205,7 +205,7 @@ export function UpdateDividingForm({
                   className={`hover:border-primary relative flex h-[70px] w-[70px] cursor-pointer items-center justify-center rounded-lg transition-colors duration-200 ${
                     watch('productType') === option.value
                       ? 'border-primary border-2'
-                      : 'border-gray-10 border-1'
+                      : 'border-gray-10 border'
                   }`}
                 >
                   <Image

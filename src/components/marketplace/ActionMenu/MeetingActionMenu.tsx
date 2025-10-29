@@ -1,0 +1,163 @@
+'use client';
+
+import {
+  ActionMenu,
+  ActionMenuItem,
+  Button,
+  useToast,
+} from '@/components/Atoms';
+import { Modal, useModal } from '@/components/Molecules/modal';
+import { deleteMeetingsApi } from '@/apis/meetings/deleteMeetingsApi';
+import {
+  MODAL_CONTENT,
+  MODAL_TITLE,
+  TOAST_SUCCESS_MESSAGE,
+  TOAST_FAILURE_MESSAGE,
+} from '@/constants';
+import { usePathname, useRouter } from 'next/navigation';
+import { useState } from 'react';
+
+export interface MeetingActionMenuProps
+  extends React.HTMLAttributes<HTMLDivElement> {
+  className?: string;
+  onClose?: () => void;
+  buttonRef?: React.RefObject<HTMLElement>;
+  meetingId: number;
+  isAuthor: boolean;
+}
+
+export const MeetingActionMenu = ({
+  className,
+  onClose,
+  buttonRef,
+  meetingId,
+  isAuthor,
+  ...props
+}: MeetingActionMenuProps) => {
+  const deleteModal = useModal();
+  const router = useRouter();
+  const pathname = usePathname();
+
+  const [isDeleting, setIsDeleting] = useState(false);
+  const { success, error } = useToast();
+
+  const handleOutsideClose = () => {
+    if (!deleteModal.isOpen) {
+      onClose?.();
+    }
+  };
+
+  const handleShareMenuClick = () => {
+    navigator.clipboard.writeText(window.location.href);
+    success(TOAST_SUCCESS_MESSAGE.SHARE_MEETING);
+    onClose?.();
+  };
+
+  const handleUpdateMenuClick = (event: React.MouseEvent<HTMLLIElement>) => {
+    event.stopPropagation();
+    onClose?.();
+
+    if (pathname.includes('/sharing')) {
+      router.push(`/sharing/${meetingId}/update`);
+    } else if (pathname.includes('/shopping')) {
+      router.push(`/shopping/${meetingId}/update`);
+    }
+  };
+
+  const handleDeleteMenuClick = (event: React.MouseEvent<HTMLLIElement>) => {
+    event.stopPropagation();
+    deleteModal.open();
+  };
+
+  const handleDeleteButtonClick = async (
+    event: React.MouseEvent<HTMLButtonElement>,
+  ) => {
+    event.stopPropagation();
+
+    if (isDeleting) return;
+
+    try {
+      setIsDeleting(true);
+      await deleteMeetingsApi(meetingId);
+
+      deleteModal.close();
+      onClose?.();
+
+      router.push(`/${pathname.includes('/sharing') ? 'sharing' : 'shopping'}`);
+      router.refresh();
+      success(TOAST_SUCCESS_MESSAGE.DELETE_MEETING);
+    } catch {
+      error(TOAST_FAILURE_MESSAGE.DELETE_MEETING);
+      setIsDeleting(false);
+    }
+  };
+
+  const menuItems: ActionMenuItem[] = [
+    {
+      id: 'share',
+      label: '링크 복사',
+      onClick: handleShareMenuClick,
+      variant: 'default',
+    },
+    ...(isAuthor
+      ? [
+          {
+            id: 'update',
+            label: '수정',
+            onClick: handleUpdateMenuClick,
+            variant: 'default' as const,
+          },
+          {
+            id: 'delete',
+            label: '삭제',
+            onClick: handleDeleteMenuClick,
+            variant: 'danger' as const,
+          },
+        ]
+      : []),
+  ];
+
+  return (
+    <>
+      <ActionMenu
+        items={menuItems}
+        onClose={handleOutsideClose}
+        buttonRef={buttonRef}
+        className={className}
+        {...props}
+      />
+
+      <Modal isOpen={deleteModal.isOpen} onClose={deleteModal.close} size="sm">
+        <div
+          className="flex flex-col items-center p-7 pb-5"
+          onPointerDown={(e) => e.stopPropagation()}
+        >
+          <h2 className="mb-2 text-[22px] font-semibold">
+            {MODAL_TITLE.DELETE}
+          </h2>
+          <p className="text-text-main mb-8 text-center">
+            {MODAL_CONTENT.DELETE_MEETING}
+          </p>
+          <div className="flex w-full gap-2">
+            <Button
+              variant="outline"
+              type="button"
+              onClick={() => {
+                deleteModal.close();
+              }}
+              className="w-full"
+              label="취소"
+            />
+            <Button
+              type="button"
+              onClick={handleDeleteButtonClick}
+              disabled={isDeleting}
+              label={isDeleting ? '삭제 중...' : '삭제'}
+              className="w-full"
+            />
+          </div>
+        </div>
+      </Modal>
+    </>
+  );
+};

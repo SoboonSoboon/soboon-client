@@ -44,7 +44,7 @@ export const CommentInputContainer = ({
                 : '댓글을 입력해주세요.'
             }
             name="comment"
-            className="!border-text-line1 !border-1 bg-white pr-[90px]"
+            className="!border-text-line1 !border bg-white pr-[90px]"
             disabled={status === 'COMPLETED' || status === 'CLOSED'}
           />
           <div className="absolute top-1/2 right-3 flex translate-y-[-50%] items-center gap-1 select-none">

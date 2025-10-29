@@ -130,7 +130,7 @@ export const MeetingDividingCard = ({
               </div>
             </div>
             {/* 이미지 영역 */}
-            <div className="border-gray-10 relative aspect-[3/2] w-full overflow-hidden rounded-lg border-1">
+            <div className="border-gray-10 relative aspect-[3/2] w-full overflow-hidden rounded-lg border">
               <CardImage
                 src={meeting.thumbnailUrl}
                 alt={meeting.title}
@@ -157,7 +157,7 @@ export const MeetingDividingCard = ({
               </div>
             </div>
             <hr className="text-gray-10" />
-            <CardFooter className="flex h-6 flex-col gap-3">
+            <CardFooter className="flex flex-col gap-3">
               <div className="flex items-center gap-1">
                 <MapPin className="text-gray-40 size-5" />
                 <span className="text-sm">{location}</span>

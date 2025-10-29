@@ -6,15 +6,16 @@ import {
   Button,
   Logo,
   ProfileImg,
-  UserMenuModal,
+  UserActionMenu,
   Icon,
   type IconType,
 } from '@/components/Atoms';
 import { redirectToKakao } from '@/apis/auth/authApi';
 import { useAuthStore } from '@/apis/auth/hooks/authStore';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { HEADER_MENU } from '@/constants';
 import Image from 'next/image';
+import { cn } from '@/utils/cn';
 
 export const Header = () => {
   const pathname = usePathname() || '/';
@@ -29,8 +30,17 @@ export const Header = () => {
     logout();
     console.log('로그아웃 되었습니다.');
     localStorage.removeItem('accessToken');
-    window.location.href = '/';
+
+    // 페이지 새로고침으로 쿠키 상태 확인
+    setTimeout(() => {
+      window.location.href = '/';
+    }, 100);
   };
+
+  // 페이지 이동 시 모달 닫기
+  useEffect(() => {
+    setIsOpen(false);
+  }, [pathname]);
 
   return (
     <header className="border-gray-10 fixed top-0 right-0 left-0 z-50 h-15 border-b bg-white pr-20 pl-4">
@@ -43,35 +53,39 @@ export const Header = () => {
           <nav className="flex items-center gap-3 text-base font-normal sm:gap-4 md:gap-5 lg:gap-6">
             {isLoggedIn && (
               <>
-                {Object.entries(HEADER_MENU).map(([key, headerMenu]) => (
-                  <Link
-                    key={key}
-                    href={headerMenu.PATH}
-                    className={`group hover:text-primary flex items-center gap-1 whitespace-nowrap ${
-                      pathname.startsWith(headerMenu.PATH) ? 'text-primary' : ''
-                    }`}
-                  >
-                    <div className="relative hidden sm:flex sm:items-center">
-                      <Icon
-                        type={
-                          pathname.startsWith(headerMenu.PATH)
-                            ? (headerMenu.ICON.GREEN as IconType)
-                            : (headerMenu.ICON.DEFAULT as IconType)
-                        }
-                        size={headerMenu.SIZE}
-                        className="transition-opacity duration-150 ease-in-out group-hover:opacity-0"
-                      />
-                      <Icon
-                        type={headerMenu.ICON.GREEN as IconType}
-                        size={headerMenu.SIZE}
-                        className="absolute top-0 left-0 opacity-0 transition-opacity duration-150 ease-in-out group-hover:opacity-100"
-                      />
-                    </div>
-                    <span className="font-memomentKkukkkuk leading-none">
-                      {headerMenu.LABEL}
-                    </span>
-                  </Link>
-                ))}
+                {Object.entries(HEADER_MENU).map(([key, headerMenu]) => {
+                  const isActive = pathname.startsWith(headerMenu.PATH);
+                  const iconType = isActive
+                    ? headerMenu.ICON.GREEN
+                    : headerMenu.ICON.DEFAULT;
+
+                  return (
+                    <Link
+                      key={key}
+                      href={headerMenu.PATH}
+                      className={cn(
+                        'group hover:text-primary flex items-center gap-1 whitespace-nowrap',
+                        isActive && 'text-primary',
+                      )}
+                    >
+                      <div className="relative hidden sm:flex sm:items-center">
+                        <Icon
+                          type={iconType as IconType}
+                          size={headerMenu.SIZE}
+                          className="transition-opacity duration-150 ease-in-out group-hover:opacity-0"
+                        />
+                        <Icon
+                          type={headerMenu.ICON.GREEN as IconType}
+                          size={headerMenu.SIZE}
+                          className="absolute top-0 left-0 opacity-0 transition-opacity duration-150 ease-in-out group-hover:opacity-100"
+                        />
+                      </div>
+                      <span className="font-memomentKkukkkuk leading-none">
+                        {headerMenu.LABEL}
+                      </span>
+                    </Link>
+                  );
+                })}
               </>
             )}
           </nav>
@@ -99,7 +113,7 @@ export const Header = () => {
                 </span>
                 {isOpen && (
                   <div className="absolute top-full right-0 z-50 mt-2">
-                    <UserMenuModal
+                    <UserActionMenu
                       onClick={handleLogout}
                       onClose={() => setIsOpen(false)}
                     />

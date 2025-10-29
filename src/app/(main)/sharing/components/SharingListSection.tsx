@@ -117,7 +117,7 @@ export const SharingListSection = ({
               className="cursor-pointer"
             >
               <CardContent>
-                <div className="border-gray-10 relative mb-5 overflow-hidden rounded-lg border-1">
+                <div className="border-gray-10 relative mb-5 overflow-hidden rounded-lg border">
                   <StatusTag
                     status={dividing.status}
                     className="absolute top-3 left-3 z-10"
