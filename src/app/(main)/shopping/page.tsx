@@ -66,7 +66,12 @@ export default async function ShoppingPage({
 
   return (
     <main className="flex flex-col gap-8">
-      <IntroSection />
+      <IntroSection
+        src="/images/banner_shopping.png"
+        alt="banner-shopping"
+        width={1200}
+        height={250}
+      />
       <section className="flex flex-col gap-4 md:gap-6">
         <ShoppingTagsSection />
         <FilterSection />

@@ -43,29 +43,44 @@ export const Accordion = ({
         return (
           <div
             key={item.id}
-            className="mb-4 rounded-lg border border-[#1A1A1A]"
+            className="mb-3 rounded-lg border border-[#1A1A1A] sm:mb-4"
           >
             <button
-              className="flex w-full cursor-pointer items-center justify-between px-9 pt-8 pb-6 text-left"
+              className="flex w-full cursor-pointer items-center justify-between px-4 py-4 text-left sm:px-6 sm:py-5 md:px-9 md:pt-6 md:pb-5.5"
               onClick={() => toggleItem(item.id)}
             >
-              <span className="text-gray-95 text-2xl font-bold">
+              <span className="text-gray-95 text-lg leading-tight font-bold sm:text-xl md:text-2xl">
                 {item.title}
               </span>
               <ChevronDown
                 className={cn(
-                  'h-5 w-5 text-gray-500 transition-transform duration-200',
+                  'flex-shrink-0 transition-transform duration-200 sm:hidden',
                   isOpen && 'rotate-180',
                 )}
+                size={24}
+              />
+              <ChevronDown
+                className={cn(
+                  'hidden flex-shrink-0 transition-transform duration-200 sm:block md:hidden',
+                  isOpen && 'rotate-180',
+                )}
+                size={28}
+              />
+              <ChevronDown
+                className={cn(
+                  'hidden flex-shrink-0 transition-transform duration-200 md:block',
+                  isOpen && 'rotate-180',
+                )}
+                size={30}
               />
             </button>
             <div
               className={cn(
                 'overflow-hidden transition-all duration-200',
-                isOpen ? 'max-h-96' : 'max-h-0',
+                isOpen ? 'max-h-96 sm:max-h-80 md:max-h-96' : 'max-h-0',
               )}
             >
-              <div className="text-text-sub1 rounded-b-lg bg-[#f3f3f3] px-9 py-6 text-left font-normal whitespace-pre-line">
+              <div className="text-text-sub1 rounded-b-lg bg-[#d9d9d9] px-4 py-4 text-left text-sm leading-relaxed font-normal whitespace-pre-line sm:px-6 sm:py-5 sm:text-base md:px-9 md:py-6">
                 {item.content}
               </div>
             </div>

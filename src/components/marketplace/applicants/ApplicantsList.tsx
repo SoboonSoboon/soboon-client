@@ -176,7 +176,7 @@ export const ApplicantsList = ({
 
                     {/* 참여자 거절 상태 */}
                     {participant.status === 'REJECTED' && (
-                      <div className="text-text-sub2 text-sm">
+                      <div className="text-text-sub2 text-sm font-semibold">
                         거절된 참여자
                       </div>
                     )}

@@ -24,6 +24,16 @@ describe('StatusTag 컴포넌트', () => {
       render(<StatusTag status="CLOSED" />);
       expect(screen.getByText('모집종료')).toBeInTheDocument();
     });
+
+    test('ReviewOpen 상태일 때 "리뷰 대기" 텍스트를 표시해야 한다', () => {
+      render(<StatusTag status="ReviewOpen" />);
+      expect(screen.getByText('리뷰 대기')).toBeInTheDocument();
+    });
+
+    test('ReviewClosed 상태일 때 "리뷰 완료" 텍스트를 표시해야 한다', () => {
+      render(<StatusTag status="ReviewClosed" />);
+      expect(screen.getByText('리뷰 완료')).toBeInTheDocument();
+    });
   });
 
   describe('스타일 적용', () => {
@@ -31,8 +41,8 @@ describe('StatusTag 컴포넌트', () => {
       render(<StatusTag status="RECRUITING" />);
       const tag = screen.getByRole('status');
       expect(tag).toHaveClass('bg-Green-1');
-      expect(tag).toHaveClass('border-primary');
-      expect(tag).toHaveClass('text-primary');
+      expect(tag).toHaveClass('border-orange');
+      expect(tag).toHaveClass('text-orange');
     });
 
     test('COMPLETED 상태일 때 올바른 스타일이 적용되어야 한다', () => {
@@ -50,6 +60,22 @@ describe('StatusTag 컴포넌트', () => {
       expect(tag).toHaveClass('border-text-inactive');
       expect(tag).toHaveClass('text-text-sub2');
     });
+
+    test('ReviewOpen 상태일 때 올바른 스타일이 적용되어야 한다', () => {
+      render(<StatusTag status="ReviewOpen" />);
+      const tag = screen.getByRole('status');
+      expect(tag).toHaveClass('bg-[var(--GreenScale-Green1)]');
+      expect(tag).toHaveClass('border-primary');
+      expect(tag).toHaveClass('text-primary');
+    });
+
+    test('ReviewClosed 상태일 때 올바른 스타일이 적용되어야 한다', () => {
+      render(<StatusTag status="ReviewClosed" />);
+      const tag = screen.getByRole('status');
+      expect(tag).toHaveClass('bg-[var(--GrayScale-Gray5)]');
+      expect(tag).toHaveClass('border-[var(--text-inactive)]');
+      expect(tag).toHaveClass('text-text-sub2');
+    });
   });
 
   describe('기본 스타일', () => {
@@ -58,9 +84,9 @@ describe('StatusTag 컴포넌트', () => {
       const tag = screen.getByRole('status');
       expect(tag).toHaveClass('rounded-3xl');
       expect(tag).toHaveClass('border');
-      expect(tag).toHaveClass('px-3');
-      expect(tag).toHaveClass('py-1.5');
-      expect(tag).toHaveClass('text-sm');
+      expect(tag).toHaveClass('px-2');
+      expect(tag).toHaveClass('py-1');
+      expect(tag).toHaveClass('text-xs');
       expect(tag).toHaveClass('font-medium');
     });
   });
@@ -90,6 +116,12 @@ describe('StatusTag 컴포넌트', () => {
 
       rerender(<StatusTag status="CLOSED" />);
       expect(screen.getByText('모집종료')).toBeInTheDocument();
+
+      rerender(<StatusTag status="ReviewOpen" />);
+      expect(screen.getByText('리뷰 대기')).toBeInTheDocument();
+
+      rerender(<StatusTag status="ReviewClosed" />);
+      expect(screen.getByText('리뷰 완료')).toBeInTheDocument();
     });
   });
 
@@ -115,6 +147,18 @@ describe('StatusTag 컴포넌트', () => {
       render(<StatusTag status="CLOSED" />);
       const tag = screen.getByRole('status');
       expect(tag).toHaveAttribute('aria-label', '모집종료 상태');
+    });
+
+    test('ReviewOpen 상태일 때 적절한 aria-label을 가져야 한다', () => {
+      render(<StatusTag status="ReviewOpen" />);
+      const tag = screen.getByRole('status');
+      expect(tag).toHaveAttribute('aria-label', '리뷰 대기 상태');
+    });
+
+    test('ReviewClosed 상태일 때 적절한 aria-label을 가져야 한다', () => {
+      render(<StatusTag status="ReviewClosed" />);
+      const tag = screen.getByRole('status');
+      expect(tag).toHaveAttribute('aria-label', '리뷰 완료 상태');
     });
   });
 

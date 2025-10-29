@@ -102,7 +102,7 @@ export const DetailAside = ({
   });
 
   return (
-    <aside className="flex flex-col gap-5 lg:w-[430px]">
+    <aside className="flex flex-col gap-5">
       <AsideMoreInfo
         status={meetingDetail?.status}
         isBookmarked={isBookmarked}
