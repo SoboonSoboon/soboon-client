@@ -7,7 +7,7 @@ import { Modal } from '@/components/Molecules/modal';
 import { PROVINCE_OPTIONS, GET_CITY_OPTIONS } from '@/constants';
 import categories from '@/constants/categories';
 import { useFilterParams } from '@/hooks/useFilterParams';
-import { useMemo } from 'react';
+import { useMemo, useState, useEffect } from 'react';
 import { X } from 'lucide-react';
 import { createPortal } from 'react-dom';
 
@@ -28,40 +28,72 @@ export const FilterBottomSheet = ({
     activeStatus,
   } = useFilterParams();
 
+  const [selectedProductType, setSelectedProductType] = useState('');
+  const [selectedProvince, setSelectedProvince] = useState('');
+  const [selectedCity, setSelectedCity] = useState('');
+  const [selectedStatus, setSelectedStatus] = useState('');
+
+  useEffect(() => {
+    if (isOpen) {
+      setSelectedProductType(activeProductType);
+      setSelectedProvince(activeProvince);
+      setSelectedCity(activeCity);
+      setSelectedStatus(activeStatus);
+    }
+  }, [isOpen, activeProductType, activeProvince, activeCity, activeStatus]);
+
   const availableCityOptions = useMemo(() => {
-    if (activeProvince === '') {
+    if (selectedProvince === '') {
       return [{ value: '', label: '전체' }];
     }
 
     return [
       { value: '', label: '전체' },
-      ...GET_CITY_OPTIONS(activeProvince).slice(1),
+      ...GET_CITY_OPTIONS(selectedProvince).slice(1),
     ];
-  }, [activeProvince]);
+  }, [selectedProvince]);
 
   const handleProvinceChange = (province: string) => {
-    if (province === '') {
-      updateParams({ province, city: '' });
-    } else {
-      updateParams({ province, city: '' });
-    }
+    setSelectedProvince(province);
+    setSelectedCity('');
   };
 
   const handleCityChange = (city: string) => {
-    updateParams({ city });
+    setSelectedCity(city);
   };
 
   const handleProductTypeChange = (productType: string) => {
-    updateParams({ productType });
+    setSelectedProductType(productType);
   };
 
   const handleStatusChange = (status: string) => {
-    updateParams({ status });
+    setSelectedStatus(status);
+  };
+
+  const handleApplyButtonClick = () => {
+    updateParams({
+      province: selectedProvince,
+      city: selectedCity,
+      productType: selectedProductType,
+      status: selectedStatus,
+    });
+    onClose();
+  };
+
+  const handleResetButtonClick = () => {
+    setSelectedProductType('');
+    setSelectedProvince('');
+    setSelectedCity('');
+    setSelectedStatus('');
   };
 
   const handleClose = () => {
     onClose();
   };
+
+  if (!isOpen) {
+    return null;
+  }
 
   return createPortal(
     <Modal
@@ -94,7 +126,7 @@ export const FilterBottomSheet = ({
             id="recruiting"
             name="recruiting"
             className="active:bg-primary checked:border-primary checked:bg-primary size-6 checked:text-white"
-            checked={activeStatus === 'RECRUITING'}
+            checked={selectedStatus === 'RECRUITING'}
             onChange={(checked) =>
               handleStatusChange(checked ? 'RECRUITING' : '')
             }
@@ -109,7 +141,7 @@ export const FilterBottomSheet = ({
           <div className="flex flex-col gap-2">
             <Dropdown
               name="province"
-              value={activeProvince}
+              value={selectedProvince}
               options={PROVINCE_OPTIONS}
               className="w-full"
               onChange={(province) => handleProvinceChange(province)}
@@ -118,7 +150,7 @@ export const FilterBottomSheet = ({
             />
             <Dropdown
               name="city"
-              value={activeCity}
+              value={selectedCity}
               options={availableCityOptions}
               className="w-full"
               onChange={(city) => handleCityChange(city)}
@@ -139,7 +171,7 @@ export const FilterBottomSheet = ({
                 onClick={() => handleProductTypeChange(category.value)}
                 label={category.label}
                 variant={
-                  activeProductType === category.value ? 'active' : 'inactive'
+                  selectedProductType === category.value ? 'active' : 'inactive'
                 }
               />
             ))}
@@ -151,22 +183,15 @@ export const FilterBottomSheet = ({
             variant="outline"
             aria-label="초기화"
             label="초기화"
-            onClick={() => {
-              updateParams({
-                province: '',
-                city: '',
-                productType: '',
-                status: '',
-              });
-            }}
-            className="flex-1"
+            onClick={handleResetButtonClick}
+            className="w-full"
           />
           <Button
             variant="filled"
             aria-label="적용"
             label="적용"
-            onClick={handleClose}
-            className="flex-1"
+            onClick={handleApplyButtonClick}
+            className="w-full"
           />
         </div>
       </div>
