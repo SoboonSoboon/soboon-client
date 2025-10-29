@@ -37,6 +37,7 @@ export const MeetingActionMenu = ({
   const deleteModal = useModal();
   const router = useRouter();
   const pathname = usePathname();
+
   const [isDeleting, setIsDeleting] = useState(false);
   const { success, error } = useToast();
 
@@ -132,7 +133,7 @@ export const MeetingActionMenu = ({
           onPointerDown={(e) => e.stopPropagation()}
         >
           <h2 className="mb-2 text-[22px] font-semibold">
-            {MODAL_TITLE.DELETE_MEETING}
+            {MODAL_TITLE.DELETE}
           </h2>
           <p className="text-text-main mb-8 text-center">
             {MODAL_CONTENT.DELETE_MEETING}
@@ -142,7 +143,6 @@ export const MeetingActionMenu = ({
               variant="outline"
               type="button"
               onClick={(e) => {
-                e.stopPropagation();
                 deleteModal.close();
               }}
               className="w-full"

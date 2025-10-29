@@ -3,7 +3,7 @@ export const getPositionClass = (position: string) => {
     case 'top':
       return 'items-start justify-center pt-8';
     case 'bottom':
-      return 'items-end justify-center pb-8';
+      return 'items-end justify-center pb-0';
     case 'left':
       return 'items-center justify-start pl-8';
     case 'right':

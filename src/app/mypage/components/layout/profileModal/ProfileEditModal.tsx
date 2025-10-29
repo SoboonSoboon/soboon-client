@@ -80,7 +80,7 @@ export const ProfileEditModal = ({
       const uploadedUrl = imageUrls[0];
       setValue('image', uploadedUrl);
     } catch {
-      showError('이미지 업로드에 실패했습니다.');
+      showError('이미지 업로드에 실패했어요.');
     }
   };
 
@@ -95,11 +95,11 @@ export const ProfileEditModal = ({
 
     updateProfile(submitData, {
       onSuccess: () => {
-        success('프로필이 성공적으로 수정되었습니다!');
+        success('프로필이 성공적으로 수정되었어요!');
         onClose();
       },
       onError: () => {
-        showError('프로필 수정에 실패했습니다.');
+        showError('프로필 수정에 실패했어요.');
       },
     });
   };

@@ -2,7 +2,7 @@
 . "$(dirname -- "$0")/_/husky.sh"
 
 # 커밋 메시지 패턴 검증
-commit_regex='^(feat|fix|docs|style|design|build|ci|perf|refactor|test|chore|rename|remove|setting|comment)([/:].*)?: .+|^Merge branch .* of .* into .*$'
+commit_regex='^(feat|modify|fix|docs|style|design|build|ci|perf|refactor|test|chore|rename|remove|setting|comment)([/:].*)?: .+|^Merge branch .* of .* into .*$'
 
 if ! grep -qE "$commit_regex" "$1"; then
     echo "❌ 커밋 메시지 형식이 올바르지 않습니다!"
@@ -17,6 +17,7 @@ if ! grep -qE "$commit_regex" "$1"; then
     echo ""
     echo "사용 가능한 타입:"
     echo "  feat: 새로운 기능"
+    echo "  modify: 기능 수정"
     echo "  fix: 버그 수정"
     echo "  docs: 문서 변경"
     echo "  style: 코드 스타일 변경"
