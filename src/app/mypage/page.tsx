@@ -1,12 +1,15 @@
 'use client';
 
-import { Suspense } from 'react';
-import { TabSection, CardList } from '@/app/mypage/components';
+import { Suspense, useState } from 'react';
+import { MypageHeader, CardList } from '@/app/mypage/components';
 import { EmptyState, ErrorPage } from '@/components/Molecules';
 
 import { useMyPageData } from './hook/components/useMypageData';
 
 function MyPageContent() {
+  // 리뷰 완료 숨기기 상태
+  const [hideCompletedReviews, setHideCompletedReviews] = useState(false);
+
   const {
     activeMainTab,
     activeSubTab,
@@ -14,15 +17,22 @@ function MyPageContent() {
     filteredData,
     handleMainTabChange,
     handleSubTabChange,
-  } = useMyPageData();
+  } = useMyPageData(hideCompletedReviews);
+
+  const handleToggleHideCompletedReviews = (checked: boolean) => {
+    setHideCompletedReviews(checked);
+  };
+
   return (
     <div className="w-full">
       <div className="flex flex-1 flex-col bg-white">
-        <TabSection
+        <MypageHeader
           activeMainTab={activeMainTab}
           activeSubTab={activeSubTab}
           onMainTabChange={handleMainTabChange}
           onSubTabChange={handleSubTabChange}
+          hideCompletedReviews={hideCompletedReviews}
+          onToggleHideCompletedReviews={handleToggleHideCompletedReviews}
         />
 
         <div className="flex-1 pt-4 sm:pt-6">

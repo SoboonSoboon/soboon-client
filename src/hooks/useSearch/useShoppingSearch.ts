@@ -1,4 +1,3 @@
-// src/hooks/useSearch.ts
 import { useCallback } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { getShoppingSearch } from '@/apis/meetings/search/getSearch';
