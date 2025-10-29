@@ -2,15 +2,18 @@
 
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useMemo } from 'react';
-import { MainTabType, SubTabType } from '../../components';
+import {
+  type MainTabType,
+  type SubTabType,
+  Storage,
+} from '../../utils/mypageType';
 import {
   useBookmarkMeetingList,
   useHostMeetingList,
   useParticipateMeetingList,
 } from '../api/useMeetings';
-import { Storage } from '../../utils/mypageType';
 
-export const useMyPageData = () => {
+export const useMyPageData = (hideCompletedReviews: boolean = false) => {
   const router = useRouter();
   const searchParams = useSearchParams();
   const activeMainTab = useMemo(
@@ -71,10 +74,11 @@ export const useMyPageData = () => {
     bookmarkError,
     bookmarkLoading,
   ]);
+
   const filteredData = useMemo(() => {
     if (!currentData.data) return [];
 
-    return currentData.data
+    let filtered = currentData.data
       .filter((meeting) => meeting.category === activeSubTab)
       .map((item) => ({
         groupId: item.groupId,
@@ -92,7 +96,23 @@ export const useMyPageData = () => {
         },
         bookmarked: item.bookmarked || false,
       }));
-  }, [currentData.data, activeSubTab]);
+
+    // 리뷰 완료 숨기기 필터 적용
+    if (hideCompletedReviews) {
+      filtered = filtered.filter((item) => {
+        // 리뷰 완료된 항목들을 숨김
+        // reviewStatus가 있고 모든 리뷰가 완료된 경우 숨김
+        if (item.reviewStatus) {
+          const reviewedCount = parseInt(item.reviewStatus.reviewedCount);
+          const totalCount = parseInt(item.reviewStatus.totalCount);
+          return !(totalCount > 0 && reviewedCount >= totalCount);
+        }
+        return true;
+      });
+    }
+
+    return filtered;
+  }, [currentData.data, activeSubTab, hideCompletedReviews]);
   const handleMainTabChange = (tab: MainTabType) => {
     const params = new URLSearchParams(searchParams.toString());
     params.set('main', tab);

@@ -157,7 +157,7 @@ export const MeetingDividingCard = ({
               </div>
             </div>
             <hr className="text-gray-10" />
-            <CardFooter className="flex h-6 flex-col gap-3">
+            <CardFooter className="flex flex-col gap-3">
               <div className="flex items-center gap-1">
                 <MapPin className="text-gray-40 size-5" />
                 <span className="text-sm">{location}</span>
