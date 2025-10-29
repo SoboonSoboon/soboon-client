@@ -1,3 +1,8 @@
+export {
+  ActionMenu,
+  type ActionMenuProps,
+  type ActionMenuItem,
+} from './ActionMenu/ActionMenu';
 export { Badge } from './Badge';
 export { Button } from './Button';
 export { Chip } from './Chip';

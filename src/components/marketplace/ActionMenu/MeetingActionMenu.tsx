@@ -1,28 +1,27 @@
 'use client';
 
-import { cn } from '@/utils/cn';
-import { useClickOutside } from '@/hooks/useClickOutside';
+import { ActionMenu, ActionMenuItem, Button } from '@/components/Atoms';
 import { Modal, useModal } from '@/components/Molecules/modal';
 import { deleteMeetingsApi } from '@/apis/meetings/deleteMeetingsApi';
+import { MODAL_CONTENT, MODAL_TITLE } from '@/constants';
 import { usePathname, useRouter } from 'next/navigation';
 import { useState } from 'react';
-import { MODAL_CONTENT, MODAL_TITLE } from '@/constants';
-import { Button } from '@/components/Atoms';
 
-export interface ActionMenuProps extends React.HTMLAttributes<HTMLDivElement> {
+export interface MeetingActionMenuProps
+  extends React.HTMLAttributes<HTMLDivElement> {
   className?: string;
   onClose?: () => void;
   buttonRef?: React.RefObject<HTMLElement>;
   meetingId: number;
 }
 
-export const ActionMenu = ({
+export const MeetingActionMenu = ({
   className,
   onClose,
   buttonRef,
   meetingId,
   ...props
-}: ActionMenuProps) => {
+}: MeetingActionMenuProps) => {
   const deleteModal = useModal();
   const router = useRouter();
   const pathname = usePathname();
@@ -34,14 +33,7 @@ export const ActionMenu = ({
     }
   };
 
-  const menuRef = useClickOutside(handleOutsideClose, buttonRef);
-
-  const handleConfirmDeleteClick = (event: React.MouseEvent<HTMLLIElement>) => {
-    event.stopPropagation();
-    deleteModal.open();
-  };
-
-  const handleUpdateMeetingClick = (event: React.MouseEvent<HTMLLIElement>) => {
+  const handleUpdateMenuClick = (event: React.MouseEvent<HTMLLIElement>) => {
     event.stopPropagation();
     onClose?.();
 
@@ -52,7 +44,12 @@ export const ActionMenu = ({
     }
   };
 
-  const handleConfirmDelete = async (
+  const handleDeleteMenuClick = (event: React.MouseEvent<HTMLLIElement>) => {
+    event.stopPropagation();
+    deleteModal.open();
+  };
+
+  const handleDeleteButtonClick = async (
     event: React.MouseEvent<HTMLButtonElement>,
   ) => {
     event.stopPropagation();
@@ -75,31 +72,30 @@ export const ActionMenu = ({
     }
   };
 
+  const menuItems: ActionMenuItem[] = [
+    {
+      id: 'update',
+      label: '수정',
+      onClick: handleUpdateMenuClick,
+      variant: 'default',
+    },
+    {
+      id: 'delete',
+      label: '삭제',
+      onClick: handleDeleteMenuClick,
+      variant: 'danger',
+    },
+  ];
+
   return (
     <>
-      <div
-        ref={menuRef}
-        className={cn(
-          'border-gray-10 mt-2.5 flex w-35 flex-col rounded-xl border-1 bg-white shadow-[0_0_6px_rgba(0,0,0,0.15)]',
-          className,
-        )}
+      <ActionMenu
+        items={menuItems}
+        onClose={handleOutsideClose}
+        buttonRef={buttonRef}
+        className={className}
         {...props}
-      >
-        <ul className="text-gray-90 flex flex-col">
-          <li
-            className="text-text-main flex cursor-pointer items-center justify-center border-b border-[var(--GrayScale-Gray10)] px-4 py-2.5 transition-all duration-200 hover:rounded-t-xl"
-            onClick={handleUpdateMeetingClick}
-          >
-            <span>수정</span>
-          </li>
-          <li
-            className="text-warning flex cursor-pointer items-center justify-center px-4 py-2.5 transition-all duration-200 hover:rounded-b-xl"
-            onClick={handleConfirmDeleteClick}
-          >
-            <span>삭제</span>
-          </li>
-        </ul>
-      </div>
+      />
 
       <Modal isOpen={deleteModal.isOpen} onClose={deleteModal.close} size="sm">
         <div
@@ -125,7 +121,7 @@ export const ActionMenu = ({
             />
             <Button
               type="button"
-              onClick={handleConfirmDelete}
+              onClick={handleDeleteButtonClick}
               disabled={isDeleting}
               label={isDeleting ? '삭제 중...' : '삭제'}
               className="w-full"

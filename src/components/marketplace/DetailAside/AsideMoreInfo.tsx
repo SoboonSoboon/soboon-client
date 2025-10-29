@@ -1,7 +1,7 @@
 import { StatusTag } from '@/components';
 import { Bookmark, EllipsisVertical } from 'lucide-react';
 import { useRef, useState } from 'react';
-import { ActionMenu } from '../ActionMenu/ActionMenu';
+import { MeetingActionMenu } from '@/components/marketplace/ActionMenu/MeetingActionMenu';
 import { StatusType } from '@/types/common';
 
 export const AsideMoreInfo = ({
@@ -47,7 +47,7 @@ export const AsideMoreInfo = ({
         </div>
         {open && isAuthor && (
           <div className="absolute top-8 right-0 z-50">
-            <ActionMenu
+            <MeetingActionMenu
               onClose={() => setOpen(false)}
               buttonRef={buttonRef as React.RefObject<HTMLElement>}
               meetingId={+meetingId}
