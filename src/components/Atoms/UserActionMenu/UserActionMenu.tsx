@@ -1,6 +1,5 @@
 'use client';
 
-import { useClickOutside } from '@/hooks/useClickOutside';
 import { ActionMenu, type ActionMenuItem } from '@/components/Atoms';
 import { useRouter } from 'next/navigation';
 
@@ -17,7 +16,6 @@ export const UserActionMenu = ({
   onClick,
   ...props
 }: UserActionMenuProps) => {
-  const menuRef = useClickOutside(onClose as () => void);
   const router = useRouter();
 
   const menuItems: ActionMenuItem[] = [
@@ -43,7 +41,6 @@ export const UserActionMenu = ({
     <ActionMenu
       items={menuItems}
       onClose={onClose}
-      buttonRef={menuRef}
       className={className}
       {...props}
     />
