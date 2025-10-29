@@ -27,7 +27,7 @@ export const CommentActionMenu = ({
   commentId: string;
   onClose?: () => void;
   buttonRef?: React.RefObject<HTMLElement>;
-}) => {
+} & React.HTMLAttributes<HTMLDivElement>) => {
   const deleteModal = useModal();
   const { success, error } = useToast();
 
@@ -67,7 +67,9 @@ export const CommentActionMenu = ({
     {
       id: 'edit',
       label: '수정',
-      onClick: onEditClick,
+      onClick: () => {
+        onEditClick?.();
+      },
       variant: 'default',
     },
     {

@@ -32,7 +32,9 @@ export const UserActionMenu = ({
     {
       id: 'logout',
       label: '로그아웃',
-      onClick: onClick,
+      onClick: () => {
+        onClick?.();
+      },
       variant: 'default',
     },
   ];
