@@ -25,7 +25,12 @@ export default function SharingPageContent({
 
   return (
     <main className="flex w-full flex-col gap-4 md:gap-8">
-      <IntroSection />
+      <IntroSection
+        src="/images/banner_dividing.png"
+        alt="banner-sharing"
+        width={1200}
+        height={250}
+      />
       <div className="flex w-full items-center justify-between">
         <div className="md:hidden">
           <Funnel
