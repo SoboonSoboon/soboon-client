@@ -21,7 +21,10 @@ export { GoToTopButton } from './GoToTopButton';
 export { CreateButton } from './CreateButton';
 export { Carousel } from './Carousel';
 export { StatusTag } from './StatusTag';
-export { UserMenuModal, type UserMenuModalProps } from './UserMenuModal';
+export {
+  UserActionMenu,
+  type UserActionMenuProps,
+} from './UserActionMenu/UserActionMenu';
 export { Footer } from './Footer';
 export { KeywordChip } from './KeywordChip/KeywordChip';
 export { ReviewItemBar } from './ReviewItemBar';
