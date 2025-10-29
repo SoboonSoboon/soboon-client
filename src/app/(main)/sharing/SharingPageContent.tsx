@@ -8,7 +8,7 @@ import {
   SharingListSection,
   SearchSection,
   FilterBottomSheet,
-} from '@/app/sharing/components';
+} from '@/app/(main)/sharing/components';
 import { SideButtonSection } from '@/components';
 import { Funnel } from 'lucide-react';
 

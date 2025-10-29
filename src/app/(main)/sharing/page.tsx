@@ -2,13 +2,7 @@ import {
   DividingMeetingsType,
   meetingSearchParamsType,
 } from '@/types/meetingsType';
-import { IntroSection } from '@/components/marketplace';
-import {
-  FilterSection,
-  SharingListSection,
-  SearchSection,
-} from '@/app/(main)/sharing/components';
-import { SideButtonSection } from '@/components';
+
 import { getServerToken } from '@/utils/serverToken';
 import SharingPageContent from './SharingPageContent';
 
