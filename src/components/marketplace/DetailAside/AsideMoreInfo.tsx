@@ -41,9 +41,9 @@ export const AsideMoreInfo = ({
             e.stopPropagation();
             setOpen(!open);
           }}
-          className="flex cursor-pointer rounded-lg p-1.5 hover:bg-[var(--GrayScale-Gray5)]"
+          className="hover:bg-gray-5 flex cursor-pointer rounded-lg p-1.5"
         >
-          <EllipsisVertical className="text-gray-30 size-6" />
+          <EllipsisVertical className="text-gray-40 size-6" />
         </div>
         {open && (
           <div className="absolute top-8 right-0 z-50">
