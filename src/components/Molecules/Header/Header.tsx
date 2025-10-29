@@ -43,7 +43,7 @@ export const Header = () => {
   }, [pathname]);
 
   return (
-    <header className="border-gray-10 fixed top-0 right-0 left-0 z-50 h-15 border-b bg-white pr-20 pl-4">
+    <header className="border-gray-10 fixed top-0 right-0 left-0 z-50 h-15 border-b bg-white">
       <div className="text-text-main mx-auto flex h-full max-w-[1200px] items-center justify-between bg-white">
         <div className="flex items-center gap-4 sm:gap-6 md:gap-8 lg:gap-10">
           <Link href="/">
