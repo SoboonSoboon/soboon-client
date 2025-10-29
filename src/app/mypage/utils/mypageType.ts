@@ -1,5 +1,9 @@
 import { LocationType } from '@/types/common';
 
+// 탭 타입 정의
+export type MainTabType = 'host' | 'participate' | 'bookmark';
+export type SubTabType = 'SHOPPING' | 'DIVIDING';
+
 // API 응답 타입 정의
 export interface MypageMeetingApiResponse {
   message: string | null;
