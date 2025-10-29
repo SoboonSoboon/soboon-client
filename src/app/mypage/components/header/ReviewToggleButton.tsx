@@ -1,4 +1,3 @@
-// src/app/mypage/components/ReviewToggleButton.tsx
 'use client';
 
 import { Checkbox, Label } from '@/components';
