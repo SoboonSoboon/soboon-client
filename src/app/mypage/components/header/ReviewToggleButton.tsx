@@ -16,14 +16,17 @@ export const ReviewToggleButton = ({
   className,
 }: ReviewToggleButton) => {
   return (
-    <div className={cn('flex cursor-pointer items-center gap-2', className)}>
+    <div className={cn('flex items-center gap-2', className)}>
       <Checkbox
         id="hide-completed-reviews"
         checked={isChecked}
         onChange={onChange}
         className="size-6"
       />
-      <Label htmlFor="hide-completed-reviews" className="text-sm">
+      <Label
+        htmlFor="hide-completed-reviews cursor-pointer"
+        className="text-sm"
+      >
         리뷰 완료 숨기기
       </Label>
     </div>
