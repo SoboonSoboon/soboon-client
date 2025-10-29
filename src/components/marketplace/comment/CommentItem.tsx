@@ -118,7 +118,7 @@ export const CommentItem = ({
             <form onSubmit={handleSubmit} className="flex items-center gap-2">
               <div className="relative flex-1">
                 <TextInput
-                  className="!border-text-line1 !border-1 bg-white pr-[90px]"
+                  className="!border-text-line1 !border bg-white pr-[90px]"
                   value={currentComment}
                   onChange={(e) => setCurrentComment(e.target.value)}
                   name="comment"

@@ -69,6 +69,9 @@ export const Dropdown = ({
     setIsOpen(false);
   };
 
+  const baseButtonStyles =
+    'hover:ring-Green-20 hover:border-Green-20 flex hover:ring-1 active:border-Green-20 active:ring-Green-20 focus:ring-1 active:ring-1 focus:ring-primary w-full items-center justify-between gap-1.5 rounded-xl border-1 transition-colors duration-200';
+
   const buttonStyles = {
     filter: 'border-gray-10 border bg-white px-3 py-2',
     form: 'border-gray-5 bg-gray-5 border px-4 py-2.5',
@@ -82,7 +85,7 @@ export const Dropdown = ({
   };
 
   const itemStyles = {
-    filter: 'px-4 py-2 hover:bg-gray-5  focus:bg-gray-5',
+    filter: 'px-4 py-2 hover:bg-gray-5 focus:bg-gray-5',
     form: 'hover:bg-gray-5 focus:bg-gray-5 px-3 py-1.5',
     gray: 'hover:bg-Green-10 focus:bg-Green-10 px-3 py-1.5',
   };
@@ -98,7 +101,7 @@ export const Dropdown = ({
         name={name}
         id={id}
         className={cn(
-          'flex w-full items-center justify-between gap-1.5 rounded-xl',
+          baseButtonStyles,
           buttonStyles[variant],
           disabled ? 'cursor-not-allowed opacity-50' : 'cursor-pointer',
         )}

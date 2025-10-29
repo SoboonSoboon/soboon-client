@@ -25,7 +25,7 @@ export const DateFilter = memo(({ className, onChange }: DateFilterProps) => {
     <div
       data-testid="date-filter-button"
       onClick={() => handleOptionChange()}
-      className={`border-gray-10 flex h-10 cursor-pointer items-center justify-center gap-0.5 rounded-xl border-1 p-1.5 select-none md:justify-between md:gap-1 md:px-3 md:py-2 ${className}`}
+      className={`border-gray-10 flex h-10 cursor-pointer items-center justify-center gap-0.5 rounded-xl border p-1.5 select-none md:justify-between md:gap-1 md:px-3 md:py-2 ${className}`}
     >
       <div className="flex items-center gap-[1px]">
         <ArrowUp
