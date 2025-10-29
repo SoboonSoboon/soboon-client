@@ -95,7 +95,7 @@ export const MeetingActionMenu = ({
   const menuItems: ActionMenuItem[] = [
     {
       id: 'share',
-      label: '링크 공유',
+      label: '링크 복사',
       onClick: handleShareMenuClick,
       variant: 'default',
     },
