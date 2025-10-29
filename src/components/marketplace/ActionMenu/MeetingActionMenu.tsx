@@ -18,6 +18,7 @@ export interface MeetingActionMenuProps
   onClose?: () => void;
   buttonRef?: React.RefObject<HTMLElement>;
   meetingId: number;
+  isAuthor: boolean;
 }
 
 export const MeetingActionMenu = ({
@@ -25,6 +26,7 @@ export const MeetingActionMenu = ({
   onClose,
   buttonRef,
   meetingId,
+  isAuthor,
   ...props
 }: MeetingActionMenuProps) => {
   const deleteModal = useModal();
@@ -39,7 +41,7 @@ export const MeetingActionMenu = ({
     }
   };
 
-  const handleShareMenuClick = (event: React.MouseEvent<HTMLLIElement>) => {
+  const handleShareMenuClick = () => {
     navigator.clipboard.writeText(window.location.href);
     success('링크가 복사되었어요.');
     onClose?.();
@@ -91,18 +93,22 @@ export const MeetingActionMenu = ({
       onClick: handleShareMenuClick,
       variant: 'default',
     },
-    {
-      id: 'update',
-      label: '수정',
-      onClick: handleUpdateMenuClick,
-      variant: 'default',
-    },
-    {
-      id: 'delete',
-      label: '삭제',
-      onClick: handleDeleteMenuClick,
-      variant: 'danger',
-    },
+    ...(isAuthor
+      ? [
+          {
+            id: 'update',
+            label: '수정',
+            onClick: handleUpdateMenuClick,
+            variant: 'default' as const,
+          },
+          {
+            id: 'delete',
+            label: '삭제',
+            onClick: handleDeleteMenuClick,
+            variant: 'danger' as const,
+          },
+        ]
+      : []),
   ];
 
   return (

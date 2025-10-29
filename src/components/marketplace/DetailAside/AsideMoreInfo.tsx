@@ -45,12 +45,13 @@ export const AsideMoreInfo = ({
         >
           <EllipsisVertical className="text-gray-30 size-6" />
         </div>
-        {open && isAuthor && (
+        {open && (
           <div className="absolute top-8 right-0 z-50">
             <MeetingActionMenu
               onClose={() => setOpen(false)}
               buttonRef={buttonRef as React.RefObject<HTMLElement>}
               meetingId={+meetingId}
+              isAuthor={isAuthor}
             />
           </div>
         )}
