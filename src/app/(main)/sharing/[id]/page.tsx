@@ -149,20 +149,22 @@ export default async function SharingDetailPage({
   params: Promise<{ id: string }>;
   searchParams: Promise<{ sortType: 'RECENT' | 'OLDEST' }>;
 }) {
-  const id = (await params).id;
-  const sortType = (await searchParams).sortType;
+  const meetingId = (await params).id;
+  const sortType = (await searchParams).sortType || 'OLDEST';
   // 소분하기 모임 상세 데이터 조회
   const meetingDetail = await getMeetingDetail({
-    id,
+    id: meetingId,
   });
 
   const userInfo = await getUserInfo();
 
   const isAuthor = meetingDetail?.user.userId === userInfo?.id;
 
-  const commentsList = await getComments({ id, sortType });
+  const commentsList = await getComments({ id: meetingId, sortType });
 
-  const participants = isAuthor ? await getParticipants({ meetingId: id }) : [];
+  const participants = isAuthor
+    ? await getParticipants({ meetingId: meetingId })
+    : [];
 
   return (
     <section>
