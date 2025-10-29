@@ -15,6 +15,7 @@ import { useAuthStore } from '@/apis/auth/hooks/authStore';
 import { useState, useEffect } from 'react';
 import { HEADER_MENU } from '@/constants';
 import { cn } from '@/utils/cn';
+import { deleteTokenInCookie } from '@/action/authAction';
 
 export const Header = () => {
   const pathname = usePathname() || '/';
@@ -29,7 +30,7 @@ export const Header = () => {
     logout();
     console.log('로그아웃 되었습니다.');
     localStorage.removeItem('accessToken');
-
+    deleteTokenInCookie();
     // 페이지 새로고침으로 쿠키 상태 확인
     setTimeout(() => {
       window.location.href = '/';
