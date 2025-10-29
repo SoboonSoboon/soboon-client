@@ -1,7 +1,8 @@
 'use client';
 
 import { Suspense, useState } from 'react';
-import { MypageHeader, CardList } from '@/app/mypage/components';
+import { MypageHeader, CardList } from '@/app/(main)/mypage/components';
+
 import { EmptyState, ErrorPage } from '@/components/Molecules';
 
 import { useMyPageData } from './hook/components/useMypageData';

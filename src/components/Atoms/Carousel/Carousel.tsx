@@ -8,6 +8,8 @@ interface CarouselProps {
   carouselImages: string[];
   width?: number;
   height?: number;
+  imageWidth?: number;
+  imageHeight?: number;
   className?: string;
 }
 
@@ -15,6 +17,8 @@ export const Carousel = ({
   carouselImages,
   width = 700,
   height = 600,
+  imageWidth = 700,
+  imageHeight = 600,
   className,
 }: CarouselProps) => {
   const [currentIndex, setCurrentIndex] = useState<number>(1); // 현재 이미지 인덱스
@@ -123,9 +127,10 @@ export const Carousel = ({
               <Image
                 src={image}
                 alt="캐러셀 이미지"
-                width={width}
-                height={height}
-                className="h-full w-full object-cover"
+                width={imageWidth}
+                height={imageHeight}
+                className="max-h-full max-w-full object-none"
+                style={{ width: 'auto', height: 'auto' }}
                 property={index === 1 ? 'true' : 'false'}
               />
             </div>

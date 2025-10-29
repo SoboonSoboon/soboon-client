@@ -2,14 +2,9 @@ import {
   DividingMeetingsType,
   meetingSearchParamsType,
 } from '@/types/meetingsType';
-import { IntroSection } from '@/components/marketplace';
-import {
-  FilterSection,
-  SharingListSection,
-  SearchSection,
-} from '@/app/sharing/components';
-import { SideButtonSection } from '@/components';
+
 import { getServerToken } from '@/utils/serverToken';
+import SharingPageContent from './SharingPageContent';
 
 async function getSharingMeeting(
   query: URLSearchParams,
@@ -63,23 +58,9 @@ export default async function SharingPage({
   const initialDividingList = await getSharingMeeting(query);
 
   return (
-    <main className="flex w-full flex-col gap-8">
-      <IntroSection />
-      <div className="flex w-full justify-end">
-        <SearchSection />
-      </div>
-      <section className="flex gap-10">
-        <aside className="sticky top-6 h-[95vh] w-[200px]">
-          <FilterSection />
-        </aside>
-        <div className="flex-1">
-          <SharingListSection
-            initialDividingList={initialDividingList}
-            query={query}
-          />
-        </div>
-      </section>
-      <SideButtonSection />
-    </main>
+    <SharingPageContent
+      initialDividingList={initialDividingList}
+      query={query}
+    />
   );
 }

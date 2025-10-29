@@ -4,11 +4,11 @@ import { useEffect } from 'react';
 import { createPortal } from 'react-dom';
 import { Modal } from '@/components/Molecules/modal';
 import { Button, Dropdown, TextInput } from '@/components';
-import { ProfileUpdateData } from '@/app/mypage/utils/profile';
+import { ProfileUpdateData } from '@/app/(main)/mypage/utils/profile';
 
 import { useAuthStore } from '@/apis/auth/hooks/authStore';
 import { useToast } from '@/components/Atoms/Toast/useToast';
-import { useProfileEdit } from '@/app/mypage/hook/api/useProfileEdit';
+import { useProfileEdit } from '@/app/(main)/mypage/hook/api/useProfileEdit';
 import { ProfileImageUploader } from './profileImgUploader';
 import {
   GET_MODEL_CITY_OPTIONS,
@@ -80,7 +80,7 @@ export const ProfileEditModal = ({
       const uploadedUrl = imageUrls[0];
       setValue('image', uploadedUrl);
     } catch {
-      showError('이미지 업로드에 실패했습니다.');
+      showError('이미지 업로드에 실패했어요.');
     }
   };
 
@@ -95,11 +95,11 @@ export const ProfileEditModal = ({
 
     updateProfile(submitData, {
       onSuccess: () => {
-        success('프로필이 성공적으로 수정되었습니다!');
+        success('프로필이 성공적으로 수정되었어요!');
         onClose();
       },
       onError: () => {
-        showError('프로필 수정에 실패했습니다.');
+        showError('프로필 수정에 실패했어요.');
       },
     });
   };

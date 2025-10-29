@@ -11,8 +11,8 @@ export {
   Toast,
   Checkbox,
   StatusTag,
-  UserMenuModal,
-  type UserMenuModalProps,
+  UserActionMenu,
+  type UserActionMenuProps,
   ReviewItemBar,
 } from './Atoms';
 export {

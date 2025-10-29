@@ -1,7 +1,7 @@
 import {
   BookMarkListApiResPonse,
   MypageMeetingApiResponse,
-} from '@/app/mypage/utils/mypageType';
+} from '@/app/(main)/mypage/utils/mypageType';
 import { axiosInstance } from '../axiosInstance';
 
 export const getHostMeetingList = async (

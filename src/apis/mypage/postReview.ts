@@ -3,7 +3,7 @@
 import {
   HostReviewRequest,
   ParticipantReviewRequest,
-} from '@/app/mypage/utils/review';
+} from '@/app/(main)/mypage/utils/review';
 import { getServerToken } from '@/utils/serverToken';
 
 export const postHostReview = async (

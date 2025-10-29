@@ -3,11 +3,7 @@ import './globals.css';
 import { Header } from '@/components';
 import { Footer } from '@/components/Atoms/Footer';
 
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+export default function Layout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="ko">
       <head>
@@ -18,7 +14,7 @@ export default function RootLayout({
       </head>
       <body className="pt-15">
         <Header />
-        <div className="mx-auto min-h-screen w-full max-w-[1200px] p-4 sm:p-6 md:p-8">
+        <div>
           <Providers>{children}</Providers>
         </div>
         <Footer />

@@ -45,7 +45,7 @@ export const CreateButton = ({ actionHandlers }: CreateButtonProps) => {
             <button
               type="button"
               onClick={() => handleAction(key)}
-              className="flex size-11 cursor-pointer items-center justify-center rounded-full border-1 border-[var(--GrayScale-Gray50)] bg-white drop-shadow-[0_0_4px_var(--Gray-Scale-Gray-20,#C8C8C8)]"
+              className="flex size-11 cursor-pointer items-center justify-center rounded-full border border-[var(--GrayScale-Gray50)] bg-white drop-shadow-[0_0_4px_var(--Gray-Scale-Gray-20,#C8C8C8)]"
               aria-label={`${value.label} 만들기`}
             >
               <Icon type={value.icon} size={24} alt={value.label} aria-hidden />
@@ -61,7 +61,7 @@ export const CreateButton = ({ actionHandlers }: CreateButtonProps) => {
         <button
           type="button"
           onClick={() => setOpen(!open)}
-          className={`border-primary bg-primary flex size-11 cursor-pointer items-center justify-center rounded-full border-1 shadow-[0_0_0.25rem_0_var(--GreenScale-Green20)] transition-all duration-300 ease-out ${open ? 'scale-105 shadow-[0_0_0.5rem_0_var(--GreenScale-Green20)]' : 'scale-100'}`}
+          className={`border-primary bg-primary flex size-11 cursor-pointer items-center justify-center rounded-full border shadow-[0_0_0.25rem_0_var(--GreenScale-Green20)] transition-all duration-300 ease-out ${open ? 'scale-105 shadow-[0_0_0.5rem_0_var(--GreenScale-Green20)]' : 'scale-100'}`}
           aria-label={open ? '메뉴 닫기' : '메뉴 열기'}
           aria-expanded={open}
         >
