@@ -1,4 +1,4 @@
-import { deleteComment } from '@/action/commentAction';
+import { deleteCommentApi } from '@/apis/comment/deleteComment';
 import {
   ActionMenu,
   ActionMenuItem,
@@ -12,7 +12,8 @@ import {
   TOAST_FAILURE_MESSAGE,
   TOAST_SUCCESS_MESSAGE,
 } from '@/constants';
-import { useParams } from 'next/navigation';
+import { useParams, useSearchParams } from 'next/navigation';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 export const CommentActionMenu = ({
   className,
@@ -30,6 +31,9 @@ export const CommentActionMenu = ({
 } & React.HTMLAttributes<HTMLDivElement>) => {
   const deleteModal = useModal();
   const { success, error } = useToast();
+  const queryClient = useQueryClient();
+  const searchParams = useSearchParams();
+  const sortType = searchParams.get('sortType');
 
   const handleOutsideClose = () => {
     if (!deleteModal.isOpen) {
@@ -38,6 +42,23 @@ export const CommentActionMenu = ({
   };
 
   const meetingId = useParams<{ id: string }>().id;
+
+  const { mutate: deleteComment } = useMutation({
+    mutationFn: (data: { meetingId: string; commentId: string }) =>
+      deleteCommentApi(data),
+    onSuccess: () => {
+      success(TOAST_SUCCESS_MESSAGE.DELETE_COMMENT);
+      deleteModal.close();
+      onClose?.();
+      queryClient.invalidateQueries({
+        queryKey: ['commentList', meetingId, sortType],
+      });
+    },
+    onError: () => {
+      error(TOAST_FAILURE_MESSAGE.DELETE_COMMENT);
+      deleteModal.close();
+    },
+  });
 
   const handleDeleteMenuClick = (event: React.MouseEvent<HTMLLIElement>) => {
     event.stopPropagation();
@@ -48,19 +69,7 @@ export const CommentActionMenu = ({
     event: React.MouseEvent<HTMLButtonElement>,
   ) => {
     event.stopPropagation();
-
-    const formData = new FormData();
-    formData.append('meetingId', meetingId);
-    formData.append('commentId', commentId);
-    try {
-      await deleteComment(null, formData);
-      deleteModal.close();
-      onClose?.();
-      success(TOAST_SUCCESS_MESSAGE.DELETE_COMMENT);
-    } catch {
-      error(TOAST_FAILURE_MESSAGE.DELETE_COMMENT);
-      deleteModal.close();
-    }
+    deleteComment({ meetingId, commentId });
   };
 
   const menuItems: ActionMenuItem[] = [

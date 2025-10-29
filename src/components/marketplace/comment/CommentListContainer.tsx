@@ -2,13 +2,17 @@
 
 import { CommentsType, ReplyType } from '@/types/commentType';
 import { CommentItem } from './CommentItem';
-import { useActionState, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Button, TextInput } from '@/components';
-import { createReply } from '@/action/commentAction';
+import { createReplyApi } from '@/apis/comment/createReply';
 import { useParams, useSearchParams } from 'next/navigation';
 import { useToast } from '@/components/Atoms';
 import { CornerDownRight } from 'lucide-react';
-import { useInfiniteQuery } from '@tanstack/react-query';
+import {
+  useInfiniteQuery,
+  useMutation,
+  useQueryClient,
+} from '@tanstack/react-query';
 import { getCommentApi } from '@/apis/comment/getComment';
 import { useInfiniteScrollTrigger } from '@/hooks/useScroll';
 
@@ -24,7 +28,7 @@ export const CommentListContainer = ({
   const searchParams = useSearchParams();
   const sortType = searchParams.get('sortType');
   const { success, error } = useToast();
-  const [state, formAction] = useActionState(createReply, null);
+  const queryClient = useQueryClient();
 
   const { isBottom } = useInfiniteScrollTrigger();
 
@@ -35,21 +39,24 @@ export const CommentListContainer = ({
     setOpenReply(null);
   };
 
-  useEffect(() => {
-    if (state) {
-      // 성공 메시지인지 에러 메시지인지 판단
-      if (typeof state === 'string' && state.includes('작성')) {
-        success(state);
-        handleCloseReply();
-      } else if (typeof state === 'string') {
-        // 에러 메시지
-        error(state);
-      } else if (state === null) {
-        // 서버 에러
-        error('댓글 작성에 실패했습니다.');
-      }
-    }
-  }, [state]);
+  const { mutate: createReply } = useMutation({
+    mutationFn: (data: {
+      meetingId: string;
+      commentId: string;
+      content: string;
+      secret: boolean;
+    }) => createReplyApi(data),
+    onSuccess: (data) => {
+      success(data.message);
+      handleCloseReply();
+      queryClient.invalidateQueries({
+        queryKey: ['commentList', meetingId, sortType],
+      });
+    },
+    onError: (err: Error) => {
+      error(err.message || '대댓글 작성에 실패했습니다.');
+    },
+  });
 
   const {
     data: commentList,
@@ -130,21 +137,21 @@ export const CommentListContainer = ({
                 {openReply === comment.commentId && (
                   <div className="mt-3">
                     <form
-                      action={formAction}
+                      onSubmit={(e) => {
+                        e.preventDefault();
+                        const formData = new FormData(e.currentTarget);
+                        const content = formData.get('reply') as string;
+                        const secret = Boolean(formData.get('secret'));
+                        createReply({
+                          meetingId,
+                          commentId: comment.commentId.toString(),
+                          content,
+                          secret,
+                        });
+                        e.currentTarget.reset();
+                      }}
                       className="flex items-center gap-2"
                     >
-                      <input
-                        name="meetingId"
-                        hidden
-                        readOnly
-                        value={meetingId}
-                      />
-                      <input
-                        name="commentId"
-                        hidden
-                        readOnly
-                        value={comment.commentId}
-                      />
                       <div className="relative flex-1">
                         <TextInput
                           placeholder="대댓글을 입력해주세요."
@@ -177,6 +184,7 @@ export const CommentListContainer = ({
                           className="w-20 !border-[var(--GrayScale-Gray20)] !text-[var(--GrayScale-Gray60)]"
                           variant="outline"
                           onClick={handleCloseReply}
+                          type="button"
                         />
                       </div>
                     </form>
@@ -206,7 +214,10 @@ export const CommentListContainer = ({
       </div>
       <p className="text-text-sub2 mt-6 text-center text-sm">
         {isFetchingNextPage && '로딩 중이예요 ...'}
-        {!hasNextPage && '모든 댓글을 불러왔어요 👋'}
+        {!commentList.pages[0]?.content.length && '댓글이 없어요 👋'}
+        {!hasNextPage &&
+          commentList.pages[0]?.content.length > 0 &&
+          '모든 댓글을 불러왔어요 👋'}
       </p>
     </>
   );
