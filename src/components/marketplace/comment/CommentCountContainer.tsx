@@ -3,26 +3,32 @@
 import { getCommentCountApi } from '@/apis/comment/getCommentCount';
 import { DateFilter } from '@/components/Atoms';
 import { useQuery } from '@tanstack/react-query';
-import { useRouter, useParams } from 'next/navigation';
+import { useParams, useSearchParams, usePathname } from 'next/navigation';
 
 export const CommentCountContainer = ({
   initialCommentCount,
 }: {
   initialCommentCount: number;
 }) => {
-  const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
   const meetingId = useParams<{ id: string }>().id;
 
   const { data: commentCount } = useQuery({
     queryKey: ['commentCount', meetingId],
     queryFn: () => getCommentCountApi(meetingId),
     initialData: initialCommentCount,
-    retry: 1,
-    retryDelay: 1000,
   });
   const handleSortTypeChange = (value: 'RECENT' | 'OLDEST') => {
     const formattedValue = value === 'OLDEST' ? 'RECENT' : 'OLDEST';
-    router.push(`?sortType=${formattedValue}`, { scroll: false });
+
+    const params = new URLSearchParams(searchParams.toString());
+
+    params.set('sortType', formattedValue);
+
+    const newUrl = `${pathname}?${params.toString()}`;
+
+    window.history.replaceState({}, '', newUrl);
   };
 
   return (
