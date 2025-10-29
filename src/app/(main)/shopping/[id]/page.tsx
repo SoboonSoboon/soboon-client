@@ -163,7 +163,7 @@ export default async function ShoppingDetailPage({
     <section>
       <DetailHeader />
       <div className="flex flex-col gap-6 lg:flex-row lg:gap-10">
-        <div className="w-full lg:sticky lg:top-6 lg:order-2 lg:w-[300px] xl:w-[350px]">
+        <div className="w-full lg:sticky lg:top-6 lg:order-2 lg:w-[350px] xl:w-[430px]">
           <DetailAside
             meetingDetail={shoppingMeetingDetail!}
             isAuthor={isAuthor}
