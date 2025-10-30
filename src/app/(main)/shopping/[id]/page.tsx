@@ -10,6 +10,91 @@ import { CommentsListType } from '@/types/commentType';
 import { ApplicantsMemberType } from '@/types/applicantsType';
 import { cookies } from 'next/headers';
 import { UserInfoType } from '@/types/authType';
+import type { Metadata } from 'next';
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ id: string }>;
+}): Promise<Metadata> {
+  const id = (await params).id;
+
+  try {
+    const cookieStore = await cookies();
+    const accessToken = cookieStore.get('accessToken')?.value || '';
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_SOBOON_API_URL}/v1/meetings/${id}`,
+      {
+        cache: 'no-store',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${accessToken}`,
+        },
+      },
+    );
+
+    if (!response.ok) {
+      throw new Error('Failed to fetch meeting detail');
+    }
+
+    const responseData = await response.json();
+    const meetingDetail: MeetingDetailType = responseData.data;
+
+    const title = `${meetingDetail.title} - 같이 사요`;
+    const description =
+      meetingDetail.description.slice(0, 160) ||
+      '대용량 제품을 함께 구매하는 공동구매 모임';
+    const meetingUrl = `/shopping/${id}`;
+
+    const ogImage =
+      meetingDetail.images && meetingDetail.images.length > 0
+        ? meetingDetail.images[0]
+        : '/images/intro_people1.png';
+
+    return {
+      title,
+      description,
+      keywords: [
+        '공동구매',
+        meetingDetail.title,
+        meetingDetail.location.province,
+        meetingDetail.location.city,
+        '같이 사요',
+        '소분소분',
+        '대용량 구매',
+        '같이 장보기',
+      ],
+      openGraph: {
+        title,
+        description,
+        url: meetingUrl,
+        type: 'article',
+        publishedTime: meetingDetail.createdAt,
+        authors: [meetingDetail.user.userName || ''],
+        images: [
+          { url: ogImage, width: 1200, height: 630, alt: meetingDetail.title },
+        ],
+      },
+      twitter: {
+        card: 'summary_large_image',
+        title,
+        description,
+        images: meetingDetail.images?.[0]
+          ? [meetingDetail.images[0]]
+          : ['/images/intro_people1.png'],
+      },
+      alternates: {
+        canonical: meetingUrl,
+      },
+    };
+  } catch (error) {
+    console.error('Failed to generate metadata', error);
+    return {
+      title: '같이 장봐요 - 소분소분',
+      description: '대용량 제품을 함께 구매하는 공동구매 모임',
+    };
+  }
+}
 
 async function getUserInfo(): Promise<UserInfoType | null> {
   const cookieStore = await cookies();

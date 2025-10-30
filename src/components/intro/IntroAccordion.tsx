@@ -1,6 +1,11 @@
+'use client';
+
 import { Accordion, type AccordionItem } from '@/components/Atoms';
+import { useScrollAnimation } from '@/hooks/useScrollAnimation';
 
 export const IntroAccordion = () => {
+  const ref = useScrollAnimation(0.3);
+
   const accordionItems: AccordionItem[] = [
     {
       id: '1',
@@ -29,8 +34,14 @@ export const IntroAccordion = () => {
   ];
 
   return (
-    <div className="mx-auto mt-[152px] w-full max-w-[1200px] p-6 text-center">
-      <strong className="text-text-main font-memomentKkukkkuk mb-8 block pb-14 text-center text-[44px] font-normal">
+    <div
+      ref={ref}
+      className="mx-auto mt-12 w-full max-w-[1200px] px-4 py-8 text-center sm:mt-20 sm:px-6 sm:py-10 lg:mt-[152px] lg:p-6"
+    >
+      <strong
+        data-scroll="fade-up"
+        className="text-text-main font-memomentKkukkkuk mb-6 block pb-8 text-center text-[28px] font-normal sm:mb-8 sm:pb-10 sm:text-[36px] lg:pb-14 lg:text-[44px]"
+      >
         자주 묻는 질문
       </strong>
       <Accordion items={accordionItems} allowMultiple={true} />
