@@ -2,6 +2,7 @@ import Providers from './providers';
 import './globals.css';
 import { Header } from '@/components';
 import { Footer } from '@/components/Atoms/Footer';
+import HeaderContainer from './Headercontainer';
 
 export default function RootLayout({
   children,
@@ -17,7 +18,9 @@ export default function RootLayout({
         />
       </head>
       <body className="pt-15">
-        <Header />
+        <HeaderContainer>
+          <Header />
+        </HeaderContainer>
         <div className="mx-auto min-h-screen w-full max-w-[1200px] p-4 sm:p-6 md:p-8">
           <Providers>{children}</Providers>
         </div>
