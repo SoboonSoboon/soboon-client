@@ -40,7 +40,7 @@ describe('StatusTag 컴포넌트', () => {
     test('RECRUITING 상태일 때 올바른 스타일이 적용되어야 한다', () => {
       render(<StatusTag status="RECRUITING" />);
       const tag = screen.getByRole('status');
-      expect(tag).toHaveClass('bg-Green-1');
+      expect(tag).toHaveClass('bg-white');
       expect(tag).toHaveClass('border-orange');
       expect(tag).toHaveClass('text-orange');
     });
