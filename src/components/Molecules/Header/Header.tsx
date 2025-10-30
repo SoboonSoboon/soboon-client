@@ -16,6 +16,7 @@ import { useState, useEffect } from 'react';
 import { HEADER_MENU } from '@/constants';
 import Image from 'next/image';
 import { cn } from '@/utils/cn';
+import { logoutAction } from '@/action/logoutAction';
 
 export const Header = () => {
   const pathname = usePathname() || '/';
@@ -26,11 +27,11 @@ export const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
   const logout = useAuthStore((state) => state.logout);
 
-  const handleLogout = () => {
+  const handleLogout = async () => {
     logout();
     console.log('로그아웃 되었습니다.');
     localStorage.removeItem('accessToken');
-
+    await logoutAction();
     // 페이지 새로고침으로 쿠키 상태 확인
     setTimeout(() => {
       window.location.href = '/';
