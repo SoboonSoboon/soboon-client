@@ -1,3 +1,4 @@
+import { ProfileImageUploader } from '@/app/mypage/components/layout/profileModal/profileImgUploader';
 import { Button, Dropdown } from '@/components';
 import {
   MODEL_PROVINCE_OPTIONS,
@@ -5,8 +6,7 @@ import {
   GET_MODEL_DISTRICT_OPTIONS,
 } from '@/constants';
 import { profileDataType } from '@/types/authType';
-import { cn } from '@/utils';
-import Image from 'next/image';
+import { cn, imageUploader } from '@/utils';
 
 const defaultImage =
   'https://github.com/SoboonSoboon/soboon-client/blob/53fc79821c2d3598dabd6e0d5b21df0da774dd48/public/images/profile_default.svg';
@@ -22,14 +22,19 @@ export default function ProfileForm({
   setNewData,
   onSubmit,
 }: ProfileFormProps) {
-  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setNewData({ ...newData, image: reader.result as string });
-      };
-      reader.readAsDataURL(file);
+  const handleImageChange = async (
+    event: React.ChangeEvent<HTMLInputElement>,
+  ) => {
+    const file = event.target.files?.[0];
+    if (!file) return;
+
+    try {
+      const imageUrls = await imageUploader([file]);
+      const uploadedUrl = imageUrls[0];
+
+      setNewData({ ...newData, image: uploadedUrl });
+    } catch {
+      console.log('이미지 업로드에 실패했어요.');
     }
   };
 
@@ -42,56 +47,10 @@ export default function ProfileForm({
         {/* 프로필 사진 */}
         <div className="mb-6 flex flex-col items-center">
           <div className="relative mb-2">
-            <div className="flex h-24 w-24 items-center justify-center rounded-full border-2 border-gray-200">
-              {newData.image && newData.image !== defaultImage ? (
-                <Image
-                  src={newData.image}
-                  alt="프로필 미리보기"
-                  width={96}
-                  height={96}
-                  priority
-                  className="h-24 w-24 rounded-full object-cover"
-                />
-              ) : (
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="48"
-                  height="48"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="#D1D5DB"
-                  strokeWidth="1.5"
-                >
-                  <rect x="3" y="3" width="18" height="18" rx="2" ry="2" />
-                  <circle cx="8.5" cy="8.5" r="1.5" />
-                  <path d="m21 15-5-5L5 21" />
-                </svg>
-              )}
-            </div>
-            <label className="absolute right-0 bottom-0 cursor-pointer">
-              <input
-                type="file"
-                accept="image/*"
-                onChange={handleImageChange}
-                className="hidden"
-              />
-              <div className="bg-primary flex h-7 w-7 items-center justify-center rounded-full">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="16"
-                  height="16"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="white"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                >
-                  <path d="M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497z" />
-                  <path d="m15 5 4 4" />
-                </svg>
-              </div>
-            </label>
+            <ProfileImageUploader
+              imageUrl={newData.image || defaultImage}
+              onImageChange={handleImageChange}
+            />
           </div>
         </div>
 
