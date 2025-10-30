@@ -75,7 +75,6 @@ export const useAuthStore = create(
     {
       name: 'userInfoStorage',
       storage: createJSONStorage(() => {
-        // SSR 환경에서는 localStorage가 없으므로 체크
         if (typeof window === 'undefined') {
           return {
             getItem: () => null,
