@@ -3,6 +3,7 @@ import './globals.css';
 import { Header } from '@/components';
 import { Footer } from '@/components/Atoms/Footer';
 import type { Metadata, Viewport } from 'next';
+import HeaderContainer from './Headercontainer';
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
@@ -14,7 +15,9 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         />
       </head>
       <body className="pt-15">
-        <Header />
+        <HeaderContainer>
+          <Header />
+        </HeaderContainer>
         <div>
           <Providers>{children}</Providers>
         </div>
