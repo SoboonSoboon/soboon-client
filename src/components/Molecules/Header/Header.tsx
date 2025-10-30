@@ -51,43 +51,41 @@ export const Header = () => {
           </Link>
 
           <nav className="flex items-center gap-3 text-base font-normal sm:gap-4 md:gap-5 lg:gap-6">
-            {isLoggedIn && (
-              <>
-                {Object.entries(HEADER_MENU).map(([key, headerMenu]) => {
-                  const isActive = pathname.startsWith(headerMenu.PATH);
-                  const iconType = isActive
-                    ? headerMenu.ICON.GREEN
-                    : headerMenu.ICON.DEFAULT;
+            <>
+              {Object.entries(HEADER_MENU).map(([key, headerMenu]) => {
+                const isActive = pathname.startsWith(headerMenu.PATH);
+                const iconType = isActive
+                  ? headerMenu.ICON.GREEN
+                  : headerMenu.ICON.DEFAULT;
 
-                  return (
-                    <Link
-                      key={key}
-                      href={headerMenu.PATH}
-                      className={cn(
-                        'group hover:text-primary flex items-center gap-1 whitespace-nowrap',
-                        isActive && 'text-primary',
-                      )}
-                    >
-                      <div className="relative hidden sm:flex sm:items-center">
-                        <Icon
-                          type={iconType as IconType}
-                          size={headerMenu.SIZE}
-                          className="transition-opacity duration-150 ease-in-out group-hover:opacity-0"
-                        />
-                        <Icon
-                          type={headerMenu.ICON.GREEN as IconType}
-                          size={headerMenu.SIZE}
-                          className="absolute top-0 left-0 opacity-0 transition-opacity duration-150 ease-in-out group-hover:opacity-100"
-                        />
-                      </div>
-                      <span className="font-memomentKkukkkuk leading-none">
-                        {headerMenu.LABEL}
-                      </span>
-                    </Link>
-                  );
-                })}
-              </>
-            )}
+                return (
+                  <Link
+                    key={key}
+                    href={headerMenu.PATH}
+                    className={cn(
+                      'group hover:text-primary flex items-center gap-1 whitespace-nowrap',
+                      isActive && 'text-primary',
+                    )}
+                  >
+                    <div className="relative hidden sm:flex sm:items-center">
+                      <Icon
+                        type={iconType as IconType}
+                        size={headerMenu.SIZE}
+                        className="transition-opacity duration-150 ease-in-out group-hover:opacity-0"
+                      />
+                      <Icon
+                        type={headerMenu.ICON.GREEN as IconType}
+                        size={headerMenu.SIZE}
+                        className="absolute top-0 left-0 opacity-0 transition-opacity duration-150 ease-in-out group-hover:opacity-100"
+                      />
+                    </div>
+                    <span className="font-memomentKkukkkuk leading-none">
+                      {headerMenu.LABEL}
+                    </span>
+                  </Link>
+                );
+              })}
+            </>
           </nav>
         </div>
 
