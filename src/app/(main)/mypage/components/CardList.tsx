@@ -1,4 +1,4 @@
-import { MeetingItem } from '../utils/mypageType';
+import { MeetingItem } from '@/app/(main)/mypage/utils/mypageType';
 import { MeetingDividingCard } from './Card/MeetingDividingCard';
 import { MeetingShoppingCard } from './Card/MeetingShoppingCard';
 
