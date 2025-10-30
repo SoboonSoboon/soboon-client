@@ -1,4 +1,3 @@
-import { ProfileImageUploader } from '@/app/mypage/components/layout/profileModal/profileImgUploader';
 import { Button, Dropdown } from '@/components';
 import {
   MODEL_PROVINCE_OPTIONS,
@@ -7,6 +6,7 @@ import {
 } from '@/constants';
 import { profileDataType } from '@/types/authType';
 import { cn, imageUploader } from '@/utils';
+import { ProfileImageUploader } from '../../mypage/components/layout/profileModal/profileImgUploader';
 
 const defaultImage =
   'https://github.com/SoboonSoboon/soboon-client/blob/53fc79821c2d3598dabd6e0d5b21df0da774dd48/public/images/profile_default.svg';
