@@ -18,7 +18,13 @@ export const setTokenInCookie = async (token: string, userId: number) => {
     name: 'userId',
     value: userId.toString(),
     httpOnly: true,
-    maxAge: 60 * 60 * 24 * 7, // 7일
+    secure: true,
+    maxAge: 60 * 60 * 24 * 7, // 7 days
     path: '/',
   });
+};
+
+export const deleteTokenInCookie = async () => {
+  (await cookies()).delete('accessToken');
+  (await cookies()).delete('userId');
 };
