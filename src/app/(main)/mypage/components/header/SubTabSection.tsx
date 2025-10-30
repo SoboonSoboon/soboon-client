@@ -2,7 +2,7 @@
 
 import { MYPAGE_SUB_TAB_LABELS } from '@/constants';
 import { KeywordChip } from '@/components/Atoms';
-import { type SubTabType } from '../../utils/mypageType';
+import { type SubTabType } from '@/app/(main)/mypage/utils/mypageType';
 
 interface SubTabSectionProps {
   activeSubTab: SubTabType;

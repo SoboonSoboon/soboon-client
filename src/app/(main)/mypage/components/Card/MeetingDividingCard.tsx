@@ -23,7 +23,7 @@ import { ReviewKeyword } from '@/types/common';
 import { useToast } from '@/components/Atoms/Toast/useToast';
 import { useReviewTargets } from '../../hook/api/useReview';
 import { ReviewModal } from '../ReviewModal';
-import { MeetingItem } from '../../utils/mypageType';
+import { MeetingItem } from '@/app/(main)/mypage/utils/mypageType';
 
 // 모임 카드 컴포넌트
 export const MeetingDividingCard = ({

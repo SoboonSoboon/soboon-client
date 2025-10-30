@@ -1,7 +1,7 @@
 'use client';
 
 import { MYPAGE_TAB_LABELS } from '@/constants';
-import { type MainTabType } from '../../utils/mypageType';
+import { type MainTabType } from '@/app/(main)/mypage/utils/mypageType';
 
 interface MainTabSectionProps {
   activeMainTab: MainTabType;

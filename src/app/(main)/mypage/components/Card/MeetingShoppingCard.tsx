@@ -9,7 +9,7 @@ import {
 } from '@/components/Molecules/Card/Card';
 
 import { Button, StatusTag } from '@/components';
-import { cn, timeFormatter } from '@/utils';
+import { timeFormatter } from '@/utils';
 import { useRouter } from 'next/navigation';
 
 import {
@@ -22,7 +22,7 @@ import { ReviewKeyword } from '@/types/common';
 import { useToast } from '@/components/Atoms/Toast/useToast';
 import { useReviewTargets } from '../../hook/api/useReview';
 import { ReviewModal } from '../ReviewModal';
-import { MeetingItem } from '../../utils/mypageType';
+import { MeetingItem } from '@/app/(main)/mypage/utils/mypageType';
 
 // 모임 카드 컴포넌트
 export const MeetingShoppingCard = ({
