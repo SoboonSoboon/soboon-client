@@ -15,7 +15,9 @@ export const CommentSection = ({
   return (
     <div className="mt-8 w-full">
       {/* 댓글 헤더 */}
-      <CommentCountContainer commentCount={commentsList!.totalElements} />
+      <CommentCountContainer
+        initialCommentCount={commentsList!.totalElements}
+      />
 
       {/* 댓글 입력 영역 */}
       <CommentInputContainer status={status} />

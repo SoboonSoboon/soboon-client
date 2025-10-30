@@ -11,7 +11,13 @@ const meta = {
   argTypes: {
     status: {
       control: 'select',
-      options: ['RECRUITING', 'COMPLETED', 'CLOSED'],
+      options: [
+        'RECRUITING',
+        'COMPLETED',
+        'CLOSED',
+        'ReviewOpen',
+        'ReviewClosed',
+      ],
       description: '상태 타입',
     },
     className: {
@@ -39,5 +45,17 @@ export const Completed: Story = {
 export const Closed: Story = {
   args: {
     status: 'CLOSED',
+  },
+};
+
+export const ReviewOpen: Story = {
+  args: {
+    status: 'ReviewOpen',
+  },
+};
+
+export const ReviewClosed: Story = {
+  args: {
+    status: 'ReviewClosed',
   },
 };

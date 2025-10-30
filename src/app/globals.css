@@ -41,6 +41,7 @@
   --color-Green-100: #000;
   --color-warning-alt: #ffd9d9;
   --color-warning: #ff4040;
+  --color-orange: #ff7e4e;
   --color-safe-alt: #e0f8e8;
   --color-safe: #46c470;
   --color-dim: rgba(0, 0, 0, 0.3);
@@ -172,6 +173,20 @@ body {
 
   .animate-fade-in {
     animation: fadeIn 0.2s ease-in;
+  }
+}
+
+@layer base {
+  input,
+  textarea,
+  select {
+    outline: none;
+  }
+  input:focus,
+  textarea:focus,
+  select:focus {
+    outline: none;
+    box-shadow: none;
   }
 }
 

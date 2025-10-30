@@ -123,11 +123,23 @@ describe('TextInput 컴포넌트', () => {
         'w-full',
         'flex-1',
         'items-center',
-        'rounded-lg',
-        'border-2',
+        'rounded-xl',
+        'border-1',
         'border-transparent',
         'px-4',
-        'py-2.5',
+        'py-2',
+        'bg-gray-5',
+        'text-[var(--GrayScale-Gray80)]',
+        // 상태 변형 클래스 존재 확인 (문자 그대로 포함 확인)
+        'hover:ring-1',
+        'focus:ring-1',
+        'active:ring-1',
+        'hover:ring-Green-20',
+        'hover:border-Green-20',
+        'focus:border-primary',
+        'focus:ring-primary',
+        'active:border-primary',
+        'active:ring-primary',
       );
     });
 
@@ -140,7 +152,7 @@ describe('TextInput 컴포넌트', () => {
     test('기본 스타일과 커스텀 className이 함께 적용되어야 한다', () => {
       render(<TextInput className="bg-blue-100" />);
       const input = screen.getByRole('textbox');
-      expect(input).toHaveClass('bg-blue-100', 'flex', 'rounded-lg');
+      expect(input).toHaveClass('bg-blue-100', 'flex', 'rounded-xl');
     });
   });
 

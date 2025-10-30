@@ -66,7 +66,13 @@ export default async function ShoppingPage({
 
   return (
     <main className="flex flex-col gap-8">
-      <IntroSection />
+      <IntroSection
+        src="/images/banner_shopping.png"
+        alt="장보기 배너"
+        className="overflow-hidden rounded-lg"
+        width={2400}
+        height={500}
+      />
       <section className="flex flex-col gap-4 md:gap-6">
         <ShoppingTagsSection />
         <FilterSection />

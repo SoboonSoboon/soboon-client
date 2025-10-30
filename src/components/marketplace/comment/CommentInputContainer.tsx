@@ -2,11 +2,11 @@
 
 import { TextInput } from '@/components';
 import { Button } from '@/components';
-import { createComment } from '@/action/commentAction';
-import { useActionState, useEffect } from 'react';
-import { useParams } from 'next/navigation';
+import { useParams, useSearchParams } from 'next/navigation';
 import { useToast } from '@/components/Atoms';
 import { cn } from '@/utils/cn';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { createCommentApi } from '@/apis/comment/createComment';
 
 export const CommentInputContainer = ({
   status,
@@ -14,27 +14,45 @@ export const CommentInputContainer = ({
   status: 'RECRUITING' | 'COMPLETED' | 'CLOSED';
 }) => {
   const meetingId = useParams<{ id: string }>().id;
-  const [state, formAction] = useActionState(createComment, null);
   const { success, error } = useToast();
+  const queryClient = useQueryClient();
+  const searchParams = useSearchParams();
 
-  useEffect(() => {
-    if (state) {
-      // 성공 메시지인지 에러 메시지인지 판단
-      if (typeof state === 'string' && state.includes('작성')) {
-        success(state);
-      } else if (typeof state === 'string') {
-        // 에러 메시지
-        error(state);
-      } else if (state === null) {
-        // 서버 에러
-        error('댓글 작성에 실패했습니다.');
-      }
-    }
-  }, [state]);
+  const { mutate: createComment } = useMutation({
+    mutationFn: (data: {
+      meetingId: string;
+      content: string;
+      secret: boolean;
+    }) => createCommentApi(data),
+    onSuccess: (data) => {
+      const sortType = searchParams.get('sortType');
+
+      success(data.message);
+      queryClient.invalidateQueries({
+        queryKey: ['commentList', meetingId, sortType || 'OLDEST'],
+      });
+      queryClient.invalidateQueries({
+        queryKey: ['commentCount', meetingId],
+      });
+    },
+    onError: (err: Error) => {
+      error(err.message || '댓글 작성에 실패했습니다.');
+    },
+  });
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const formData = new FormData(e.target as HTMLFormElement);
+    const meetingId = formData.get('meetingId') as string;
+    const content = formData.get('comment') as string;
+    const secret = Boolean(formData.get('secret'));
+    createComment({ meetingId, content, secret });
+    (e.target as HTMLFormElement).reset();
+  };
 
   return (
     <div className="mb-6">
-      <form action={formAction} className="flex items-center gap-2">
+      <form onSubmit={handleSubmit} className="flex items-center gap-2">
         <input name="meetingId" hidden readOnly value={meetingId} />
         <div className="relative flex-1">
           <TextInput

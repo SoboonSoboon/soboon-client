@@ -7,10 +7,12 @@ import { Button, ProfileImg, ProfilePopover, TextInput } from '@/components';
 import { CommentActionMenu } from '@/components/marketplace/ActionMenu/CommentActionMenu';
 import { useState } from 'react';
 import { useParams } from 'next/navigation';
-import { updateComment } from '@/action/commentAction';
+import { updateCommentApi } from '@/apis/comment/updateComment';
 import { useToast } from '@/components/Atoms';
 import { useAuthStore } from '@/apis/auth/hooks/authStore';
 import { usePopoverReview } from '@/hooks/usePopoverReview';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { useSearchParams } from 'next/navigation';
 
 export const CommentItem = ({
   isAuthor,
@@ -24,6 +26,9 @@ export const CommentItem = ({
   const meetingId = useParams<{ id: string }>().id;
   const { success, error } = useToast();
   const [currentComment, setCurrentComment] = useState(comment.content);
+  const queryClient = useQueryClient();
+  const searchParams = useSearchParams();
+  const sortType = searchParams.get('sortType');
 
   const handleEditClick = () => {
     setIsEditing((prev) => !prev);
@@ -52,6 +57,28 @@ export const CommentItem = ({
       }))
     : [];
 
+  const { mutate: updateComment } = useMutation({
+    mutationFn: (data: {
+      meetingId: string;
+      commentId: string;
+      content: string;
+      secret: boolean;
+    }) => updateCommentApi(data),
+    onSuccess: (data) => {
+      success(data.message || '댓글 수정을 완료했어요.');
+      handleCancelClick();
+      queryClient.invalidateQueries({
+        queryKey: ['commentList', meetingId, sortType || 'OLDEST'],
+      });
+      queryClient.invalidateQueries({
+        queryKey: ['commentCount', meetingId],
+      });
+    },
+    onError: (err: Error) => {
+      error(err.message || '댓글 수정에 실패했어요.');
+    },
+  });
+
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const formData = new FormData(e.target as HTMLFormElement);
@@ -59,13 +86,15 @@ export const CommentItem = ({
       (comment as CommentType)?.commentId?.toString() ||
       (comment as ReplyType)?.replyId?.toString() ||
       '';
-    const response = await updateComment(null, formData, commentId, meetingId);
-    if (response) {
-      success(response.message || '댓글 수정을 완료했어요.');
-      handleCancelClick();
-    } else {
-      error(response.message || '댓글 수정에 실패했어요.');
-    }
+    const content = formData.get('comment') as string;
+    const secret = Boolean(formData.get('secret'));
+
+    updateComment({
+      meetingId,
+      commentId,
+      content,
+      secret,
+    });
   };
   return (
     <div>
@@ -129,7 +158,7 @@ export const CommentItem = ({
                     htmlFor="editCommentSecret"
                     className="text-gray-60 cursor-pointer text-sm"
                   >
-                    비밀 댓글
+                    비공개
                   </label>
                 </div>
               </div>

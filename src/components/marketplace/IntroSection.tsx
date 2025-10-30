@@ -1,25 +1,24 @@
 import Image from 'next/image';
+import { cn } from '@/utils/cn';
 
-export const IntroSection = () => {
+interface IntroSectionProps {
+  src: string;
+  alt: string;
+  width?: number;
+  height?: number;
+  className?: string;
+}
+
+export const IntroSection = ({
+  src,
+  alt,
+  width,
+  height,
+  className,
+}: IntroSectionProps) => {
   return (
-    <div className="border-gray-10 flex h-[250px] w-full items-center justify-between overflow-hidden rounded-lg border bg-white p-6 px-[6rem]">
-      <div className="flex h-full flex-col justify-center gap-5">
-        <p className="text-text-main font-memomentKkukkkuk text-2xl">
-          함께하면 더 알뜰하니까!
-        </p>
-        <h2 className="text-text-main text-4xl font-normal">
-          지금 모임에 참여해보세요!
-        </h2>
-      </div>
-
-      <div className="pr-18">
-        <Image
-          src="/images/soboon-rabbit.png"
-          alt="intro-section"
-          width={270}
-          height={270}
-        />
-      </div>
+    <div className={cn('border-gray-10 w-full rounded-lg border', className)}>
+      <Image src={src} alt={alt} width={width} height={height} />
     </div>
   );
 };
