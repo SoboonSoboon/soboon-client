@@ -14,7 +14,7 @@ import { timeFormatter } from '@/utils';
 import { MapPin } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 
-import { useEffect } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import { getShoppingListApi } from '@/apis/meetings/getShoppingListApi';
 import { useInfiniteScrollTrigger } from '@/hooks/useScroll';
@@ -96,69 +96,104 @@ export const ShoppingListSection = ({
     router.push(`/shopping/${id}`);
   };
 
-  if (!shoppingList || shoppingList.pages[0]?.content.length === 0) {
-    return (
-      <EmptyState
-        type="main-shopping"
-        title="아직 장보기 모임이 없어요"
-        description="첫 번째 장보기 모임을 만들어보세요!"
-        primaryButton={{
-          text: '장보기 모임 만들기',
-          href: '/shopping/register',
-          variant: 'filled',
-        }}
-        secondaryButton={{
-          text: '소분하기 모임 둘러보기',
-          href: '/sharing',
-          variant: 'outline',
-        }}
-      />
+  // 반응형 컬럼 수 계산
+  const [columnCount, setColumnCount] = useState(1);
+
+  useEffect(() => {
+    const calculateColumns = () => {
+      const width = window.innerWidth;
+      if (width >= 1280) return 4;
+      if (width >= 768) return 3;
+      if (width >= 640) return 2;
+      return 1;
+    };
+
+    const updateColumns = () => setColumnCount(calculateColumns());
+    updateColumns();
+    window.addEventListener('resize', updateColumns);
+    return () => window.removeEventListener('resize', updateColumns);
+  }, []);
+
+  const items = useMemo(
+    () => shoppingList?.pages.flatMap((page) => page.content) ?? [],
+    [shoppingList],
+  );
+
+  // 가로 우선(좌→우, 위→아래) 순서를 위해 라운드로빈으로 컬럼 분배
+  const columns = useMemo(() => {
+    const cols: (typeof items)[] = Array.from(
+      { length: columnCount },
+      () => [],
     );
-  }
+    items.forEach((item, index) => {
+      cols[index % columnCount].push(item);
+    });
+    return cols;
+  }, [items, columnCount]);
 
   return (
     <>
-      <div className="columns-1 gap-4 space-y-4 sm:columns-2 md:columns-3 md:gap-5 md:space-y-5 xl:columns-4">
-        {shoppingList.pages
-          .flatMap((page) => page.content)
-          .map((shopping) => (
-            <Card
-              key={shopping.id}
-              className="border-gray-10 flex cursor-pointer break-inside-avoid flex-col gap-3 rounded-xl border p-6"
-              onClick={() => onClickCard(shopping.id.toString())}
-            >
-              <StatusTag status={shopping.status} />
-              <CardContent className="flex flex-col gap-3">
-                <CardTitle
-                  className="font-memomentKkukkkuk line-clamp-2"
-                  status={shopping.status as 'RECRUITING'}
+      {items.length === 0 ? (
+        <EmptyState
+          type="main-shopping"
+          title="아직 장보기 모임이 없어요"
+          description="첫 번째 장보기 모임을 만들어보세요!"
+          primaryButton={{
+            text: '장보기 모임 만들기',
+            href: '/shopping/register',
+            variant: 'filled',
+          }}
+          secondaryButton={{
+            text: '소분하기 모임 둘러보기',
+            href: '/sharing',
+            variant: 'outline',
+          }}
+        />
+      ) : (
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 md:gap-5 xl:grid-cols-4">
+          {columns.map((col, colIdx) => (
+            <div key={colIdx} className="flex flex-col gap-4 md:gap-5">
+              {col.map((shopping) => (
+                <Card
+                  key={shopping.id}
+                  className="border-gray-10 flex cursor-pointer flex-col gap-3 rounded-xl border p-6"
+                  onClick={() => onClickCard(shopping.id.toString())}
                 >
-                  {shopping.title}
-                </CardTitle>
-                <CardSubtitle className="text-text-sub2 flex items-center gap-1 text-sm">
-                  <span>{shopping.user.userName}</span>
-                  <span>・</span>
-                  <span>{timeFormatter(shopping.createdAt)}</span>
-                </CardSubtitle>
-                <div className="flex flex-wrap gap-x-2">
-                  {shopping.tags && shopping.tags.length > 0 && (
-                    <HashTag
-                      tags={shopping.tags}
+                  <StatusTag status={shopping.status} />
+                  <CardContent className="flex flex-col gap-3">
+                    <CardTitle
+                      className="font-memomentKkukkkuk line-clamp-2"
                       status={shopping.status as 'RECRUITING'}
-                    />
-                  )}
-                </div>
-              </CardContent>
-              <Line />
-              <CardFooter className="text-text-sub2 text-sm">
-                <div className="flex items-center gap-1 text-sm">
-                  <MapPin className="size-4" />
-                  <p>{shopping.location.district}</p>
-                </div>
-              </CardFooter>
-            </Card>
+                    >
+                      {shopping.title}
+                    </CardTitle>
+                    <CardSubtitle className="text-text-sub2 flex items-center gap-1 text-sm">
+                      <span>{shopping.user.userName}</span>
+                      <span>・</span>
+                      <span>{timeFormatter(shopping.createdAt)}</span>
+                    </CardSubtitle>
+                    <div className="flex flex-wrap gap-x-2">
+                      {shopping.tags && shopping.tags.length > 0 && (
+                        <HashTag
+                          tags={shopping.tags}
+                          status={shopping.status as 'RECRUITING'}
+                        />
+                      )}
+                    </div>
+                  </CardContent>
+                  <Line />
+                  <CardFooter className="text-text-sub2 text-sm">
+                    <div className="flex items-center gap-1 text-sm">
+                      <MapPin className="size-4" />
+                      <p>{shopping.location.district}</p>
+                    </div>
+                  </CardFooter>
+                </Card>
+              ))}
+            </div>
           ))}
-      </div>
+        </div>
+      )}
       <p className="text-text-sub2 mt-6 text-center text-sm">
         {isFetchingNextPage && '로딩 중이예요 ...'}
         {!hasNextPage && '모든 게시글을 불러왔어요 👋'}
