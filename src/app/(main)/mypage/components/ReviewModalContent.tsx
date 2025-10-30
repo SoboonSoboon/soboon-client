@@ -18,9 +18,13 @@ export const ReviewModalContent = ({
   handleReviewSubmit,
   activeMainTab,
 }: ReviewModalContentProps) => {
+  // 호스트일 때만 드롭다운 토글, 참여자/북마크는 항상 열림
   const [expandedIndex, setExpandedIndex] = useState<number | null>(null);
   const [selectedKeywords, setSelectedKeywords] = useState<
     Record<number, ReviewKeyword[]>
+  >({});
+  const [submittedByIndex, setSubmittedByIndex] = useState<
+    Record<number, boolean>
   >({});
 
   const availableKeywords: ReviewKeyword[] = [
@@ -59,11 +63,11 @@ export const ReviewModalContent = ({
       return;
     }
     handleReviewSubmit?.(attendeeId, keywords);
-    setExpandedIndex(null);
     setSelectedKeywords((prev) => ({
       ...prev,
       [index]: [],
     }));
+    setSubmittedByIndex((prev) => ({ ...prev, [index]: true }));
   }
 
   return (
@@ -71,16 +75,14 @@ export const ReviewModalContent = ({
       {reviewTargetList.map((step, index) => (
         <div
           key={index}
-          className="border-gray-10 flex flex-col gap-5 border-b py-5 last:border-b-0"
+          className="border-gray-10 flex cursor-pointer flex-col gap-5 border-b py-5 last:border-b-0"
+          onClick={() => {
+            if (activeMainTab === 'host') {
+              handleItemClick(index);
+            }
+          }}
         >
-          <div
-            className="flex cursor-pointer justify-between"
-            onClick={() => {
-              if (activeMainTab === 'host' && !step.alreadyReviewed) {
-                handleItemClick(index);
-              }
-            }}
-          >
+          <div className="flex cursor-pointer justify-between">
             <div className="flex items-center gap-3">
               <ProfileImg
                 profileImageUrl={step.profileImageUrl}
@@ -130,11 +132,13 @@ export const ReviewModalContent = ({
               <div className="flex justify-end">
                 <Button
                   variant="filled"
-                  disabled={step.alreadyReviewed}
+                  disabled={step.alreadyReviewed || submittedByIndex[index]}
                   className="rounded-8px w-[133px] !py-2.5"
                   onClick={() => handleSubmit(index, step.attendeeId)}
                 >
-                  {step.alreadyReviewed ? '리뷰 완료' : '제출'}
+                  {step.alreadyReviewed || submittedByIndex[index]
+                    ? '리뷰 완료'
+                    : '제출'}
                 </Button>
               </div>
             </div>

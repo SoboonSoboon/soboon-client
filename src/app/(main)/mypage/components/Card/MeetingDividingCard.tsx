@@ -24,6 +24,7 @@ import { useToast } from '@/components/Atoms/Toast/useToast';
 import { useReviewTargets } from '../../hook/api/useReview';
 import { ReviewModal } from '../ReviewModal';
 import { MeetingItem } from '@/app/(main)/mypage/utils/mypageType';
+import { mypageKeys } from '@/constants/queryKey';
 
 // 모임 카드 컴포넌트
 export const MeetingDividingCard = ({
@@ -53,7 +54,7 @@ export const MeetingDividingCard = ({
 
   // 리뷰 모달 열기 핸들러
   const handleReviewModalOpen = () => {
-    if (meeting.status !== 'COMPLETED') return;
+    if (meeting.status === 'RECRUITING') return;
     reviewModal.open();
   };
 
@@ -87,6 +88,13 @@ export const MeetingDividingCard = ({
         queryClient.invalidateQueries({
           queryKey: ['reviewTargets', meeting.groupId],
         });
+        // 모든 대상 리뷰 완료 시에만 MyPage 리스트 무효화 (라벨 변경 목적)
+        const isAllReviewedOptimistic = reviewTargetList.every(
+          (step) => step.alreadyReviewed || step.attendeeId === targetUserId,
+        );
+        if (isAllReviewedOptimistic) {
+          queryClient.invalidateQueries({ queryKey: mypageKeys.meetings() });
+        }
         // 리뷰 제출 성공 Toast 메시지
         toast.success('리뷰해주셔서 감사합니다');
 
@@ -123,10 +131,7 @@ export const MeetingDividingCard = ({
           <div className="pb-5">
             <div className="absolute top-4 left-0 z-10 w-full px-3">
               <div className="flex items-center justify-start">
-                <StatusTag
-                  status={meeting.status}
-                  className="!mx-0 h-8 whitespace-nowrap"
-                />
+                <StatusTag status={meeting.status} />
               </div>
             </div>
             {/* 이미지 영역 */}
@@ -140,66 +145,58 @@ export const MeetingDividingCard = ({
           </div>
           {/* 컨텐츠 영역 */}
           <div className="flex flex-col gap-3">
-            {/* 제목 */}
-            <div className="flex flex-col">
+            {/* 제목 + 메타 정보 */}
+            <header className="flex flex-col gap-1">
               <CardTitle className={cn('line-clamp-1 !text-xl')}>
                 {meeting.title}
               </CardTitle>
-              {/* 사용자 정보와 시간 */}
-              <div className="flex items-center gap-1">
-                <span className="text-text-sub2 text-sm">작성자</span>
-                <span className="text-text-sub2 w-4 text-center text-sm">
-                  •
-                </span>
-                <span className="text-text-sub2 text-sm">
-                  {timeFormatter(meeting.createdAt)}
+              <div className="flex w-full items-center justify-between text-sm">
+                <p className="text-text-sub2 flex items-center gap-1">
+                  <span>작성자</span>
+                  <span>・</span>
+                  <time dateTime={meeting.createdAt}>
+                    {timeFormatter(meeting.createdAt)}
+                  </time>
+                </p>
+                <span id="참여자인원수" className="text-text-sub2">
+                  참여자 {reviewTargetList.length + 1}명
                 </span>
               </div>
-            </div>
+            </header>
             <hr className="text-gray-10" />
             <CardFooter className="flex flex-col gap-3">
               <div className="flex items-center gap-1">
                 <MapPin className="text-gray-40 size-5" />
                 <span className="text-sm">{location}</span>
               </div>
-              <Button
-                variant={
-                  meeting.status === 'RECRUITING' ||
-                  meeting.status !== 'COMPLETED' ||
-                  (activeMainTab === 'participate' &&
-                    reviewTargetList[0]?.alreadyReviewed) ||
-                  (activeMainTab === 'host' &&
-                    reviewTargetList.every((step) => step.alreadyReviewed))
-                    ? 'filled'
-                    : 'outline'
-                }
-                label={
-                  meeting.status === 'RECRUITING'
-                    ? '모집중'
-                    : (activeMainTab === 'participate' &&
-                          reviewTargetList[0]?.alreadyReviewed) ||
-                        (activeMainTab === 'host' &&
-                          reviewTargetList.every(
-                            (step) => step.alreadyReviewed,
-                          ))
-                      ? '리뷰완료'
-                      : '리뷰하기'
-                }
-                className="flex !py-[9px]"
-                size="small"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  handleReviewModalOpen();
-                }}
-                disabled={
-                  meeting.status === 'RECRUITING' ||
-                  meeting.status !== 'COMPLETED' ||
-                  (activeMainTab === 'participate' &&
-                    reviewTargetList[0]?.alreadyReviewed) ||
-                  (activeMainTab === 'host' &&
-                    reviewTargetList.every((step) => step.alreadyReviewed))
-                }
-              />
+              {(() => {
+                const isRecruiting = meeting.status === 'RECRUITING';
+                const reviewedCount = meeting.reviewStatus?.reviewedCount ?? 0;
+                const totalCount = meeting.reviewStatus?.totalCount ?? 0;
+                const isAllReviewed =
+                  totalCount > 0 && reviewedCount >= totalCount;
+
+                const variant = isAllReviewed ? 'outline' : ('filled' as const);
+                const label = isRecruiting
+                  ? '모집중'
+                  : isAllReviewed
+                    ? '완료한 리뷰 보기'
+                    : '리뷰하기';
+
+                return (
+                  <Button
+                    variant={variant}
+                    label={label}
+                    className="flex !py-[9px]"
+                    size="small"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleReviewModalOpen();
+                    }}
+                    disabled={isRecruiting}
+                  />
+                );
+              })()}
             </CardFooter>
           </div>
         </CardContent>

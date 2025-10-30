@@ -23,6 +23,7 @@ import { useToast } from '@/components/Atoms/Toast/useToast';
 import { useReviewTargets } from '../../hook/api/useReview';
 import { ReviewModal } from '../ReviewModal';
 import { MeetingItem } from '@/app/(main)/mypage/utils/mypageType';
+import { mypageKeys } from '@/constants/queryKey';
 
 // 모임 카드 컴포넌트
 export const MeetingShoppingCard = ({
@@ -52,7 +53,7 @@ export const MeetingShoppingCard = ({
 
   // 리뷰 모달 열기 핸들러
   const handleReviewModalOpen = () => {
-    if (meeting.status !== 'COMPLETED') return;
+    if (meeting.status === 'RECRUITING') return;
     reviewModal.open();
   };
 
@@ -86,6 +87,13 @@ export const MeetingShoppingCard = ({
         queryClient.invalidateQueries({
           queryKey: ['reviewTargets', meeting.groupId],
         });
+        // 모든 대상 리뷰 완료 시에만 MyPage 리스트 무효화 (라벨 변경 목적)
+        const isAllReviewedOptimistic = reviewTargetList.every(
+          (step) => step.alreadyReviewed || step.attendeeId === targetUserId,
+        );
+        if (isAllReviewedOptimistic) {
+          queryClient.invalidateQueries({ queryKey: mypageKeys.meetings() });
+        }
         // 리뷰 제출 성공 Toast 메시지
         toast.success('리뷰해주셔서 감사합니다');
 
@@ -120,17 +128,26 @@ export const MeetingShoppingCard = ({
       >
         <StatusTag status={meeting.status} />
         <CardContent className="flex flex-col gap-3">
-          <CardTitle
-            className="font-memomentKkukkkuk line-clamp-2"
-            status={meeting.status as 'RECRUITING'}
-          >
-            {meeting.title}
-          </CardTitle>
-          <div className="text-text-sub2 flex items-center gap-1 text-sm">
-            <span>작성자</span>
-            <span>・</span>
-            <span>{timeFormatter(meeting.createdAt)}</span>
-          </div>
+          <header className="flex flex-col gap-1">
+            <CardTitle
+              className="font-memomentKkukkkuk line-clamp-2"
+              status={meeting.status as 'RECRUITING'}
+            >
+              {meeting.title}
+            </CardTitle>
+            <div className="flex w-full items-center justify-between text-sm">
+              <p className="text-text-sub2 flex items-center gap-1">
+                <span>작성자</span>
+                <span>・</span>
+                <time dateTime={meeting.createdAt}>
+                  {timeFormatter(meeting.createdAt)}
+                </time>
+              </p>
+              <span id="참여자인원수" className="text-text-sub2">
+                참여자 {reviewTargetList.length + 1}명
+              </span>
+            </div>
+          </header>
         </CardContent>
         <hr className="text-gray-10" />
         <CardFooter className="flex flex-col gap-3">
@@ -138,42 +155,35 @@ export const MeetingShoppingCard = ({
             <MapPin className="size-4" />
             <p>{location}</p>
           </div>
-          <Button
-            variant={
-              meeting.status === 'RECRUITING' ||
-              meeting.status !== 'COMPLETED' ||
-              (activeMainTab === 'participate' &&
-                reviewTargetList[0]?.alreadyReviewed) ||
-              (activeMainTab === 'host' &&
-                reviewTargetList.every((step) => step.alreadyReviewed))
-                ? 'filled'
-                : 'outline'
-            }
-            label={
-              meeting.status === 'RECRUITING'
-                ? '모집중'
-                : (activeMainTab === 'participate' &&
-                      reviewTargetList[0]?.alreadyReviewed) ||
-                    (activeMainTab === 'host' &&
-                      reviewTargetList.every((step) => step.alreadyReviewed))
-                  ? '리뷰완료'
-                  : '리뷰하기'
-            }
-            className="flex !py-[9px]"
-            size="small"
-            onClick={(e) => {
-              e.stopPropagation();
-              handleReviewModalOpen();
-            }}
-            disabled={
-              meeting.status === 'RECRUITING' ||
-              meeting.status !== 'COMPLETED' ||
-              (activeMainTab === 'participate' &&
-                reviewTargetList[0]?.alreadyReviewed) ||
-              (activeMainTab === 'host' &&
-                reviewTargetList.every((step) => step.alreadyReviewed))
-            }
-          />
+          {(() => {
+            const isRecruiting = meeting.status === 'RECRUITING';
+            const reviewedCount = meeting.reviewStatus?.reviewedCount ?? 0;
+            const totalCount = meeting.reviewStatus?.totalCount ?? 0;
+            const isAllReviewed = totalCount > 0 && reviewedCount >= totalCount;
+
+            const variant = isAllReviewed ? 'outline' : ('filled' as const);
+            const label = isRecruiting
+              ? '모집중'
+              : isAllReviewed
+                ? '완료한 리뷰 보기'
+                : activeMainTab === 'participate'
+                  ? '주최자 리뷰하기'
+                  : '리뷰하기';
+
+            return (
+              <Button
+                variant={variant}
+                label={label}
+                className="flex !py-[9px]"
+                size="small"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handleReviewModalOpen();
+                }}
+                disabled={isRecruiting}
+              />
+            );
+          })()}
         </CardFooter>
       </Card>
 
