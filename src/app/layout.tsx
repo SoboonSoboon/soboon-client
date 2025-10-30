@@ -67,7 +67,6 @@ export const metadata: Metadata = {
   icons: {
     icon: [{ url: '/icons/soboon_favicon.svg', type: 'image/svg+xml' }],
   },
-  manifest: '/manifest.json',
   openGraph: {
     type: 'website',
     locale: 'ko_KR',
