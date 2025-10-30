@@ -9,7 +9,6 @@ import {
   ShoppingTagsSection,
 } from './components';
 import { SideButtonSection } from '@/components';
-import { getServerToken } from '@/utils/serverToken';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
@@ -57,20 +56,12 @@ async function getShoppingList(
   query: URLSearchParams,
 ): Promise<ShoppingMeetingsType | null> {
   try {
-    const token = await getServerToken();
-
-    if (!token) {
-      console.error('No access token found');
-      return null;
-    }
-
     const response = await fetch(
       `${process.env.NEXT_PUBLIC_SOBOON_API_URL}/v1/meetings/shopping?${query.toString()}`,
       {
         cache: 'no-store',
         headers: {
           'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`,
         },
       },
     );

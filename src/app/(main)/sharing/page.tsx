@@ -3,7 +3,6 @@ import {
   meetingSearchParamsType,
 } from '@/types/meetingsType';
 
-import { getServerToken } from '@/utils/serverToken';
 import SharingPageContent from './SharingPageContent';
 import type { Metadata } from 'next';
 
@@ -52,7 +51,6 @@ export const metadata: Metadata = {
 async function getSharingMeeting(
   query: URLSearchParams,
 ): Promise<DividingMeetingsType | null> {
-  const accessToken = await getServerToken();
   try {
     const response = await fetch(
       `${process.env.NEXT_PUBLIC_SOBOON_API_URL}/v1/meetings/dividing?${query.toString()}`,
@@ -60,7 +58,6 @@ async function getSharingMeeting(
         cache: 'no-store',
         headers: {
           'Content-Type': 'application/json',
-          Authorization: `Bearer ${accessToken}`,
         },
       },
     );
