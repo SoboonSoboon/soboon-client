@@ -145,22 +145,24 @@ export const MeetingDividingCard = ({
           </div>
           {/* 컨텐츠 영역 */}
           <div className="flex flex-col gap-3">
-            {/* 제목 */}
-            <div className="flex flex-col">
+            {/* 제목 + 메타 정보 */}
+            <header className="flex flex-col gap-1">
               <CardTitle className={cn('line-clamp-1 !text-xl')}>
                 {meeting.title}
               </CardTitle>
-              {/* 사용자 정보와 시간 */}
-              <div className="flex items-center gap-1">
-                <span className="text-text-sub2 text-sm">작성자</span>
-                <span className="text-text-sub2 w-4 text-center text-sm">
-                  •
-                </span>
-                <span className="text-text-sub2 text-sm">
-                  {timeFormatter(meeting.createdAt)}
+              <div className="flex w-full items-center justify-between text-sm">
+                <p className="text-text-sub2 flex items-center gap-1">
+                  <span>작성자</span>
+                  <span>・</span>
+                  <time dateTime={meeting.createdAt}>
+                    {timeFormatter(meeting.createdAt)}
+                  </time>
+                </p>
+                <span id="참여자인원수" className="text-text-sub2">
+                  참여자 {reviewTargetList.length + 1}명
                 </span>
               </div>
-            </div>
+            </header>
             <hr className="text-gray-10" />
             <CardFooter className="flex flex-col gap-3">
               <div className="flex items-center gap-1">

@@ -128,17 +128,26 @@ export const MeetingShoppingCard = ({
       >
         <StatusTag status={meeting.status} />
         <CardContent className="flex flex-col gap-3">
-          <CardTitle
-            className="font-memomentKkukkkuk line-clamp-2"
-            status={meeting.status as 'RECRUITING'}
-          >
-            {meeting.title}
-          </CardTitle>
-          <div className="text-text-sub2 flex items-center gap-1 text-sm">
-            <span>작성자</span>
-            <span>・</span>
-            <span>{timeFormatter(meeting.createdAt)}</span>
-          </div>
+          <header className="flex flex-col gap-1">
+            <CardTitle
+              className="font-memomentKkukkkuk line-clamp-2"
+              status={meeting.status as 'RECRUITING'}
+            >
+              {meeting.title}
+            </CardTitle>
+            <div className="flex w-full items-center justify-between text-sm">
+              <p className="text-text-sub2 flex items-center gap-1">
+                <span>작성자</span>
+                <span>・</span>
+                <time dateTime={meeting.createdAt}>
+                  {timeFormatter(meeting.createdAt)}
+                </time>
+              </p>
+              <span id="참여자인원수" className="text-text-sub2">
+                참여자 {reviewTargetList.length + 1}명
+              </span>
+            </div>
+          </header>
         </CardContent>
         <hr className="text-gray-10" />
         <CardFooter className="flex flex-col gap-3">
