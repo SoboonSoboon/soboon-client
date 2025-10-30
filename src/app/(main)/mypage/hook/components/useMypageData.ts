@@ -2,11 +2,7 @@
 
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useMemo } from 'react';
-import {
-  type MainTabType,
-  type SubTabType,
-  Storage,
-} from '../../utils/mypageType';
+import { type MainTabType, type SubTabType } from '../../utils/mypageType';
 import {
   useBookmarkMeetingList,
   useHostMeetingList,
@@ -29,18 +25,18 @@ export const useMyPageData = (hideCompletedReviews: boolean = false) => {
     data: hostData,
     isLoading: hostLoading,
     error: hostError,
-  } = useHostMeetingList(1, 20);
+  } = useHostMeetingList(0, 20, activeSubTab);
   const {
     data: participateData,
     isLoading: participateLoading,
     error: participateError,
-  } = useParticipateMeetingList(1, 20);
+  } = useParticipateMeetingList(0, 20, activeSubTab);
   const {
     data: bookmarkData,
     isLoading: bookmarkLoading,
     error: bookmarkError,
-  } = useBookmarkMeetingList(1, 20);
-  //api 호출
+  } = useBookmarkMeetingList(0, 20, activeSubTab);
+  //api 호출 (category 파라미터로 필터링됨)
 
   // 현재 탭에 따른 데이터 선택
   const currentData = useMemo(() => {
@@ -78,41 +74,54 @@ export const useMyPageData = (hideCompletedReviews: boolean = false) => {
   const filteredData = useMemo(() => {
     if (!currentData.data) return [];
 
-    let filtered = currentData.data
-      .filter((meeting) => meeting.category === activeSubTab)
-      .map((item) => ({
+    // API에서 이미 category로 필터링된 데이터가 오므로 category 필터링 불필요
+    let filtered = currentData.data.map((item) => {
+      // 북마크 API는 storage 필드를 사용하고, reviewStatus와 tags가 없음
+      // 내가 만든/참여한 모임 API는 productTypes 필드를 사용하고, reviewStatus와 tags가 있음
+      const baseItem = {
         groupId: item.groupId,
         title: item.title,
         category: item.category,
         status: item.status,
         usageStatus: item.usageStatus,
         location: item.location,
-        storage: item.storage as Storage[], // StorageType으로 캐스팅
         thumbnailUrl: item.thumbnailUrl,
         createdAt: item.createdAt,
-        reviewStatus: item.reviewStatus || {
-          reviewedCount: '0',
-          totalCount: '0',
-        },
-        bookmarked: item.bookmarked || false,
-      }));
+        bookmarked: item.bookmarked,
+      };
+
+      // 북마크 데이터인 경우 (storage 필드 사용)
+      if ('storage' in item) {
+        return {
+          ...baseItem,
+          storage: item.storage,
+          reviewStatus: { reviewedCount: 0, totalCount: 0 },
+          tags: [],
+        };
+      }
+
+      // 일반 모임 데이터인 경우 (productTypes 필드 사용)
+      return {
+        ...baseItem,
+        storage: item.productTypes,
+        reviewStatus: item.reviewStatus,
+        tags: item.tags,
+      };
+    });
 
     // 리뷰 완료 숨기기 필터 적용
     if (hideCompletedReviews) {
       filtered = filtered.filter((item) => {
         // 리뷰 완료된 항목들을 숨김
         // reviewStatus가 있고 모든 리뷰가 완료된 경우 숨김
-        if (item.reviewStatus) {
-          const reviewedCount = parseInt(item.reviewStatus.reviewedCount);
-          const totalCount = parseInt(item.reviewStatus.totalCount);
-          return !(totalCount > 0 && reviewedCount >= totalCount);
-        }
-        return true;
+        const reviewedCount = item.reviewStatus.reviewedCount;
+        const totalCount = item.reviewStatus.totalCount;
+        return !(totalCount > 0 && reviewedCount >= totalCount);
       });
     }
 
     return filtered;
-  }, [currentData.data, activeSubTab, hideCompletedReviews]);
+  }, [currentData.data, hideCompletedReviews]);
   const handleMainTabChange = (tab: MainTabType) => {
     const params = new URLSearchParams(searchParams.toString());
     params.set('main', tab);
