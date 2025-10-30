@@ -3,7 +3,10 @@
 import { MainTabSection } from './MainTabSection';
 import { SubTabSection } from './SubTabSection';
 import { ReviewToggleButton } from './ReviewToggleButton';
-import { type MainTabType, type SubTabType } from '../../utils/mypageType';
+import {
+  type MainTabType,
+  type SubTabType,
+} from '@/app/(main)/mypage/utils/mypageType';
 
 interface MypageHeaderProps {
   activeMainTab: MainTabType;

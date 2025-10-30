@@ -30,7 +30,7 @@ export interface MeetingItem {
   status: Status;
   usageStatus: UsageStatus;
   location: LocationType;
-  productTypes: StorageType[];
+  storage: StorageType[];
   thumbnailUrl: string;
   createdAt: string;
   reviewStatus: { reviewedCount: number; totalCount: number };

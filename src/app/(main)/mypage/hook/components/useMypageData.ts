@@ -2,7 +2,10 @@
 
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useMemo } from 'react';
-import { type MainTabType, type SubTabType } from '../../utils/mypageType';
+import {
+  type MainTabType,
+  type SubTabType,
+} from '@/app/(main)/mypage/utils/mypageType';
 import {
   useBookmarkMeetingList,
   useHostMeetingList,
@@ -75,9 +78,12 @@ export const useMyPageData = (hideCompletedReviews: boolean = false) => {
     if (!currentData.data) return [];
 
     // API에서 이미 category로 필터링된 데이터가 오므로 category 필터링 불필요
-    let filtered = currentData.data.map((item) => {
-      // 북마크 API는 storage 필드를 사용하고, reviewStatus와 tags가 없음
-      // 내가 만든/참여한 모임 API는 productTypes 필드를 사용하고, reviewStatus와 tags가 있음
+    let filtered = (
+      currentData.data as Array<
+        | import('@/app/(main)/mypage/utils/mypageType').MeetingItem
+        | import('@/app/(main)/mypage/utils/mypageType').BookMarkItem
+      >
+    ).map((item) => {
       const baseItem = {
         groupId: item.groupId,
         title: item.title,
@@ -90,22 +96,22 @@ export const useMyPageData = (hideCompletedReviews: boolean = false) => {
         bookmarked: item.bookmarked,
       };
 
-      // 북마크 데이터인 경우 (storage 필드 사용)
-      if ('storage' in item) {
+      // 일반 모임 데이터인 경우 (reviewStatus가 존재)
+      if ('reviewStatus' in item) {
         return {
           ...baseItem,
           storage: item.storage,
-          reviewStatus: { reviewedCount: 0, totalCount: 0 },
-          tags: [],
+          reviewStatus: item.reviewStatus,
+          tags: item.tags,
         };
       }
 
-      // 일반 모임 데이터인 경우 (productTypes 필드 사용)
+      // 북마크 데이터인 경우
       return {
         ...baseItem,
-        storage: item.productTypes,
-        reviewStatus: item.reviewStatus,
-        tags: item.tags,
+        storage: item.storage,
+        reviewStatus: { reviewedCount: 0, totalCount: 0 },
+        tags: [],
       };
     });
 
