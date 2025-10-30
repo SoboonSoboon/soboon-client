@@ -20,7 +20,6 @@ export default function DevKakaoCallbackHandler() {
         );
         const data = response.data;
         localStorage.setItem('accessToken', data.accessToken); //todo: 전역상태관리로 관리하기로 변경
-        console.log(data);
         const userId = data.userId ?? NaN;
 
         // 쿠키에 토큰과 userId 저장

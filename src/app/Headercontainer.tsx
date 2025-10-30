@@ -9,7 +9,6 @@ export default function HeaderContainer({
 }) {
   const pathname = usePathname();
   const segments = pathname.split('/');
-  console.log(segments);
 
   if (segments[2] === 'addinfo') {
     return null;
