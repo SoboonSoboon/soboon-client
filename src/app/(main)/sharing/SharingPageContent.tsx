@@ -28,8 +28,9 @@ export default function SharingPageContent({
       <IntroSection
         src="/images/banner_dividing.png"
         alt="banner-sharing"
-        width={1200}
-        height={250}
+        className="overflow-hidden rounded-lg"
+        width={2400}
+        height={500}
       />
       <div className="flex w-full items-center justify-between">
         <div className="md:hidden">
