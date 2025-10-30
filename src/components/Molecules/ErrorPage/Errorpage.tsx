@@ -7,7 +7,7 @@ export const ErrorPage = () => {
   return (
     <div className="flex flex-col items-center justify-center gap-5 py-20">
       <Image
-        src="/images/error_image.svg"
+        src="/images/error_400_image.svg"
         alt="에러 이미지"
         width={200}
         height={200}

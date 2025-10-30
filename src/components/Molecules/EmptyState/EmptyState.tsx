@@ -175,7 +175,7 @@ export const EmptyState = (props: EmptyStateProps) => {
     >
       <div className="text-center">
         <Image
-          src="/images/empty_image.png"
+          src="/images/empty_image.svg"
           alt="빈 상태 이미지"
           width={200}
           height={200}

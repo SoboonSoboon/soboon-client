@@ -1,17 +1,27 @@
 'use client';
 
 import { Suspense, useState, useEffect, useRef } from 'react';
+import { isAxiosError } from 'axios';
+import { useSearchParams } from 'next/navigation';
 import { MypageHeader, CardList } from '@/app/(main)/mypage/components';
 
-import { EmptyState, ErrorPage } from '@/components/Molecules';
+import { EmptyState, ErrorPage, ServerErrorPage } from '@/components/Molecules';
 
 import { useMyPageData } from './hook/components/useMypageData';
 
 function MyPageContent() {
+  const searchParams = useSearchParams();
   // 리뷰 완료 숨기기 상태
   const [hideCompletedReviews, setHideCompletedReviews] = useState(false);
   const observerTarget = useRef<HTMLDivElement>(null);
   const fetchLockRef = useRef(false);
+
+  // TEMP: 0이면 정상, 400/500을 넣으면 해당 에러 UI 강제 표시
+  const g = globalThis as unknown as { __FORCE_ERROR__?: 0 | 400 | 500 };
+  const qp = searchParams.get('forceError');
+  const qpNum = qp ? Number(qp) : 0;
+  const qpForce: 0 | 400 | 500 = qpNum === 400 ? 400 : qpNum === 500 ? 500 : 0;
+  const FORCE_ERROR: 0 | 400 | 500 = qpForce || (g.__FORCE_ERROR__ ?? 0);
 
   const {
     activeMainTab,
@@ -86,8 +96,18 @@ function MyPageContent() {
                 <p className="text-gray-60">로딩 중...</p>
               </div>
             </div>
-          ) : currentData.error ? (
+          ) : FORCE_ERROR === 500 ? (
+            <ServerErrorPage />
+          ) : FORCE_ERROR === 400 ? (
             <ErrorPage />
+          ) : currentData.error ? (
+            (isAxiosError(currentData.error)
+              ? (currentData.error.response?.status ?? 0)
+              : 0) >= 500 ? (
+              <ServerErrorPage />
+            ) : (
+              <ErrorPage />
+            )
           ) : filteredData.length === 0 ? (
             <EmptyState
               type="mypage"
