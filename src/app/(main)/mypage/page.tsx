@@ -26,35 +26,23 @@ function MyPageContent() {
     setHideCompletedReviews(checked);
   };
 
-  // 무한스크롤 감지 + 콘솔 로깅
+  const hasNextPage = currentData.hasNextPage;
+  const isFetchingNextPage = currentData.isFetchingNextPage;
+  const pagesLength = currentData.data?.pages?.length ?? 0;
+
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
-        console.log('[마이페이지/무한스크롤] Observer 트리거:', {
-          isIntersecting: entries[0].isIntersecting,
-          hasNextPage: currentData.hasNextPage,
-          isFetchingNextPage: currentData.isFetchingNextPage,
-          fetchLock: fetchLockRef.current,
-        });
-
         if (
           entries[0].isIntersecting &&
-          currentData.hasNextPage &&
-          !currentData.isFetchingNextPage &&
+          hasNextPage &&
+          !isFetchingNextPage &&
           !fetchLockRef.current
         ) {
-          const loadedPages = currentData.data?.pages?.length ?? 0;
-          console.log('[마이페이지/무한스크롤] 다음 페이지 요청:', loadedPages);
           fetchLockRef.current = true;
           currentData.fetchNextPage().finally(() => {
             fetchLockRef.current = false;
           });
-        } else if (
-          entries[0].isIntersecting &&
-          !currentData.hasNextPage &&
-          !currentData.isFetchingNextPage
-        ) {
-          console.log('[마이페이지/무한스크롤] 모든 데이터 로드 완료');
         }
       },
       { threshold: 0.1 },
@@ -70,26 +58,13 @@ function MyPageContent() {
         observer.unobserve(currentTarget);
       }
     };
-  }, [currentData]);
+  }, [hasNextPage, isFetchingNextPage, pagesLength, currentData]);
 
-  // 페이지 로드 완료 시점 로깅
+  // 페이지 로드 완료 시점 부수효과 (콘솔 제거, 의존성은 유지)
   useEffect(() => {
     const pages = currentData.data?.pages;
     if (!pages || pages.length === 0) return;
-    const last = pages[pages.length - 1];
-    const sliceInfo = last.data.sliceInfo;
-    console.log(
-      '[마이페이지/무한스크롤] 페이지 로드 완료:',
-      `현재까지 ${pages.length}페이지, 마지막 currentPage=${sliceInfo.currentPage}, hasNext=${sliceInfo.hasNext}`,
-    );
-    console.log(
-      '[마이페이지/무한스크롤] React Query hasNextPage:',
-      currentData.hasNextPage,
-    );
-    if (!sliceInfo.hasNext) {
-      console.log('[마이페이지/무한스크롤] 더 이상 로드할 페이지가 없습니다.');
-    }
-  }, [currentData.data?.pages?.length, currentData.hasNextPage]);
+  }, [pagesLength, hasNextPage, currentData]);
 
   return (
     <div className="w-full">

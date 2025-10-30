@@ -61,3 +61,21 @@ export interface BookMarkItem {
 export type Category = 'DIVIDING' | 'SHOPPING';
 export type Status = 'RECRUITING' | 'COMPLETED' | 'CLOSED';
 export type UsageStatus = 'UPCOMING' | 'IN_USE' | 'DONE';
+
+// React Query InfiniteData 구조
+export interface InfiniteData<T> {
+  pages: T[];
+  pageParams: number[];
+}
+
+export interface CurrentTabData {
+  data:
+    | InfiniteData<MypageMeetingApiResponse>
+    | InfiniteData<BookMarkListApiResPonse>
+    | undefined;
+  loading: boolean;
+  error: Error | null;
+  fetchNextPage: () => Promise<unknown>;
+  hasNextPage: boolean;
+  isFetchingNextPage: boolean;
+}
