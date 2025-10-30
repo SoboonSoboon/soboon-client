@@ -28,14 +28,28 @@ const DIVIDING_PRODUCT_TYPE_OPTIONS = [
   { value: 'ETC', label: '기타' },
 ];
 
+const FORM_VALIDATION = {
+  MIN_CAPACITY: 2,
+  MAX_CAPACITY: 5,
+  MIN_LOCATION_DETAIL_LENGTH: 3,
+  MAX_LOCATION_DETAIL_LENGTH: 50,
+  MAX_IMAGE_COUNT: 10,
+  MIN_DESCRIPTION_LENGTH: 10,
+  MAX_DESCRIPTION_LENGTH: 500,
+} as const;
+
 const dividingFormSchema = z.object({
   productType: z.string().min(1, { message: '제품 카테고리를 선택해주세요.' }),
   itemName: z.string().min(1, { message: '품목 이름을 입력해주세요.' }),
   capacity: z
     .number()
     .min(1, { message: '모집 인원을 선택해주세요.' })
-    .min(2, { message: '모집 인원은 2명 이상이어야 합니다.' })
-    .max(5, { message: '모집 인원은 5명 이하로 입력해주세요.' }),
+    .min(FORM_VALIDATION.MIN_CAPACITY, {
+      message: `모집 인원은 ${FORM_VALIDATION.MIN_CAPACITY}명 이상이어야 합니다.`,
+    })
+    .max(FORM_VALIDATION.MAX_CAPACITY, {
+      message: `모집 인원은 ${FORM_VALIDATION.MAX_CAPACITY}명 이하로 입력해주세요.`,
+    }),
   location: z.object({
     province: z.string().min(1, { message: '주소를 선택해주세요.' }),
     city: z.string().min(1, { message: '주소를 선택해주세요.' }),
@@ -43,16 +57,24 @@ const dividingFormSchema = z.object({
     detail: z
       .string()
       .min(1, { message: '상세 주소를 입력해주세요.' })
-      .min(3, { message: '상세 주소는 3자 이상 입력해주세요.' })
-      .max(50, { message: '상세 주소는 50자 이하로 입력해주세요.' }),
+      .min(FORM_VALIDATION.MIN_LOCATION_DETAIL_LENGTH, {
+        message: `상세 주소는 ${FORM_VALIDATION.MIN_LOCATION_DETAIL_LENGTH}자 이상 입력해주세요.`,
+      })
+      .max(FORM_VALIDATION.MAX_LOCATION_DETAIL_LENGTH, {
+        message: `상세 주소는 ${FORM_VALIDATION.MAX_LOCATION_DETAIL_LENGTH}자 이하로 입력해주세요.`,
+      }),
   }),
-  imageUrls: z
-    .array(z.string())
-    .max(10, { message: '이미지는 최대 10장까지만 추가할 수 있습니다.' }),
+  imageUrls: z.array(z.string()).max(FORM_VALIDATION.MAX_IMAGE_COUNT, {
+    message: `이미지는 최대 ${FORM_VALIDATION.MAX_IMAGE_COUNT}장까지만 추가할 수 있습니다.`,
+  }),
   description: z
     .string()
-    .min(10, { message: '상세 설명은 10자 이상 입력해주세요.' })
-    .max(500, { message: '상세 설명은 500자 이하로 입력해주세요.' }),
+    .min(FORM_VALIDATION.MIN_DESCRIPTION_LENGTH, {
+      message: `상세 설명은 ${FORM_VALIDATION.MIN_DESCRIPTION_LENGTH}자 이상 입력해주세요.`,
+    })
+    .max(FORM_VALIDATION.MAX_DESCRIPTION_LENGTH, {
+      message: `상세 설명은 ${FORM_VALIDATION.MAX_DESCRIPTION_LENGTH}자 이하로 입력해주세요.`,
+    }),
 });
 
 type DividingFormData = z.infer<typeof dividingFormSchema>;
@@ -320,7 +342,7 @@ export function UpdateDividingForm({
             imageUrls={watch('imageUrls')}
             onChange={(imageUrls: string[]) => setValue('imageUrls', imageUrls)}
             validation={{
-              maxFiles: 10,
+              maxFiles: FORM_VALIDATION.MAX_IMAGE_COUNT,
               maxFileSize: 10 * 1024 * 1024,
               allowedTypes: [
                 'image/jpeg',
