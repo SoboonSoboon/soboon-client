@@ -28,7 +28,7 @@ export const metadata: Metadata = {
     type: 'website',
     images: [
       {
-        url: '/images/og-home.png',
+        url: '/images/intro_people1.png',
         width: 1200,
         height: 630,
         alt: '소분소분 메인 페이지',
@@ -40,7 +40,7 @@ export const metadata: Metadata = {
     title: '소분소분 - 함께 사서, 알뜰하게 나누는 소비',
     description:
       '대용량 제품을 여러 사람이 함께 구매하여 필요한 만큼만 소분해요',
-    images: ['/images/og-home.png'],
+    images: ['/images/intro_people1.png'],
   },
   alternates: {
     canonical: '/',

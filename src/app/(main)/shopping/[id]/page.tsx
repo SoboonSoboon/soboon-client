@@ -20,15 +20,12 @@ export async function generateMetadata({
   const id = (await params).id;
 
   try {
-    const cookieStore = await cookies();
-    const accessToken = cookieStore.get('accessToken')?.value || '';
     const response = await fetch(
       `${process.env.NEXT_PUBLIC_SOBOON_API_URL}/v1/meetings/${id}`,
       {
         cache: 'no-store',
         headers: {
           'Content-Type': 'application/json',
-          Authorization: `Bearer ${accessToken}`,
         },
       },
     );
@@ -40,16 +37,13 @@ export async function generateMetadata({
     const responseData = await response.json();
     const meetingDetail: MeetingDetailType = responseData.data;
 
-    const title = `${meetingDetail.title} - 같이 사요`;
+    const title = `${meetingDetail.title} - 같이 장보기`;
     const description =
       meetingDetail.description.slice(0, 160) ||
       '대용량 제품을 함께 구매하는 공동구매 모임';
     const meetingUrl = `/shopping/${id}`;
 
-    const ogImage =
-      meetingDetail.images && meetingDetail.images.length > 0
-        ? meetingDetail.images[0]
-        : '/images/intro_people1.png';
+    const ogImage = '/images/intro_people1.png';
 
     return {
       title,
@@ -57,12 +51,12 @@ export async function generateMetadata({
       keywords: [
         '공동구매',
         meetingDetail.title,
-        meetingDetail.location.province,
-        meetingDetail.location.city,
-        '같이 사요',
+        meetingDetail.location_dep0,
+        meetingDetail.location_dep1,
+        meetingDetail.location_dep2,
+        '같이 장보기',
         '소분소분',
         '대용량 구매',
-        '같이 장보기',
       ],
       openGraph: {
         title,
@@ -70,7 +64,7 @@ export async function generateMetadata({
         url: meetingUrl,
         type: 'article',
         publishedTime: meetingDetail.createdAt,
-        authors: [meetingDetail.user.userName || ''],
+        authors: [meetingDetail.user.userName],
         images: [
           { url: ogImage, width: 1200, height: 630, alt: meetingDetail.title },
         ],
@@ -79,9 +73,7 @@ export async function generateMetadata({
         card: 'summary_large_image',
         title,
         description,
-        images: meetingDetail.images?.[0]
-          ? [meetingDetail.images[0]]
-          : ['/images/intro_people1.png'],
+        images: [ogImage],
       },
       alternates: {
         canonical: meetingUrl,
@@ -90,8 +82,8 @@ export async function generateMetadata({
   } catch (error) {
     console.error('Failed to generate metadata', error);
     return {
-      title: '같이 장봐요 - 소분소분',
-      description: '대용량 제품을 함께 구매하는 공동구매 모임',
+      title: '같이 장보기 - 소분소분',
+      description: '대용량 제품을 함께 구매할 사람을 찾아보세요',
     };
   }
 }

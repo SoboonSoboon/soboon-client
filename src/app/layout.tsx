@@ -66,13 +66,6 @@ export const metadata: Metadata = {
   },
   icons: {
     icon: [{ url: '/icons/soboon_favicon.svg', type: 'image/svg+xml' }],
-    apple: [
-      {
-        url: '/icons/apple-touch-icon.png',
-        sizes: '180x180',
-        type: 'image/png',
-      },
-    ],
   },
   manifest: '/manifest.json',
   openGraph: {
@@ -85,7 +78,7 @@ export const metadata: Metadata = {
       '대용량 제품을 여러 사람이 함께 구매하여 필요한 만큼만 나누어 사용하는 플랫폼. 비용 절약과 낭비 감소를 실현하세요.',
     images: [
       {
-        url: '/images/og-image.png',
+        url: '/images/intro_people1.png',
         width: 1200,
         height: 630,
         alt: '소분소분 - 함께 사서, 알뜰하게 나누는 소비',
@@ -97,7 +90,7 @@ export const metadata: Metadata = {
     title: '소분소분 - 함께 사서, 알뜰하게 나누는 소비',
     description:
       '대용량 제품을 여러 사람이 함께 구매하여 필요한 만큼만 나누어 사용하는 플랫폼',
-    images: ['/images/og-image.png'],
+    images: ['/images/intro_people1.png'],
     creator: '@soboon',
   },
 
