@@ -21,15 +21,12 @@ export async function generateMetadata({
   const meetingId = (await params).id;
 
   try {
-    const cookieStore = await cookies();
-    const accessToken = cookieStore.get('accessToken')?.value || '';
     const response = await fetch(
       `${process.env.NEXT_PUBLIC_SOBOON_API_URL}/v1/meetings/${meetingId}`,
       {
         cache: 'no-store',
         headers: {
           'Content-Type': 'application/json',
-          Authorization: `Bearer ${accessToken}`,
         },
       },
     );
@@ -41,10 +38,10 @@ export async function generateMetadata({
     const responseData = await response.json();
     const meetingDetail: MeetingDetailType = responseData.data;
 
-    const title = `${meetingDetail.title} - 나눠요`;
+    const title = `${meetingDetail.title} - 같이 소분하기`;
     const description =
       meetingDetail.description.slice(0, 160) ||
-      '대용량 제품을 함께 소분하는 나눔 모임';
+      '구매한 대용량 제품을 함께 나눌 사람을 찾아보세요';
     const meetingUrl = `/sharing/${meetingId}`;
 
     const ogImage =
@@ -57,13 +54,16 @@ export async function generateMetadata({
       description,
       keywords: [
         '소분',
-        '나눔',
+        '같이 소분하기',
         meetingDetail.title,
-        meetingDetail.location.province,
-        meetingDetail.location.city,
-        '나눠요',
+        meetingDetail.location_dep0,
+        meetingDetail.location_dep1,
+        meetingDetail.location_dep2,
+        '같이 소분하기',
         '소분소분',
         '대용량 소분',
+        '1인 가구 소분',
+        '알뜰 소비',
       ],
       openGraph: {
         title,
@@ -71,7 +71,7 @@ export async function generateMetadata({
         url: meetingUrl,
         type: 'article',
         publishedTime: meetingDetail.createdAt,
-        authors: [meetingDetail.user.userName || ''],
+        authors: [meetingDetail.user.userName],
         images: [
           {
             url: ogImage,
@@ -94,8 +94,8 @@ export async function generateMetadata({
   } catch (error) {
     console.error('Failed to generate metadata', error);
     return {
-      title: '나눠요 - 소분소분',
-      description: '대용량 제품을 함께 소분하는 나눔 모임',
+      title: '같이 소분하기 - 소분소분',
+      description: '구매한 대용량 제품을 함께 나눌 사람을 찾아보세요',
     };
   }
 }

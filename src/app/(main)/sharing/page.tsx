@@ -3,16 +3,15 @@ import {
   meetingSearchParamsType,
 } from '@/types/meetingsType';
 
-import { getServerToken } from '@/utils/serverToken';
 import SharingPageContent from './SharingPageContent';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: '같이 소분해요 - 소분소분',
+  title: '같이 소분하기 - 소분소분',
   description:
     '구매한 대용량 제품을 함께 나눌 사람을 찾아보세요. 지역별, 상품별로 소분 모임을 탐색하고 참여하여 낭비 없이 알뜰하게 사용하세요. 필요한 만큼만 소분하는 스마트한 소비.',
   keywords: [
-    '나눠요',
+    '같이 소분하기',
     '소분',
     '제품 나눔',
     '지역 소분',
@@ -24,7 +23,7 @@ export const metadata: Metadata = {
     '알뜰 소비',
   ],
   openGraph: {
-    title: '나눠요 - 소분소분',
+    title: '같이 소분하기 - 소분소분',
     description:
       '구매한 대용량 제품을 함께 나눌 사람을 찾아보세요. 지역별, 상품별 소분 모임 탐색',
     url: '/sharing',
@@ -34,13 +33,13 @@ export const metadata: Metadata = {
         url: '/images/intro_people1.png',
         width: 1200,
         height: 630,
-        alt: '소분소분 나눠요',
+        alt: '같이 소분하기 - 소분소분 ',
       },
     ],
   },
   twitter: {
     card: 'summary_large_image',
-    title: '나눠요 - 소분소분',
+    title: '같이 소분하기 - 소분소분',
     description: '구매한 대용량 제품을 함께 나눌 사람을 찾아보세요',
     images: ['/images/intro_people1.png'],
   },
@@ -52,7 +51,6 @@ export const metadata: Metadata = {
 async function getSharingMeeting(
   query: URLSearchParams,
 ): Promise<DividingMeetingsType | null> {
-  const accessToken = await getServerToken();
   try {
     const response = await fetch(
       `${process.env.NEXT_PUBLIC_SOBOON_API_URL}/v1/meetings/dividing?${query.toString()}`,
@@ -60,7 +58,6 @@ async function getSharingMeeting(
         cache: 'no-store',
         headers: {
           'Content-Type': 'application/json',
-          Authorization: `Bearer ${accessToken}`,
         },
       },
     );

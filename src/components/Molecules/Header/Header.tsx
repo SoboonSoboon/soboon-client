@@ -16,7 +16,7 @@ import { useState, useEffect } from 'react';
 import { HEADER_MENU } from '@/constants';
 import Image from 'next/image';
 import { cn } from '@/utils/cn';
-import { deleteTokenInCookie } from '@/action/authAction';
+import { logoutAction } from '@/action/logoutAction';
 
 export const Header = () => {
   const pathname = usePathname() || '/';
@@ -27,11 +27,11 @@ export const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
   const logout = useAuthStore((state) => state.logout);
 
-  const handleLogout = () => {
+  const handleLogout = async () => {
     logout();
     console.log('로그아웃 되었습니다.');
     localStorage.removeItem('accessToken');
-    deleteTokenInCookie();
+    await logoutAction();
     // 페이지 새로고침으로 쿠키 상태 확인
     setTimeout(() => {
       window.location.href = '/';
@@ -52,43 +52,41 @@ export const Header = () => {
           </Link>
 
           <nav className="flex items-center gap-3 text-base font-normal sm:gap-4 md:gap-5 lg:gap-6">
-            {isLoggedIn && (
-              <>
-                {Object.entries(HEADER_MENU).map(([key, headerMenu]) => {
-                  const isActive = pathname.startsWith(headerMenu.PATH);
-                  const iconType = isActive
-                    ? headerMenu.ICON.GREEN
-                    : headerMenu.ICON.DEFAULT;
+            <>
+              {Object.entries(HEADER_MENU).map(([key, headerMenu]) => {
+                const isActive = pathname.startsWith(headerMenu.PATH);
+                const iconType = isActive
+                  ? headerMenu.ICON.GREEN
+                  : headerMenu.ICON.DEFAULT;
 
-                  return (
-                    <Link
-                      key={key}
-                      href={headerMenu.PATH}
-                      className={cn(
-                        'group hover:text-primary flex items-center gap-1 whitespace-nowrap',
-                        isActive && 'text-primary',
-                      )}
-                    >
-                      <div className="relative hidden sm:flex sm:items-center">
-                        <Icon
-                          type={iconType as IconType}
-                          size={headerMenu.SIZE}
-                          className="transition-opacity duration-150 ease-in-out group-hover:opacity-0"
-                        />
-                        <Icon
-                          type={headerMenu.ICON.GREEN as IconType}
-                          size={headerMenu.SIZE}
-                          className="absolute top-0 left-0 opacity-0 transition-opacity duration-150 ease-in-out group-hover:opacity-100"
-                        />
-                      </div>
-                      <span className="font-memomentKkukkkuk leading-none">
-                        {headerMenu.LABEL}
-                      </span>
-                    </Link>
-                  );
-                })}
-              </>
-            )}
+                return (
+                  <Link
+                    key={key}
+                    href={headerMenu.PATH}
+                    className={cn(
+                      'group hover:text-primary flex items-center gap-1 whitespace-nowrap',
+                      isActive && 'text-primary',
+                    )}
+                  >
+                    <div className="relative hidden sm:flex sm:items-center">
+                      <Icon
+                        type={iconType as IconType}
+                        size={headerMenu.SIZE}
+                        className="transition-opacity duration-150 ease-in-out group-hover:opacity-0"
+                      />
+                      <Icon
+                        type={headerMenu.ICON.GREEN as IconType}
+                        size={headerMenu.SIZE}
+                        className="absolute top-0 left-0 opacity-0 transition-opacity duration-150 ease-in-out group-hover:opacity-100"
+                      />
+                    </div>
+                    <span className="font-memomentKkukkkuk leading-none">
+                      {headerMenu.LABEL}
+                    </span>
+                  </Link>
+                );
+              })}
+            </>
           </nav>
         </div>
 
