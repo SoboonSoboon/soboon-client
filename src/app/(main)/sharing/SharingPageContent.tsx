@@ -27,16 +27,17 @@ export default function SharingPageContent({
     <main className="flex w-full flex-col gap-4 md:gap-8">
       <IntroSection
         src="/images/banner_dividing.png"
-        alt="banner-sharing"
-        width={1200}
-        height={250}
+        alt="소분하기 배너"
+        className="overflow-hidden rounded-lg"
+        width={2400}
+        height={500}
       />
       <div className="flex w-full items-center justify-between">
         <div className="md:hidden">
           <Funnel
             size={20}
             onClick={() => setIsFilterOpen(true)}
-            className="border-gray-10 text-gray-95 mr-2.5 flex h-11 w-[47px] cursor-pointer items-center justify-center rounded-xl border bg-white px-3 font-medium"
+            className="border-gray-10 text-gray-95 mr-2.5 flex h-11 w-[47px] cursor-pointer items-center justify-center rounded-lg border bg-white px-3 font-medium"
           />
           <FilterBottomSheet
             isOpen={isFilterOpen}

@@ -14,7 +14,7 @@ const STATUS_LABEL: Record<StatusTagProps['status'], string> = {
 
 // todo: 리뷰 완료, 리뷰 대기 쓰고 있는지 확인
 const STATUS_STYLE: Record<StatusTagProps['status'], string> = {
-  RECRUITING: 'bg-Green-1 border-orange text-orange',
+  RECRUITING: 'bg-white border-orange text-orange',
   COMPLETED: 'bg-[var(--GrayScale-Gray5)] border-text-inactive text-text-sub2',
   CLOSED: 'bg-[var(--GrayScale-Gray5)] border-text-inactive text-text-sub2',
   ReviewOpen: 'bg-[var(--GreenScale-Green1)] border-primary text-primary',
