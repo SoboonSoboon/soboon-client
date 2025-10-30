@@ -54,9 +54,11 @@ describe('Textarea', () => {
 
     const textarea = screen.getByRole('textbox');
     expect(textarea).toHaveClass('w-full');
-    expect(textarea).toHaveClass('py-2.5');
+    expect(textarea).toHaveClass('py-2');
     expect(textarea).toHaveClass('px-4');
     expect(textarea).toHaveClass('rounded-xl');
+    expect(textarea).toHaveClass('bg-gray-5');
+    expect(textarea).toHaveClass('border-1');
   });
 
   test('커스텀 className이 추가로 적용되어야 한다', () => {
