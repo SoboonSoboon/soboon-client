@@ -11,14 +11,13 @@ export const getHostMeetingList = async (
   category?: Category,
 ): Promise<MypageMeetingApiResponse> => {
   try {
-    const pageable = JSON.stringify({ page, size });
     const response = await axiosInstance.get('/v1/me/meetings/hosted', {
       params: {
+        page,
+        size,
         ...(category ? { category } : {}),
-        pageable,
       },
     });
-
     return response.data;
   } catch (error) {
     console.error(' 내가 만든 모임 데이터를 가져오는데 실패했습니다:', error);
@@ -32,11 +31,11 @@ export const getParticipateMeetingList = async (
   category?: Category,
 ): Promise<MypageMeetingApiResponse> => {
   try {
-    const pageable = JSON.stringify({ page, size });
     const response = await axiosInstance.get('/v1/me/meetings/participated', {
       params: {
+        page,
+        size,
         ...(category ? { category } : {}),
-        pageable,
       },
     });
 
@@ -48,7 +47,7 @@ export const getParticipateMeetingList = async (
 };
 
 export const getBookmarkMeetingList = async (
-  page: number = 1,
+  page: number = 0,
   size: number = 20,
   category?: Category,
 ): Promise<BookMarkListApiResPonse> => {
