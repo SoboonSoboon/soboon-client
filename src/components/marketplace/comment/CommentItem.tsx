@@ -5,7 +5,7 @@ import { timeFormatter } from '@/utils';
 import { CommentType, ReplyType } from '@/types/commentType';
 import { Button, ProfileImg, ProfilePopover, TextInput } from '@/components';
 import { CommentActionMenu } from '@/components/marketplace/ActionMenu/CommentActionMenu';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useParams } from 'next/navigation';
 import { updateCommentApi } from '@/apis/comment/updateComment';
 import { useToast } from '@/components/Atoms';
@@ -26,9 +26,15 @@ export const CommentItem = ({
   const meetingId = useParams<{ id: string }>().id;
   const { success, error } = useToast();
   const [currentComment, setCurrentComment] = useState(comment.content);
+  const [isSecret, setIsSecret] = useState(comment.secret);
   const queryClient = useQueryClient();
   const searchParams = useSearchParams();
   const sortType = searchParams.get('sortType');
+
+  useEffect(() => {
+    setCurrentComment(comment.content);
+    setIsSecret(comment.secret);
+  }, [comment.content, comment.secret]);
 
   const handleEditClick = () => {
     setIsEditing((prev) => !prev);
@@ -42,6 +48,8 @@ export const CommentItem = ({
   const handleCancelClick = () => {
     setIsEditing(false);
     setIsOpen(false);
+    setCurrentComment(comment.content);
+    setIsSecret(comment.secret);
   };
 
   const userId = useAuthStore((state) => state.userId);
@@ -81,19 +89,16 @@ export const CommentItem = ({
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const formData = new FormData(e.target as HTMLFormElement);
     const commentId =
       (comment as CommentType)?.commentId?.toString() ||
       (comment as ReplyType)?.replyId?.toString() ||
       '';
-    const content = formData.get('comment') as string;
-    const secret = Boolean(formData.get('secret'));
 
     updateComment({
       meetingId,
       commentId,
-      content,
-      secret,
+      content: currentComment,
+      secret: isSecret,
     });
   };
   return (
@@ -153,7 +158,12 @@ export const CommentItem = ({
                   name="comment"
                 />
                 <div className="absolute top-1/2 right-3 flex translate-y-[-50%] items-center gap-1 select-none">
-                  <input type="checkbox" id="editCommentSecret" name="secret" />
+                  <input
+                    type="checkbox"
+                    id="editCommentSecret"
+                    checked={isSecret}
+                    onChange={(e) => setIsSecret(e.target.checked)}
+                  />
                   <label
                     htmlFor="editCommentSecret"
                     className="text-gray-60 cursor-pointer text-sm"
