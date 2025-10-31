@@ -14,7 +14,7 @@ export const ServerErrorPage = () => {
         className="mx-auto"
       />
 
-      <p className="leading-tight font-semibold">
+      <p>
         서버가 잠시 멈췄습니다.
         <br />
         기술팀이 이미 달려가고 있어요!
