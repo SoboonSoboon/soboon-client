@@ -1,8 +1,14 @@
 import { Button, ProfileImg, StatusTag } from '@/components';
 import { ChevronDown, ChevronUp } from 'lucide-react';
 import { useState } from 'react';
+import {
+  ReviewerListData,
+  getAvailableKeywords,
+  getKeywordLabel,
+  getKeywordClassName,
+  getButtonClassName,
+} from '../utils/review';
 import { ReviewKeyword } from '@/types/common';
-import { ReviewerListData } from '../utils/review';
 
 interface ReviewModalContentProps {
   reviewTargetList: ReviewerListData[];
@@ -18,7 +24,6 @@ export const ReviewModalContent = ({
   handleReviewSubmit,
   activeMainTab,
 }: ReviewModalContentProps) => {
-  // 호스트일 때만 드롭다운 토글, 참여자/북마크는 항상 열림
   const [expandedIndex, setExpandedIndex] = useState<number | null>(null);
   const [selectedKeywords, setSelectedKeywords] = useState<
     Record<number, ReviewKeyword[]>
@@ -27,24 +32,9 @@ export const ReviewModalContent = ({
     Record<number, boolean>
   >({});
 
-  const availableKeywords: ReviewKeyword[] = [
-    'TIME_PROMISE',
-    'KIND_AND_CARING',
-    'FAST_RESPONSE',
-    activeMainTab === 'host' ? 'SAME_AS_PHOTO' : 'GOOD_DISTRIBUTION',
-  ];
-
-  const keywordLabels = {
-    TIME_PROMISE: '시간 약속을 잘 지켜요',
-    KIND_AND_CARING: '친절하고 배려가 넘쳐요',
-    FAST_RESPONSE: '응답이 빨라요',
-    SAME_AS_PHOTO: '소분이 사진, 설명과 동일해요',
-    GOOD_DISTRIBUTION: '적절하게 잘 분배했어요',
-  };
-
   const handleItemClick = (index: number) => {
     if (activeMainTab !== 'host') return;
-    setExpandedIndex(expandedIndex === index ? null : index);
+    setExpandedIndex((prev) => (prev === index ? null : index));
   };
 
   const handleKeywordToggle = (index: number, keyword: ReviewKeyword) => {
@@ -56,19 +46,27 @@ export const ReviewModalContent = ({
     }));
   };
 
-  function handleSubmit(index: number, attendeeId: number): void {
+  const handleSubmit = (index: number, attendeeId: number) => {
     const keywords = selectedKeywords[index] || [];
     if (keywords.length === 0) {
       alert('최소 하나의 리뷰 키워드를 선택해주세요.');
       return;
     }
     handleReviewSubmit?.(attendeeId, keywords);
-    setSelectedKeywords((prev) => ({
-      ...prev,
-      [index]: [],
-    }));
+    setSelectedKeywords((prev) => ({ ...prev, [index]: [] }));
     setSubmittedByIndex((prev) => ({ ...prev, [index]: true }));
-  }
+  };
+
+  const isKeywordSelected = (
+    step: ReviewerListData,
+    index: number,
+    keyword: ReviewKeyword,
+  ) =>
+    step.alreadyReviewed
+      ? (step.selectedKeywords?.includes(keyword) ?? false)
+      : (selectedKeywords[index]?.includes(keyword) ?? false);
+
+  const availableKeywords = getAvailableKeywords(activeMainTab);
 
   return (
     <div className="border-gray-10 flex flex-col overflow-y-auto border-y">
@@ -79,11 +77,7 @@ export const ReviewModalContent = ({
         >
           <div
             className="flex cursor-pointer justify-between py-5"
-            onClick={() => {
-              if (activeMainTab === 'host') {
-                handleItemClick(index);
-              }
-            }}
+            onClick={() => activeMainTab === 'host' && handleItemClick(index)}
           >
             <div className="flex items-center gap-3">
               <ProfileImg
@@ -99,40 +93,44 @@ export const ReviewModalContent = ({
                 status={step.alreadyReviewed ? 'ReviewClosed' : 'ReviewOpen'}
               />
             </div>
-            <div className="flex items-center">
-              {activeMainTab === 'host' && (
-                <button className="flex cursor-pointer">
-                  {expandedIndex === index ? (
-                    <ChevronUp size={24} />
-                  ) : (
-                    <ChevronDown size={24} />
-                  )}
-                </button>
-              )}
-            </div>
+            {activeMainTab === 'host' && (
+              <button className="flex cursor-pointer items-center">
+                {expandedIndex === index ? (
+                  <ChevronUp size={24} />
+                ) : (
+                  <ChevronDown size={24} />
+                )}
+              </button>
+            )}
           </div>
 
-          {/* 드롭다운 내용 */}
           {((activeMainTab === 'host' && expandedIndex === index) ||
             activeMainTab !== 'host') && (
             <div className="flex flex-col gap-5 pb-5">
               <div className="flex flex-wrap gap-3">
-                {availableKeywords.map((keyword) => (
-                  <button
-                    key={keyword}
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      handleKeywordToggle(index, keyword);
-                    }}
-                    className={`cursor-pointer rounded-lg px-4 py-2 text-sm whitespace-nowrap transition-colors ${
-                      selectedKeywords[index]?.includes(keyword)
-                        ? 'bg-Green-5'
-                        : 'bg-gray-5'
-                    }`}
-                  >
-                    {keywordLabels[keyword]}
-                  </button>
-                ))}
+                {availableKeywords.map((keyword) => {
+                  const isSelected = isKeywordSelected(step, index, keyword);
+
+                  return step.alreadyReviewed ? (
+                    <div
+                      key={keyword}
+                      className={getKeywordClassName(isSelected)}
+                    >
+                      {getKeywordLabel(keyword)}
+                    </div>
+                  ) : (
+                    <button
+                      key={keyword}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleKeywordToggle(index, keyword);
+                      }}
+                      className={getButtonClassName(isSelected)}
+                    >
+                      {getKeywordLabel(keyword)}
+                    </button>
+                  );
+                })}
               </div>
               <div className="flex justify-end">
                 <Button
