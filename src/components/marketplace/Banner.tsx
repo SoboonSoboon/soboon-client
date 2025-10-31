@@ -37,7 +37,7 @@ export const Banner = ({ title, src, alt, className }: BannerProps) => {
         className={cn(
           'absolute',
           'right-[16px] sm:right-[32px] md:right-[64px] lg:right-[98px]',
-          'w-[180px] sm:w-[260px] md:w-[320px] lg:w-[423px]',
+          'w-[300px] sm:w-[340px] md:w-[380px] lg:w-[423px]',
         )}
       />
     </div>
