@@ -4,6 +4,7 @@ import {
   type CurrentTabData,
 } from '@/app/(main)/mypage/utils/mypageType';
 
+// 현재 탭에 맞는 데이터 선택
 export function useCurrentTabData(
   activeMainTab: MainTabType,
   host: CurrentTabData,
@@ -18,8 +19,6 @@ export function useCurrentTabData(
         return participate;
       case 'bookmark':
         return bookmark;
-      default:
-        return host;
     }
   }, [activeMainTab, host, participate, bookmark]);
 }
