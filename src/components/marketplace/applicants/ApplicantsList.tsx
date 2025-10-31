@@ -5,7 +5,7 @@ import {
   kickApplicants,
   rejectApplicants,
 } from '@/action/applicantsAction';
-import { getUserApplyStatus, UserApplyStatusType } from '@/apis';
+import { getUserApplyStatus } from '@/apis';
 import { useAuthStore } from '@/apis/auth/hooks/authStore';
 import { axiosInstance } from '@/apis/axiosInstance';
 
@@ -31,8 +31,7 @@ export const ApplicantsList = ({
   const { id: meetingId } = useParams<{ id: string }>();
   const { success, error } = useToast();
 
-  const userId = useAuthStore((state) => state.userId);
-
+  const isLoggedIn = useAuthStore((state) => state.isLoggedIn);
   const handleApproveApplicants = async (applicationId: number) => {
     const response = await approveApplicants(null, applicationId, meetingId);
     if (response) {
@@ -62,11 +61,6 @@ export const ApplicantsList = ({
 
   const isCompletedOrClosed = status === 'COMPLETED' || status === 'CLOSED';
 
-  const isApprovedParticipant = participants.some(
-    (participant) =>
-      participant.userId === userId && participant.status === 'APPROVED',
-  );
-
   // 내가 이 모임에 신청한 상태를 조회
   const { data: myApplyStatus } = useQuery({
     queryKey: ['myApplyStatus', meetingId],
@@ -74,6 +68,7 @@ export const ApplicantsList = ({
       const response = await getUserApplyStatus();
       return response.find((status) => status.meetingId === +meetingId) || null;
     },
+    enabled: isLoggedIn,
   });
 
   // 이 모임에 신청한 사람들을 조회

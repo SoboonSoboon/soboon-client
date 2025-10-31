@@ -29,7 +29,6 @@ export const Header = () => {
 
   const handleLogout = async () => {
     logout();
-    console.log('로그아웃 되었습니다.');
     localStorage.removeItem('accessToken');
     await logoutAction();
     // 페이지 새로고침으로 쿠키 상태 확인

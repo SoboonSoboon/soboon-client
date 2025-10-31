@@ -91,26 +91,29 @@ export async function generateMetadata({
 async function getUserInfo(): Promise<UserInfoType | null> {
   const cookieStore = await cookies();
   const accessToken = cookieStore.get('accessToken')?.value || '';
-  try {
-    const response = await fetch(
-      `${process.env.NEXT_PUBLIC_SOBOON_API_URL}/v1/auth/me`,
-      {
-        cache: 'no-store',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${accessToken}`,
+  if (accessToken) {
+    try {
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_SOBOON_API_URL}/v1/auth/me`,
+        {
+          cache: 'no-store',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${accessToken}`,
+          },
         },
-      },
-    );
-    if (!response.ok) {
-      throw new Error('사용자 정보 조회 실패');
+      );
+      if (!response.ok) {
+        throw new Error('사용자 정보 조회 실패');
+      }
+      const responseData = await response.json();
+      return responseData;
+    } catch (error) {
+      console.error('사용자 정보 조회 실패', error);
+      return null;
     }
-    const responseData = await response.json();
-    return responseData;
-  } catch (error) {
-    console.error('사용자 정보 조회 실패', error);
-    return null;
   }
+  return null;
 }
 
 async function getMeetingDetail({
@@ -118,8 +121,6 @@ async function getMeetingDetail({
 }: {
   id: string;
 }): Promise<MeetingDetailType | null> {
-  const cookieStore = await cookies();
-  const accessToken = cookieStore.get('accessToken')?.value || '';
   try {
     const response = await fetch(
       `${process.env.NEXT_PUBLIC_SOBOON_API_URL}/v1/meetings/${id}`,
@@ -130,7 +131,6 @@ async function getMeetingDetail({
         },
         headers: {
           'Content-Type': 'application/json',
-          Authorization: `Bearer ${accessToken}`,
         },
       },
     );
@@ -155,8 +155,6 @@ async function getComments({
   id: string;
   sortType?: 'RECENT' | 'OLDEST';
 }): Promise<CommentsListType | null> {
-  const cookieStore = await cookies();
-  const accessToken = cookieStore.get('accessToken')?.value || '';
   try {
     const response = await fetch(
       `${process.env.NEXT_PUBLIC_SOBOON_API_URL}/v1/meetings/${id}/comments?page=0&size=10&sort=${sortType}`,
@@ -168,7 +166,6 @@ async function getComments({
         },
         headers: {
           'Content-Type': 'application/json',
-          Authorization: `Bearer ${accessToken}`,
         },
       },
     );
@@ -191,30 +188,33 @@ async function getParticipants({
 }): Promise<ApplicantsMemberType['data'][]> {
   const cookieStore = await cookies();
   const accessToken = cookieStore.get('accessToken')?.value || '';
-  try {
-    const response = await fetch(
-      `${process.env.NEXT_PUBLIC_SOBOON_API_URL}/v1/meetings/${meetingId}/applicants`,
-      {
-        cache: 'force-cache',
-        next: {
-          revalidate: 10,
-          tags: [`participants-${meetingId}`],
+  if (accessToken) {
+    try {
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_SOBOON_API_URL}/v1/meetings/${meetingId}/applicants`,
+        {
+          cache: 'force-cache',
+          next: {
+            revalidate: 10,
+            tags: [`participants-${meetingId}`],
+          },
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${accessToken}`,
+          },
         },
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${accessToken}`,
-        },
-      },
-    );
-    if (!response.ok) {
-      throw new Error('참여 신청자 목록 조회 실패');
+      );
+      if (!response.ok) {
+        throw new Error('참여 신청자 목록 조회 실패');
+      }
+      const responseData = await response.json();
+      return responseData.data;
+    } catch (error) {
+      console.error('참여 신청자 목록 조회 실패', error);
+      return [];
     }
-    const responseData = await response.json();
-    return responseData.data;
-  } catch (error) {
-    console.error('참여 신청자 목록 조회 실패', error);
-    return [];
   }
+  return [];
 }
 
 export default async function ShoppingDetailPage({
