@@ -53,7 +53,7 @@ export const DateFilter = memo(({ className, onChange }: DateFilterProps) => {
           strokeWidth="3"
         />
       </div>
-      <span className="hidden text-sm font-medium text-[#1F2937] md:block">
+      <span className="hidden text-sm font-medium text-[#1F2937] sm:block">
         작성일
       </span>
     </div>
