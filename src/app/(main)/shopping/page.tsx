@@ -103,7 +103,7 @@ export default async function ShoppingPage({
         title="장보기"
         src="/images/banner_shopping.png"
         alt="장보기 배너"
-        imageTopClassName="top-[-8px] sm:top-[-16px] md:top-[-24px] lg:top-[-32px]"
+        imageTopClassName="top-[-12px] sm:top-[-14px] md:top-[-16px] lg:top-[-18px] "
       />
       <section className="flex flex-col gap-4 md:gap-6">
         <ShoppingTagsSection />
