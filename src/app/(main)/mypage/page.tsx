@@ -7,7 +7,7 @@ import { MypageHeader, CardList } from '@/app/(main)/mypage/components';
 
 import { EmptyState, ErrorPage, ServerErrorPage } from '@/components/Molecules';
 
-import { useMyPageData } from './hook/components/useMypageData';
+import { useMyPageData } from './hook/components/page/useMypageData';
 
 function MyPageContent() {
   const searchParams = useSearchParams();
@@ -27,7 +27,7 @@ function MyPageContent() {
     activeMainTab,
     activeSubTab,
     currentData,
-    filteredData,
+    processedMeetingList,
     handleMainTabChange,
     handleSubTabChange,
   } = useMyPageData(hideCompletedReviews);
@@ -108,7 +108,7 @@ function MyPageContent() {
             ) : (
               <ErrorPage />
             )
-          ) : filteredData.length === 0 ? (
+          ) : processedMeetingList.length === 0 ? (
             <EmptyState
               type="mypage"
               mainTab={activeMainTab}
@@ -116,7 +116,10 @@ function MyPageContent() {
             />
           ) : (
             <>
-              <CardList data={filteredData} activeMainTab={activeMainTab} />
+              <CardList
+                data={processedMeetingList}
+                activeMainTab={activeMainTab}
+              />
               {/* 무한스크롤 트리거 - hasNextPage일 때만 렌더링 */}
               {currentData.hasNextPage && (
                 <div ref={observerTarget} className="h-10" />

@@ -22,10 +22,10 @@ export const ReviewToggleButton = ({
         onChange={onChange}
       />
       <Label
-        htmlFor="hide-completed-reviews cursor-pointer"
-        className="text-sm"
+        htmlFor="hide-completed-reviews"
+        className="text-text-main cursor-pointer"
       >
-        리뷰 완료 숨기기
+        완료한 리뷰 숨기기
       </Label>
     </div>
   );

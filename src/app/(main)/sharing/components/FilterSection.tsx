@@ -7,7 +7,6 @@ import { PROVINCE_OPTIONS, GET_CITY_OPTIONS } from '@/constants';
 import categories from '@/constants/categories';
 import { useFilterParams } from '@/hooks/useFilterParams';
 import { useEffect, useMemo, useRef } from 'react';
-import { GoToTopScroll } from '@/utils';
 import { useSearchParams } from 'next/navigation';
 
 const Line = () => {
@@ -15,8 +14,13 @@ const Line = () => {
 };
 
 export const FilterSection = () => {
-  const { updateParams, activeProductType, activeProvince, activeCity, activeStatus } =
-    useFilterParams();
+  const {
+    updateParams,
+    activeProductType,
+    activeProvince,
+    activeCity,
+    activeStatus,
+  } = useFilterParams();
 
   const searchParams = useSearchParams();
   const prevFilterParamsRef = useRef<string>('');
@@ -61,14 +65,6 @@ export const FilterSection = () => {
       searchParams.get('status') || '',
     ].join('|');
 
-    // 이전 값이 있고, 실제로 필터 값이 변경된 경우에만 스크롤
-    if (
-      prevFilterParamsRef.current &&
-      prevFilterParamsRef.current !== currentFilterParams
-    ) {
-      GoToTopScroll(250);
-    }
-
     // 현재 값을 이전 값으로 저장
     prevFilterParamsRef.current = currentFilterParams;
   }, [searchParams]);
@@ -88,7 +84,9 @@ export const FilterSection = () => {
             handleStatusChange(checked ? 'RECRUITING' : '')
           }
         />
-        <Label htmlFor="recruiting">가능한 모임만 보기</Label>
+        <Label htmlFor="recruiting" className="text-text-main cursor-pointer">
+          가능한 모임만 보기
+        </Label>
       </div>
 
       <Line />
