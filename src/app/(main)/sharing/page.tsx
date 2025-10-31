@@ -86,7 +86,7 @@ export default async function SharingPage({
     province: (params.province as string) || '',
     city: (params.city as string) || '',
     district: (params.district as string) || '',
-    item: (params.item as string) || '',
+    title: (params.title as string) || '',
     productType: (params.productType as string) || '',
     sortType: (params.sortType as string) || '',
     page: (params.page as string) || '0',

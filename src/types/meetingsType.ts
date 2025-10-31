@@ -14,7 +14,6 @@ GET /v1/meetings/{id}
 type MeetingDetailType = {
   id: number;
   title: string;
-  item: string;
   location_dep0: string;
   location_dep1: string;
   location_dep2: string;
@@ -54,7 +53,7 @@ type DeleteMeetingResponseType = ApiResponse<null | string>;
 */
 interface DividingContentType {
   groupId: number;
-  item: string;
+  title: string;
   image: string;
   productType: ProductType;
   location: LocationType;
