@@ -3,11 +3,13 @@ export default function SoboonLogo({
   iconHeight = 44,
   height = 36,
   gap = 3,
+  sequence = false,
 }) {
   return (
     <div
       className="flex items-center justify-center"
       style={{ gap: `${gap}px` }}
+      {...(sequence && { 'data-sequence': '150' })}
     >
       <svg
         height={height}
