@@ -26,11 +26,9 @@ export default function SharingPageContent({
   return (
     <main className="flex w-full flex-col gap-4 md:gap-8">
       <Banner
+        title="소분하기"
         src="/images/banner_dividing.png"
         alt="소분하기 배너"
-        className="overflow-hidden rounded-lg"
-        width={2400}
-        height={500}
       />
       <div className="flex w-full items-center justify-between">
         <div className="md:hidden">
