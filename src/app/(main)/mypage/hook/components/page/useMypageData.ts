@@ -1,21 +1,21 @@
 'use client';
 
-import { useRouter, useSearchParams } from 'next/navigation';
 import { useMemo } from 'react';
+import { useRouter, useSearchParams } from 'next/navigation';
 import {
   type MainTabType,
   type SubTabType,
   type InfiniteData,
   type MypageMeetingApiResponse,
   type BookMarkListApiResPonse,
-} from '../../utils/mypageType';
+} from '@/app/(main)/mypage/utils/mypageType';
 import {
   useHostMeetingList,
   useParticipateMeetingList,
   useBookmarkMeetingList,
-} from '../api/useMeetings';
+} from '../../api/useMeetings';
 import { useCurrentTabData } from './useCurrentTabData';
-import { transformMeetingItems } from '../utils/meetingDataTransformer';
+import { transformMeetingItems } from '../../utils/meetingDataTransformer';
 
 export const useMyPageData = (hideCompletedReviews: boolean = false) => {
   const router = useRouter();
@@ -66,9 +66,11 @@ export const useMyPageData = (hideCompletedReviews: boolean = false) => {
   const filteredData = useMemo(() => {
     if (!currentData.data?.pages) return [];
 
-    const safePages = currentData.data.pages.map((page) => ({
-      data: { content: page.data.content },
-    }));
+    const safePages = currentData.data.pages.map(
+      (page: MypageMeetingApiResponse | BookMarkListApiResPonse) => ({
+        data: { content: page.data.content },
+      }),
+    );
 
     return transformMeetingItems(safePages, hideCompletedReviews);
   }, [currentData.data, hideCompletedReviews]);

@@ -1,5 +1,8 @@
 import { useMemo } from 'react';
-import { type MainTabType, type CurrentTabData } from '../../utils/mypageType';
+import {
+  type MainTabType,
+  type CurrentTabData,
+} from '@/app/(main)/mypage/utils/mypageType';
 
 export function useCurrentTabData(
   activeMainTab: MainTabType,

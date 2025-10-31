@@ -7,7 +7,7 @@ import { MypageHeader, CardList } from '@/app/(main)/mypage/components';
 
 import { EmptyState, ErrorPage, ServerErrorPage } from '@/components/Molecules';
 
-import { useMyPageData } from './hook/components/useMypageData';
+import { useMyPageData } from './hook/components/page/useMypageData';
 
 function MyPageContent() {
   const searchParams = useSearchParams();
