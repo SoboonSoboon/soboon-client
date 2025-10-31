@@ -15,8 +15,13 @@ const Line = () => {
 };
 
 export const FilterSection = () => {
-  const { updateParams, activeProductType, activeProvince, activeCity, activeStatus } =
-    useFilterParams();
+  const {
+    updateParams,
+    activeProductType,
+    activeProvince,
+    activeCity,
+    activeStatus,
+  } = useFilterParams();
 
   const searchParams = useSearchParams();
   const prevFilterParamsRef = useRef<string>('');
@@ -88,7 +93,9 @@ export const FilterSection = () => {
             handleStatusChange(checked ? 'RECRUITING' : '')
           }
         />
-        <Label htmlFor="recruiting">가능한 모임만 보기</Label>
+        <Label htmlFor="recruiting" className="text-text-main cursor-pointer">
+          가능한 모임만 보기
+        </Label>
       </div>
 
       <Line />
