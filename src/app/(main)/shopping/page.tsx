@@ -1,4 +1,4 @@
-import { IntroSection } from '@/components/marketplace';
+import { Banner } from '@/components/marketplace';
 import {
   meetingSearchParamsType,
   ShoppingMeetingsType,
@@ -99,7 +99,7 @@ export default async function ShoppingPage({
 
   return (
     <main className="flex flex-col gap-8">
-      <IntroSection
+      <Banner
         src="/images/banner_shopping.png"
         alt="장보기 배너"
         className="overflow-hidden rounded-lg"

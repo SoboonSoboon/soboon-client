@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { DividingMeetingsType } from '@/types/meetingsType';
-import { IntroSection } from '@/components/marketplace';
+import { Banner } from '@/components/marketplace';
 import {
   FilterSection,
   SharingListSection,
@@ -25,7 +25,7 @@ export default function SharingPageContent({
 
   return (
     <main className="flex w-full flex-col gap-4 md:gap-8">
-      <IntroSection
+      <Banner
         src="/images/banner_dividing.png"
         alt="소분하기 배너"
         className="overflow-hidden rounded-lg"

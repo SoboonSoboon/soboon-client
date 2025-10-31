@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import { cn } from '@/utils/cn';
 
-interface IntroSectionProps {
+interface BannerProps {
   src: string;
   alt: string;
   width?: number;
@@ -9,13 +9,7 @@ interface IntroSectionProps {
   className?: string;
 }
 
-export const IntroSection = ({
-  src,
-  alt,
-  width,
-  height,
-  className,
-}: IntroSectionProps) => {
+export const Banner = ({ src, alt, width, height, className }: BannerProps) => {
   return (
     <div className={cn('border-gray-10 w-full rounded-lg border', className)}>
       <Image src={src} alt={alt} width={width} height={height} />
