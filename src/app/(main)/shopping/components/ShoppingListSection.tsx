@@ -20,7 +20,7 @@ import { getShoppingListApi } from '@/apis/meetings/getShoppingListApi';
 import { useInfiniteScrollTrigger } from '@/hooks/useScroll';
 import { useSearchParams } from 'next/navigation';
 import { HashTag } from './HashTag';
-import { EmptyState } from '@/components/Molecules';
+import { MainEmptyState } from '@/components/Molecules';
 import { useShoppingSearch } from '@/hooks/useSearch/useShoppingSearch';
 
 export const ShoppingListSection = ({
@@ -134,8 +134,7 @@ export const ShoppingListSection = ({
   return (
     <>
       {items.length === 0 ? (
-        <EmptyState
-          type="main-shopping"
+        <MainEmptyState
           title="아직 장보기 모임이 없어요"
           description="첫 번째 장보기 모임을 만들어보세요!"
           primaryButton={{
@@ -148,6 +147,7 @@ export const ShoppingListSection = ({
             href: '/sharing',
             variant: 'outline',
           }}
+          padding="py-[52px]"
         />
       ) : (
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 md:gap-5 xl:grid-cols-4">

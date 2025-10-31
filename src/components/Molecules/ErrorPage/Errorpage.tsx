@@ -14,7 +14,7 @@ export const ErrorPage = () => {
         className="mx-auto"
       />
 
-      <p className="leading-tight font-semibold">
+      <p>
         요청하신 페이지를 찾을 수 없습니다.
         <br />
         입력하신 주소가 올바른지 확인해주세요.

@@ -14,10 +14,9 @@ export { Dropdown, type DropdownProps } from './Dropdown';
 export { ErrorPage, ServerErrorPage } from './ErrorPage';
 export { Header } from './Header';
 export {
-  EmptyState,
-  type EmptyStateProps,
-  type MainShoppingEmptyStateProps,
-  type MainDividingEmptyStateProps,
+  MainEmptyState,
+  MyPageEmptyState,
+  type MainEmptyStateProps,
   type MyPageEmptyStateProps,
 } from './EmptyState';
 export { SideButtonSection } from './SideButtonSection';
