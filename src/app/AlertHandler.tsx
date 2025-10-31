@@ -1,0 +1,18 @@
+'use client';
+
+import { useSearchParams } from 'next/navigation';
+import { useEffect } from 'react';
+import { useToast } from '@/components/Atoms';
+
+export default function AlertHandler() {
+  const searchParams = useSearchParams();
+  const { error } = useToast();
+
+  useEffect(() => {
+    if (searchParams.get('alert') === 'login_required') {
+      error('로그인이 필요합니다.');
+    }
+  }, [searchParams]);
+
+  return null;
+}

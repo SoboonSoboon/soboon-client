@@ -13,6 +13,7 @@ export function middleware(request: NextRequest) {
 
   if (isProtectedRoute && !accessToken) {
     const redirectUrl = new URL('/', request.url);
+    redirectUrl.searchParams.set('alert', 'login_required');
     return NextResponse.redirect(redirectUrl);
   }
 
