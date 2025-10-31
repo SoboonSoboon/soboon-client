@@ -209,7 +209,8 @@ export function UpdateDividingForm({
                   <Image
                     src={`/images/category_${option.value}.png`}
                     alt={option.label}
-                    fill
+                    width={94}
+                    height={94}
                     className="object-contain"
                   />
                 </button>

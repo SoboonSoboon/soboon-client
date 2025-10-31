@@ -25,6 +25,7 @@ export function ProfileImg({
         src={profileImageUrl || defaultProfileImage}
         alt="profileImage"
         fill
+        sizes="116px"
         className="object-cover"
       />
     </div>

@@ -70,7 +70,7 @@ export const Dropdown = ({
   };
 
   const baseButtonStyles =
-    'hover:ring-Green-20 hover:border-Green-20 flex hover:ring-1 active:ring-1 active:border-primary active:ring-primary w-full items-center justify-between gap-1.5 rounded-xl border-1 transition-colors duration-200';
+    'h-11 hover:ring-Green-20 hover:border-Green-20 flex hover:ring-1 active:ring-1 active:border-primary active:ring-primary w-full items-center justify-between gap-1.5 rounded-xl border-1 transition-colors duration-200';
 
   const buttonStyles = {
     filter: 'border-gray-10 border bg-white px-3 py-2',

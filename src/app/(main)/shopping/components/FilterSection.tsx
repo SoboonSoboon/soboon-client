@@ -6,7 +6,6 @@ import { PROVINCE_OPTIONS, GET_CITY_OPTIONS } from '@/constants';
 import { statusOptions } from '@/constants/status';
 import { useFilterParams } from '@/hooks/useFilterParams';
 import { useEffect, useMemo, useRef } from 'react';
-import { GoToTopScroll } from '@/utils';
 import { useSearchParams } from 'next/navigation';
 import { SearchInput } from '@/components/Molecules/Search/SearchInput';
 
@@ -62,21 +61,13 @@ export const FilterSection = () => {
       searchParams.get('keyword') || '',
     ].join('|');
 
-    // 이전 값이 있고, 실제로 필터 값이 변경된 경우에만 스크롤
-    if (
-      prevFilterParamsRef.current &&
-      prevFilterParamsRef.current !== currentFilterParams
-    ) {
-      GoToTopScroll(250);
-    }
-
     // 현재 값을 이전 값으로 저장
     prevFilterParamsRef.current = currentFilterParams;
   }, [searchParams]);
 
   return (
-    <div className="flex justify-between">
-      <div className="flex w-full max-w-92 gap-2">
+    <div className="flex flex-col gap-2 md:flex-row md:justify-between">
+      <div className="flex w-full gap-2 md:max-w-92">
         <Dropdown
           name="province"
           value={activeProvince}
@@ -106,7 +97,7 @@ export const FilterSection = () => {
         />
       </div>
 
-      <div className="flex w-full max-w-[361px] justify-between gap-2.5">
+      <div className="flex w-full justify-between gap-2.5 md:max-w-[361px]">
         <DateFilter
           onChange={(value) => handleDateChange(value)}
           className="!h-[44px]"

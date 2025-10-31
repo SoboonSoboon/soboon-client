@@ -148,7 +148,9 @@ export const FilterBottomSheet = ({
               handleStatusChange(checked ? 'RECRUITING' : '')
             }
           />
-          <Label htmlFor="recruiting">가능한 모임만 보기</Label>
+          <Label htmlFor="recruiting" className="cursor-pointer">
+            가능한 모임만 보기
+          </Label>
         </div>
 
         <div className="bg-gray-10 my-5 h-[1px] w-full"></div>

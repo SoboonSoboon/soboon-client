@@ -77,7 +77,10 @@ export default function ImageUploadForm({
         <div className="overflow-x-auto">
           <div className="flex min-w-max gap-2.5">
             {imageFiles.map((image, index) => (
-              <div key={index} className="group relative flex-shrink-0">
+              <div
+                key={index}
+                className="group border-gray-10 relative flex-shrink-0 overflow-hidden rounded-lg border"
+              >
                 <Image
                   src={imagePreviews[index]}
                   alt={`미리보기 ${index + 1}`}
