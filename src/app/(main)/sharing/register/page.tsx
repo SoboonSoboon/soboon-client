@@ -128,9 +128,9 @@ export default function DividingRegisterPage() {
       const response = await dividingRegisterApi(formatData);
       return response;
     },
-    onSuccess: (data: ApiResponse<string>) => {
+    onSuccess: (data: ApiResponse<{ meetingId: number }>) => {
       success(data.message!);
-      router.push('/sharing');
+      router.replace(`/sharing/${data.data.meetingId}`);
     },
     onError: (data: ApiResponse<string>) => {
       error(data.message!);
