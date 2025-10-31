@@ -1,5 +1,6 @@
 'use client';
 
+import { Suspense } from 'react';
 import Providers from './providers';
 import './globals.css';
 import { Header } from '@/components';
@@ -22,7 +23,9 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         </HeaderContainer>
         <div>
           <Providers>
-            <AlertHandler />
+            <Suspense fallback={null}>
+              <AlertHandler />
+            </Suspense>
             {children}
           </Providers>
         </div>
