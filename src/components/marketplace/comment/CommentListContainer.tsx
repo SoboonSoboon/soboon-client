@@ -15,6 +15,7 @@ import {
 } from '@tanstack/react-query';
 import { getCommentApi } from '@/apis/comment/getComment';
 import { useInfiniteScrollTrigger } from '@/hooks/useScroll';
+import { useAuthStore } from '@/apis/auth/hooks/authStore';
 
 export const CommentListContainer = ({
   initialCommentList,
@@ -29,8 +30,8 @@ export const CommentListContainer = ({
   const sortType = searchParams.get('sortType');
   const { success, error } = useToast();
   const queryClient = useQueryClient();
-
   const { isBottom } = useInfiniteScrollTrigger();
+  const isLoggedIn = useAuthStore((state) => state.isLoggedIn);
 
   const handleToggleReply = (commentId: number) => {
     setOpenReply(commentId);
@@ -126,7 +127,7 @@ export const CommentListContainer = ({
               <div>
                 <div className="flex flex-col gap-2">
                   <CommentItem comment={comment} isAuthor={isAuthor} />
-                  {!openReply && (
+                  {!openReply && isLoggedIn && (
                     <div>
                       <span
                         className="text-primary cursor-pointer font-normal"

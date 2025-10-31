@@ -5,10 +5,14 @@ import { useState } from 'react';
 import { ApplicantsMemberType } from '@/types/applicantsType';
 import { ApplicantsList } from '../applicants/ApplicantsList';
 import { applyMeeting, handleCloseMeeting } from '@/action/applicantsAction';
-import { useToast } from '@/components/Atoms';
+import { Button, useToast } from '@/components/Atoms';
 import { useParams } from 'next/navigation';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { cancelApplyMeeting, getUserApplyStatus } from '@/apis';
+import {
+  cancelApplyMeeting,
+  getUserApplyStatus,
+  redirectToKakao,
+} from '@/apis';
 import { useMemo } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { useBookmark } from '@/hooks';
@@ -19,6 +23,8 @@ import { CurrentPeople } from './CurrentPeople';
 import { AsideHeader } from './AsideHeader';
 import { AsideMoreInfo } from './AsideMoreInfo';
 import { useAuthStore } from '@/apis/auth/hooks/authStore';
+import { Modal, useModal } from '@/components/Molecules/modal';
+import { MODAL_IS_LOGIN_REQUIRED_TEXT } from '@/constants';
 
 interface DetailAsideProps {
   meetingDetail: MeetingDetailType;
@@ -37,23 +43,44 @@ export const DetailAside = ({
   const queryClient = useQueryClient();
   const { handleBookmark } = useBookmark();
   const userId = useAuthStore((state) => state.userId);
+  const deleteModal = useModal();
+  const isLoggedIn = useAuthStore((state) => state.isLoggedIn);
 
   const handleBookmarkClick = () => {
-    setIsBookmarked(!isBookmarked);
-    handleBookmark(meetingId.toString(), isBookmarked);
+    if (!isLoggedIn) {
+      handleOpenLoginModal();
+      return;
+    } else {
+      setIsBookmarked(!isBookmarked);
+      handleBookmark(meetingId.toString(), isBookmarked);
+    }
   };
 
   // todo: 모임 신청 로직 수정
   const handleApplyMeeting = async (applicationId: string) => {
-    try {
-      const response = await applyMeeting(null, applicationId);
-      success(response.message || '모임을 신청했어요.');
-      queryClient.invalidateQueries({ queryKey: ['userApplyStatus'] });
-      return response;
-    } catch (err) {
-      error('모임 신청을 실패했어요.');
-      throw err;
+    if (!isLoggedIn) {
+      handleOpenLoginModal();
+      return;
+    } else {
+      try {
+        const response = await applyMeeting(null, applicationId);
+        success(response.message || '모임을 신청했어요.');
+        queryClient.invalidateQueries({ queryKey: ['userApplyStatus'] });
+        return response;
+      } catch (err) {
+        error('모임 신청을 실패했어요.');
+        throw err;
+      }
     }
+  };
+
+  const handleOpenLoginModal = () => {
+    deleteModal.open();
+  };
+
+  const handleLoginButtonClick = () => {
+    redirectToKakao();
+    deleteModal.close();
   };
 
   const { mutate: handleCloseMeetingAction } = useMutation({
@@ -80,6 +107,7 @@ export const DetailAside = ({
   const { data: userApplyStatus } = useQuery({
     queryKey: ['userApplyStatus', userId],
     queryFn: () => getUserApplyStatus(),
+    enabled: isLoggedIn,
   });
 
   const filteredStatus = useMemo(() => {
@@ -154,6 +182,36 @@ export const DetailAside = ({
           handleCloseMeetingAction={handleCloseMeetingAction}
         />
       )}
+
+      <Modal isOpen={deleteModal.isOpen} onClose={deleteModal.close} size="sm">
+        <div
+          className="flex flex-col items-center p-7 pb-5"
+          onPointerDown={(e) => e.stopPropagation()}
+        >
+          <h2 className="mb-2 text-[22px] font-semibold">
+            {MODAL_IS_LOGIN_REQUIRED_TEXT.LOGIN_COMMENT_TITLE}
+          </h2>
+          <p className="text-text-main mb-8 text-center">
+            {MODAL_IS_LOGIN_REQUIRED_TEXT.LOGIN_COMMENT_LIST}
+          </p>
+          <div className="flex w-full gap-2">
+            <Button
+              variant="outline"
+              onClick={() => {
+                deleteModal.close();
+              }}
+              className="w-full"
+              label="취소"
+            />
+            <Button
+              variant="filled"
+              label="로그인"
+              onClick={handleLoginButtonClick}
+              className="w-full"
+            />
+          </div>
+        </div>
+      </Modal>
     </aside>
   );
 };
