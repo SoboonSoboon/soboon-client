@@ -75,7 +75,7 @@ export const FilterSection = () => {
   }, [searchParams]);
 
   return (
-    <div className="flex justify-between">
+    <div className="flex-col justify-between md:flex">
       <div className="flex w-full max-w-92 gap-2">
         <Dropdown
           name="province"
@@ -106,7 +106,7 @@ export const FilterSection = () => {
         />
       </div>
 
-      <div className="flex w-full max-w-[361px] justify-between gap-2.5">
+      <div className="mt-3 flex w-full max-w-[361px] justify-between gap-2.5 md:mt-0">
         <DateFilter
           onChange={(value) => handleDateChange(value)}
           className="!h-[44px]"
