@@ -10,17 +10,23 @@ function isMeetingItem(item: MeetingItem | BookMarkItem): item is MeetingItem {
   return 'reviewStatus' in item && 'tags' in item;
 }
 
+// 무한스크롤 API 응답을 통일된 MeetingItem 배열로 변환
 export function transformMeetingItems(
   pages: ReadonlyArray<PageChunk>,
   hideCompletedReviews: boolean,
 ): MeetingItem[] {
   if (pages.length === 0) return [];
 
-  const allItems = pages.reduce<Array<MeetingItem | BookMarkItem>>((acc, p) => {
-    return acc.concat(p.data.content ?? []);
-  }, []);
+  // 모든 페이지의 content 배열을 하나로 합치기
+  const flattenedItems = pages.reduce<Array<MeetingItem | BookMarkItem>>(
+    (acc, page) => {
+      return acc.concat(page.data.content ?? []);
+    },
+    [],
+  );
 
-  let normalized: MeetingItem[] = allItems.map((item) => {
+  // 북마크 아이템에 기본값 부여하여 통일된 형태로 변환
+  let unifiedItems: MeetingItem[] = flattenedItems.map((item) => {
     const base = {
       groupId: item.groupId,
       title: item.title,
@@ -50,19 +56,21 @@ export function transformMeetingItems(
     };
   });
 
-  const seen = new Set<number>();
-  normalized = normalized.filter((it) => {
-    if (seen.has(it.groupId)) return false;
-    seen.add(it.groupId);
+  // 중복 제거 (groupId 기준)
+  const seenGroupIds = new Set<number>();
+  unifiedItems = unifiedItems.filter((item) => {
+    if (seenGroupIds.has(item.groupId)) return false;
+    seenGroupIds.add(item.groupId);
     return true;
   });
 
+  // 리뷰 완료 필터링
   if (hideCompletedReviews) {
-    normalized = normalized.filter((it) => {
-      const { reviewedCount, totalCount } = it.reviewStatus;
+    unifiedItems = unifiedItems.filter((item) => {
+      const { reviewedCount, totalCount } = item.reviewStatus;
       return !(totalCount > 0 && reviewedCount >= totalCount);
     });
   }
 
-  return normalized;
+  return unifiedItems;
 }

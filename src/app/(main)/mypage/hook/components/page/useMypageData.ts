@@ -1,38 +1,44 @@
 'use client';
 
-import { useRouter, useSearchParams } from 'next/navigation';
 import { useMemo } from 'react';
+import { useRouter, useSearchParams } from 'next/navigation';
 import {
   type MainTabType,
   type SubTabType,
   type InfiniteData,
   type MypageMeetingApiResponse,
   type BookMarkListApiResPonse,
-} from '../../utils/mypageType';
+} from '@/app/(main)/mypage/utils/mypageType';
 import {
   useHostMeetingList,
   useParticipateMeetingList,
   useBookmarkMeetingList,
-} from '../api/useMeetings';
+} from '../../api/useMeetings';
 import { useCurrentTabData } from './useCurrentTabData';
-import { transformMeetingItems } from '../utils/meetingDataTransformer';
+import { transformMeetingItems } from '../../utils/meetingDataTransformer';
 
 export const useMyPageData = (hideCompletedReviews: boolean = false) => {
   const router = useRouter();
   const searchParams = useSearchParams();
+
+  // URL에서 현재 메인 탭 정보 읽기
   const activeMainTab = useMemo(
     () => (searchParams.get('main') as MainTabType) || 'host',
     [searchParams],
   );
+
+  // URL에서 현재 서브 탭 정보 읽기
   const activeSubTab = useMemo(
     () => (searchParams.get('sub')?.toUpperCase() as SubTabType) || 'DIVIDING',
     [searchParams],
   );
 
+  // 3개 API 동시 호출
   const host = useHostMeetingList(20, activeSubTab);
   const participate = useParticipateMeetingList(20, activeSubTab);
   const bookmark = useBookmarkMeetingList(20, activeSubTab);
 
+  // 현재 탭에 맞는 데이터 선택
   const currentData = useCurrentTabData(
     activeMainTab,
     {
@@ -40,7 +46,7 @@ export const useMyPageData = (hideCompletedReviews: boolean = false) => {
       loading: host.isLoading,
       error: host.error,
       fetchNextPage: () => host.fetchNextPage(),
-      hasNextPage: !!host.hasNextPage,
+      hasNextPage: host.hasNextPage,
       isFetchingNextPage: host.isFetchingNextPage,
     },
     {
@@ -50,7 +56,7 @@ export const useMyPageData = (hideCompletedReviews: boolean = false) => {
       loading: participate.isLoading,
       error: participate.error,
       fetchNextPage: () => participate.fetchNextPage(),
-      hasNextPage: !!participate.hasNextPage,
+      hasNextPage: participate.hasNextPage,
       isFetchingNextPage: participate.isFetchingNextPage,
     },
     {
@@ -58,17 +64,20 @@ export const useMyPageData = (hideCompletedReviews: boolean = false) => {
       loading: bookmark.isLoading,
       error: bookmark.error,
       fetchNextPage: () => bookmark.fetchNextPage(),
-      hasNextPage: !!bookmark.hasNextPage,
+      hasNextPage: bookmark.hasNextPage,
       isFetchingNextPage: bookmark.isFetchingNextPage,
     },
   );
 
-  const filteredData = useMemo(() => {
+  // 데이터 변환 및 필터링
+  const processedMeetingList = useMemo(() => {
     if (!currentData.data?.pages) return [];
 
-    const safePages = currentData.data.pages.map((page) => ({
-      data: { content: page.data.content },
-    }));
+    const safePages = currentData.data.pages.map(
+      (page: MypageMeetingApiResponse | BookMarkListApiResPonse) => ({
+        data: { content: page.data.content },
+      }),
+    );
 
     return transformMeetingItems(safePages, hideCompletedReviews);
   }, [currentData.data, hideCompletedReviews]);
@@ -87,7 +96,7 @@ export const useMyPageData = (hideCompletedReviews: boolean = false) => {
     activeMainTab,
     activeSubTab,
     currentData,
-    filteredData,
+    processedMeetingList,
     handleMainTabChange,
     handleSubTabChange,
   };
