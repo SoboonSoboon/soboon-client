@@ -12,7 +12,7 @@ export const Banner = ({ title, src, alt, className }: BannerProps) => {
   return (
     <div
       className={cn(
-        'border-gray-10 bg-gray-5 relative flex h-[200px] w-full overflow-hidden rounded-lg border px-4 lg:px-[98px]',
+        'border-gray-10 bg-gray-5 relative flex h-[200px] w-full overflow-hidden rounded-lg border px-4 sm:px-10 md:px-18 lg:px-[98px]',
         className,
       )}
     >
