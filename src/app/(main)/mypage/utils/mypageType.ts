@@ -36,6 +36,7 @@ export interface MeetingItem {
   reviewStatus: { reviewedCount: number; totalCount: number };
   bookmarked: boolean;
   tags: string[];
+  hostName: string;
 }
 
 // 북마크 리스트 (무한스크롤 지원) - totalElements 없음
@@ -56,6 +57,7 @@ export interface BookMarkItem {
   thumbnailUrl: string;
   createdAt: string;
   bookmarked: boolean;
+  hostName: string;
 }
 
 export type Category = 'DIVIDING' | 'SHOPPING';

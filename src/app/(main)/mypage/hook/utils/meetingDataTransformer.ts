@@ -37,6 +37,7 @@ export function transformMeetingItems(
       thumbnailUrl: item.thumbnailUrl,
       createdAt: item.createdAt,
       bookmarked: item.bookmarked,
+      hostName: item.hostName,
     };
 
     if (isMeetingItem(item)) {
