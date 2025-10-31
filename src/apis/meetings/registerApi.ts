@@ -19,7 +19,6 @@ export interface ShoppingRegisterData {
 export interface SharingRegisterData {
   title: string;
   description: string;
-  itemName: string;
   price: number;
   capacity: number;
   province: string;
@@ -32,7 +31,6 @@ export interface SharingRegisterData {
 
 export interface DividingRegisterData {
   title?: string;
-  itemName: string;
   capacity: number;
   location: LocationType;
   productType: string;
@@ -64,7 +62,6 @@ const formatSharingRegisterData = async (data: SharingRegisterData) => {
   const formData = {
     title: data.title,
     description: data.description,
-    itemName: data.itemName,
     price: data.price,
     capacity: data.capacity,
     location: {
@@ -84,7 +81,7 @@ export const dividingRegisterApi = async (formatData: DividingRegisterData) => {
   if (formatData.imageUrls.length === 0) {
     const response = await axiosInstance.post('/v1/meetings/dividing', {
       ...formatData,
-      title: '',
+      title: formatData.title,
       price: 0,
     });
     return response.data;
@@ -94,7 +91,7 @@ export const dividingRegisterApi = async (formatData: DividingRegisterData) => {
     );
     const response = await axiosInstance.post('/v1/meetings/dividing', {
       ...formatData,
-      title: '',
+      title: formatData.title,
       price: 0,
       imageUrls: formattedData,
     });

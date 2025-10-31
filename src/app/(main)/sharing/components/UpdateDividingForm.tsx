@@ -40,7 +40,7 @@ const FORM_VALIDATION = {
 
 const dividingFormSchema = z.object({
   productType: z.string().min(1, { message: '제품 카테고리를 선택해주세요.' }),
-  itemName: z.string().min(1, { message: '품목 이름을 입력해주세요.' }),
+  title: z.string().min(1, { message: '품목 이름을 입력해주세요.' }),
   capacity: z
     .number()
     .min(1, { message: '모집 인원을 선택해주세요.' })
@@ -100,7 +100,7 @@ export function UpdateDividingForm({
     resolver: zodResolver(dividingFormSchema),
     defaultValues: {
       productType: '',
-      itemName: '',
+      title: '',
       capacity: 0,
       location: {
         province: '',
@@ -123,7 +123,7 @@ export function UpdateDividingForm({
 
       reset({
         productType: productTypeValue,
-        itemName: meetingDetail.item || '',
+        title: meetingDetail.title || '',
         capacity: meetingDetail.total_member || 0,
         location: {
           province:
@@ -156,7 +156,7 @@ export function UpdateDividingForm({
     mutationFn: async (formatData: DividingFormData) => {
       const requestData = {
         ...formatData,
-        title: '',
+        title: formatData.title,
         price: 0,
         imageUrls: formatData.imageUrls,
       };
@@ -233,14 +233,12 @@ export function UpdateDividingForm({
         )}
         <div className="mt-3">
           <TextInput
-            id="itemName"
+            id="title"
             placeholder="품목 이름을 적어주세요. (ex. 동물복지 유정란 30구)"
-            {...register('itemName')}
+            {...register('title')}
           />
-          {errors.itemName && (
-            <p className="mt-2 text-sm text-red-500">
-              {errors.itemName.message}
-            </p>
+          {errors.title && (
+            <p className="mt-2 text-sm text-red-500">{errors.title.message}</p>
           )}
         </div>
       </div>
