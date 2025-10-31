@@ -7,7 +7,6 @@ import { PROVINCE_OPTIONS, GET_CITY_OPTIONS } from '@/constants';
 import categories from '@/constants/categories';
 import { useFilterParams } from '@/hooks/useFilterParams';
 import { useEffect, useMemo, useRef } from 'react';
-import { GoToTopScroll } from '@/utils';
 import { useSearchParams } from 'next/navigation';
 
 const Line = () => {
@@ -65,14 +64,6 @@ export const FilterSection = () => {
       searchParams.get('productType') || '',
       searchParams.get('status') || '',
     ].join('|');
-
-    // 이전 값이 있고, 실제로 필터 값이 변경된 경우에만 스크롤
-    if (
-      prevFilterParamsRef.current &&
-      prevFilterParamsRef.current !== currentFilterParams
-    ) {
-      GoToTopScroll(250);
-    }
 
     // 현재 값을 이전 값으로 저장
     prevFilterParamsRef.current = currentFilterParams;

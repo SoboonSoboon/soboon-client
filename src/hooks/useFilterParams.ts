@@ -1,4 +1,3 @@
-// import { GoToTopScroll } from '@/utils/goToTopScroll';
 import { useSearchParams } from 'next/navigation';
 import { useRouter } from 'next/navigation';
 import { useCallback } from 'react';
