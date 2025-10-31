@@ -7,6 +7,7 @@ import { useToast } from '@/components/Atoms';
 import { cn } from '@/utils/cn';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { createCommentApi } from '@/apis/comment/createComment';
+import { useAuthStore } from '@/apis/auth/hooks/authStore';
 
 export const CommentInputContainer = ({
   status,
@@ -17,6 +18,7 @@ export const CommentInputContainer = ({
   const { success, error } = useToast();
   const queryClient = useQueryClient();
   const searchParams = useSearchParams();
+  const isLoggedIn = useAuthStore((state) => state.isLoggedIn);
 
   const { mutate: createComment } = useMutation({
     mutationFn: (data: {
@@ -59,21 +61,27 @@ export const CommentInputContainer = ({
             placeholder={
               status === 'COMPLETED' || status === 'CLOSED'
                 ? '모집이 종료된 모임입니다.'
-                : '댓글을 입력해주세요.'
+                : !isLoggedIn
+                  ? '로그인이 필요합니다.'
+                  : '댓글을 입력해주세요.'
             }
             name="comment"
             className="!border-text-line1 !border bg-white pr-[90px]"
-            disabled={status === 'COMPLETED' || status === 'CLOSED'}
+            disabled={
+              status === 'COMPLETED' || status === 'CLOSED' || !isLoggedIn
+            }
           />
-          <div className="absolute top-1/2 right-3 flex translate-y-[-50%] items-center gap-1 select-none">
-            <input type="checkbox" id="secret" name="secret" />
-            <label
-              htmlFor="secret"
-              className="text-gray-60 cursor-pointer text-sm"
-            >
-              비공개
-            </label>
-          </div>
+          {isLoggedIn && (
+            <div className="absolute top-1/2 right-3 flex translate-y-[-50%] items-center gap-1 select-none">
+              <input type="checkbox" id="secret" name="secret" />
+              <label
+                htmlFor="secret"
+                className="text-gray-60 cursor-pointer text-sm"
+              >
+                비공개
+              </label>
+            </div>
+          )}
         </div>
         <Button
           label="작성"
@@ -81,11 +89,13 @@ export const CommentInputContainer = ({
           variant="outline"
           className={cn(
             'w-20 shrink',
-            status === 'COMPLETED' || status === 'CLOSED'
+            status === 'COMPLETED' || status === 'CLOSED' || !isLoggedIn
               ? 'border-text-line2 text-text-line2 !cursor-not-allowed'
               : 'border-primary text-primary',
           )}
-          disabled={status === 'COMPLETED' || status === 'CLOSED'}
+          disabled={
+            status === 'COMPLETED' || status === 'CLOSED' || !isLoggedIn
+          }
         />
       </form>
     </div>
