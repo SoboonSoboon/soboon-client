@@ -6,23 +6,30 @@ interface BannerProps {
   src: string;
   alt: string;
   className?: string;
+  imageTopClassName?: string;
 }
 
-export const Banner = ({ title, src, alt, className }: BannerProps) => {
+export const Banner = ({
+  title,
+  src,
+  alt,
+  className,
+  imageTopClassName,
+}: BannerProps) => {
   return (
     <div
       className={cn(
         'border-gray-10 bg-gray-5 relative flex w-full overflow-hidden rounded-lg border',
         'h-[140px] sm:h-[160px] md:h-[180px] lg:h-[200px]',
-        'px-4 sm:px-10 md:px-18 lg:px-[98px]',
+        'px-4 sm:px-[20px] md:px-[36px] lg:px-[50px] xl:px-[98px]',
         className,
       )}
     >
-      <div className="z-10 flex flex-col justify-center gap-2 sm:gap-[19px]">
-        <p className="text-text-main font-memomentKkukkkuk text-2xl">
+      <div className="z-10 flex flex-col justify-center gap-1 sm:gap-2 md:gap-3 lg:gap-4 xl:gap-5">
+        <p className="text-text-main font-memomentKkukkkuk text-base sm:text-lg md:text-xl lg:text-2xl">
           함께하면 더 알뜰하니까!
         </p>
-        <h2 className="font-memomentKkukkkuk text-4xl">
+        <h2 className="font-memomentKkukkkuk text-xl sm:text-2xl md:text-3xl lg:text-4xl">
           지금
           <strong className="text-primary font-memomentKkukkkuk">{` ${title} `}</strong>
           모임에 참여해 보세요!
@@ -36,8 +43,9 @@ export const Banner = ({ title, src, alt, className }: BannerProps) => {
         height={423}
         className={cn(
           'absolute',
-          'right-[16px] sm:right-[32px] md:right-[64px] lg:right-[98px]',
-          'w-[300px] sm:w-[340px] md:w-[380px] lg:w-[423px]',
+          'right-[-16px] sm:right-[-8px] md:right-[28px] lg:right-[58px] xl:right-[98px]',
+          'w-[240px] sm:w-[340px] md:w-[380px] lg:w-[423px]',
+          imageTopClassName,
         )}
       />
     </div>

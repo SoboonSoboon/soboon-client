@@ -29,6 +29,7 @@ export default function SharingPageContent({
         title="소분하기"
         src="/images/banner_dividing.png"
         alt="소분하기 배너"
+        imageTopClassName="top-[-18px] sm:top-[-28px] md:top-[-30px] lg:top-[-34px]"
       />
       <div className="flex w-full items-center justify-between">
         <div className="md:hidden">
