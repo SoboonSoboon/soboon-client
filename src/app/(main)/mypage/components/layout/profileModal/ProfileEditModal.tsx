@@ -161,7 +161,6 @@ export const ProfileEditModal = ({
                       setValue('city', '');
                       setValue('district', '');
                     }}
-                    variant="gray"
                   />
                 </div>
                 <div className="flex-1">
@@ -174,7 +173,6 @@ export const ProfileEditModal = ({
                       setValue('city', value);
                       setValue('district', '');
                     }}
-                    variant="gray"
                   />
                 </div>
                 <div className="flex-1">
@@ -184,7 +182,6 @@ export const ProfileEditModal = ({
                     options={GET_MODEL_DISTRICT_OPTIONS(watchCity)}
                     value={watchDistrict}
                     onChange={(value) => setValue('district', value)}
-                    variant="gray"
                   />
                 </div>
               </div>
