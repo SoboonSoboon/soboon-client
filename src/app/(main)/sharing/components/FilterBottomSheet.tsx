@@ -143,7 +143,6 @@ export const FilterBottomSheet = ({
           <Checkbox
             id="recruiting"
             name="recruiting"
-            className="active:bg-primary checked:border-primary checked:bg-primary size-6 checked:text-white"
             checked={selectedFilters.status === 'RECRUITING'}
             onChange={(checked) =>
               handleStatusChange(checked ? 'RECRUITING' : '')

@@ -15,7 +15,7 @@ const Line = () => {
 };
 
 export const FilterSection = () => {
-  const { updateParams, activeProductType, activeProvince, activeCity } =
+  const { updateParams, activeProductType, activeProvince, activeCity, activeStatus } =
     useFilterParams();
 
   const searchParams = useSearchParams();
@@ -65,7 +65,7 @@ export const FilterSection = () => {
         <Checkbox
           id="recruiting"
           name="recruiting"
-          className="active:bg-primary checked:border-primary checked:bg-primary size-6 checked:text-white"
+          checked={activeStatus === 'RECRUITING'}
           onChange={(checked) =>
             handleStatusChange(checked ? 'RECRUITING' : '')
           }

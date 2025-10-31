@@ -20,7 +20,6 @@ export const ReviewToggleButton = ({
         id="hide-completed-reviews"
         checked={isChecked}
         onChange={onChange}
-        className="size-6"
       />
       <Label
         htmlFor="hide-completed-reviews cursor-pointer"
