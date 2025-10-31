@@ -200,7 +200,7 @@ export function UpdateDividingForm({
                     setValue('productType', option.value);
                     clearErrors('productType');
                   }}
-                  className={`hover:border-primary relative flex h-[70px] w-[70px] cursor-pointer items-center justify-center rounded-lg transition-colors duration-200 ${
+                  className={`hover:border-primary relative flex size-[70px] cursor-pointer items-center justify-center rounded-lg transition-colors duration-200 ${
                     watch('productType') === option.value
                       ? 'border-primary border-2'
                       : 'border-gray-10 border'
