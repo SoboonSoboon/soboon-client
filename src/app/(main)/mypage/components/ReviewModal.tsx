@@ -40,11 +40,19 @@ export const ReviewModal = ({
     <Modal
       isOpen={modal.isOpen}
       onClose={modal.close}
-      className="z-40"
+      className="z-40 md:items-center"
       size="custom"
-      contentClassName={`w-[520px] rounded-[24px] p-[52px] flex flex-col gap-8 ${
-        activeMainTab === 'participate' ? 'h-[420px]' : 'h-[677px]'
-      }`}
+      position="bottom"
+      showCloseButton={true}
+      contentClassName={`
+        w-full max-w-none rounded-t-[24px] rounded-b-none p-6
+        md:w-[520px] md:rounded-[24px] md:p-[52px]
+        flex flex-col gap-8
+        ${activeMainTab === 'participate' ? 'h-[420px]' : ' md:h-[677px] h-[520px]'}
+       
+      `}
+      scrollable={true}
+      maxHeight="90vh"
     >
       <div className="flex items-center justify-center">
         <div className="w-full text-center font-serif text-2xl font-bold">
