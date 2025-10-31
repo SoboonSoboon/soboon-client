@@ -21,7 +21,7 @@ export const Banner = ({
       className={cn(
         'border-gray-10 bg-gray-5 relative flex w-full overflow-hidden rounded-lg border',
         'h-[140px] sm:h-[160px] md:h-[180px] lg:h-[200px]',
-        'px-4 sm:px-[20px] md:px-[36px] lg:px-[50px] xl:px-[98px]',
+        'px-7 sm:px-[26px] md:px-[36px] lg:px-[50px] xl:px-[98px]',
         className,
       )}
     >
@@ -32,7 +32,8 @@ export const Banner = ({
         <h2 className="font-memomentKkukkkuk text-xl sm:text-2xl md:text-3xl lg:text-4xl">
           지금
           <strong className="text-primary font-memomentKkukkkuk">{` ${title} `}</strong>
-          모임에 참여해 보세요!
+          모임에 <br className="block sm:hidden" />
+          참여해 보세요!
         </h2>
       </div>
       <div className="absolute"></div>
