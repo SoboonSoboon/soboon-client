@@ -75,14 +75,16 @@ export const ReviewModalContent = ({
       {reviewTargetList.map((step, index) => (
         <div
           key={index}
-          className="border-gray-10 flex cursor-pointer flex-col gap-5 border-b py-5 last:border-b-0"
-          onClick={() => {
-            if (activeMainTab === 'host') {
-              handleItemClick(index);
-            }
-          }}
+          className="border-gray-10 flex flex-col border-b last:border-b-0"
         >
-          <div className="flex cursor-pointer justify-between">
+          <div
+            className="flex cursor-pointer justify-between py-5"
+            onClick={() => {
+              if (activeMainTab === 'host') {
+                handleItemClick(index);
+              }
+            }}
+          >
             <div className="flex items-center gap-3">
               <ProfileImg
                 profileImageUrl={step.profileImageUrl}
@@ -99,7 +101,7 @@ export const ReviewModalContent = ({
             </div>
             <div className="flex items-center">
               {activeMainTab === 'host' && (
-                <button className="flex">
+                <button className="flex cursor-pointer">
                   {expandedIndex === index ? (
                     <ChevronUp size={24} />
                   ) : (
@@ -113,12 +115,15 @@ export const ReviewModalContent = ({
           {/* 드롭다운 내용 */}
           {((activeMainTab === 'host' && expandedIndex === index) ||
             activeMainTab !== 'host') && (
-            <div className="flex flex-col gap-5">
+            <div className="flex flex-col gap-5 pb-5">
               <div className="flex flex-wrap gap-3">
                 {availableKeywords.map((keyword) => (
                   <button
                     key={keyword}
-                    onClick={() => handleKeywordToggle(index, keyword)}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleKeywordToggle(index, keyword);
+                    }}
                     className={`cursor-pointer rounded-lg px-4 py-2 text-sm whitespace-nowrap transition-colors ${
                       selectedKeywords[index]?.includes(keyword)
                         ? 'bg-Green-5'
