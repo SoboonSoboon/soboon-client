@@ -5,5 +5,5 @@ export { CommentSection } from '@/components/marketplace/comment/CommentSection'
 export { DetailAside } from '@/components/marketplace/DetailAside/DetailAside';
 export { ShoppingMeetingRegisterModal } from '@/components/marketplace/registerModal/MeetingRegisterModal';
 export { MeetingActionMenu } from '@/components/marketplace/ActionMenu/MeetingActionMenu';
-export { IntroSection } from '@/components/marketplace/IntroSection';
+export { Banner } from '@/components/marketplace/Banner';
 export { ImageUploadUrlForm } from '@/components/marketplace/registerModal/ImageUploadUrlForm';
