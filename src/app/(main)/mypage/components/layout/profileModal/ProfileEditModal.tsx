@@ -111,8 +111,10 @@ export const ProfileEditModal = ({
       isOpen={isOpen}
       onClose={onClose}
       size="custom"
-      className="z-50"
-      contentClassName="w-full max-w-[510px] h-auto max-h-[90vh] p-4 sm:p-8 lg:p-[52px] mx-4"
+      scrollable={true}
+      maxHeight="90vh"
+      className="z-50 items-end justify-center pb-0 md:items-center md:justify-center md:pb-0"
+      contentClassName="w-full max-w-[510px] h-auto max-h-[90vh] p-4 sm:p-8 lg:p-[52px] mx-4 rounded-t-3xl md:rounded-3xl border-b-0 md:border-b overflow-y-auto"
     >
       <div className="flex flex-col gap-4 sm:gap-6 lg:gap-8">
         <div className="text-center">
