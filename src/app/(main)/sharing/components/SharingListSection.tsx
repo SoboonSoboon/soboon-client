@@ -19,7 +19,7 @@ import { useInfiniteScrollTrigger } from '@/hooks/useScroll';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import { getDividingListApi } from '@/apis/meetings/getDividingListApi';
 import { useEffect } from 'react';
-import { EmptyState } from '@/components/Molecules';
+import { MainEmptyState } from '@/components/Molecules';
 import { useSearchParams } from 'next/navigation';
 import { useDividingSearch } from '@/hooks/useSearch/useDividingSearch';
 
@@ -87,8 +87,7 @@ export const SharingListSection = ({
 
   if (!dividingList || dividingList.pages[0]?.content.length === 0) {
     return (
-      <EmptyState
-        type="main-dividing"
+      <MainEmptyState
         title="아직 소분하기 모임이 없어요"
         description="첫 번째 소분하기 모임을 만들어보세요!"
         primaryButton={{

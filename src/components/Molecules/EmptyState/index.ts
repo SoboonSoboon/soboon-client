@@ -1,7 +1,4 @@
-export { EmptyState } from './EmptyState';
-export type {
-  EmptyStateProps,
-  MainShoppingEmptyStateProps,
-  MainDividingEmptyStateProps,
-  MyPageEmptyStateProps,
-} from './EmptyState';
+export { MainEmptyState } from './MainEmptyState';
+export { MyPageEmptyState } from './MyPageEmptyState';
+export type { MainEmptyStateProps } from './MainEmptyState';
+export type { MyPageEmptyStateProps } from './MyPageEmptyState';
