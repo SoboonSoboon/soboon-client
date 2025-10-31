@@ -6,7 +6,7 @@ import { KeywordChip } from '@/components/Atoms';
 import { PROVINCE_OPTIONS, GET_CITY_OPTIONS } from '@/constants';
 import categories from '@/constants/categories';
 import { useFilterParams } from '@/hooks/useFilterParams';
-import { useEffect, useMemo } from 'react';
+import { useEffect, useMemo, useRef } from 'react';
 import { GoToTopScroll } from '@/utils';
 import { useSearchParams } from 'next/navigation';
 
@@ -19,6 +19,7 @@ export const FilterSection = () => {
     useFilterParams();
 
   const searchParams = useSearchParams();
+  const prevFilterParamsRef = useRef<string>('');
 
   const availableCityOptions = useMemo(() => {
     if (activeProvince === '') {
@@ -52,7 +53,24 @@ export const FilterSection = () => {
   };
 
   useEffect(() => {
-    GoToTopScroll(300);
+    // 필터 관련 파라미터만 추출
+    const currentFilterParams = [
+      searchParams.get('province') || '',
+      searchParams.get('city') || '',
+      searchParams.get('productType') || '',
+      searchParams.get('status') || '',
+    ].join('|');
+
+    // 이전 값이 있고, 실제로 필터 값이 변경된 경우에만 스크롤
+    if (
+      prevFilterParamsRef.current &&
+      prevFilterParamsRef.current !== currentFilterParams
+    ) {
+      GoToTopScroll(250);
+    }
+
+    // 현재 값을 이전 값으로 저장
+    prevFilterParamsRef.current = currentFilterParams;
   }, [searchParams]);
 
   return (
