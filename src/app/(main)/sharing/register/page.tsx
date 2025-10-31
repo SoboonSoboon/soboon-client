@@ -29,7 +29,7 @@ const DIVIDING_PRODUCT_TYPE_OPTIONS = [
 
 const dividingFormSchema = z.object({
   productType: z.string().min(1, { message: '제품 카테고리를 선택해주세요.' }),
-  itemName: z
+  title: z
     .string()
     .min(1, { message: '품목 이름을 입력해주세요.' })
     .refine((val: string) => !/<[^>]*>/i.test(val), {
@@ -98,7 +98,7 @@ export default function DividingRegisterPage() {
     resolver: zodResolver(dividingFormSchema),
     defaultValues: {
       productType: '',
-      itemName: '',
+      title: '',
       capacity: 0,
       location: {
         province: '',
@@ -201,13 +201,13 @@ export default function DividingRegisterPage() {
             )}
             <div className="mt-3">
               <TextInput
-                id="itemName"
+                id="title"
                 placeholder="품목 이름을 적어주세요. (ex. 동물복지 유정란 30구)"
-                {...register('itemName')}
+                {...register('title')}
               />
-              {errors.itemName && (
+              {errors.title && (
                 <p className="mt-2 text-sm text-red-500">
-                  {errors.itemName.message}
+                  {errors.title.message}
                 </p>
               )}
             </div>
