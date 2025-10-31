@@ -8,7 +8,10 @@ export const IntroSection = () => {
   const ref = useSequentialAnimation();
 
   return (
-    <div ref={ref} className="relative h-[calc(100vh-59px)] min-h-[850px]">
+    <div
+      ref={ref}
+      className="relative h-[calc(95vh-59px)] sm:h-[calc(100vh-59px)]"
+    >
       <div className="flex flex-col items-center justify-center text-center">
         <h1
           data-sequence="0"
