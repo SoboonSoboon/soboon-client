@@ -1,4 +1,5 @@
 import { forwardRef } from 'react';
+import { cn } from '@/utils/cn';
 
 export interface CheckboxProps {
   checked?: boolean;
@@ -11,7 +12,18 @@ export interface CheckboxProps {
 }
 
 export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
-  ({ checked, required = false, disabled = false, className, id, name, onChange }, ref) => {
+  (
+    {
+      checked,
+      required = false,
+      disabled = false,
+      className,
+      id,
+      name,
+      onChange,
+    },
+    ref,
+  ) => {
     return (
       <input
         ref={ref}
@@ -19,7 +31,7 @@ export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
         checked={checked}
         required={required}
         disabled={disabled}
-        className={`${className}`}
+        className={cn('checkbox-green', className)}
         id={id}
         name={name}
         onChange={(e) => onChange?.(e.target.checked)}
