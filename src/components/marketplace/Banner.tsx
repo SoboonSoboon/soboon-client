@@ -12,7 +12,7 @@ export const Banner = ({ title, src, alt, className }: BannerProps) => {
   return (
     <div
       className={cn(
-        'border-gray-10 bg-gray-5 relative flex h-[200px] w-full overflow-hidden rounded-lg border px-4 sm:px-10 md:px-18 lg:px-[98px]',
+        'border-gray-10 bg-gray-5 relative flex h-[100px] w-full overflow-hidden rounded-lg border px-4 sm:h-[140px] sm:px-10 md:px-18 lg:h-[200px] lg:px-[98px]',
         className,
       )}
     >
@@ -26,15 +26,14 @@ export const Banner = ({ title, src, alt, className }: BannerProps) => {
           모임에 참여해 보세요!
         </h2>
       </div>
-      <div className="absolute">
-        <Image
-          src={src}
-          alt={alt}
-          width={423}
-          height={423}
-          className="h-auto w-full"
-        />
-      </div>
+      <div className="absolute"></div>
+      <Image
+        src={src}
+        alt={alt}
+        width={423}
+        height={423}
+        className="absolute right-[16px] w-[180px] sm:right-[32px] sm:w-[260px] lg:right-[98px] lg:w-[423px]"
+      />
     </div>
   );
 };
