@@ -129,7 +129,7 @@ export function ShoppingRegisterForm({
             <Dropdown
               name="capacity"
               id="capacity"
-              required
+              // required
               options={CAPACITY_OPTIONS}
               value={formData.capacity.toString()}
               onChange={(value) =>
@@ -149,7 +149,6 @@ export function ShoppingRegisterForm({
                 <Dropdown
                   name="province"
                   id="province"
-                  required
                   options={MODEL_PROVINCE_OPTIONS}
                   value={formData.location.province}
                   onChange={(value) =>
@@ -169,7 +168,6 @@ export function ShoppingRegisterForm({
                 <Dropdown
                   name="city"
                   id="city"
-                  required
                   options={GET_MODEL_CITY_OPTIONS(formData.location.province)}
                   value={formData.location.city}
                   onChange={(value) =>
@@ -188,7 +186,6 @@ export function ShoppingRegisterForm({
                 <Dropdown
                   name="district"
                   id="district"
-                  required
                   options={GET_MODEL_DISTRICT_OPTIONS(formData.location.city)}
                   value={formData.location.district}
                   onChange={(value) =>

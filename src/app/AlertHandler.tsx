@@ -12,7 +12,7 @@ export default function AlertHandler() {
     if (searchParams === 'login_required') {
       error('로그인이 필요합니다.');
     }
-  }, [searchParams]);
+  }, [searchParams, error]);
 
   return null;
 }

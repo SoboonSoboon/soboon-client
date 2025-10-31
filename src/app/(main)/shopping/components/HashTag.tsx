@@ -6,11 +6,9 @@ import { cn } from '@/utils/cn';
 export const HashTag = ({
   tags,
   className,
-  status,
 }: {
   tags: string[];
   className?: string;
-  status?: 'RECRUITING';
 }) => {
   const router = useRouter();
 

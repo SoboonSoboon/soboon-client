@@ -32,7 +32,7 @@ export const Dropdown = ({
   value,
   onChange,
   disabled = false,
-  required = false,
+  //required = false,
   className,
   variant = 'filter',
   ...props

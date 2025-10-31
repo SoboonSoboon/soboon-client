@@ -110,7 +110,7 @@ export function SharingRegisterForm({ handleClose }: SharingRegisterFormProps) {
             <Dropdown
               name="productType"
               id="productType"
-              required
+              //required
               options={categories}
               value={formData.productType}
               onChange={(value) =>
@@ -154,7 +154,6 @@ export function SharingRegisterForm({ handleClose }: SharingRegisterFormProps) {
                 <Dropdown
                   name="province"
                   id="province"
-                  required
                   options={MODEL_PROVINCE_OPTIONS}
                   value={formData.province}
                   onChange={(value) =>
@@ -171,7 +170,6 @@ export function SharingRegisterForm({ handleClose }: SharingRegisterFormProps) {
                 <Dropdown
                   name="city"
                   id="city"
-                  required
                   options={GET_MODEL_CITY_OPTIONS(formData.province)}
                   value={formData.city}
                   onChange={(value) =>
@@ -183,7 +181,6 @@ export function SharingRegisterForm({ handleClose }: SharingRegisterFormProps) {
                 <Dropdown
                   name="district"
                   id="district"
-                  required
                   options={GET_MODEL_DISTRICT_OPTIONS(formData.city)}
                   value={formData.district}
                   onChange={(value) =>
