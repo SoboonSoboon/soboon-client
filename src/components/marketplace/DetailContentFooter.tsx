@@ -2,7 +2,7 @@ import { timeFormatter } from '@/utils';
 
 export const DetailContentFooter = ({ createdAt }: { createdAt: string }) => {
   return (
-    <div className="text-text-sub2 mt-8 flex justify-end gap-4">
+    <div className="text-text-sub2 mt-8 flex justify-end gap-4 text-xs md:text-base">
       <p>{timeFormatter(createdAt)} 작성됨</p>
     </div>
   );
