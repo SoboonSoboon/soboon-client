@@ -36,7 +36,7 @@ export const ActionMenu = ({
     <div
       ref={menuRef}
       className={cn(
-        'border-gray-10 mt-2.5 flex w-35 flex-col rounded-xl border bg-white shadow-[0_0_6px_rgba(0,0,0,0.15)]',
+        'border-gray-10 mt-2.5 flex w-28 flex-col rounded-xl border bg-white shadow-[0_0_6px_rgba(0,0,0,0.15)] md:w-35',
         className,
       )}
       {...props}
