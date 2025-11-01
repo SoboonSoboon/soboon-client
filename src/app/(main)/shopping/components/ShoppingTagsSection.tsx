@@ -38,7 +38,7 @@ export const ShoppingTagsSection = () => {
   }
 
   return (
-    <div className="flex flex-wrap justify-start gap-2">
+    <div className="flex flex-wrap justify-start gap-2 sm:justify-center">
       <KeywordChip
         label="전체"
         variant={activeTag === '' ? 'active' : 'inactive'}
