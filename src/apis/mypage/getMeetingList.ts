@@ -65,7 +65,7 @@ export const getBookmarkMeetingList = async (
     });
     return response.data;
   } catch (error) {
-    console.error(' 찜한 모임 데이터를 가져오는데 실패했습니다:', error);
+    console.error('찜한 모임 데이터를 가져오는데 실패했습니다:', error);
     throw error;
   }
 };

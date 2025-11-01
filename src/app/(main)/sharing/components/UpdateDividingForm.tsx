@@ -56,24 +56,24 @@ const dividingFormSchema = z.object({
     district: z.string().min(1, { message: '주소를 선택해주세요.' }),
     detail: z
       .string()
-      .min(1, { message: '상세 주소를 입력해주세요.' })
+      .min(1, { message: '상세 주소를 입력해 주세요.' })
       .min(FORM_VALIDATION.MIN_LOCATION_DETAIL_LENGTH, {
-        message: `상세 주소는 ${FORM_VALIDATION.MIN_LOCATION_DETAIL_LENGTH}자 이상 입력해주세요.`,
+        message: `상세 주소는 ${FORM_VALIDATION.MIN_LOCATION_DETAIL_LENGTH}자 이상 입력해 주세요.`,
       })
       .max(FORM_VALIDATION.MAX_LOCATION_DETAIL_LENGTH, {
-        message: `상세 주소는 ${FORM_VALIDATION.MAX_LOCATION_DETAIL_LENGTH}자 이하로 입력해주세요.`,
+        message: `상세 주소는 ${FORM_VALIDATION.MAX_LOCATION_DETAIL_LENGTH}자 이하로 입력해 주세요.`,
       }),
   }),
   imageUrls: z.array(z.string()).max(FORM_VALIDATION.MAX_IMAGE_COUNT, {
-    message: `이미지는 최대 ${FORM_VALIDATION.MAX_IMAGE_COUNT}장까지만 추가할 수 있습니다.`,
+    message: `이미지는 최대 ${FORM_VALIDATION.MAX_IMAGE_COUNT}장까지만 추가할 수 있어요.`,
   }),
   description: z
     .string()
     .min(FORM_VALIDATION.MIN_DESCRIPTION_LENGTH, {
-      message: `상세 설명은 ${FORM_VALIDATION.MIN_DESCRIPTION_LENGTH}자 이상 입력해주세요.`,
+      message: `상세 설명은 ${FORM_VALIDATION.MIN_DESCRIPTION_LENGTH}자 이상 입력해 주세요.`,
     })
     .max(FORM_VALIDATION.MAX_DESCRIPTION_LENGTH, {
-      message: `상세 설명은 ${FORM_VALIDATION.MAX_DESCRIPTION_LENGTH}자 이하로 입력해주세요.`,
+      message: `상세 설명은 ${FORM_VALIDATION.MAX_DESCRIPTION_LENGTH}자 이하로 입력해 주세요.`,
     }),
 });
 
@@ -164,11 +164,11 @@ export function UpdateDividingForm({
       return await updateDividingMeeting(meetingId, requestData);
     },
     onSuccess: (data: ApiResponse<string>) => {
-      success(data.message || '소분 모임이 성공적으로 수정되었습니다.');
+      success(data.message || '소분 모임이 성공적으로 수정되었어요.');
       router.push('/sharing');
     },
     onError: (error: Error) => {
-      showError(error.message || '소분 모임 수정에 실패했습니다.');
+      showError(error.message || '소분 모임 수정에 실패했어요.');
     },
   });
 

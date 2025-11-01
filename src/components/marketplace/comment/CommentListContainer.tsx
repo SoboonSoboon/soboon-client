@@ -58,7 +58,7 @@ export const CommentListContainer = ({
       });
     },
     onError: (err: Error) => {
-      error(err.message || '대댓글 작성에 실패했습니다.');
+      error(err.message || '대댓글 작성에 실패했어요.');
     },
   });
 

@@ -86,11 +86,11 @@ export function useMeetingReview(
           reviewModal.close();
         }
       } else {
-        toast.error(result.error || '리뷰 제출에 실패했습니다');
+        toast.error(result.error || '리뷰 제출에 실패했어요.');
       }
     } catch (error) {
       console.error('Review submission error:', error);
-      toast.error('리뷰 제출 중 오류가 발생했습니다');
+      toast.error('리뷰 제출 중 오류가 발생했어요.');
     }
   };
 

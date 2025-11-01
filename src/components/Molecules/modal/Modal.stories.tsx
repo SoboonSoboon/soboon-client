@@ -785,14 +785,14 @@ export const ScrollableModal: Story = {
   render: (args) => (
     <InteractiveModal {...args}>
       <h2 className="mb-4 text-xl font-bold">스크롤 가능한 모달</h2>
-      <p className="mb-4">이 모달은 내부 스크롤이 가능합니다.</p>
+      <p className="mb-4">이 모달은 내부 스크롤이 가능해요.</p>
       <div className="space-y-4">
         {Array.from({ length: 20 }, (_, i) => (
           <div key={i} className="rounded bg-gray-100 p-4">
             <h3 className="font-semibold">항목 {i + 1}</h3>
             <p className="text-sm text-gray-600">
               이것은 스크롤 가능한 모달의 {i + 1}번째 항목입니다. 내용이
-              많아지면 모달 내부에서 스크롤할 수 있습니다.
+              많아지면 모달 내부에서 스크롤할 수 있어요.
             </p>
           </div>
         ))}
