@@ -123,9 +123,10 @@ export const Header = () => {
             <>
               <div className="group relative">
                 <Button
+                  size="small"
                   onClick={redirectToKakao}
                   label="시작하기"
-                  className="h-[40px] text-[14px] sm:h-[48px] sm:text-[16px]"
+                  className="md:test-base md:h-11 md:px-5"
                 />
                 <div className="absolute top-[140%] right-0 hidden w-[238px] sm:group-hover:block xl:left-1/2 xl:-translate-x-1/2">
                   <SpeechBubble>
