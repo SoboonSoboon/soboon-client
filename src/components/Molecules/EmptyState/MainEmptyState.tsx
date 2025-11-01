@@ -4,6 +4,7 @@ import { Button } from '@/components';
 import Image from 'next/image';
 
 export interface MainEmptyStateProps {
+  title?: string;
   description: string;
   primaryButton: {
     text: string;
@@ -20,6 +21,7 @@ export interface MainEmptyStateProps {
 
 export const MainEmptyState = (props: MainEmptyStateProps) => {
   const {
+    title,
     description,
     primaryButton,
     secondaryButton,
@@ -36,6 +38,9 @@ export const MainEmptyState = (props: MainEmptyStateProps) => {
           height={200}
           className="mx-auto"
         />
+        {title && (
+          <h3 className="text-text-main mb-2 text-lg font-semibold">{title}</h3>
+        )}
         <p className="mb-8">{description}</p>
       </div>
       <div className="flex flex-col gap-3">
