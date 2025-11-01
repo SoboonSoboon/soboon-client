@@ -1,6 +1,6 @@
 'use client';
 
-import { containsUrls, extractUrls, splitTextByUrls } from '@/utils';
+import { containsUrls, splitTextByUrls } from '@/utils';
 import { ExternalLink } from 'lucide-react';
 
 interface LinkRendererProps {
@@ -15,8 +15,7 @@ export const LinkRenderer = ({ text }: LinkRendererProps) => {
   if (!containsUrls(text)) {
     return <div className="p-2 whitespace-pre-wrap text-gray-700">{text}</div>;
   }
-
-  const urls = extractUrls(text);
+  //const urls = extractUrls(text);
   const textParts = splitTextByUrls(text);
 
   return (

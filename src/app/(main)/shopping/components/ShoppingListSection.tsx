@@ -176,7 +176,7 @@ export const ShoppingListSection = ({
                       {shopping.tags && shopping.tags.length > 0 && (
                         <HashTag
                           tags={shopping.tags}
-                          status={shopping.status as 'RECRUITING'}
+                          // status={shopping.status as 'RECRUITING'}
                         />
                       )}
                     </div>

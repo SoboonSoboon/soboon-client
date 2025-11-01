@@ -14,7 +14,7 @@ export const MeetingCardInfo = ({
   return (
     <div className="flex w-full items-center justify-between text-sm">
       <p className="text-text-sub2 flex items-center gap-1">
-        <span>작성자</span>
+        <span>{meeting.hostName}</span>
         <span>・</span>
         <time dateTime={meeting.createdAt}>
           {timeFormatter(meeting.createdAt)}
