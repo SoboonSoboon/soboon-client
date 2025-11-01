@@ -66,8 +66,8 @@ export const FilterSection = () => {
   }, [searchParams]);
 
   return (
-    <div className="flex-col justify-between md:flex">
-      <div className="flex w-full max-w-92 gap-2">
+    <div className="flex flex-col gap-2 md:flex-row md:justify-between">
+      <div className="flex w-full gap-2 md:max-w-92">
         <Dropdown
           name="province"
           value={activeProvince}
@@ -97,7 +97,7 @@ export const FilterSection = () => {
         />
       </div>
 
-      <div className="mt-3 flex w-full max-w-[361px] justify-between gap-2.5 md:mt-0">
+      <div className="flex w-full justify-between gap-2.5 md:max-w-[361px]">
         <DateFilter
           onChange={(value) => handleDateChange(value)}
           className="!h-[44px]"
