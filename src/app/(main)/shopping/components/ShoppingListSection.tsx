@@ -135,17 +135,11 @@ export const ShoppingListSection = ({
     <>
       {items.length === 0 ? (
         <MainEmptyState
-          title="아직 장보기 모임이 없어요"
-          description="첫 번째 장보기 모임을 만들어보세요!"
+          description="조건에 맞는 모임이 없어요"
           primaryButton={{
-            text: '장보기 모임 만들기',
+            text: '모임 만들기',
             href: '/shopping/register',
             variant: 'filled',
-          }}
-          secondaryButton={{
-            text: '소분하기 모임 둘러보기',
-            href: '/sharing',
-            variant: 'outline',
           }}
           padding="py-[52px]"
         />

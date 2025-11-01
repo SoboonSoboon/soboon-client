@@ -23,7 +23,7 @@ export default function ImageUploadForm({
     const totalFiles = imageFiles.length + newFiles.length;
 
     if (totalFiles > 10) {
-      alert('이미지는 최대 10개까지 업로드할 수 있습니다.');
+      alert('이미지는 최대 10개까지 업로드할 수 있어요.');
       return;
     }
 

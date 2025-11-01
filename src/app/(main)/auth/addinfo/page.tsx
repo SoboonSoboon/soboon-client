@@ -69,7 +69,7 @@ export default function AddInfoPage() {
 
   if (isLoading) return <div>로딩 중...</div>;
   if (error) return <div>에러: {error.message}</div>;
-  if (!profileData) return <div>데이터가 없습니다.</div>;
+  if (!profileData) return <div>데이터가 없어요.</div>;
 
   return (
     <div className="flex min-h-screen flex-col">
@@ -80,7 +80,7 @@ export default function AddInfoPage() {
           </div>
           <p className="text-center text-base font-normal text-gray-800">
             소분소분의 원활한 이용을 위해
-            <br />새 프로필을 생성합니다
+            <br />새 프로필을 생성해 주세요.
           </p>
         </div>
       </div>

@@ -4,7 +4,7 @@ import { Button } from '@/components';
 import Image from 'next/image';
 
 export interface MainEmptyStateProps {
-  title: string;
+  title?: string;
   description: string;
   primaryButton: {
     text: string;
@@ -32,21 +32,22 @@ export const MainEmptyState = (props: MainEmptyStateProps) => {
     <div className={`flex flex-col items-center justify-center ${padding}`}>
       <div className="flex flex-col items-center justify-center text-center">
         <Image
-          src="/images/empty_image.png"
+          src="/images/empty_image.svg"
           alt="빈 데이터 이미지"
           width={200}
           height={200}
           className="mx-auto"
         />
-        <div className="mb-8 flex flex-col items-center justify-center gap-2">
-          <p>{title}</p>
-          <p>{description}</p>
-        </div>
+        {title && (
+          <h3 className="text-text-main mb-2 text-lg font-semibold">{title}</h3>
+        )}
+        <p className="mb-8">{description}</p>
       </div>
       <div className="flex flex-col gap-3">
         <Button
           onClick={() => (window.location.href = primaryButton.href)}
           variant={primaryButton.variant || 'filled'}
+          className="w-[256px]"
         >
           {primaryButton.text}
         </Button>
