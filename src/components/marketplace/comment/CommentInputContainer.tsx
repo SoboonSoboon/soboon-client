@@ -72,7 +72,7 @@ export const CommentInputContainer = ({
             }
           />
           {isLoggedIn && (
-            <div className="absolute top-1/2 right-3 flex translate-y-[-50%] items-center gap-1 select-none">
+            <div className="absolute top-1/2 right-4 flex translate-y-[-50%] items-center gap-1 select-none">
               <input type="checkbox" id="secret" name="secret" />
               <label
                 htmlFor="secret"

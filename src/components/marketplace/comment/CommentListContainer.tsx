@@ -162,7 +162,7 @@ export const CommentListContainer = ({
                           name="reply"
                           className="!border-text-line1 !border bg-white pr-[90px]"
                         />
-                        <div className="absolute top-1/2 right-3 flex translate-y-[-50%] items-center gap-1 select-none">
+                        <div className="absolute top-1/2 right-4 flex translate-y-[-50%] items-center gap-1 select-none">
                           <input
                             type="checkbox"
                             id="replySecret"
