@@ -23,7 +23,7 @@ export function useMeetingReview(
   const queryClient = useQueryClient();
   const toast = useToast();
 
-  // 리뷰 데이터 가져오기 (완료된 모임만)
+  // 리뷰 데이터 가져오기
   const {
     data: reviewTargetData,
     isLoading,
