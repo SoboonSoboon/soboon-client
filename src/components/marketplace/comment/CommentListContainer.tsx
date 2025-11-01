@@ -216,9 +216,9 @@ export const CommentListContainer = ({
             </div>
           ))}
       </div>
-      <p className="text-text-sub2 mt-6 text-center text-sm">
+      <p className="text-text-sub2 my-[96px] text-center text-sm">
         {isFetchingNextPage && '로딩 중이예요 ...'}
-        {!commentList.pages[0]?.content.length && '댓글이 없어요 👋'}
+        {!commentList.pages[0]?.content.length && '아직 댓글이 없어요 🍂'}
         {!hasNextPage &&
           commentList.pages[0]?.content.length > 0 &&
           '모든 댓글을 불러왔어요 👋'}
