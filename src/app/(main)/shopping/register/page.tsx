@@ -133,14 +133,18 @@ export default function ShoppingRegisterPage() {
               <Label htmlFor="title" className="font-semibold" required>
                 어떤 장보기 모임을 만들까요?
               </Label>
-              <TextInput
-                id="title"
-                {...register('title')}
-                placeholder="ex) 트레이더스 고양점에서 등심 고기 사실 분?"
-              />
-              {errors.title && (
-                <p className="text-sm text-red-500">{errors.title.message}</p>
-              )}
+              <div className="flex flex-col gap-1">
+                <TextInput
+                  id="title"
+                  {...register('title')}
+                  placeholder="ex) 트레이더스 고양점에서 등심 고기 사실 분?"
+                />
+                {errors.title && (
+                  <p className="ml-1 text-sm text-red-500">
+                    {errors.title.message}
+                  </p>
+                )}
+              </div>
             </div>
           </div>
 
@@ -149,33 +153,37 @@ export default function ShoppingRegisterPage() {
               <Label htmlFor="tags" className="font-semibold" required>
                 모임 태그를 붙여볼까요?
               </Label>
-              <div className="flex flex-wrap gap-2">
-                {SHOPPING_TAGS.map((tags: ShoppingTagType) => {
-                  const isSelected = watch('tags')?.includes(tags.value);
+              <div className="flex flex-col gap-1">
+                <div className="flex flex-wrap gap-2">
+                  {SHOPPING_TAGS.map((tags: ShoppingTagType) => {
+                    const isSelected = watch('tags')?.includes(tags.value);
 
-                  return (
-                    <KeywordChip
-                      key={`# ${tags.value}`}
-                      label={`# ${tags.label}`}
-                      onClick={() => {
-                        const currentTags = watch('tags') || [];
-                        if (isSelected) {
-                          setValue(
-                            'tags',
-                            currentTags.filter((t) => t !== tags.value),
-                          );
-                        } else {
-                          setValue('tags', [...currentTags, tags.value]);
-                        }
-                      }}
-                      variant={isSelected ? 'active' : 'inactive'}
-                    />
-                  );
-                })}
+                    return (
+                      <KeywordChip
+                        key={`# ${tags.value}`}
+                        label={`# ${tags.label}`}
+                        onClick={() => {
+                          const currentTags = watch('tags') || [];
+                          if (isSelected) {
+                            setValue(
+                              'tags',
+                              currentTags.filter((t) => t !== tags.value),
+                            );
+                          } else {
+                            setValue('tags', [...currentTags, tags.value]);
+                          }
+                        }}
+                        variant={isSelected ? 'active' : 'inactive'}
+                      />
+                    );
+                  })}
+                </div>
+                {errors.tags && (
+                  <p className="ml-1 text-sm text-red-500">
+                    {errors.tags.message}
+                  </p>
+                )}
               </div>
-              {errors.tags && (
-                <p className="text-sm text-red-500">{errors.tags.message}</p>
-              )}
             </div>
           </div>
 
@@ -183,105 +191,119 @@ export default function ShoppingRegisterPage() {
             <Label htmlFor="capacity" className="font-semibold" required>
               몇 명이 함께 하면 좋을까요?
             </Label>
-            <Dropdown
-              name="capacity"
-              id="capacity"
-              options={CAPACITY_OPTIONS}
-              value={watch('capacity')}
-              onChange={(value) => {
-                setValue('capacity', +value);
-                clearErrors('capacity');
-              }}
-            />
-            {errors.capacity && (
-              <p className="text-sm text-red-500">{errors.capacity.message}</p>
-            )}
+            <div className="flex flex-col gap-1">
+              <Dropdown
+                name="capacity"
+                id="capacity"
+                options={CAPACITY_OPTIONS}
+                value={watch('capacity')}
+                onChange={(value) => {
+                  setValue('capacity', +value);
+                  clearErrors('capacity');
+                }}
+              />
+              {errors.capacity && (
+                <p className="ml-1 text-sm text-red-500">
+                  {errors.capacity.message}
+                </p>
+              )}{' '}
+            </div>
           </div>
 
           <div className="flex flex-col gap-3">
             <Label htmlFor="province" className="font-semibold" required>
               어디서 만날까요?
             </Label>
-            <div className="flex flex-col gap-3 sm:items-center">
-              <div className="flex w-full flex-col gap-3 sm:flex-row sm:items-center sm:gap-2.5">
-                <div className="flex-1">
-                  <Dropdown
-                    name="location.province"
-                    id="location.province"
-                    options={MODEL_PROVINCE_OPTIONS}
-                    value={watch('location.province')}
-                    onChange={(value) => {
-                      setValue('location.province', value);
-                      clearErrors('location.province');
-                    }}
-                  />
+            <div className="flex flex-col gap-1">
+              <div className="flex flex-col gap-3 sm:items-center">
+                <div className="flex w-full flex-col gap-3 sm:flex-row sm:items-center sm:gap-2.5">
+                  <div className="flex-1">
+                    <Dropdown
+                      name="location.province"
+                      id="location.province"
+                      options={MODEL_PROVINCE_OPTIONS}
+                      value={watch('location.province')}
+                      onChange={(value) => {
+                        setValue('location.province', value);
+                        clearErrors('location.province');
+                      }}
+                    />
+                  </div>
+                  <div className="flex-1">
+                    <Dropdown
+                      name="location.city"
+                      id="location.city"
+                      options={GET_MODEL_CITY_OPTIONS(
+                        watch('location.province'),
+                      )}
+                      value={watch('location.city')}
+                      onChange={(value) => {
+                        setValue('location.city', value);
+                        clearErrors('location.city');
+                      }}
+                    />
+                  </div>
+                  <div className="flex-1">
+                    <Dropdown
+                      name="location.district"
+                      id="location.district"
+                      options={GET_MODEL_DISTRICT_OPTIONS(
+                        watch('location.city'),
+                      )}
+                      value={watch('location.district')}
+                      onChange={(value) => {
+                        setValue('location.district', value);
+                        clearErrors('location.district');
+                      }}
+                    />
+                  </div>
                 </div>
-                <div className="flex-1">
-                  <Dropdown
-                    name="location.city"
-                    id="location.city"
-                    options={GET_MODEL_CITY_OPTIONS(watch('location.province'))}
-                    value={watch('location.city')}
-                    onChange={(value) => {
-                      setValue('location.city', value);
-                      clearErrors('location.city');
-                    }}
-                  />
-                </div>
-                <div className="flex-1">
-                  <Dropdown
-                    name="location.district"
-                    id="location.district"
-                    options={GET_MODEL_DISTRICT_OPTIONS(watch('location.city'))}
-                    value={watch('location.district')}
-                    onChange={(value) => {
-                      setValue('location.district', value);
-                      clearErrors('location.district');
-                    }}
+                <div className="w-full">
+                  <TextInput
+                    id="location.detail"
+                    placeholder="나머지 장소를 입력해 주세요"
+                    {...register('location.detail')}
                   />
                 </div>
               </div>
-              <div className="w-full">
-                <TextInput
-                  id="location.detail"
-                  placeholder="나머지 장소를 입력해 주세요"
-                  {...register('location.detail')}
-                />
-              </div>
+              {errors.location && (
+                <>
+                  {(errors.location.district ||
+                    errors.location.city ||
+                    errors.location.province) && (
+                    <p className="ml-1 text-sm text-red-500">
+                      {errors.location.district?.message}
+                    </p>
+                  )}
+                </>
+              )}
+              {errors.location?.detail && (
+                <p className="ml-1 text-sm text-red-500">
+                  {errors.location?.detail.message}
+                </p>
+              )}
             </div>
-            {errors.location && (
-              <>
-                {(errors.location.district ||
-                  errors.location.city ||
-                  errors.location.province) && (
-                  <p className="text-sm text-red-500">
-                    {errors.location.district?.message}
-                  </p>
-                )}
-              </>
-            )}
-            {errors.location?.detail && (
-              <p className="text-sm text-red-500">
-                {errors.location?.detail.message}
-              </p>
-            )}
           </div>
 
           <div className="flex flex-col gap-3">
             <Label htmlFor="detail" className="font-semibold" required>
               모임의 설명 글을 작성해 주세요.
             </Label>
-            <Textarea
-              className="min-h-[120px] sm:min-h-[150px] lg:min-h-[173px]"
-              id="description"
-              {...register('detail')}
-              placeholder={`ex) 대량 고기를 사서 나누고 싶어요.
+            <div className="flex flex-col gap-1">
+              <Textarea
+                className="min-h-[120px] sm:min-h-[150px] lg:min-h-[173px]"
+                id="description"
+                {...register('detail')}
+                placeholder={`ex) 대량 고기를 사서 나누고 싶어요.
 그 외 필요한 구매 물품은 개인 구매하셔도 되어요.
 이번주 토요일인 10월 10일 오후 3시에 만나기로 해요.`}
-            />
-            {errors.detail && (
-              <p className="text-sm text-red-500">{errors.detail.message}</p>
-            )}
+              />
+              {errors.detail && (
+                <p className="ml-1 text-sm text-red-500">
+                  {errors.detail.message}
+                </p>
+              )}
+            </div>
           </div>
 
           <Button
