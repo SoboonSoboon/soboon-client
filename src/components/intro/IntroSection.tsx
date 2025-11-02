@@ -41,6 +41,7 @@ export const IntroSection = () => {
             alt="intro-section"
             width={417}
             height={334}
+            sizes="(max-width: 640px) 35vw, (max-width: 1024px) 38vw, 412px"
             className="z-2 h-auto w-[35%] max-w-[417px] object-contain sm:w-[38%] lg:w-[40%]"
           />
           <Image
@@ -49,6 +50,7 @@ export const IntroSection = () => {
             alt="intro-section"
             width={630}
             height={360}
+            sizes="(max-width: 1024px) 55vw, 618px"
             className="z-2 h-auto w-[55%] max-w-[630px] rotate-3 object-contain lg:w-[60%]"
           />
         </div>
