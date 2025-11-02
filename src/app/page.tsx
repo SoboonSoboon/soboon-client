@@ -1,7 +1,9 @@
-import { IntroSection } from '@/components/intro/IntroSection';
-import { IntroScroll } from '@/components/intro/IntroScroll';
-import { IntroCarousel } from '@/components/intro/IntroCarousel';
-import { IntroAccordion } from '@/components/intro/IntroAccordion';
+import {
+  IntroSection,
+  IntroScroll,
+  IntroCarousel,
+  IntroAccordion,
+} from '@/components/intro';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {

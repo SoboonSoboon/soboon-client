@@ -12,11 +12,11 @@ export type { IconType, IconSize } from './Icon/iconType';
 export { Label } from './Label/Label';
 export { LinkRenderer } from './LinkRenderer/LinkRenderer';
 export { Logo } from './Logo/Logo';
-export { ProfileImg } from './ProfileImg';
 export { Textarea } from './Textarea/Textarea';
 export { TextInput } from './TextInput/TextInput';
-export { Toast, useToast } from './Toast';
-export { Checkbox, type CheckboxProps } from './Checkbox';
+export { Toast } from './Toast/Toast';
+export { useToast } from './Toast/useToast';
+export { Checkbox, type CheckboxProps } from './Checkbox/Checkbox';
 export { GoToTopButton } from './GoToTopButton/GoToTopButton';
 export { CreateButton } from './CreateButton/CreateButton';
 export { Carousel } from './Carousel/Carousel';
@@ -33,5 +33,6 @@ export {
   type AccordionItem,
   type AccordionProps,
 } from './Accordion/Accordion';
-export { ToastProvider } from './Toast/ToastContext';
+export { ProfileImg } from './ProfileImg/ProfileImg';
 export { SpeechBubble } from './SpeechBubble/SpeechBubble';
+export { ToastProvider } from './Toast/ToastContext';
