@@ -1,11 +1,6 @@
 'use client';
 
-import {
-  Button,
-  ProfileImg,
-  ReviewItemBar,
-  Skeleton,
-} from '@/components/Atoms';
+import { Button, ProfileImg, ReviewItemBar } from '@/components/Atoms';
 import { useModal } from '@/components/Molecules';
 import { useAuthStore } from '@/apis/auth/hooks/authStore';
 import { REVIEW_KEYWORD_LABELS } from '@/constants';

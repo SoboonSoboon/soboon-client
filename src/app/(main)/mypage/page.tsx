@@ -1,6 +1,6 @@
 'use client';
 
-import { Suspense, useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { isAxiosError } from 'axios';
 import { MypageHeader, CardList } from '@/app/(main)/mypage/components';
 
