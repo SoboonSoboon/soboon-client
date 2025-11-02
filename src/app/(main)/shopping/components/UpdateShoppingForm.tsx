@@ -20,7 +20,7 @@ import {
 } from '@/constants/locations';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
-import z from 'zod';
+import * as z from 'zod/mini';
 import { useMutation } from '@tanstack/react-query';
 import { ApiResponse } from '@/types/common';
 import { useRouter } from 'next/navigation';
@@ -29,32 +29,58 @@ import { MeetingDetailType } from '@/types/meetingsType';
 import { updateShoppingMeeting } from '@/action/meetingAction';
 
 const shoppingFormSchema = z.object({
-  title: z
-    .string()
-    .min(1, { message: '제목을 입력해 주세요.' })
-    .max(50, { message: '제목은 50자 이하로 입력해 주세요.' }),
-  capacity: z
-    .number()
-    .min(1, { message: '모집 인원을 선택해 주세요.' })
-    .min(2, { message: '모집 인원은 2명 이상이어야 해요.' })
-    .max(5, { message: '모집 인원은 5명 이하로 입력해 주세요.' }),
+  title: z.string().check(
+    z.refine((val) => val.length > 0, { message: '제목을 입력해 주세요.' }),
+    z.refine((val) => val.length <= 50, {
+      message: '제목은 50자 이하로 입력해 주세요.',
+    }),
+  ),
+  capacity: z.number().check(
+    z.refine((val) => val >= 1, { message: '모집 인원을 선택해 주세요.' }),
+    z.refine((val) => val >= 2, {
+      message: '모집 인원은 2명 이상이어야 해요.',
+    }),
+    z.refine((val) => val <= 5, {
+      message: '모집 인원은 5명 이하로 입력해 주세요.',
+    }),
+  ),
   tags: z
     .array(z.string())
-    .min(1, { message: '1개 이상의 태그를 선택해 주세요.' }),
+    .check(
+      z.refine((val) => val.length >= 1, {
+        message: '1개 이상의 태그를 선택해 주세요.',
+      }),
+    ),
   location: z.object({
-    province: z.string().min(1, { message: '주소를 선택해 주세요.' }),
-    city: z.string().min(1, { message: '주소를 선택해 주세요.' }),
-    district: z.string().min(1, { message: '주소를 선택해 주세요.' }),
-    detail: z
-      .string()
-      .min(1, { message: '상세 주소를 입력해 주세요.' })
-      .min(3, { message: '상세 주소는 3자 이상 입력해 주세요.' })
-      .max(10, { message: '상세 주소는 10자 이하로 입력해 주세요.' }),
+    province: z.string().check(
+      z.refine((val) => val.length > 0, { message: '주소를 선택해 주세요.' }),
+    ),
+    city: z.string().check(
+      z.refine((val) => val.length > 0, { message: '주소를 선택해 주세요.' }),
+    ),
+    district: z.string().check(
+      z.refine((val) => val.length > 0, { message: '주소를 선택해 주세요.' }),
+    ),
+    detail: z.string().check(
+      z.refine((val) => val.length > 0, {
+        message: '상세 주소를 입력해 주세요.',
+      }),
+      z.refine((val) => val.length >= 3, {
+        message: '상세 주소는 3자 이상 입력해 주세요.',
+      }),
+      z.refine((val) => val.length <= 10, {
+        message: '상세 주소는 10자 이하로 입력해 주세요.',
+      }),
+    ),
   }),
-  detail: z
-    .string()
-    .min(10, { message: '모임의 설명은 10자 이상 입력해 주세요.' })
-    .max(500, { message: '모임의 설명은 500자 이하로 입력해 주세요.' }),
+  detail: z.string().check(
+    z.refine((val) => val.length >= 10, {
+      message: '모임의 설명은 10자 이상 입력해 주세요.',
+    }),
+    z.refine((val) => val.length <= 500, {
+      message: '모임의 설명은 500자 이하로 입력해 주세요.',
+    }),
+  ),
 });
 
 type ShoppingFormData = z.infer<typeof shoppingFormSchema>;
