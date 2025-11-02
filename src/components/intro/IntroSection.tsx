@@ -2,7 +2,6 @@
 
 import Image from 'next/image';
 import { useSequentialAnimation } from '@/hooks/useScrollAnimation';
-import SoboonLogo from '@/app/(main)/auth/components/SoboonLogo';
 
 export const IntroSection = () => {
   const ref = useSequentialAnimation();
@@ -15,21 +14,22 @@ export const IntroSection = () => {
       <div className="flex flex-col items-center justify-center text-center">
         <h1
           data-sequence="0"
-          className="pt-[130px] text-[28px] leading-tight text-black sm:text-[36px] lg:text-[44px]"
+          className="pt-[110px] text-[28px] leading-tight text-black sm:text-[36px] lg:text-[44px]"
         >
           함께 사서, <br />
           알뜰하게 나누는 소비
         </h1>
-        <div className="py-4 sm:py-6">
-          <SoboonLogo
-            sequence={true}
-            color="#00B460"
-            height={50}
-            gap={7}
-            iconHeight={64}
+        <div className="py-2 sm:py-4">
+          <Image
+            src="/images/green_logo.png"
+            alt="로고이미지"
+            width={250}
+            height={250}
+            priority
+            className="h-auto w-auto"
           />
         </div>
-        <p data-sequence="300" className="pt-2">
+        <p data-sequence="300" className="z-10">
           대용량 제품을 같이 사서, 필요한 만큼만 소분해요.
         </p>
       </div>
@@ -51,6 +51,7 @@ export const IntroSection = () => {
             width={630}
             height={360}
             sizes="(max-width: 1024px) 55vw, 618px"
+            priority
             className="z-2 h-auto w-[55%] max-w-[630px] rotate-3 object-contain lg:w-[60%]"
           />
         </div>
