@@ -324,6 +324,7 @@ export function UpdateShoppingForm({
 
           <Button
             label="확인"
+            aria-label="확인 버튼"
             type="submit"
             className="w-full sm:w-auto sm:min-w-[120px]"
           />

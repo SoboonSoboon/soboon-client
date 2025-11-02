@@ -85,6 +85,7 @@ export const CommentInputContainer = ({
         </div>
         <Button
           label="작성"
+          aria-label="작성 버튼"
           type="submit"
           variant="outline"
           className={cn(

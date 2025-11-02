@@ -23,7 +23,7 @@ export default function NotFound() {
         </p>
       </div>
       <Link href="/">
-        <Button label="홈으로" variant="outline" />
+        <Button label="홈으로" aria-label="홈으로" variant="outline" />
       </Link>
     </div>
   );

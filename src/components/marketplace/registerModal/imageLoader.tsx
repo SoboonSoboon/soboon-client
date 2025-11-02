@@ -68,6 +68,7 @@ export default function ImageUploadForm({
         <Button
           variant="outline"
           label="파일 찾기"
+          aria-label="파일 찾기 버튼"
           onClick={() => inputRef.current?.click()}
           disabled={imageFiles.length >= 10}
         />
@@ -89,6 +90,7 @@ export default function ImageUploadForm({
                   height={100}
                 />
                 <button
+                  aria-label="이미지 삭제 버튼"
                   onClick={() => handleRemoveImage(index)}
                   className="bg-primary absolute top-1.5 right-1.5 cursor-pointer rounded-full p-1 text-white"
                 >

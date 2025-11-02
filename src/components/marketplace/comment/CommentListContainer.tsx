@@ -179,12 +179,14 @@ export const CommentListContainer = ({
                       <div className="flex gap-2">
                         <Button
                           label="작성"
+                          aria-label="작성 버튼"
                           type="submit"
                           className="text-primary border-primary w-20"
                           variant="outline"
                         />
                         <Button
                           label="취소"
+                          aria-label="취소 버튼"
                           className="w-20 !border-[var(--GrayScale-Gray20)] !text-[var(--GrayScale-Gray60)]"
                           variant="outline"
                           onClick={handleCloseReply}

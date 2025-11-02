@@ -175,6 +175,7 @@ export const CommentItem = ({
               <Button label="수정" className="text-primary" type="submit" />
               <Button
                 label="취소"
+                aria-label="취소 버튼"
                 variant="outline"
                 type="button"
                 onClick={() => handleCancelClick()}

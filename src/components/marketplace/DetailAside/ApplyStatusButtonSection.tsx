@@ -28,6 +28,7 @@ export const ApplyStatusButtonSection = ({
             filteredStatus?.participationStatus === 'CANCELLED') && (
             <Button
               label="모임 신청"
+              aria-label="모임 신청 버튼"
               className="w-full"
               variant="filled"
               onClick={() => handleApplyMeeting(meetingId)}
@@ -41,6 +42,7 @@ export const ApplyStatusButtonSection = ({
             variant="filled"
             onClick={() => handleCancelApplyMeeting(meetingId)}
             label="신청 취소"
+            aria-label="신청 취소 버튼"
           />
         )}
 
@@ -48,6 +50,7 @@ export const ApplyStatusButtonSection = ({
         {filteredStatus?.participationStatus === 'APPROVED' && (
           <Button
             label="모임 신청이 승인되었어요."
+            aria-label="모임 신청이 승인되었어요. 버튼"
             className="w-full !bg-[var(--GrayScale-Gray30)]"
             variant="filled"
             disabled
@@ -59,6 +62,7 @@ export const ApplyStatusButtonSection = ({
           <Button
             label="모임 신청이 거절되었어요."
             variant="filled"
+            aria-label="모임 신청이 거절되었어요. 버튼"
             className="w-full !bg-[var(--GrayScale-Gray30)]"
             disabled
           />
@@ -69,6 +73,7 @@ export const ApplyStatusButtonSection = ({
           <Button
             label="모임에서 강퇴되었어요."
             variant="filled"
+            aria-label="모임에서 강퇴되었어요. 버튼"
             className="w-full !bg-[var(--GrayScale-Gray30)]"
             disabled
           />
@@ -77,6 +82,7 @@ export const ApplyStatusButtonSection = ({
         {isCompletedOrClosed && !filteredStatus?.participationStatus && (
           <Button
             label="모집 완료"
+            aria-label="모집 완료 버튼"
             variant="filled"
             className="w-full !bg-[var(--GrayScale-Gray30)]"
             disabled

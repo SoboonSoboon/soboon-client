@@ -98,6 +98,7 @@ export const Dropdown = ({
     >
       <button
         type="button"
+        aria-label="드롭다운 버튼"
         name={name}
         id={id}
         className={cn(

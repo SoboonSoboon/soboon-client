@@ -19,7 +19,12 @@ export const ServerErrorPage = () => {
         <br />
         기술팀이 달려가고 있어요!
       </p>
-      <Button label="홈으로" onClick={onButtonClick} variant="outline" />
+      <Button
+        label="홈으로"
+        aria-label="홈으로 버튼"
+        onClick={onButtonClick}
+        variant="outline"
+      />
     </div>
   );
 };

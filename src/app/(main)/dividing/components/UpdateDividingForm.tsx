@@ -196,6 +196,7 @@ export function UpdateDividingForm({
               >
                 <button
                   type="button"
+                  aria-label={option.label}
                   onClick={() => {
                     setValue('productType', option.value);
                     clearErrors('productType');
@@ -391,6 +392,7 @@ export function UpdateDividingForm({
 
       <Button
         label="수정하기"
+        aria-label="수정하기"
         type="submit"
         className="w-full sm:w-auto sm:min-w-[120px]"
       />

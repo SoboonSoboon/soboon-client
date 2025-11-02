@@ -125,6 +125,7 @@ export const Header = () => {
                 <Button
                   size="small"
                   onClick={redirectToKakao}
+                  aria-label="시작하기 버튼"
                   label="시작하기"
                   className="md:test-base md:h-11 md:px-5"
                 />
