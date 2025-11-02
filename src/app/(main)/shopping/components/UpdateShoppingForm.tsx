@@ -24,7 +24,7 @@ import { updateShoppingMeeting } from '@/action/meetingAction';
 const shoppingFormSchema = z.object({
   title: z
     .string()
-    .min(1, { message: '제목을 입력해주세요.' })
+    .min(1, { message: '제목을 입력해 주세요.' })
     .max(50, { message: '제목은 50자 이하로 입력해 주세요.' }),
   capacity: z
     .number()
@@ -169,7 +169,7 @@ export function UpdateShoppingForm({
         >
           <div>
             <Label htmlFor="title" className="font-semibold" required>
-              모임 제목을 입력해주세요
+              모임 제목을 입력해 주세요
             </Label>
             <div className="mt-3">
               <TextInput
@@ -278,7 +278,7 @@ export function UpdateShoppingForm({
               <div className="w-full">
                 <TextInput
                   id="location.detail"
-                  placeholder="나머지 장소를 입력해주세요"
+                  placeholder="나머지 장소를 입력해 주세요"
                   {...register('location.detail')}
                 />
               </div>
@@ -309,11 +309,11 @@ export function UpdateShoppingForm({
               className="min-h-[120px] sm:min-h-[150px] lg:min-h-[173px]"
               id="description"
               {...register('detail')}
-              placeholder={`모집 내용을 작성해주세요.
+              placeholder={`모집 내용을 작성해 주세요.
 
 ex) 대량 고기를 사서 나누고 싶어요.
 그 외 필요한 구매 물품은 개인 구매하셔도 되어요.
-함께 장보기 할 인원은 3명 정도 생각하고 있어요.이번주 토요일인 10월 10일  3시에 만나기로 해요!`}
+함께 장보기 할 인원은 3명 정도 생각하고 있어요.이번주 토요일인 10월 10일 3시에 만나기로 해요!`}
             />
             {errors.detail && (
               <p className="text-sm text-red-500">{errors.detail.message}</p>

@@ -40,7 +40,7 @@ const FORM_VALIDATION = {
 
 const dividingFormSchema = z.object({
   productType: z.string().min(1, { message: '제품 카테고리를 선택해주세요.' }),
-  title: z.string().min(1, { message: '품목 이름을 입력해주세요.' }),
+  title: z.string().min(1, { message: '품목 이름을 입력해 주세요.' }),
   capacity: z
     .number()
     .min(1, { message: '모집 인원을 선택해주세요.' })
@@ -48,12 +48,12 @@ const dividingFormSchema = z.object({
       message: `모집 인원은 ${FORM_VALIDATION.MIN_CAPACITY}명 이상이어야 합니다.`,
     })
     .max(FORM_VALIDATION.MAX_CAPACITY, {
-      message: `모집 인원은 ${FORM_VALIDATION.MAX_CAPACITY}명 이하로 입력해주세요.`,
+      message: `모집 인원은 ${FORM_VALIDATION.MAX_CAPACITY}명 이하로 입력해 주세요.`,
     }),
   location: z.object({
-    province: z.string().min(1, { message: '주소를 선택해주세요.' }),
-    city: z.string().min(1, { message: '주소를 선택해주세요.' }),
-    district: z.string().min(1, { message: '주소를 선택해주세요.' }),
+    province: z.string().min(1, { message: '주소를 선택해 주세요.' }),
+    city: z.string().min(1, { message: '주소를 선택해 주세요.' }),
+    district: z.string().min(1, { message: '주소를 선택해 주세요.' }),
     detail: z
       .string()
       .min(1, { message: '상세 주소를 입력해 주세요.' })
@@ -309,7 +309,7 @@ export function UpdateDividingForm({
           <div className="w-full">
             <TextInput
               id="location.detail"
-              placeholder="나머지 장소를 입력해주세요"
+              placeholder="나머지 장소를 입력해 주세요"
               {...register('location.detail')}
             />
           </div>
@@ -366,11 +366,10 @@ export function UpdateDividingForm({
           className="min-h-[120px] sm:min-h-[150px] lg:min-h-[173px]"
           id="description"
           {...register('description')}
-          placeholder={`모집 내용을 작성해주세요.
+          placeholder={`모집 내용을 작성해 주세요.
 
-ex)
-이런 식으로 나누고 싶어요.
-언제 구매했어요.
+ex) 이런 식으로 나누고 싶어요.
+언제 구매했어요. 
 언제 어디서 만나고 싶어요`}
         />
         {errors.description && (

@@ -31,7 +31,7 @@ const dividingFormSchema = z.object({
   productType: z.string().min(1, { message: '제품 카테고리를 선택해주세요.' }),
   title: z
     .string()
-    .min(1, { message: '품목 이름을 입력해주세요.' })
+    .min(1, { message: '품목 이름을 입력해 주세요.' })
     .refine((val: string) => !/<[^>]*>/i.test(val), {
       message: 'HTML 태그는 사용할 수 없어요.',
     }),
@@ -279,7 +279,7 @@ export default function DividingRegisterPage() {
               <div className="w-full">
                 <TextInput
                   id="location.detail"
-                  placeholder="나머지 장소를 입력해주세요"
+                  placeholder="나머지 장소를 입력해 주세요"
                   {...register('location.detail')}
                 />
               </div>
@@ -329,11 +329,10 @@ export default function DividingRegisterPage() {
               className="min-h-[120px] sm:min-h-[150px] lg:min-h-[173px]"
               id="description"
               {...register('description')}
-              placeholder={`모집 내용을 작성해주세요.
+              placeholder={`모집 내용을 작성해 주세요.
 
-ex)
-이런 식으로 나누고 싶어요.
-언제 구매했어요.
+ex) 이런 식으로 나누고 싶어요.
+언제 구매했어요. 
 언제 어디서 만나고 싶어요`}
             />
             {errors.description && (

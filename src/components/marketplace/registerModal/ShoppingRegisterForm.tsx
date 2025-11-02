@@ -203,7 +203,7 @@ export function ShoppingRegisterForm({
                   name="detail"
                   required
                   id="detail"
-                  placeholder="나머지 장소를 입력해주세요"
+                  placeholder="나머지 장소를 입력해 주세요"
                   value={formData.location.detail}
                   onChange={(e) =>
                     setFormData({
@@ -221,7 +221,7 @@ export function ShoppingRegisterForm({
 
           <div className="flex flex-col gap-3">
             <Label htmlFor="description" required>
-              모임의 설명 글을 작성해보세요!
+              모임의 설명 글을 작성해 보세요!
             </Label>
             <Textarea
               className="min-h-[173px]"
@@ -229,11 +229,11 @@ export function ShoppingRegisterForm({
               id="detail"
               required
               value={formData.detail}
-              placeholder={`모집 내용을 작성해주세요.
+              placeholder={`모집 내용을 작성해 주세요.
 
 ex) 대량 고기를 사서 나누고 싶어요.
 그 외 필요한 구매 물품은 개인 구매하셔도 되어요.
-함께 장보기 할 인원은 3명 정도 생각하고 있어요.이번주 토요일인 10월 10일  3시에 만나기로 해요!`}
+함께 장보기 할 인원은 3명 정도 생각하고 있어요.이번주 토요일인 10월 10일 3시에 만나기로 해요!`}
               onChange={(e) =>
                 setFormData({ ...formData, detail: e.target.value })
               }

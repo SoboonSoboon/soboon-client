@@ -65,7 +65,7 @@ export default function ProfileForm({
             onChange={(e) =>
               setNewData({ ...newData, nickname: e.target.value })
             }
-            placeholder="이름을 입력해주세요"
+            placeholder="이름을 입력해 주세요"
             className={cn(
               'w-full rounded-lg px-4 py-2.5 text-base outline-none',
               'hover:ring-Green-30 hover:ring-2',

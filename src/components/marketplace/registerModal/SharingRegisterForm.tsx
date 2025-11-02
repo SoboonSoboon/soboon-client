@@ -195,7 +195,7 @@ export function SharingRegisterForm({ handleClose }: SharingRegisterFormProps) {
                   name="detail"
                   required
                   id="detail"
-                  placeholder="나머지 장소를 입력해주세요"
+                  placeholder="나머지 장소를 입력해 주세요"
                   value={formData.detail}
                   onChange={(e) =>
                     setFormData({ ...formData, detail: e.target.value })
@@ -229,10 +229,9 @@ export function SharingRegisterForm({ handleClose }: SharingRegisterFormProps) {
               id="description"
               required
               value={formData.description}
-              placeholder={`모집 내용을 작성해주세요.
+              placeholder={`모집 내용을 작성해 주세요.
 
-ex)
-이런 식으로 나누고 싶어요.
+ex) 이런 식으로 나누고 싶어요.
 언제 구매했어요.
 언제 어디서 만나고 싶어요`}
               onChange={(e) =>
