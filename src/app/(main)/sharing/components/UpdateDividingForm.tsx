@@ -207,7 +207,7 @@ export function UpdateDividingForm({
                   }`}
                 >
                   <Image
-                    src={`/images/category_${option.value}.png`}
+                    src={`/images/category_${option.value.toLowerCase()}.png`}
                     alt={option.label}
                     width={94}
                     height={94}
