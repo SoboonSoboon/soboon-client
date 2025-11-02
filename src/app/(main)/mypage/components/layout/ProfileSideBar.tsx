@@ -1,11 +1,10 @@
 'use client';
 
-import { Button, ProfileImg, ReviewItemBar } from '@/components/Atoms';
 import { useModal } from '@/components/Molecules';
 import { useAuthStore } from '@/apis/auth/hooks/authStore';
-import { REVIEW_KEYWORD_LABELS } from '@/constants';
-import { useReviewStats } from '@/hooks';
 import { useReceivedReview } from '../../hook/api/useReceivedReview';
+import { ProfileHeader } from './ProfileHeader';
+import { ReviewSection } from './ReviewSection';
 import dynamic from 'next/dynamic';
 
 export const ProfileSideBar = () => {
@@ -14,14 +13,6 @@ export const ProfileSideBar = () => {
   const userImage = useAuthStore((state) => state.userImage);
 
   const { data: reviews } = useReceivedReview();
-
-  const allKeywords = Object.keys(REVIEW_KEYWORD_LABELS) as Array<
-    keyof typeof REVIEW_KEYWORD_LABELS
-  >;
-
-  const { maxCount, getCountForKeyword } = useReviewStats({
-    reviewKeywords: reviews?.data?.keywords || [],
-  });
 
   const DynamicProfileEditModal = dynamic(
     () =>
@@ -34,34 +25,15 @@ export const ProfileSideBar = () => {
   );
 
   return (
-    <div className="border-gray-10 flex w-full flex-col gap-3 rounded-lg border bg-white px-4 py-6 sm:px-6 sm:py-8 lg:px-8 lg:py-15">
-      <div className="flex flex-col items-center justify-center gap-2.5">
-        <ProfileImg profileImageUrl={userImage || ''} size={118} />
-        {userNickname ? (
-          <h2 className="font-memomentKkukkkuk text-lg sm:text-xl lg:text-2xl">
-            {userNickname}
-          </h2>
-        ) : (
-          <div className="h-5.5 sm:h-7 lg:h-8" />
-        )}
-      </div>
-      <Button
-        label="프로필 수정"
-        aria-label="프로필 수정 버튼"
-        variant="outline"
-        className="w-full"
-        onClick={profileModal.open}
+    <div className="border-gray-10 flex w-full flex-col gap-5 rounded-lg border bg-white p-8 md:px-8 md:py-15">
+      <ProfileHeader
+        userNickname={userNickname}
+        userImage={userImage}
+        onEditClick={profileModal.open}
       />
-      <div className="flex flex-col gap-3 sm:gap-4">
-        {allKeywords.map((keyword, index) => (
-          <ReviewItemBar
-            key={index}
-            count={getCountForKeyword(keyword)}
-            maxCount={maxCount}
-            label={REVIEW_KEYWORD_LABELS[keyword]}
-          />
-        ))}
-      </div>
+
+      <ReviewSection keywords={reviews?.data?.keywords || []} />
+
       <DynamicProfileEditModal
         isOpen={profileModal.isOpen}
         onClose={profileModal.close}
