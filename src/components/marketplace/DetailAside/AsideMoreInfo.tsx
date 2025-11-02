@@ -23,12 +23,12 @@ export const AsideMoreInfo = ({
   return (
     <div className="flex w-full justify-between">
       {/* 상태 바 */}
-      <div>
+      <div className="py-1.5">
         <StatusTag status={status} />
       </div>
 
       {/* 아이콘 버튼 */}
-      <div className="relative flex cursor-pointer justify-center gap-2">
+      <div className="relative flex cursor-pointer justify-center gap-1">
         <div className="flex justify-center p-1.5">
           <Bookmark
             className={`${isBookmarked ? 'text-primary fill-primary' : 'text-gray-40 fill-gray-40'} size-6`}

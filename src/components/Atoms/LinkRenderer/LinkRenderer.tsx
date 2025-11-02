@@ -13,7 +13,7 @@ export const LinkRenderer = ({ text }: LinkRendererProps) => {
   }
 
   if (!containsUrls(text)) {
-    return <div className="p-2 whitespace-pre-wrap text-gray-700">{text}</div>;
+    return <div className="py-2 whitespace-pre-wrap text-gray-700">{text}</div>;
   }
   //const urls = extractUrls(text);
   const textParts = splitTextByUrls(text);

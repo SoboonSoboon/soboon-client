@@ -22,7 +22,7 @@ import { useEffect } from 'react';
 const shoppingFormSchema = z.object({
   title: z
     .string()
-    .min(1, { message: '제목을 입력해주세요.' })
+    .min(1, { message: '제목을 입력해 주세요.' })
     .max(50, { message: '제목은 50자 이하로 입력해 주세요.' })
     .refine((val: string) => !/<[^>]*>/i.test(val), {
       message: 'HTML 태그는 사용할 수 없어요.',
@@ -46,7 +46,7 @@ const shoppingFormSchema = z.object({
       .string()
       .min(1, { message: '상세 주소를 입력해 주세요.' })
       .min(3, { message: '상세 주소는 3자 이상 입력해 주세요.' })
-      .max(50, { message: '상세 주소는 50자 이하로 입력해 주세요.' })
+      .max(10, { message: '상세 주소는 10자 이하로 입력해 주세요.' })
       .refine((val: string) => !/<[^>]*>/i.test(val), {
         message: 'HTML 태그는 사용할 수 없어요.',
       }),
@@ -244,7 +244,7 @@ export default function ShoppingRegisterPage() {
               <div className="w-full">
                 <TextInput
                   id="location.detail"
-                  placeholder="나머지 장소를 입력해주세요"
+                  placeholder="나머지 장소를 입력해 주세요"
                   {...register('location.detail')}
                 />
               </div>

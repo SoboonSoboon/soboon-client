@@ -17,7 +17,7 @@ export const IntroCarousel = () => {
       <div className="flex flex-col items-center justify-center gap-[15px] pt-[100px] sm:gap-[53px] sm:pt-[152px]">
         <strong
           data-scroll="fade-up"
-          className="font-memomentKkukkkuk text-[34px] font-normal text-[#fff] sm:text-[44px]"
+          className="font-memomentKkukkkuk p-4 text-[30px] font-normal text-[#fff] sm:p-0 sm:text-[44px]"
         >
           소분소분에서 이렇게 함께 해요
         </strong>

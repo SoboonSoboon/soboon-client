@@ -24,7 +24,7 @@ import { updateShoppingMeeting } from '@/action/meetingAction';
 const shoppingFormSchema = z.object({
   title: z
     .string()
-    .min(1, { message: '제목을 입력해주세요.' })
+    .min(1, { message: '제목을 입력해 주세요.' })
     .max(50, { message: '제목은 50자 이하로 입력해 주세요.' }),
   capacity: z
     .number()
@@ -169,7 +169,7 @@ export function UpdateShoppingForm({
         >
           <div>
             <Label htmlFor="title" className="font-semibold" required>
-              모임 제목을 입력해주세요
+              모임 제목을 입력해 주세요
             </Label>
             <div className="mt-3">
               <TextInput
@@ -278,7 +278,7 @@ export function UpdateShoppingForm({
               <div className="w-full">
                 <TextInput
                   id="location.detail"
-                  placeholder="나머지 장소를 입력해주세요"
+                  placeholder="나머지 장소를 입력해 주세요"
                   {...register('location.detail')}
                 />
               </div>

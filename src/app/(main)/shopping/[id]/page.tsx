@@ -1,7 +1,6 @@
 import {
   DetailHeader,
   DetailContent,
-  DetailContentFooter,
   CommentSection,
   DetailAside,
 } from '@/components/marketplace';
@@ -11,6 +10,7 @@ import { ApplicantsMemberType } from '@/types/applicantsType';
 import { cookies } from 'next/headers';
 import { UserInfoType } from '@/types/authType';
 import type { Metadata } from 'next';
+import { notFound } from 'next/navigation';
 
 export async function generateMetadata({
   params,
@@ -18,6 +18,10 @@ export async function generateMetadata({
   params: Promise<{ id: string }>;
 }): Promise<Metadata> {
   const id = (await params).id;
+
+  if (Number.isNaN(Number(id))) {
+    notFound();
+  }
 
   try {
     const response = await fetch(
@@ -88,34 +92,6 @@ export async function generateMetadata({
   }
 }
 
-async function getUserInfo(): Promise<UserInfoType | null> {
-  const cookieStore = await cookies();
-  const accessToken = cookieStore.get('accessToken')?.value || '';
-  if (accessToken) {
-    try {
-      const response = await fetch(
-        `${process.env.NEXT_PUBLIC_SOBOON_API_URL}/v1/auth/me`,
-        {
-          cache: 'no-store',
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${accessToken}`,
-          },
-        },
-      );
-      if (!response.ok) {
-        throw new Error('사용자 정보 조회 실패');
-      }
-      const responseData = await response.json();
-      return responseData;
-    } catch (error) {
-      console.error('사용자 정보 조회 실패', error);
-      return null;
-    }
-  }
-  return null;
-}
-
 async function getMeetingDetail({
   id,
 }: {
@@ -145,6 +121,34 @@ async function getMeetingDetail({
     console.error('소분하기 모임 상세 데이터 조회 실패', error);
     return null;
   }
+}
+
+async function getUserInfo(): Promise<UserInfoType | null> {
+  const cookieStore = await cookies();
+  const accessToken = cookieStore.get('accessToken')?.value || '';
+  if (accessToken) {
+    try {
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_SOBOON_API_URL}/v1/auth/me`,
+        {
+          cache: 'no-store',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${accessToken}`,
+          },
+        },
+      );
+      if (!response.ok) {
+        throw new Error('사용자 정보 조회 실패');
+      }
+      const responseData = await response.json();
+      return responseData;
+    } catch (error) {
+      console.error('사용자 정보 조회 실패', error);
+      return null;
+    }
+  }
+  return null;
 }
 
 // 댓글 조회
@@ -228,7 +232,15 @@ export default async function ShoppingDetailPage({
   const sortType = (await searchParams).sortType;
   const userInfo = await getUserInfo();
 
+  if (Number.isNaN(Number(id))) {
+    notFound();
+  }
+
   const shoppingMeetingDetail = await getMeetingDetail({ id });
+
+  if (!shoppingMeetingDetail) {
+    notFound();
+  }
 
   const isAuthor = shoppingMeetingDetail?.user.userId === userInfo?.id;
 
@@ -250,7 +262,6 @@ export default async function ShoppingDetailPage({
 
         <article className="flex-1 lg:order-1">
           <DetailContent description={shoppingMeetingDetail!.description} />
-          <DetailContentFooter createdAt={shoppingMeetingDetail!.createdAt} />
 
           {/* 댓글 영역 */}
           <CommentSection

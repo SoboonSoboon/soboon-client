@@ -203,7 +203,7 @@ export function ShoppingRegisterForm({
                   name="detail"
                   required
                   id="detail"
-                  placeholder="나머지 장소를 입력해주세요"
+                  placeholder="나머지 장소를 입력해 주세요"
                   value={formData.location.detail}
                   onChange={(e) =>
                     setFormData({
