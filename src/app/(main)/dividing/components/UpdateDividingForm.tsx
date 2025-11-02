@@ -165,7 +165,7 @@ export function UpdateDividingForm({
     },
     onSuccess: (data: ApiResponse<string>) => {
       success(data.message || '소분 모임이 성공적으로 수정되었어요.');
-      router.push('/sharing');
+      router.push('/dividing');
     },
     onError: (error: Error) => {
       showError(error.message || '소분 모임 수정에 실패했어요.');

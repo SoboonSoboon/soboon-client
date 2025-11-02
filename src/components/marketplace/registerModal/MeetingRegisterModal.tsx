@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { ShoppingRegisterForm } from './ShoppingRegisterForm';
-import { SharingRegisterForm } from './SharingRegisterForm';
+import { DividingRegisterForm } from './DividingRegisterForm';
 
 export function ShoppingMeetingRegisterModal({
   isOpen,
@@ -10,7 +10,7 @@ export function ShoppingMeetingRegisterModal({
   onClose,
 }: {
   isOpen: boolean;
-  meetingType: 'shopping' | 'sharing';
+  meetingType: 'shopping' | 'dividing';
   onClose: () => void;
 }) {
   const [isOpenModal, setIsOpenModal] = useState(isOpen);
@@ -38,8 +38,8 @@ export function ShoppingMeetingRegisterModal({
         {meetingType === 'shopping' && (
           <ShoppingRegisterForm handleClose={handleClose} />
         )}
-        {meetingType === 'sharing' && (
-          <SharingRegisterForm handleClose={handleClose} />
+        {meetingType === 'dividing' && (
+          <DividingRegisterForm handleClose={handleClose} />
         )}
       </dialog>
     </>

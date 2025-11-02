@@ -12,8 +12,8 @@ const meta: Meta<typeof Icon> = {
     type: {
       control: 'select',
       options: [
-        'sharing-cart',
-        'sharing-cart-green',
+        'dividing-cart',
+        'dividing-cart-green',
         'shopping-basket',
         'shopping-basket-green',
         'soboon-letters',
@@ -67,15 +67,15 @@ export const AllIcons: Story = {
   render: () => (
     <div className="grid grid-cols-2 gap-6">
       <div className="flex flex-col items-center gap-2 rounded-lg border border-gray-50 p-4">
-        <Icon type="sharing-cart" size={32} />
+        <Icon type="dividing-cart" size={32} />
         <div className="text-center">
-          <div className="mt-1 text-xs text-gray-500">sharing-cart</div>
+          <div className="mt-1 text-xs text-gray-500">dividing-cart</div>
         </div>
       </div>
       <div className="flex flex-col items-center gap-2 rounded-lg border border-gray-50 p-4">
-        <Icon type="sharing-cart-green" size={32} />
+        <Icon type="dividing-cart-green" size={32} />
         <div className="text-center">
-          <div className="mt-1 text-xs text-gray-500">sharing-cart-green</div>
+          <div className="mt-1 text-xs text-gray-500">dividing-cart-green</div>
         </div>
       </div>
       <div className="flex flex-col items-center gap-2 rounded-lg border border-gray-50 p-4">

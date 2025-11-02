@@ -46,7 +46,7 @@ export async function generateMetadata({
     const description =
       meetingDetail.description.slice(0, 160) ||
       '구매한 대용량 제품을 함께 나눌 사람을 찾아보세요';
-    const meetingUrl = `/sharing/${meetingId}`;
+    const meetingUrl = `/dividing/${meetingId}`;
 
     const ogImage =
       meetingDetail.images && meetingDetail.images.length > 0
@@ -238,7 +238,7 @@ async function getParticipants({
   }
 }
 
-export default async function SharingDetailPage({
+export default async function DividingDetailPage({
   params,
   searchParams,
 }: {

@@ -13,7 +13,7 @@ export function useMeetingNavigation(meeting: MeetingItem) {
   const handleCardClick = () => {
     const category =
       meeting.category.toLowerCase() === 'dividing'
-        ? 'sharing'
+        ? 'dividing'
         : meeting.category.toLowerCase();
     router.push(`/${category}/${meeting.groupId}`);
   };

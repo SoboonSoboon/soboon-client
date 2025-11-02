@@ -6,7 +6,7 @@ import { useRouter } from 'next/navigation';
 export const SideButtonSection = () => {
   const router = useRouter();
 
-  const handleOpen = (type: 'shopping' | 'sharing') => {
+  const handleOpen = (type: 'shopping' | 'dividing') => {
     router.push(`/${type}/register`);
   };
 
@@ -16,7 +16,7 @@ export const SideButtonSection = () => {
         <CreateButton
           actionHandlers={{
             shopping: () => handleOpen('shopping'),
-            sharing: () => handleOpen('sharing'),
+            dividing: () => handleOpen('dividing'),
           }}
         />
         <GoToTopButton />

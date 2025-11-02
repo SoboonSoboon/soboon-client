@@ -12,7 +12,7 @@ export const MYPAGE_SUB_TAB_LABELS = Object.freeze([
 export const HEADER_MENU = {
   SHARING: {
     LABEL: '함께 소분하기',
-    PATH: '/sharing',
+    PATH: '/dividing',
     SIZE: 20,
     ICON: {
       DEFAULT: 'shopping-basket',
@@ -24,8 +24,8 @@ export const HEADER_MENU = {
     PATH: '/shopping',
     SIZE: 24,
     ICON: {
-      DEFAULT: 'sharing-cart',
-      GREEN: 'sharing-cart-green',
+      DEFAULT: 'dividing-cart',
+      GREEN: 'dividing-cart-green',
     },
   },
 };

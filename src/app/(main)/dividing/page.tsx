@@ -3,7 +3,7 @@ import {
   meetingSearchParamsType,
 } from '@/types/meetingsType';
 
-import SharingPageContent from './SharingPageContent';
+import DividingPageContent from './DividingPageContent';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
@@ -26,7 +26,7 @@ export const metadata: Metadata = {
     title: '같이 소분하기 - 소분소분',
     description:
       '구매한 대용량 제품을 함께 나눌 사람을 찾아보세요. 지역별, 상품별 소분 모임 탐색',
-    url: '/sharing',
+    url: '/dividing',
     type: 'website',
     images: [
       {
@@ -44,11 +44,11 @@ export const metadata: Metadata = {
     images: ['/images/intro_people1.png'],
   },
   alternates: {
-    canonical: '/sharing',
+    canonical: '/dividing',
   },
 };
 
-async function getSharingMeeting(
+async function getDividingMeeting(
   query: URLSearchParams,
 ): Promise<DividingMeetingsType | null> {
   try {
@@ -63,19 +63,19 @@ async function getSharingMeeting(
     );
 
     if (!response.ok) {
-      throw new Error('Failed to fetch sharing meeting');
+      throw new Error('Failed to fetch dividing meeting');
     }
 
     const responseData = await response.json();
 
     return responseData.data;
   } catch (error) {
-    console.error('Failed to fetch sharing meeting', error);
+    console.error('Failed to fetch dividing meeting', error);
     return null;
   }
 }
 
-export default async function SharingPage({
+export default async function DividingPage({
   searchParams,
 }: {
   searchParams: Promise<meetingSearchParamsType>;
@@ -95,10 +95,10 @@ export default async function SharingPage({
     keyword: (params.keyword as string) || '',
   });
 
-  const initialDividingList = await getSharingMeeting(query);
+  const initialDividingList = await getDividingMeeting(query);
 
   return (
-    <SharingPageContent
+    <DividingPageContent
       initialDividingList={initialDividingList}
       query={query}
     />

@@ -39,7 +39,7 @@ export default function DevKakaoCallbackHandler() {
             },
           });
 
-          router.push('/sharing');
+          router.push('/dividing');
         } else {
           console.log('추가 정보 입력이 필요합니다.'); //todo: 추후 토스트로 변경
           setTimeout(() => router.push('/auth/addinfo'), 300);

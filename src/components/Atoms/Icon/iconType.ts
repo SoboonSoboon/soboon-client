@@ -1,6 +1,6 @@
 export type IconType =
-  | 'sharing-cart'
-  | 'sharing-cart-green'
+  | 'dividing-cart'
+  | 'dividing-cart-green'
   | 'shopping-basket'
   | 'shopping-basket-green'
   | 'soboon-letters'

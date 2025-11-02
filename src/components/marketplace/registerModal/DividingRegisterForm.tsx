@@ -6,7 +6,7 @@ import {
   GET_MODEL_DISTRICT_OPTIONS,
 } from '@/constants';
 import { useMemo, useState, useEffect } from 'react';
-import { sharingRegisterApi } from '@/apis/meetings/registerApi';
+import { dividingRegisterApi } from '@/apis/meetings/registerApi';
 import {
   useToast,
   TextInput,
@@ -23,11 +23,13 @@ import ImageUploadForm from './imageLoader';
 import RegisterModalHeader from './RegisterModalHeader';
 import { useUserLocation } from '@/hooks';
 
-interface SharingRegisterFormProps {
+interface DividingRegisterFormProps {
   handleClose: () => void;
 }
 
-export function SharingRegisterForm({ handleClose }: SharingRegisterFormProps) {
+export function DividingRegisterForm({
+  handleClose,
+}: DividingRegisterFormProps) {
   const { success, error } = useToast();
   const router = useRouter();
   const { userLocation, hasLocation } = useUserLocation();
@@ -37,10 +39,12 @@ export function SharingRegisterForm({ handleClose }: SharingRegisterFormProps) {
     description: '',
     itemName: '',
     price: 0,
-    province: '',
-    city: '',
-    district: '',
-    detail: '',
+    location: {
+      province: '',
+      city: '',
+      district: '',
+      detail: '',
+    },
     capacity: 0,
     productType: '',
     imageUrls: [] as File[],
@@ -50,10 +54,12 @@ export function SharingRegisterForm({ handleClose }: SharingRegisterFormProps) {
     if (hasLocation && userLocation) {
       setFormData((prev) => ({
         ...prev,
-        province: userLocation.province || '',
-        city: userLocation.city || '',
-        district: userLocation.district || '',
-        detail: userLocation.detail || '',
+        location: {
+          province: userLocation.province || '',
+          city: userLocation.city || '',
+          district: userLocation.district || '',
+          detail: userLocation.detail || '',
+        },
       }));
     }
   }, [hasLocation, userLocation]);
@@ -62,10 +68,10 @@ export function SharingRegisterForm({ handleClose }: SharingRegisterFormProps) {
     return (
       formData.itemName &&
       formData.productType &&
-      formData.province &&
-      formData.city &&
-      formData.district &&
-      formData.detail &&
+      formData.location.province &&
+      formData.location.city &&
+      formData.location.district &&
+      formData.location.detail &&
       formData.description &&
       formData.capacity > 0
     );
@@ -73,14 +79,14 @@ export function SharingRegisterForm({ handleClose }: SharingRegisterFormProps) {
 
   const { mutate } = useMutation({
     mutationFn: async () => {
-      const response = await sharingRegisterApi({
+      const response = await dividingRegisterApi({
         ...formData,
       });
       return response;
     },
     onSuccess: (data: ApiResponse<string>) => {
       success(data.message!);
-      router.push('/sharing');
+      router.push('/dividing');
       router.refresh();
       handleClose();
     },
@@ -155,13 +161,11 @@ export function SharingRegisterForm({ handleClose }: SharingRegisterFormProps) {
                   name="province"
                   id="province"
                   options={MODEL_PROVINCE_OPTIONS}
-                  value={formData.province}
+                  value={formData.location.province}
                   onChange={(value) =>
                     setFormData({
                       ...formData,
-                      province: value,
-                      city: '',
-                      district: '',
+                      location: { ...formData.location, province: value },
                     })
                   }
                   placeholder="지역 선택"
@@ -170,10 +174,13 @@ export function SharingRegisterForm({ handleClose }: SharingRegisterFormProps) {
                 <Dropdown
                   name="city"
                   id="city"
-                  options={GET_MODEL_CITY_OPTIONS(formData.province)}
-                  value={formData.city}
+                  options={GET_MODEL_CITY_OPTIONS(formData.location.province)}
+                  value={formData.location.city}
                   onChange={(value) =>
-                    setFormData({ ...formData, city: value, district: '' })
+                    setFormData({
+                      ...formData,
+                      location: { ...formData.location, city: value },
+                    })
                   }
                   variant="form"
                   placeholder="시/군/구"
@@ -181,10 +188,13 @@ export function SharingRegisterForm({ handleClose }: SharingRegisterFormProps) {
                 <Dropdown
                   name="district"
                   id="district"
-                  options={GET_MODEL_DISTRICT_OPTIONS(formData.city)}
-                  value={formData.district}
+                  options={GET_MODEL_DISTRICT_OPTIONS(formData.location.city)}
+                  value={formData.location.district}
                   onChange={(value) =>
-                    setFormData({ ...formData, district: value })
+                    setFormData({
+                      ...formData,
+                      location: { ...formData.location, district: value },
+                    })
                   }
                   variant="form"
                   placeholder="동/읍/면"
@@ -196,9 +206,15 @@ export function SharingRegisterForm({ handleClose }: SharingRegisterFormProps) {
                   required
                   id="detail"
                   placeholder="나머지 장소를 입력해 주세요"
-                  value={formData.detail}
+                  value={formData.location.detail}
                   onChange={(e) =>
-                    setFormData({ ...formData, detail: e.target.value })
+                    setFormData({
+                      ...formData,
+                      location: {
+                        ...formData.location,
+                        detail: e.target.value,
+                      },
+                    })
                   }
                 />
               </div>

@@ -5,8 +5,8 @@ import { Plus } from 'lucide-react';
 import { Icon } from '@/components/Atoms';
 
 const CREATE_MENU_OPTIONS = {
-  shopping: { label: '장보기', icon: 'sharing-cart' as const },
-  sharing: { label: '소분하기', icon: 'shopping-basket' as const },
+  shopping: { label: '장보기', icon: 'dividing-cart' as const },
+  dividing: { label: '소분하기', icon: 'shopping-basket' as const },
 } as const;
 
 type CreateMenuKey = keyof typeof CREATE_MENU_OPTIONS;
@@ -14,7 +14,7 @@ type CreateMenuKey = keyof typeof CREATE_MENU_OPTIONS;
 type CreateButtonProps = {
   actionHandlers: {
     shopping: () => void;
-    sharing: () => void;
+    dividing: () => void;
   };
 };
 

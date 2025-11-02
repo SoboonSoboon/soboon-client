@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 
-const protectedRoutes = ['/mypage', '/shopping/register', '/sharing/register'];
+const protectedRoutes = ['/mypage', '/shopping/register', '/dividing/register'];
 
 export function middleware(request: NextRequest) {
   const accessToken = request.cookies.get('accessToken')?.value;

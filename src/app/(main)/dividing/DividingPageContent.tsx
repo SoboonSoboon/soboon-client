@@ -5,22 +5,22 @@ import { DividingMeetingsType } from '@/types/meetingsType';
 import { Banner } from '@/components/marketplace';
 import {
   FilterSection,
-  SharingListSection,
+  DividingListSection,
   SearchSection,
   FilterBottomSheet,
-} from '@/app/(main)/sharing/components';
+} from '@/app/(main)/dividing/components';
 import { SideButtonSection } from '@/components';
 import { Funnel } from 'lucide-react';
 
-interface SharingPageContentProps {
+interface DividingPageContentProps {
   initialDividingList: DividingMeetingsType | null;
   query: URLSearchParams;
 }
 
-export default function SharingPageContent({
+export default function DividingPageContent({
   initialDividingList,
   query,
-}: SharingPageContentProps) {
+}: DividingPageContentProps) {
   const [isFilterOpen, setIsFilterOpen] = useState(false);
 
   return (
@@ -53,7 +53,7 @@ export default function SharingPageContent({
           <FilterSection />
         </aside>
         <div className="flex-1">
-          <SharingListSection
+          <DividingListSection
             initialDividingList={initialDividingList}
             query={query}
           />

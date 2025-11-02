@@ -64,7 +64,7 @@ const sampleOptions = [
 const shortOptions = sampleOptions.slice(0, 6);
 
 const categoryOptions = [
-  { value: 'sharing', label: '소분하기' },
+  { value: 'dividing', label: '소분하기' },
   { value: 'shopping', label: '장보기' },
 ];
 

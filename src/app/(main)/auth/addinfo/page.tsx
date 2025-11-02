@@ -43,7 +43,7 @@ export default function AddInfoPage() {
             detail: newData.detail,
           },
         });
-        router.push('/sharing');
+        router.push('/dividing');
       }
     } catch (error) {
       console.log('저장 실패!');

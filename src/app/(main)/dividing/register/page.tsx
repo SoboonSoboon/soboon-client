@@ -130,7 +130,7 @@ export default function DividingRegisterPage() {
     },
     onSuccess: (data: ApiResponse<{ meetingId: number }>) => {
       success(data.message!);
-      router.replace(`/sharing/${data.data.meetingId}`);
+      router.replace(`/dividing/${data.data.meetingId}`);
     },
     onError: (data: ApiResponse<string>) => {
       error(data.message!);

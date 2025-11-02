@@ -57,8 +57,8 @@ export const MeetingActionMenu = ({
     event.stopPropagation();
     onClose?.();
 
-    if (pathname.includes('/sharing')) {
-      router.push(`/sharing/${meetingId}/update`);
+    if (pathname.includes('/dividing')) {
+      router.push(`/dividing/${meetingId}/update`);
     } else if (pathname.includes('/shopping')) {
       router.push(`/shopping/${meetingId}/update`);
     }
@@ -83,7 +83,9 @@ export const MeetingActionMenu = ({
       deleteModal.close();
       onClose?.();
 
-      router.push(`/${pathname.includes('/sharing') ? 'sharing' : 'shopping'}`);
+      router.push(
+        `/${pathname.includes('/dividing') ? 'dividing' : 'shopping'}`,
+      );
       router.refresh();
       success(TOAST_SUCCESS_MESSAGE.DELETE_MEETING);
     } catch {
