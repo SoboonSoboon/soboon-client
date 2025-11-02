@@ -12,7 +12,8 @@ export default function AlertHandler() {
     if (searchParams === 'login_required') {
       error('로그인이 필요합니다.');
     }
-  }, [searchParams, error]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [searchParams]);
 
   return null;
 }
