@@ -24,7 +24,9 @@ export const IntroSection = () => {
             src="/images/green_logo.png"
             alt="로고이미지"
             width={250}
-            height={200}
+            height={250}
+            priority
+            className="h-auto w-auto"
           />
         </div>
         <p data-sequence="300" className="z-10">
@@ -49,6 +51,7 @@ export const IntroSection = () => {
             width={630}
             height={360}
             sizes="(max-width: 1024px) 55vw, 618px"
+            priority
             className="z-2 h-auto w-[55%] max-w-[630px] rotate-3 object-contain lg:w-[60%]"
           />
         </div>

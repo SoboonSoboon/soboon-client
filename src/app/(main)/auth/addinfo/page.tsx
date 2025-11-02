@@ -79,7 +79,8 @@ export default function AddInfoPage() {
               src="/images/green_logo.png"
               alt="로고이미지"
               width={200}
-              height={100}
+              height={200}
+              className="h-auto w-auto"
             />
           </div>
           <p className="text-center text-base font-normal text-gray-800">
