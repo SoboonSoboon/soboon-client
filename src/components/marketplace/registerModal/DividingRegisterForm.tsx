@@ -255,7 +255,12 @@ export function DividingRegisterForm({
           </div>
         </div>
 
-        <Button label="확인" type="submit" disabled={!isValid} />
+        <Button
+          label="확인"
+          type="submit"
+          aria-label="확인 버튼"
+          disabled={!isValid}
+        />
       </form>
     </>
   );

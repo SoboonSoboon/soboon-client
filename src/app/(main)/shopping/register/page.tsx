@@ -1,8 +1,15 @@
 'use client';
 
 import { shoppingRegisterApi } from '@/apis';
-import { Button, Dropdown, Label, Textarea, TextInput } from '@/components';
-import { useToast, KeywordChip } from '@/components/Atoms';
+import {
+  Button,
+  Label,
+  Textarea,
+  TextInput,
+  useToast,
+  KeywordChip,
+} from '@/components/Atoms';
+import { Dropdown } from '@/components/Molecules';
 import { MODEL_PROVINCE_OPTIONS, SHOPPING_TAGS } from '@/constants';
 import { ShoppingTagType } from '@/types/common';
 import {
@@ -308,6 +315,7 @@ export default function ShoppingRegisterPage() {
 
           <Button
             label="확인"
+            aria-label="확인 버튼"
             type="submit"
             className="w-full sm:w-auto sm:min-w-[120px]"
           />

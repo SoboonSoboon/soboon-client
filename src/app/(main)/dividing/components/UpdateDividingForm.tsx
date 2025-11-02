@@ -1,16 +1,22 @@
 'use client';
 
-import { Button, Dropdown, Label, Textarea, TextInput } from '@/components';
+import {
+  Button,
+  Textarea,
+  TextInput,
+  Label,
+  useToast,
+} from '@/components/Atoms';
+import { Dropdown } from '@/components/Molecules';
+import { ImageUploadUrlForm } from '@/components/marketplace';
 import { CAPACITY_OPTIONS, MODEL_PROVINCE_OPTIONS } from '@/constants';
 import { GET_MODEL_CITY_OPTIONS } from '@/constants/locations';
 import { GET_MODEL_DISTRICT_OPTIONS } from '@/constants/locations';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import z from 'zod';
-import { ImageUploadUrlForm } from '@/components/marketplace';
 import { useMutation } from '@tanstack/react-query';
 import { ApiResponse } from '@/types/common';
-import { useToast } from '@/components/Atoms';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import { useEffect } from 'react';
@@ -196,6 +202,7 @@ export function UpdateDividingForm({
               >
                 <button
                   type="button"
+                  aria-label={option.label}
                   onClick={() => {
                     setValue('productType', option.value);
                     clearErrors('productType');
@@ -391,6 +398,7 @@ export function UpdateDividingForm({
 
       <Button
         label="수정하기"
+        aria-label="수정하기"
         type="submit"
         className="w-full sm:w-auto sm:min-w-[120px]"
       />

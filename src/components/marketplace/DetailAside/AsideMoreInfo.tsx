@@ -1,7 +1,7 @@
-import { StatusTag } from '@/components';
+import { StatusTag } from '@/components/Atoms';
+import { MeetingActionMenu } from '@/components/marketplace';
 import { Bookmark, EllipsisVertical } from 'lucide-react';
 import { useRef, useState } from 'react';
-import { MeetingActionMenu } from '@/components/marketplace/ActionMenu/MeetingActionMenu';
 import { StatusType } from '@/types/common';
 
 export const AsideMoreInfo = ({

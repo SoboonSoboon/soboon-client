@@ -3,8 +3,8 @@
 import { Suspense } from 'react';
 import Providers from './providers';
 import './globals.css';
-import { Header } from '@/components';
-import { Footer } from '@/components/Atoms/Footer';
+import { Footer } from '@/components/Atoms';
+import { Header } from '@/components/Molecules';
 import HeaderContainer from './Headercontainer';
 import AlertHandler from './AlertHandler';
 

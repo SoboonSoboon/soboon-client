@@ -1,6 +1,6 @@
 'use client';
 
-import { Button } from '@/components';
+import { Button } from '@/components/Atoms';
 import Image from 'next/image';
 
 export interface MainEmptyStateProps {
@@ -48,6 +48,7 @@ export const MainEmptyState = (props: MainEmptyStateProps) => {
           onClick={() => (window.location.href = primaryButton.href)}
           variant={primaryButton.variant || 'filled'}
           className="w-[256px]"
+          aria-label={primaryButton.text}
         >
           {primaryButton.text}
         </Button>
@@ -56,6 +57,7 @@ export const MainEmptyState = (props: MainEmptyStateProps) => {
           <Button
             onClick={() => (window.location.href = secondaryButton.href)}
             variant={secondaryButton.variant || 'outline'}
+            aria-label={secondaryButton.text}
           >
             {secondaryButton.text}
           </Button>

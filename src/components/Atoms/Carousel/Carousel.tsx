@@ -143,6 +143,7 @@ export const Carousel = ({
         </div>
       </div>
       <button
+        aria-label="이전 버튼"
         className="absolute top-[50%] left-0 translate-y-[-50%] cursor-pointer bg-[rgba(0,0,0,0.1)] p-3"
         onClick={prevButton}
         disabled={isDisabled}
@@ -151,6 +152,7 @@ export const Carousel = ({
         <ChevronLeft className="size-6" />
       </button>
       <button
+        aria-label="다음 버튼"
         className="absolute top-[50%] right-0 translate-y-[-50%] cursor-pointer bg-[rgba(0,0,0,0.1)] p-3"
         onClick={nextButton}
         disabled={isDisabled}

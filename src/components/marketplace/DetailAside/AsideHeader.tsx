@@ -1,4 +1,4 @@
-import { ProfileImg } from '@/components';
+import { ProfileImg } from '@/components/Atoms';
 import { HashTag } from '@/app/(main)/shopping/components/HashTag';
 import { timeFormatter } from '@/utils';
 

@@ -1,7 +1,10 @@
 'use client';
+
 import { Button, ProfileImg, ReviewItemBar } from '@/components/Atoms';
+import { useModal } from '@/components/Molecules';
 import { useAuthStore } from '@/apis/auth/hooks/authStore';
 import { useModal } from '@/components/Molecules/modal';
+import { ProfileEditModal } from './profileModal/ProfileEditModal';
 import { REVIEW_KEYWORD_LABELS } from '@/constants';
 import { useReviewStats } from '@/hooks';
 import { useReceivedReview } from '../../hook/api/useReceivedReview';
@@ -45,6 +48,7 @@ export const ProfileSideBar = () => {
       </div>
       <Button
         label="프로필 수정"
+        aria-label="프로필 수정 버튼"
         variant="outline"
         className="w-full"
         onClick={profileModal.open}

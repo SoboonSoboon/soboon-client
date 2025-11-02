@@ -5,7 +5,7 @@ import {
   Button,
   useToast,
 } from '@/components/Atoms';
-import { Modal, useModal } from '@/components/Molecules/modal';
+import { Modal, useModal } from '@/components/Molecules';
 import {
   MODAL_CONTENT,
   MODAL_TITLE,
@@ -121,12 +121,14 @@ export const CommentActionMenu = ({
               }}
               className="w-full"
               label="취소"
+              aria-label="취소 버튼"
             />
             <Button
               variant="filled"
               label="삭제"
               onClick={handleDeleteButtonClick}
               className="w-full"
+              aria-label="삭제 버튼"
             />
           </div>
         </div>

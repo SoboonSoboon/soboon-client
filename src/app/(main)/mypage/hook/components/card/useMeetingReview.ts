@@ -1,8 +1,8 @@
 import { useQueryClient } from '@tanstack/react-query';
 import { mypageKeys } from '@/constants/queryKey';
 import { ReviewKeyword } from '@/types/common';
-import { useToast } from '@/components/Atoms/Toast/useToast';
-import { useModal } from '@/components/Molecules/modal';
+import { useToast } from '@/components/Atoms';
+import { useModal } from '@/components/Molecules';
 import {
   postHostReview,
   postParticipantReview,

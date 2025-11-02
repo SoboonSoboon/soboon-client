@@ -1,1 +1,0 @@
-export { GoToTopButton } from './GoToTopButton';

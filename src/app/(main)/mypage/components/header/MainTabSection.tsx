@@ -18,6 +18,7 @@ export const MainTabSection = ({
         {MYPAGE_TAB_LABELS.map((tab) => (
           <button
             key={tab.value}
+            aria-label={tab.value}
             onClick={() => (
               onMainTabChange(tab.value as MainTabType),
               console.log(tab.value)

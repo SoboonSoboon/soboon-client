@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useRef, useEffect } from 'react';
-import { ProfileImg, ReviewItemBar } from '@/components';
+import { ProfileImg, ReviewItemBar } from '@/components/Atoms';
 import { cn } from '@/utils/cn';
 import { useReviewStats } from '@/hooks';
 import { REVIEW_KEYWORD_LABELS } from '@/constants';

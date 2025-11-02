@@ -1,13 +1,13 @@
 'use client';
 
 import { MapPin } from 'lucide-react';
+import { StatusTag } from '@/components/Atoms';
 import {
   Card,
   CardContent,
   CardFooter,
   CardTitle,
-} from '@/components/Molecules/Card/Card';
-import { StatusTag } from '@/components';
+} from '@/components/Molecules';
 import { MeetingItem } from '../../utils/mypageType';
 import { useMeetingCardActions } from '../../hook/components/card/useMeetingCardActions';
 import { ReviewModal } from '../ReviewModal';

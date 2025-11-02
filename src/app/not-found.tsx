@@ -1,6 +1,6 @@
 'use client';
 
-import { Button } from '@/components';
+import { Button } from '@/components/Atoms';
 import Image from 'next/image';
 import Link from 'next/link';
 
@@ -23,7 +23,7 @@ export default function NotFound() {
         </p>
       </div>
       <Link href="/">
-        <Button label="홈으로" variant="outline" />
+        <Button label="홈으로" aria-label="홈으로" variant="outline" />
       </Link>
     </div>
   );

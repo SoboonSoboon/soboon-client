@@ -8,6 +8,7 @@ import {
   DividingListSection,
   SearchSection,
 } from '@/app/(main)/dividing/components';
+import { SideButtonSection } from '@/components/Molecules';
 import { Funnel } from 'lucide-react';
 import { DynamicSideButtonSectionWrapper } from '@/app/(main)/dividing/components/DynamicSideButtonSectionWrapper';
 import { DynamicFilterBottomSheetWrapper } from '@/app/(main)/dividing/components/DynamicFilterBottomSheetWrapper';

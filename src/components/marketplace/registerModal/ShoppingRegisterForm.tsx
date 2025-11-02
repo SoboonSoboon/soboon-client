@@ -101,7 +101,11 @@ export function ShoppingRegisterForm({
           <span className="text-primary font-memomentKkukkkuk">장보기</span>{' '}
           모임 만들기
         </h1>
-        <button onClick={handleClose} className="cursor-pointer">
+        <button
+          onClick={handleClose}
+          aria-label="닫기 버튼"
+          className="cursor-pointer"
+        >
           <XIcon className="size-6" />
         </button>
       </div>
@@ -238,7 +242,12 @@ export function ShoppingRegisterForm({
             />
           </div>
         </div>
-        <Button label="확인" type="submit" disabled={!isValid} />
+        <Button
+          label="확인"
+          aria-label="확인 버튼"
+          type="submit"
+          disabled={!isValid}
+        />
       </form>
     </div>
   );

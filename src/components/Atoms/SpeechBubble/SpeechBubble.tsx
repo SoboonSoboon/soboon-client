@@ -1,4 +1,3 @@
-// SpeechBubble.tsx
 import { ReactNode } from 'react';
 
 interface SpeechBubbleProps {
@@ -6,10 +5,7 @@ interface SpeechBubbleProps {
   className?: string;
 }
 
-export default function SpeechBubble({
-  children,
-  className = '',
-}: SpeechBubbleProps) {
+export function SpeechBubble({ children, className = '' }: SpeechBubbleProps) {
   return (
     <div className={`relative ${className}`}>
       {/* 말풍선 본체 */}

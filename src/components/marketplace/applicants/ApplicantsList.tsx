@@ -9,8 +9,7 @@ import { getUserApplyStatus } from '@/apis';
 import { useAuthStore } from '@/apis/auth/hooks/authStore';
 import { axiosInstance } from '@/apis/axiosInstance';
 
-import { Button, ProfileImg } from '@/components';
-import { useToast } from '@/components/Atoms';
+import { Button, ProfileImg, useToast } from '@/components/Atoms';
 import { ApplicantsMemberType } from '@/types/applicantsType';
 import { StatusString } from '@/types/common';
 import { useQuery } from '@tanstack/react-query';
@@ -125,6 +124,7 @@ export const ApplicantsList = ({
                     </div>
                     <Button
                       label="강퇴"
+                      aria-label="강퇴 버튼"
                       size="small"
                       className="!border-text-sub2 !text-text-sub2"
                       variant="outline"
@@ -140,6 +140,7 @@ export const ApplicantsList = ({
                   <div className="flex gap-2">
                     <Button
                       label="수락"
+                      aria-label="수락 버튼"
                       size="small"
                       variant="outline"
                       onClick={() =>
@@ -148,6 +149,7 @@ export const ApplicantsList = ({
                     />
                     <Button
                       label="거절"
+                      aria-label="거절 버튼"
                       className="!border-text-sub2 !text-text-sub2"
                       variant="outline"
                       size="small"

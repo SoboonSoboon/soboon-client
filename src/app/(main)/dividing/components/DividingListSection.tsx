@@ -9,19 +9,18 @@ import {
   CardSubtitle,
   CardTitle,
   Line,
-  StatusTag,
-} from '@/components';
-import { MapPin } from 'lucide-react';
-import { DividingMeetingsType } from '@/types/meetingsType';
-import { timeFormatter } from '@/utils';
-
+  MainEmptyState,
+} from '@/components/Molecules';
+import { StatusTag } from '@/components/Atoms';
+import { useEffect } from 'react';
+import { useSearchParams } from 'next/navigation';
+import { useDividingSearch } from '@/hooks/useSearch/useDividingSearch';
 import { useInfiniteScrollTrigger } from '@/hooks/useScroll';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import { getDividingListApi } from '@/apis/meetings/getDividingListApi';
-import { useEffect } from 'react';
-import { MainEmptyState } from '@/components/Molecules';
-import { useSearchParams } from 'next/navigation';
-import { useDividingSearch } from '@/hooks/useSearch/useDividingSearch';
+import { MapPin } from 'lucide-react';
+import { DividingMeetingsType } from '@/types/meetingsType';
+import { timeFormatter } from '@/utils';
 
 export const DividingListSection = ({
   initialDividingList,

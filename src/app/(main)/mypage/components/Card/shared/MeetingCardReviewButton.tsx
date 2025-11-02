@@ -1,4 +1,4 @@
-import { Button } from '@/components';
+import { Button } from '@/components/Atoms';
 import { MeetingItem } from '../../../utils/mypageType';
 
 interface MeetingCardReviewButtonProps {
@@ -31,6 +31,7 @@ export const MeetingCardReviewButton = ({
     <Button
       variant={variant}
       label={label}
+      aria-label={label}
       className="flex !py-[9px]"
       size="small"
       onClick={(e) => {
