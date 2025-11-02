@@ -1,6 +1,11 @@
 'use client';
 
-import { Button, ProfileImg, ReviewItemBar } from '@/components/Atoms';
+import {
+  Button,
+  ProfileImg,
+  ReviewItemBar,
+  Skeleton,
+} from '@/components/Atoms';
 import { useModal } from '@/components/Molecules';
 import { useAuthStore } from '@/apis/auth/hooks/authStore';
 import { REVIEW_KEYWORD_LABELS } from '@/constants';
@@ -13,15 +18,12 @@ export const ProfileSideBar = () => {
   const userNickname = useAuthStore((state) => state.userNickname);
   const userImage = useAuthStore((state) => state.userImage);
 
-  // React Query로 리뷰 데이터 가져오기
   const { data: reviews } = useReceivedReview();
 
-  // 모든 키워드를 키워드 순서대로 표시 (데이터에 없는 키워드도 표시)
   const allKeywords = Object.keys(REVIEW_KEYWORD_LABELS) as Array<
     keyof typeof REVIEW_KEYWORD_LABELS
   >;
 
-  // 공용 훅 사용
   const { maxCount, getCountForKeyword } = useReviewStats({
     reviewKeywords: reviews?.data?.keywords || [],
   });
@@ -40,9 +42,13 @@ export const ProfileSideBar = () => {
     <div className="border-gray-10 flex w-full flex-col gap-3 rounded-lg border bg-white px-4 py-6 sm:px-6 sm:py-8 lg:px-8 lg:py-15">
       <div className="flex flex-col items-center justify-center gap-2.5">
         <ProfileImg profileImageUrl={userImage || ''} size={118} />
-        <h2 className="font-memomentKkukkkuk text-lg sm:text-xl lg:text-2xl">
-          {userNickname}
-        </h2>
+        {userNickname ? (
+          <h2 className="font-memomentKkukkkuk text-lg sm:text-xl lg:text-2xl">
+            {userNickname}
+          </h2>
+        ) : (
+          <div className="h-5.5 sm:h-7 lg:h-8" />
+        )}
       </div>
       <Button
         label="프로필 수정"

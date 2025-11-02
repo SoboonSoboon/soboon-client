@@ -43,7 +43,7 @@ export const useMyPageData = (hideCompletedReviews: boolean = false) => {
     activeMainTab,
     {
       data: host.data as InfiniteData<MypageMeetingApiResponse> | undefined,
-      loading: host.isLoading,
+      loading: host.isLoading || !host.data,
       error: host.error,
       fetchNextPage: () => host.fetchNextPage(),
       hasNextPage: host.hasNextPage,
@@ -53,7 +53,7 @@ export const useMyPageData = (hideCompletedReviews: boolean = false) => {
       data: participate.data as
         | InfiniteData<MypageMeetingApiResponse>
         | undefined,
-      loading: participate.isLoading,
+      loading: participate.isLoading || !participate.data,
       error: participate.error,
       fetchNextPage: () => participate.fetchNextPage(),
       hasNextPage: participate.hasNextPage,
@@ -61,7 +61,7 @@ export const useMyPageData = (hideCompletedReviews: boolean = false) => {
     },
     {
       data: bookmark.data as InfiniteData<BookMarkListApiResPonse> | undefined,
-      loading: bookmark.isLoading,
+      loading: bookmark.isLoading || !bookmark.data,
       error: bookmark.error,
       fetchNextPage: () => bookmark.fetchNextPage(),
       hasNextPage: bookmark.hasNextPage,
