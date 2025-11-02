@@ -18,7 +18,7 @@ import { useDividingSearch } from '@/hooks/useSearch/useDividingSearch';
 import { useInfiniteScrollTrigger } from '@/hooks/useScroll';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import { getDividingListApi } from '@/apis/meetings/getDividingListApi';
-import { MapPin } from 'lucide-react';
+import { MapPin } from '@/components/Atoms/icons';
 import { DividingMeetingsType } from '@/types/meetingsType';
 import { timeFormatter } from '@/utils';
 

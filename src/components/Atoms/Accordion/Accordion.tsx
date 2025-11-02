@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { ChevronDown } from 'lucide-react';
+import { ChevronDown } from '@/components/Atoms/icons';
 import { cn } from '@/utils/cn';
 
 export interface AccordionItem {

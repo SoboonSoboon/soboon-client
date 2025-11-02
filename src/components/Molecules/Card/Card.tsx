@@ -2,7 +2,7 @@
 
 import { memo, useState, useEffect } from 'react';
 import Image from 'next/image';
-import { Bookmark } from 'lucide-react';
+import { Bookmark } from '@/components/Atoms/icons';
 import { cn } from '@/utils/cn';
 
 interface cardContentProps {

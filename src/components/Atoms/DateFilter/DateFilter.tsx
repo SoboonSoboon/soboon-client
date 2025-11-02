@@ -1,6 +1,6 @@
 'use client';
 
-import { ArrowDown, ArrowUp } from 'lucide-react';
+import { ArrowDown, ArrowUp } from '@/components/Atoms/icons';
 import { cn } from '@/utils/cn';
 import { useState, memo } from 'react';
 

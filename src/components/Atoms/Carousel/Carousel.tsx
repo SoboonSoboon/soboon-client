@@ -1,6 +1,6 @@
 'use client';
 
-import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { ChevronLeft, ChevronRight } from '@/components/Atoms/icons';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
 

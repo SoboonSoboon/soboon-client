@@ -1,6 +1,6 @@
 'use client';
 
-import { MapPin } from 'lucide-react';
+import { MapPin } from '@/components/Atoms/icons';
 import { StatusTag } from '@/components/Atoms';
 import {
   Card,

@@ -4,7 +4,7 @@ import { useModalEscape } from './hooks/useModalEscape';
 import { useModalScrollLock } from './hooks/useModalScrollLock';
 import { ModalProps } from './utils/modalTypes';
 import { getPositionClass, getSizeClass } from './utils/modalUtils';
-import { X } from 'lucide-react';
+import { X } from '@/components/Atoms/icons';
 import { createPortal } from 'react-dom';
 /**
  * 재사용 가능한 모달 컴포넌트

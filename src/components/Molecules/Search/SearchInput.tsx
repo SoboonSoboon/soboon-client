@@ -1,6 +1,6 @@
 'use client';
 
-import { SearchIcon } from 'lucide-react';
+import { SearchIcon } from '@/components/Atoms/icons';
 import { FormEvent, useState, useEffect } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { cn } from '@/utils/cn';

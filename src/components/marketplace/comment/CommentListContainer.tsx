@@ -6,7 +6,7 @@ import { useEffect, useState } from 'react';
 import { Button, TextInput, useToast } from '@/components/Atoms';
 import { createReplyApi } from '@/apis/comment/createReply';
 import { useParams, useSearchParams } from 'next/navigation';
-import { CornerDownRight } from 'lucide-react';
+import { CornerDownRight } from '@/components/Atoms/icons';
 import {
   useInfiniteQuery,
   useMutation,

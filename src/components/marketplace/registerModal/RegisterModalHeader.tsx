@@ -1,4 +1,4 @@
-import { XIcon } from 'lucide-react';
+import { XIcon } from '@/components/Atoms/icons';
 
 export default function RegisterModalHeader({
   title,
