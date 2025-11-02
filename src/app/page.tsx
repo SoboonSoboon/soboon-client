@@ -1,10 +1,6 @@
-import {
-  IntroSection,
-  IntroScroll,
-  IntroCarousel,
-  IntroAccordion,
-} from '@/components/intro';
+import { IntroSection } from '@/components/intro';
 import type { Metadata } from 'next';
+import { DynamicIntroSectionsWrapper } from '@/components/intro/wrapper/DynamicIntroSectionsWrapper';
 
 export const metadata: Metadata = {
   title: '소분소분 - 함께 사서, 알뜰하게 나누는 소비',
@@ -54,9 +50,7 @@ export default function Home() {
     <>
       <section className="overflow-hidden">
         <IntroSection />
-        <IntroScroll />
-        <IntroCarousel />
-        <IntroAccordion />
+        <DynamicIntroSectionsWrapper />
       </section>
     </>
   );

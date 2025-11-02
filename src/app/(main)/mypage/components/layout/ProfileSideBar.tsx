@@ -3,10 +3,10 @@
 import { Button, ProfileImg, ReviewItemBar } from '@/components/Atoms';
 import { useModal } from '@/components/Molecules';
 import { useAuthStore } from '@/apis/auth/hooks/authStore';
-import { ProfileEditModal } from './profileModal/ProfileEditModal';
 import { REVIEW_KEYWORD_LABELS } from '@/constants';
 import { useReviewStats } from '@/hooks';
 import { useReceivedReview } from '../../hook/api/useReceivedReview';
+import dynamic from 'next/dynamic';
 
 export const ProfileSideBar = () => {
   const profileModal = useModal();
@@ -25,6 +25,16 @@ export const ProfileSideBar = () => {
   const { maxCount, getCountForKeyword } = useReviewStats({
     reviewKeywords: reviews?.data?.keywords || [],
   });
+
+  const DynamicProfileEditModal = dynamic(
+    () =>
+      import('./profileModal/ProfileEditModal').then(
+        (mod) => mod.ProfileEditModal,
+      ),
+    {
+      ssr: false,
+    },
+  );
 
   return (
     <div className="border-gray-10 flex w-full flex-col gap-3 rounded-lg border bg-white px-4 py-6 sm:px-6 sm:py-8 lg:px-8 lg:py-15">
@@ -51,7 +61,7 @@ export const ProfileSideBar = () => {
           />
         ))}
       </div>
-      <ProfileEditModal
+      <DynamicProfileEditModal
         isOpen={profileModal.isOpen}
         onClose={profileModal.close}
       />

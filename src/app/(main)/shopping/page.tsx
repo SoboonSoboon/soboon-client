@@ -1,4 +1,3 @@
-import { SideButtonSection } from '@/components/Molecules';
 import { Banner } from '@/components/marketplace';
 import {
   meetingSearchParamsType,
@@ -9,6 +8,7 @@ import {
   ShoppingListSection,
   ShoppingTagsSection,
 } from './components';
+import { DynamicSideButtonSectionWrapper } from './components/DynamicSideButtonSectionWrapper';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
@@ -110,7 +110,7 @@ export default async function ShoppingPage({
         <FilterSection />
         <ShoppingListSection initialShoppingList={initialShoppingList} />
       </section>
-      <SideButtonSection />
+      <DynamicSideButtonSectionWrapper />
     </main>
   );
 }
