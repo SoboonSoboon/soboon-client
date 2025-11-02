@@ -40,7 +40,7 @@ export const Default: Story = {
 };
 
 export const CustomImage: Story = {
-  args: { size: 100, profileImageUrl: '/images/dummy_profile.png' },
+  args: { size: 100, profileImageUrl: '/images/profile_default.svg' },
   parameters: {
     docs: {
       description: {
