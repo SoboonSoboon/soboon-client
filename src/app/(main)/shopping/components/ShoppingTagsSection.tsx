@@ -34,7 +34,7 @@ export const ShoppingTagsSection = () => {
   };
 
   if (loading || popularTags.length === 0) {
-    return null;
+    return <div className="h-[36px]" />;
   }
 
   return (
