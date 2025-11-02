@@ -12,7 +12,7 @@ import {
 import {
   DividingCardSkeleton,
   ShoppingCardSkeleton,
-} from './components/Card/CardSkeleton';
+} from './components/card/CardSkeleton';
 
 import { useMyPageData } from './hook/components/page/useMypageData';
 

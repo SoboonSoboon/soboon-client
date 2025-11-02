@@ -2,7 +2,7 @@ import { useToast } from '@/components/Atoms';
 import { Modal } from '@/components/Molecules';
 import { ReviewModalContent } from './ReviewModalContent';
 import { ReviewKeyword } from '@/types/common';
-import { ReviewerListData } from '../utils/review';
+import { ReviewerListData } from '../../utils/review';
 
 interface ReviewModalProps {
   modal: {

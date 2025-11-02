@@ -7,7 +7,7 @@ import {
   getKeywordLabel,
   getKeywordClassName,
   getButtonClassName,
-} from '../utils/review';
+} from '../../utils/review';
 import { ReviewKeyword } from '@/types/common';
 
 interface ReviewModalContentProps {

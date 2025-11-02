@@ -12,9 +12,10 @@ import {
 import { cn } from '@/utils';
 import { MeetingItem } from '../../utils/mypageType';
 import { useMeetingCardActions } from '../../hook/components/card/useMeetingCardActions';
-import { ReviewModal } from '../ReviewModal';
+import { ReviewModal } from '../review/ReviewModal';
 import { MeetingCardInfo } from './shared/MeetingCardInfo';
 import { MeetingCardReviewButton } from './shared/MeetingCardReviewButton';
+
 
 // 모임 카드 컴포넌트
 export const MeetingDividingCard = ({
