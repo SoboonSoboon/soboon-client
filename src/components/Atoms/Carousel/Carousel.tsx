@@ -34,25 +34,25 @@ export const Carousel = ({
   useEffect(() => {
     let timer: NodeJS.Timeout;
 
-    // 첫 번째 이미지일 때 300ms 후 마지막 이미지로 이동
+    // 첫 번째 이미지일 때 500ms 후 마지막 이미지로 이동
     if (currentIndex === 0) {
       timer = setTimeout(() => {
         setCurrentIndex(newCarouselImagesArray.length - 2);
         setIsMoving(false);
-      }, 300);
+      }, 500);
     }
 
-    // 마지막 이미지일 때 300ms 후 첫 번째 이미지로 이동
+    // 마지막 이미지일 때 500ms 후 첫 번째 이미지로 이동
     else if (currentIndex === newCarouselImagesArray.length - 1) {
       timer = setTimeout(() => {
         setCurrentIndex(1);
         setIsMoving(false);
-      }, 300);
+      }, 500);
     }
 
     setTimeout(() => {
       setIsDisabled(false);
-    }, 300);
+    }, 500);
 
     return () => {
       clearTimeout(timer);
@@ -76,13 +76,17 @@ export const Carousel = ({
   // todo: 이미지가 없을 때 대체 이미지 사용
   if (carouselImages.length === 0) {
     return (
-      <div>
+      <div
+        className={`relative w-full ${className}`}
+        style={{ aspectRatio: `${width} / ${height}`, maxWidth: `${width}px` }}
+      >
         <Image
           src={'/images/notFound_image.png'}
           alt="캐러셀 이미지"
           width={width}
           height={height}
           className="h-full w-full rounded-lg object-cover"
+          sizes="100vw"
         />
       </div>
     );
@@ -92,8 +96,8 @@ export const Carousel = ({
   if (carouselImages.length === 1) {
     return (
       <div
-        className={`relative ${className}`}
-        style={{ width: `${width}px`, height: `${height}px` }}
+        className={`relative w-full ${className}`}
+        style={{ aspectRatio: `${width} / ${height}`, maxWidth: `${width}px` }}
       >
         <Image
           src={carouselImages[0]}
@@ -101,6 +105,7 @@ export const Carousel = ({
           width={width}
           height={height}
           className="h-full w-full rounded-lg object-cover"
+          sizes="100vw"
         />
       </div>
     );
@@ -108,29 +113,29 @@ export const Carousel = ({
 
   return (
     <div
-      className={`relative ${className}`}
-      style={{ width: `${width}px`, height: `${height}px` }}
+      className={`relative w-full ${className}`}
+      style={{ aspectRatio: `${width} / ${height}`, maxWidth: `${width}px` }}
     >
       <div className="flex size-full overflow-hidden">
         <div
-          className={`flex size-full transition-transform duration-300 ${
-            isMoving ? 'transition-transform duration-300' : 'transition-none'
+          className={`flex size-full transition-transform duration-500 ${
+            isMoving ? 'transition-transform duration-500' : 'transition-none'
           }`}
-          style={{ transform: `translateX(-${currentIndex * width}px)` }}
+          style={{ transform: `translateX(-${currentIndex * 100}%)` }}
           data-testid="carousel-container"
         >
           {newCarouselImagesArray.map((image, index) => (
             <div
               key={index}
-              className="flex h-full w-full shrink-0 items-center justify-center"
+              className="flex h-full w-full shrink-0 items-center justify-center p-4 sm:p-0"
             >
               <Image
                 src={image}
                 alt="캐러셀 이미지"
                 width={imageWidth}
                 height={imageHeight}
-                className="max-h-full max-w-full object-none"
-                style={{ width: 'auto', height: 'auto' }}
+                className="h-full w-full object-contain"
+                sizes="100vw"
                 property={index === 1 ? 'true' : 'false'}
               />
             </div>

@@ -17,6 +17,7 @@ jest.mock('next/image', () => {
     alt,
     ...props
   }: React.ImgHTMLAttributes<HTMLImageElement>) {
+    // eslint-disable-next-line @next/next/no-img-element
     return <img src={src} alt={alt} {...props} />;
   };
 });
@@ -60,7 +61,7 @@ describe('Carousel', () => {
   });
 
   describe('이미지가 여러장일 때', () => {
-    test('버튼을 누르면 0.3ms동안 disabled 상태가 된다.', () => {
+    test('버튼을 누르면 500ms동안 disabled 상태가 된다.', () => {
       jest.useFakeTimers();
 
       render(<Carousel carouselImages={mockImages} />);
@@ -74,7 +75,7 @@ describe('Carousel', () => {
       expect(prevButton).toBeDisabled();
 
       act(() => {
-        jest.advanceTimersByTime(300);
+        jest.advanceTimersByTime(500);
       });
 
       expect(nextButton).not.toBeDisabled();
@@ -90,7 +91,7 @@ describe('Carousel', () => {
       fireEvent.click(nextButton);
 
       expect(screen.getByTestId('carousel-container')).toHaveStyle(
-        'transform: translateX(-1400px)',
+        'transform: translateX(-200%)',
       );
     });
 
@@ -98,22 +99,26 @@ describe('Carousel', () => {
       render(<Carousel carouselImages={mockImages} />);
       const prevButton = screen.getByTestId('carousel-prev-button');
 
-      // 첫 번째 클릭
+      // 첫 번째 클릭: currentIndex 1 -> 0 (복사본으로 이동)
       fireEvent.click(prevButton);
       expect(screen.getByTestId('carousel-container')).toHaveStyle(
-        'transform: translateX(-0px)',
+        'transform: translateX(-0%)',
       );
 
-      // 300ms 즉시 진행
+      // 500ms 후 자동으로 마지막 실제 이미지로 이동: currentIndex 0 -> 3
       act(() => {
-        jest.advanceTimersByTime(300);
+        jest.advanceTimersByTime(500);
       });
 
-      // 두 번째 클릭
-      fireEvent.click(prevButton);
-
+      // 자동 이동 후 인덱스가 3이 되어야 함
       expect(screen.getByTestId('carousel-container')).toHaveStyle(
-        'transform: translateX(-1400px)',
+        'transform: translateX(-300%)',
+      );
+
+      // 두 번째 클릭: currentIndex 3 -> 2
+      fireEvent.click(prevButton);
+      expect(screen.getByTestId('carousel-container')).toHaveStyle(
+        'transform: translateX(-200%)',
       );
     });
 
@@ -121,40 +126,40 @@ describe('Carousel', () => {
       render(<Carousel carouselImages={mockImages} />);
       const nextButton = screen.getByTestId('carousel-next-button');
 
-      // 첫 번째 클릭
+      // 첫 번째 클릭 (currentIndex: 1 -> 2)
       fireEvent.click(nextButton);
 
       expect(screen.getByTestId('carousel-container')).toHaveStyle(
-        'transform: translateX(-1400px)',
+        'transform: translateX(-200%)',
       );
 
       act(() => {
-        jest.advanceTimersByTime(300);
+        jest.advanceTimersByTime(500);
       });
 
-      // 두 번째 클릭
+      // 두 번째 클릭 (currentIndex: 2 -> 3)
       fireEvent.click(nextButton);
       expect(screen.getByTestId('carousel-container')).toHaveStyle(
-        'transform: translateX(-2100px)',
+        'transform: translateX(-300%)',
       );
 
       act(() => {
-        jest.advanceTimersByTime(300);
+        jest.advanceTimersByTime(500);
       });
 
-      // 세 번째 클릭
+      // 세 번째 클릭 (currentIndex: 3 -> 4, 마지막 이미지인 4는 복사본)
       fireEvent.click(nextButton);
       expect(screen.getByTestId('carousel-container')).toHaveStyle(
-        'transform: translateX(-2800px)',
+        'transform: translateX(-400%)',
       );
 
       act(() => {
-        jest.advanceTimersByTime(300);
+        jest.advanceTimersByTime(500);
       });
 
-      // 300ms 후 첫 번째 이미지로 이동
+      // 500ms 후 첫 번째 이미지로 이동 (currentIndex: 4 -> 1)
       expect(screen.getByTestId('carousel-container')).toHaveStyle(
-        'transform: translateX(-700px)',
+        'transform: translateX(-100%)',
       );
     });
   });
