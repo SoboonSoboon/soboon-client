@@ -155,7 +155,7 @@ export const SharingListSection = ({
               <CardFooter>
                 <div className="flex items-center gap-1 text-sm">
                   <MapPin className="text-gray-40 size-4" />
-                  <p>{dividing.location.detail}</p>
+                  <p>{dividing.location.district}</p>
                 </div>
               </CardFooter>
             </Card>
