@@ -1,6 +1,6 @@
 'use client';
 
-import { EllipsisVertical, LockKeyhole } from 'lucide-react';
+import { EllipsisVertical, LockKeyhole } from '@/components/Atoms/icons';
 import { timeFormatter } from '@/utils';
 import { CommentType, ReplyType } from '@/types/commentType';
 import { Button, ProfileImg, TextInput, useToast } from '@/components/Atoms';

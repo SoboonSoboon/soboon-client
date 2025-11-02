@@ -1,6 +1,6 @@
 'use client';
 
-import { MapPin } from 'lucide-react';
+import { MapPin } from '@/components/Atoms/icons';
 import { useState } from 'react';
 import { ApplicantsMemberType } from '@/types/applicantsType';
 import { ApplicantsList } from '../applicants/ApplicantsList';

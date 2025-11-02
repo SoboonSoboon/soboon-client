@@ -1,6 +1,6 @@
 'use client';
 
-import { ArrowUp } from 'lucide-react';
+import { ArrowUp } from '@/components/Atoms/icons';
 
 export const GoToTopButton = () => {
   const handleClick = () => {

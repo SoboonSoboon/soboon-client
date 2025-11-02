@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { Plus } from 'lucide-react';
+import { Plus } from '@/components/Atoms/icons';
 import { Icon } from '@/components/Atoms';
 
 const CREATE_MENU_OPTIONS = {

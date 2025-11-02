@@ -1,7 +1,7 @@
 'use client';
 
 import { Button, TextInput } from '@/components/Atoms';
-import { XIcon } from 'lucide-react';
+import { XIcon } from '@/components/Atoms/icons';
 import { useRef, useState } from 'react';
 import Image from 'next/image';
 

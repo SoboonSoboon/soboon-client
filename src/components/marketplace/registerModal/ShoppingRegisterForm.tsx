@@ -11,7 +11,7 @@ import { shoppingRegisterApi } from '@/apis/meetings/registerApi';
 import { useMutation } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
 import { ApiResponse } from '@/types/common';
-import { XIcon } from 'lucide-react';
+import { XIcon } from '@/components/Atoms/icons';
 import {
   TextInput,
   useToast,

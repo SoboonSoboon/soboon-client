@@ -12,7 +12,7 @@ import {
 } from '@/components/Molecules';
 import { ShoppingMeetingsType } from '@/types/meetingsType';
 import { timeFormatter } from '@/utils';
-import { MapPin } from 'lucide-react';
+import { MapPin } from '@/components/Atoms/icons';
 import { useRouter } from 'next/navigation';
 
 import { useEffect, useMemo, useState } from 'react';

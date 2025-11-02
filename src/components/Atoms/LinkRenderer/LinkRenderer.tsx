@@ -1,7 +1,7 @@
 'use client';
 
 import { containsUrls, splitTextByUrls } from '@/utils';
-import { ExternalLink } from 'lucide-react';
+import { ExternalLink } from '@/components/Atoms/icons';
 
 interface LinkRendererProps {
   text: string;

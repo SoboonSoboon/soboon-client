@@ -1,6 +1,6 @@
 'use client';
 
-import { ChevronLeft } from 'lucide-react';
+import { ChevronLeft } from '@/components/Atoms/icons';
 import { useRouter } from 'next/navigation';
 
 export const DetailHeader = () => {

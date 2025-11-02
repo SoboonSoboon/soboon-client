@@ -1,6 +1,6 @@
 import { StatusTag } from '@/components/Atoms';
 import { MeetingActionMenu } from '@/components/marketplace';
-import { Bookmark, EllipsisVertical } from 'lucide-react';
+import { Bookmark, EllipsisVertical } from '@/components/Atoms/icons';
 import { useRef, useState } from 'react';
 import { StatusType } from '@/types/common';
 
