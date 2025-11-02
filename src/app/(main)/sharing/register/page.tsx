@@ -48,7 +48,7 @@ const dividingFormSchema = z.object({
       .string()
       .min(1, { message: '상세 주소를 입력해 주세요.' })
       .min(3, { message: '상세 주소는 3자 이상 입력해 주세요.' })
-      .max(50, { message: '상세 주소는 50자 이하로 입력해 주세요.' })
+      .max(10, { message: '상세 주소는 10자 이하로 입력해 주세요.' })
       .refine((val: string) => !/<[^>]*>/i.test(val), {
         message: 'HTML 태그는 사용할 수 없어요.',
       }),
