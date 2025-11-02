@@ -46,7 +46,6 @@ export default function AddInfoPage() {
         router.push('/dividing');
       }
     } catch (error) {
-      console.log('저장 실패!');
       console.error('저장 오류:', error);
     }
   };
@@ -64,7 +63,6 @@ export default function AddInfoPage() {
         detail: profileData.detail || '',
       });
     }
-    console.log('프로필 데이터:', profileData);
   }, [profileData]);
 
   if (isLoading) return <div>로딩 중...</div>;

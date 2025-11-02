@@ -19,10 +19,7 @@ export const MainTabSection = ({
           <button
             key={tab.value}
             aria-label={tab.value}
-            onClick={() => (
-              onMainTabChange(tab.value as MainTabType),
-              console.log(tab.value)
-            )}
+            onClick={() => onMainTabChange(tab.value as MainTabType)}
             className={`font-memomentKkukkkuk relative text-base transition-colors sm:text-lg ${
               activeMainTab === tab.value
                 ? 'text-quaternary'

@@ -182,7 +182,6 @@ export default function DividingRegisterPage() {
 
   const onSubmit = (data: DividingFormData) => {
     dividingRegister(data);
-    console.log(data);
   };
 
   return (
