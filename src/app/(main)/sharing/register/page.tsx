@@ -216,7 +216,7 @@ export default function DividingRegisterPage() {
 
           <div className="flex flex-col gap-3">
             <Label htmlFor="capacity" className="font-semibold" required>
-              몇 명을 모을까요?
+              몇 명이 함께하면 좋을까요?
             </Label>
             <Dropdown
               name="capacity"
@@ -235,7 +235,7 @@ export default function DividingRegisterPage() {
 
           <div className="flex flex-col gap-3">
             <Label htmlFor="province" className="font-semibold" required>
-              어디서 만날까요??
+              어디서 만날까요?
             </Label>
             <div className="flex flex-col gap-3 sm:items-center">
               <div className="flex w-full flex-col gap-3 sm:flex-row sm:items-center sm:gap-2.5">
@@ -323,17 +323,15 @@ export default function DividingRegisterPage() {
 
           <div className="flex flex-col gap-3">
             <Label htmlFor="description" className="font-semibold" required>
-              상세 설명
+              상세 설명을 작성해 주세요.
             </Label>
             <Textarea
               className="min-h-[120px] sm:min-h-[150px] lg:min-h-[173px]"
               id="description"
               {...register('description')}
-              placeholder={`모집 내용을 작성해 주세요.
-
-ex) 이런 식으로 나누고 싶어요.
-언제 구매했어요. 
-언제 어디서 만나고 싶어요`}
+              placeholder={`ex) 언제 구매한 제품이예요.
+이런 식으로 나누고 싶어요.
+언제 어디서 만나고 싶어요.`}
             />
             {errors.description && (
               <p className="text-sm text-red-500">

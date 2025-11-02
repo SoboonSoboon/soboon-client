@@ -181,7 +181,7 @@ export default function ShoppingRegisterPage() {
 
           <div className="flex flex-col gap-3">
             <Label htmlFor="capacity" className="font-semibold" required>
-              몇 명을 모을까요?
+              몇 명이 함께하면 좋을까요?
             </Label>
             <Dropdown
               name="capacity"
@@ -200,7 +200,7 @@ export default function ShoppingRegisterPage() {
 
           <div className="flex flex-col gap-3">
             <Label htmlFor="province" className="font-semibold" required>
-              어디서 만날까요??
+              어디서 만날까요?
             </Label>
             <div className="flex flex-col gap-3 sm:items-center">
               <div className="flex w-full flex-col gap-3 sm:flex-row sm:items-center sm:gap-2.5">
@@ -269,17 +269,15 @@ export default function ShoppingRegisterPage() {
 
           <div className="flex flex-col gap-3">
             <Label htmlFor="detail" className="font-semibold" required>
-              모임의 설명 글을 작성해보세요!
+              모임의 설명 글을 작성해 주세요.
             </Label>
             <Textarea
               className="min-h-[120px] sm:min-h-[150px] lg:min-h-[173px]"
               id="description"
               {...register('detail')}
-              placeholder={`모집 내용을 작성해 주세요.
-
-ex) 대량 고기를 사서 나누고 싶어요.
+              placeholder={`ex) 대량 고기를 사서 나누고 싶어요.
 그 외 필요한 구매 물품은 개인 구매하셔도 되어요.
-함께 장보기 할 인원은 3명 정도 생각하고 있어요.이번주 토요일인 10월 10일  3시에 만나기로 해요!`}
+이번주 토요일인 10월 10일 오후 3시에 만나기로 해요.`}
             />
             {errors.detail && (
               <p className="text-sm text-red-500">{errors.detail.message}</p>
