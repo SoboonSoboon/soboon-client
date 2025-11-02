@@ -42,7 +42,7 @@ const shoppingFormSchema = z.object({
       .string()
       .min(1, { message: '상세 주소를 입력해 주세요.' })
       .min(3, { message: '상세 주소는 3자 이상 입력해 주세요.' })
-      .max(50, { message: '상세 주소는 50자 이하로 입력해 주세요.' }),
+      .max(10, { message: '상세 주소는 10자 이하로 입력해 주세요.' }),
   }),
   detail: z
     .string()
@@ -171,14 +171,14 @@ export function UpdateShoppingForm({
             <Label htmlFor="title" className="font-semibold" required>
               모임 제목을 입력해 주세요
             </Label>
-            <div className="mt-3">
+            <div className="mt-3 flex flex-col gap-1">
               <TextInput
                 id="title"
                 placeholder="ex) 대량 고기 구매해서 나누고 싶어요!"
                 {...register('title')}
               />
               {errors.title && (
-                <p className="mt-2 text-sm text-red-500">
+                <p className="ml-1 text-sm text-red-500">
                   {errors.title.message}
                 </p>
               )}
@@ -187,7 +187,7 @@ export function UpdateShoppingForm({
 
           <div>
             <Label htmlFor="capacity" className="font-semibold" required>
-              모집 인원을 선택해주세요
+              몇 명이 함께 하면 좋을까요?
             </Label>
             <div className="mt-3">
               <Dropdown
@@ -207,7 +207,7 @@ export function UpdateShoppingForm({
             </div>
           </div>
 
-          <div>
+          <div className="flex flex-col gap-1">
             <Label htmlFor="tags" className="font-semibold" required>
               어떤 장보기를 할까요?
             </Label>
@@ -226,7 +226,7 @@ export function UpdateShoppingForm({
               })}
             </div>
             {errors.tags && (
-              <p className="mt-2 text-sm text-red-500">{errors.tags.message}</p>
+              <p className="ml-1 text-sm text-red-500">{errors.tags.message}</p>
             )}
           </div>
 
@@ -288,14 +288,14 @@ export function UpdateShoppingForm({
                 {(errors.location.district ||
                   errors.location.city ||
                   errors.location.province) && (
-                  <p className="text-sm text-red-500">
+                  <p className="mt-1 ml-1 text-sm text-red-500">
                     {errors.location.district?.message}
                   </p>
                 )}
               </>
             )}
             {errors.location?.detail && (
-              <p className="text-sm text-red-500">
+              <p className="mt-1 ml-1 text-sm text-red-500">
                 {errors.location?.detail.message}
               </p>
             )}
@@ -305,17 +305,21 @@ export function UpdateShoppingForm({
             <Label htmlFor="detail" className="font-semibold" required>
               모임의 설명 글을 작성해 주세요.
             </Label>
-            <Textarea
-              className="min-h-[120px] sm:min-h-[150px] lg:min-h-[173px]"
-              id="description"
-              {...register('detail')}
-              placeholder={`ex) 대량 고기를 사서 나누고 싶어요.
+            <div className="flex flex-col gap-1">
+              <Textarea
+                className="min-h-[120px] sm:min-h-[150px] lg:min-h-[173px]"
+                id="description"
+                {...register('detail')}
+                placeholder={`ex) 대량 고기를 사서 나누고 싶어요.
 그 외 필요한 구매 물품은 개인 구매하셔도 되어요.
 이번주 토요일인 10월 10일 오후 3시에 만나기로 해요.`}
-            />
-            {errors.detail && (
-              <p className="text-sm text-red-500">{errors.detail.message}</p>
-            )}
+              />
+              {errors.detail && (
+                <p className="ml-1 text-sm text-red-500">
+                  {errors.detail.message}
+                </p>
+              )}
+            </div>
           </div>
 
           <Button

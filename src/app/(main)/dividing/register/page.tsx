@@ -169,7 +169,7 @@ export default function DividingRegisterPage() {
                       setValue('productType', option.value);
                       clearErrors('productType');
                     }}
-                    className={`hover:border-primary relative flex h-[70px] w-[70px] cursor-pointer items-center justify-center rounded-lg transition-colors duration-200 ${
+                    className={`hover:border-primary relative flex size-[70px] cursor-pointer items-center justify-center overflow-hidden rounded-lg transition-colors duration-200 ${
                       watch('productType') === option.value
                         ? 'border-primary border-2'
                         : 'border-gray-10 border'
@@ -196,117 +196,130 @@ export default function DividingRegisterPage() {
               ))}
             </div>
             {errors.productType && (
-              <p className="mt-2 text-sm text-red-500">
+              <p className="mt-2 ml-1 text-sm text-red-500">
                 {errors.productType.message}
               </p>
             )}
+
             <div className="mt-3">
-              <TextInput
-                id="title"
-                placeholder="품목 이름을 적어주세요. (ex. 동물복지 유정란 30구)"
-                {...register('title')}
+              <div className="flex flex-col gap-1">
+                <TextInput
+                  id="title"
+                  placeholder="품목 이름을 적어주세요. (ex. 동물복지 유정란 30구)"
+                  {...register('title')}
+                />
+                {errors.title && (
+                  <p className="ml-1 text-sm text-red-500">
+                    {errors.title.message}
+                  </p>
+                )}
+              </div>
+            </div>
+          </div>
+
+          <div className="flex flex-col gap-3">
+            <Label htmlFor="capacity" className="font-semibold" required>
+              몇 명이 함께 하면 좋을까요?
+            </Label>
+            <div className="flex flex-col gap-1">
+              <Dropdown
+                name="capacity"
+                id="capacity"
+                options={CAPACITY_OPTIONS}
+                value={watch('capacity')}
+                onChange={(value) => {
+                  setValue('capacity', +value);
+                  clearErrors('capacity');
+                }}
               />
-              {errors.title && (
-                <p className="mt-2 text-sm text-red-500">
-                  {errors.title.message}
+              {errors.capacity && (
+                <p className="ml-1 text-sm text-red-500">
+                  {errors.capacity.message}
                 </p>
               )}
             </div>
           </div>
 
           <div className="flex flex-col gap-3">
-            <Label htmlFor="capacity" className="font-semibold" required>
-              몇 명이 함께하면 좋을까요?
-            </Label>
-            <Dropdown
-              name="capacity"
-              id="capacity"
-              options={CAPACITY_OPTIONS}
-              value={watch('capacity')}
-              onChange={(value) => {
-                setValue('capacity', +value);
-                clearErrors('capacity');
-              }}
-            />
-            {errors.capacity && (
-              <p className="text-sm text-red-500">{errors.capacity.message}</p>
-            )}
-          </div>
-
-          <div className="flex flex-col gap-3">
             <Label htmlFor="province" className="font-semibold" required>
               어디서 만날까요?
             </Label>
-            <div className="flex flex-col gap-3 sm:items-center">
-              <div className="flex w-full flex-col gap-3 sm:flex-row sm:items-center sm:gap-2.5">
-                <div className="flex-1">
-                  <Dropdown
-                    name="location.province"
-                    id="location.province"
-                    options={MODEL_PROVINCE_OPTIONS}
-                    value={watch('location.province')}
-                    onChange={(value) => {
-                      setValue('location.province', value);
-                      clearErrors('location.province');
-                    }}
-                  />
+            <div className="flex flex-col gap-1">
+              <div className="flex flex-col gap-3 sm:items-center">
+                <div className="flex w-full flex-col gap-3 sm:flex-row sm:items-center sm:gap-2.5">
+                  <div className="flex-1">
+                    <Dropdown
+                      name="location.province"
+                      id="location.province"
+                      options={MODEL_PROVINCE_OPTIONS}
+                      value={watch('location.province')}
+                      onChange={(value) => {
+                        setValue('location.province', value);
+                        clearErrors('location.province');
+                      }}
+                    />
+                  </div>
+                  <div className="flex-1">
+                    <Dropdown
+                      name="location.city"
+                      id="location.city"
+                      options={GET_MODEL_CITY_OPTIONS(
+                        watch('location.province'),
+                      )}
+                      value={watch('location.city')}
+                      onChange={(value) => {
+                        setValue('location.city', value);
+                        clearErrors('location.city');
+                      }}
+                    />
+                  </div>
+                  <div className="flex-1">
+                    <Dropdown
+                      name="location.district"
+                      id="location.district"
+                      options={GET_MODEL_DISTRICT_OPTIONS(
+                        watch('location.city'),
+                      )}
+                      value={watch('location.district')}
+                      onChange={(value) => {
+                        setValue('location.district', value);
+                        clearErrors('location.district');
+                      }}
+                    />
+                  </div>
                 </div>
-                <div className="flex-1">
-                  <Dropdown
-                    name="location.city"
-                    id="location.city"
-                    options={GET_MODEL_CITY_OPTIONS(watch('location.province'))}
-                    value={watch('location.city')}
-                    onChange={(value) => {
-                      setValue('location.city', value);
-                      clearErrors('location.city');
-                    }}
-                  />
-                </div>
-                <div className="flex-1">
-                  <Dropdown
-                    name="location.district"
-                    id="location.district"
-                    options={GET_MODEL_DISTRICT_OPTIONS(watch('location.city'))}
-                    value={watch('location.district')}
-                    onChange={(value) => {
-                      setValue('location.district', value);
-                      clearErrors('location.district');
-                    }}
+                <div className="w-full">
+                  <TextInput
+                    id="location.detail"
+                    placeholder="나머지 장소를 입력해 주세요"
+                    {...register('location.detail')}
                   />
                 </div>
               </div>
-              <div className="w-full">
-                <TextInput
-                  id="location.detail"
-                  placeholder="나머지 장소를 입력해 주세요"
-                  {...register('location.detail')}
-                />
-              </div>
+              {errors.location && (
+                <>
+                  {(errors.location.district ||
+                    errors.location.city ||
+                    errors.location.province) && (
+                    <p className="ml-1 text-sm text-red-500">
+                      {errors.location.district?.message}
+                    </p>
+                  )}
+                </>
+              )}
+              {errors.location?.detail && (
+                <p className="ml-1 text-sm text-red-500">
+                  {errors.location?.detail.message}
+                </p>
+              )}
             </div>
-            {errors.location && (
-              <>
-                {(errors.location.district ||
-                  errors.location.city ||
-                  errors.location.province) && (
-                  <p className="text-sm text-red-500">
-                    {errors.location.district?.message}
-                  </p>
-                )}
-              </>
-            )}
-            {errors.location?.detail && (
-              <p className="text-sm text-red-500">
-                {errors.location?.detail.message}
-              </p>
-            )}
           </div>
 
           <div className="flex flex-col gap-3">
             <Label htmlFor="imageUrls" className="font-semibold">
               이미지를 추가할까요?
             </Label>
-            <div className="flex flex-col gap-3">
+            <div className="flex flex-col gap-1">
               <ImageUploadForm
                 imageFiles={watch('imageUrls')}
                 setImageFiles={(imageFiles) =>
@@ -314,7 +327,7 @@ export default function DividingRegisterPage() {
                 }
               />
               {errors.imageUrls && (
-                <p className="text-sm text-red-500">
+                <p className="ml-1 text-sm text-red-500">
                   {errors.imageUrls.message}
                 </p>
               )}
@@ -325,19 +338,21 @@ export default function DividingRegisterPage() {
             <Label htmlFor="description" className="font-semibold" required>
               상세 설명을 작성해 주세요.
             </Label>
-            <Textarea
-              className="min-h-[120px] sm:min-h-[150px] lg:min-h-[173px]"
-              id="description"
-              {...register('description')}
-              placeholder={`ex) 언제 구매한 제품이예요.
+            <div className="flex flex-col gap-1">
+              <Textarea
+                className="min-h-[120px] sm:min-h-[150px] lg:min-h-[173px]"
+                id="description"
+                {...register('description')}
+                placeholder={`ex) 언제 구매한 제품이예요.
 이런 식으로 나누고 싶어요.
 언제 어디서 만나고 싶어요.`}
-            />
-            {errors.description && (
-              <p className="text-sm text-red-500">
-                {errors.description.message}
-              </p>
-            )}
+              />
+              {errors.description && (
+                <p className="ml-1 text-sm text-red-500">
+                  {errors.description.message}
+                </p>
+              )}
+            </div>
           </div>
 
           <Button
