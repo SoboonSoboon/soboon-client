@@ -35,4 +35,5 @@ export {
 } from './Accordion/Accordion';
 export { ProfileImg } from './ProfileImg/ProfileImg';
 export { SpeechBubble } from './SpeechBubble/SpeechBubble';
+export { Skeleton, type SkeletonProps } from './skeleton/skeleton';
 export { ToastProvider } from './Toast/ToastContext';
