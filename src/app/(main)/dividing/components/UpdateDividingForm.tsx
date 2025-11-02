@@ -65,15 +65,21 @@ const dividingFormSchema = z.object({
     }),
   ),
   location: z.object({
-    province: z.string().check(
-      z.refine((val) => val.length > 0, { message: '주소를 선택해 주세요.' }),
-    ),
-    city: z.string().check(
-      z.refine((val) => val.length > 0, { message: '주소를 선택해 주세요.' }),
-    ),
-    district: z.string().check(
-      z.refine((val) => val.length > 0, { message: '주소를 선택해 주세요.' }),
-    ),
+    province: z
+      .string()
+      .check(
+        z.refine((val) => val.length > 0, { message: '주소를 선택해 주세요.' }),
+      ),
+    city: z
+      .string()
+      .check(
+        z.refine((val) => val.length > 0, { message: '주소를 선택해 주세요.' }),
+      ),
+    district: z
+      .string()
+      .check(
+        z.refine((val) => val.length > 0, { message: '주소를 선택해 주세요.' }),
+      ),
     detail: z.string().check(
       z.refine((val) => val.length > 0, {
         message: '상세 주소를 입력해 주세요.',
@@ -148,7 +154,6 @@ export function UpdateDividingForm({
 
   useEffect(() => {
     if (meetingDetail) {
-      console.log(meetingDetail);
       const productTypeValue = meetingDetail.productTypes?.[0];
 
       reset({

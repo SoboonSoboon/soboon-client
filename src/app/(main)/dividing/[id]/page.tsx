@@ -1,10 +1,5 @@
 import { Carousel } from '@/components/Atoms';
-import {
-  DetailHeader,
-  DetailContent,
-  CommentSection,
-  DetailAside,
-} from '@/components/marketplace';
+import { DetailHeader, DetailContent } from '@/components/marketplace';
 import { MeetingDetailType } from '@/types/meetingsType';
 import { CommentsListType } from '@/types/commentType';
 import { ApplicantsMemberType } from '@/types/applicantsType';

@@ -34,8 +34,8 @@ export default function ProfileForm({
       const uploadedUrl = imageUrls[0];
 
       setNewData({ ...newData, image: uploadedUrl });
-    } catch {
-      console.log('이미지 업로드에 실패했어요.');
+    } catch (error) {
+      console.error('이미지 업로드에 실패했어요.', error);
     }
   };
 
