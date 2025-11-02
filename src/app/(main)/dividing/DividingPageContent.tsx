@@ -9,7 +9,8 @@ import {
   SearchSection,
 } from '@/app/(main)/dividing/components';
 import { Funnel } from 'lucide-react';
-import dynamic from 'next/dynamic';
+import { DynamicSideButtonSectionWrapper } from '@/app/(main)/dividing/components/DynamicSideButtonSectionWrapper';
+import { DynamicFilterBottomSheetWrapper } from '@/app/(main)/dividing/components/DynamicFilterBottomSheetWrapper';
 
 interface DividingPageContentProps {
   initialDividingList: DividingMeetingsType | null;
@@ -21,26 +22,6 @@ export default function DividingPageContent({
   query,
 }: DividingPageContentProps) {
   const [isFilterOpen, setIsFilterOpen] = useState(false);
-
-  const DynamicSideButtonSection = dynamic(
-    () =>
-      import('@/components/Molecules/SideButtonSection').then(
-        (mod) => mod.SideButtonSection,
-      ),
-    {
-      ssr: false,
-    },
-  );
-
-  const DynamicFilterBottomSheet = dynamic(
-    () =>
-      import('@/app/(main)/dividing/components/FilterBottomSheet').then(
-        (mod) => mod.FilterBottomSheet,
-      ),
-    {
-      ssr: false,
-    },
-  );
 
   return (
     <main className="flex w-full flex-col gap-3 md:gap-5">
@@ -57,7 +38,7 @@ export default function DividingPageContent({
             onClick={() => setIsFilterOpen(true)}
             className="border-gray-10 text-gray-95 mr-2.5 flex h-11 w-[47px] cursor-pointer items-center justify-center rounded-lg border bg-white px-3 font-medium"
           />
-          <DynamicFilterBottomSheet
+          <DynamicFilterBottomSheetWrapper
             isOpen={isFilterOpen}
             onClose={() => setIsFilterOpen(false)}
           />
@@ -78,7 +59,7 @@ export default function DividingPageContent({
           />
         </div>
       </section>
-      <DynamicSideButtonSection />
+      <DynamicSideButtonSectionWrapper />
     </main>
   );
 }
