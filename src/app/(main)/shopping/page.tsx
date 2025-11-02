@@ -98,15 +98,15 @@ export default async function ShoppingPage({
   const initialShoppingList = await getShoppingList(query);
 
   return (
-    <main className="flex flex-col gap-8">
+    <main className="flex flex-col gap-4 md:gap-8">
       <Banner
         title="장보기"
         src="/images/banner_shopping.png"
         alt="장보기 배너"
         imageTopClassName="top-[-12px] sm:top-[-14px] md:top-[-16px] lg:top-[-18px] "
       />
-      <section className="flex flex-col gap-4 md:gap-6">
-        <ShoppingTagsSection />
+      <ShoppingTagsSection />
+      <section className="flex flex-col gap-3 md:gap-5">
         <FilterSection />
         <ShoppingListSection initialShoppingList={initialShoppingList} />
       </section>

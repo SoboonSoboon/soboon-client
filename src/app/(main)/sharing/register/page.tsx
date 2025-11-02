@@ -33,32 +33,32 @@ const dividingFormSchema = z.object({
     .string()
     .min(1, { message: '품목 이름을 입력해주세요.' })
     .refine((val: string) => !/<[^>]*>/i.test(val), {
-      message: 'HTML 태그는 사용할 수 없습니다.',
+      message: 'HTML 태그는 사용할 수 없어요.',
     }),
   capacity: z
     .number()
-    .min(1, { message: '모집 인원을 선택해주세요.' })
-    .min(2, { message: '모집 인원은 2명 이상이어야 합니다.' })
-    .max(5, { message: '모집 인원은 5명 이하로 입력해주세요.' }),
+    .min(1, { message: '모집 인원을 선택해 주세요.' })
+    .min(2, { message: '모집 인원은 2명 이상이어야 해요.' })
+    .max(5, { message: '모집 인원은 5명 이하로 입력해 주세요.' }),
   location: z.object({
-    province: z.string().min(1, { message: '주소를 선택해주세요.' }),
-    city: z.string().min(1, { message: '주소를 선택해주세요.' }),
-    district: z.string().min(1, { message: '주소를 선택해주세요.' }),
+    province: z.string().min(1, { message: '주소를 선택해 주세요.' }),
+    city: z.string().min(1, { message: '주소를 선택해 주세요.' }),
+    district: z.string().min(1, { message: '주소를 선택해 주세요.' }),
     detail: z
       .string()
-      .min(1, { message: '상세 주소를 입력해주세요.' })
-      .min(3, { message: '상세 주소는 3자 이상 입력해주세요.' })
-      .max(50, { message: '상세 주소는 50자 이하로 입력해주세요.' })
+      .min(1, { message: '상세 주소를 입력해 주세요.' })
+      .min(3, { message: '상세 주소는 3자 이상 입력해 주세요.' })
+      .max(50, { message: '상세 주소는 50자 이하로 입력해 주세요.' })
       .refine((val: string) => !/<[^>]*>/i.test(val), {
-        message: 'HTML 태그는 사용할 수 없습니다.',
+        message: 'HTML 태그는 사용할 수 없어요.',
       }),
   }),
   imageUrls: z
     .array(z.instanceof(File))
-    .max(10, { message: '이미지는 최대 10장까지만 추가할 수 있습니다.' })
+    .max(10, { message: '이미지는 최대 10장까지만 추가할 수 있어요.' })
     .refine(
       (files) => files.every((file) => file.size <= 10 * 1024 * 1024), // 10MB 제한
-      { message: '각 이미지 파일은 10MB 이하여야 합니다.' },
+      { message: '각 이미지 파일은 10MB 이하여야 해요.' },
     )
     .refine(
       (files) =>
@@ -72,14 +72,14 @@ const dividingFormSchema = z.object({
           ];
           return allowedTypes.includes(file.type);
         }),
-      { message: 'JPG, PNG, GIF, WebP 이미지 파일만 업로드 가능합니다.' },
+      { message: 'JPG, PNG, GIF, WebP 이미지 파일만 업로드 가능해요.' },
     ),
   description: z
     .string()
-    .min(10, { message: '상세 설명은 10자 이상 입력해주세요.' })
-    .max(500, { message: '상세 설명은 500자 이하로 입력해주세요.' })
+    .min(10, { message: '상세 설명은 10자 이상 입력해 주세요.' })
+    .max(500, { message: '상세 설명은 500자 이하로 입력해 주세요.' })
     .refine((val: string) => !/<[^>]*>/i.test(val), {
-      message: 'HTML 태그는 사용할 수 없습니다.',
+      message: 'HTML 태그는 사용할 수 없어요.',
     }),
 });
 

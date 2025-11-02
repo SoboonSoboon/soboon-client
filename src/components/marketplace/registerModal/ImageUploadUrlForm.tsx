@@ -51,14 +51,14 @@ export function ImageUploadUrlForm({
     // 최대 파일 개수 검증
     const totalFiles = imageUrls.length + files.length;
     if (maxFiles && totalFiles > maxFiles) {
-      return `이미지는 최대 ${maxFiles}개까지 업로드할 수 있습니다.`;
+      return `이미지는 최대 ${maxFiles}개까지 업로드할 수 있어요.`;
     }
 
     // 파일 크기 검증
     const oversizedFile = files.find((file) => file.size > (maxFileSize || 0));
     if (oversizedFile && maxFileSize) {
       const sizeMB = Math.round(maxFileSize / (1024 * 1024));
-      return `각 이미지 파일은 ${sizeMB}MB 이하여야 합니다.`;
+      return `각 이미지 파일은 ${sizeMB}MB 이하여야 해요.`;
     }
 
     // 파일 타입 검증
@@ -102,7 +102,7 @@ export function ImageUploadUrlForm({
     } catch (error) {
       const err = error instanceof Error ? error : new Error('Upload failed');
       onUploadError?.(err);
-      alert('이미지 업로드에 실패했습니다. 다시 시도해주세요.');
+      alert('이미지 업로드에 실패했습니다. 다시 시도해 주세요.');
     } finally {
       setIsUploading(false);
       // input 초기화

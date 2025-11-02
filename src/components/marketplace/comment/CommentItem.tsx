@@ -157,7 +157,7 @@ export const CommentItem = ({
                   onChange={(e) => setCurrentComment(e.target.value)}
                   name="comment"
                 />
-                <div className="absolute top-1/2 right-3 flex translate-y-[-50%] items-center gap-1 select-none">
+                <div className="absolute top-1/2 right-4 flex translate-y-[-50%] items-center gap-1 select-none">
                   <input
                     type="checkbox"
                     id="editCommentSecret"
@@ -190,7 +190,7 @@ export const CommentItem = ({
               </div>
             ) : (
               <p className="text-gray-60">
-                비밀 댓글입니다. 작성자만 확인할 수 있습니다.
+                비밀 댓글입니다. 작성자만 확인할 수 있어요.
               </p>
             )
           ) : (

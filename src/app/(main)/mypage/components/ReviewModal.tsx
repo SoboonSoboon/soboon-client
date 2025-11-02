@@ -31,7 +31,7 @@ export const ReviewModal = ({
 
   // 에러 발생 시 Toast 표시하고 모달 닫기
   if (error) {
-    toast.error('리뷰 목록을 불러오는데 실패했습니다.');
+    toast.error('리뷰 목록을 불러오는데 실패했어요.');
     modal.close();
     return null;
   }

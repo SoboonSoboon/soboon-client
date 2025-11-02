@@ -29,8 +29,8 @@ const shoppingFormSchema = z.object({
   capacity: z
     .number()
     .min(1, { message: '모집 인원을 선택해 주세요.' })
-    .min(2, { message: '모집 인원은 2명 이상이어야 합니다.' })
-    .max(5, { message: '모집 인원은 5명 이하로 입력해주세요.' }),
+    .min(2, { message: '모집 인원은 2명 이상이어야 해요.' })
+    .max(5, { message: '모집 인원은 5명 이하로 입력해 주세요.' }),
   tags: z
     .array(z.string())
     .min(1, { message: '1개 이상의 태그를 선택해 주세요.' }),
@@ -130,11 +130,11 @@ export function UpdateShoppingForm({
       return await updateShoppingMeeting(meetingId, formatData);
     },
     onSuccess: (data: ApiResponse<string>) => {
-      success(data.message || '장보기 모임이 성공적으로 수정되었습니다.');
+      success(data.message || '장보기 모임이 성공적으로 수정되었어요.');
       router.push('/shopping');
     },
     onError: (error: Error) => {
-      showError(error.message || '장보기 모임 수정에 실패했습니다.');
+      showError(error.message || '장보기 모임 수정에 실패했어요.');
     },
   });
 

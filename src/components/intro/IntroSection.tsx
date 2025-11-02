@@ -34,7 +34,7 @@ export const IntroSection = () => {
         </p>
       </div>
       <div>
-        <div className="absolute bottom-[84px] left-1/2 z-2 flex w-full max-w-[1030px] -translate-x-1/2 items-center justify-center">
+        <div className="absolute bottom-[160px] left-1/2 z-2 flex w-full max-w-[1030px] -translate-x-1/2 items-center justify-center sm:bottom-[120px] md:bottom-[84px]">
           <Image
             data-sequence="450"
             // src="/images/intro_people1.png"
@@ -54,7 +54,7 @@ export const IntroSection = () => {
             className="z-2 h-auto w-[55%] max-w-[630px] rotate-3 object-contain lg:w-[60%]"
           />
         </div>
-        <div className="bg-Green-10 absolute bottom-0 z-1 h-[120px] w-full sm:h-[140px] lg:h-[195px]"></div>
+        <div className="bg-Green-10 absolute bottom-0 z-1 h-[200px] w-full lg:h-[195px]"></div>
       </div>
     </div>
   );
