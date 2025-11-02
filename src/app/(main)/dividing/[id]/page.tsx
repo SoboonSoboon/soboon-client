@@ -1,10 +1,5 @@
 import { Carousel } from '@/components/Atoms/Carousel/Carousel';
-import {
-  DetailHeader,
-  DetailContent,
-  CommentSection,
-  DetailAside,
-} from '@/components/marketplace';
+import { DetailHeader, DetailContent } from '@/components/marketplace';
 import { MeetingDetailType } from '@/types/meetingsType';
 import { CommentsListType } from '@/types/commentType';
 import { ApplicantsMemberType } from '@/types/applicantsType';
@@ -12,6 +7,8 @@ import { cookies } from 'next/headers';
 import { UserInfoType } from '@/types/authType';
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
+import { DynamicDetailAsideWrapper } from '@/components/marketplace/wrapper/DynamicDetailAsideWrapper';
+import { DynamicCommentSectionWrapper } from '@/components/marketplace/wrapper/DynamicCommentSectionWrapper';
 
 export async function generateMetadata({
   params,
@@ -274,7 +271,7 @@ export default async function DividingDetailPage({
       <DetailHeader />
       <div className="flex flex-col gap-6 lg:flex-row lg:gap-10">
         <div className="w-full lg:sticky lg:top-6 lg:order-2 lg:w-[300px] xl:w-[350px]">
-          <DetailAside
+          <DynamicDetailAsideWrapper
             meetingDetail={meetingDetail!}
             isAuthor={isAuthor}
             participants={participants || []}
@@ -286,7 +283,7 @@ export default async function DividingDetailPage({
           <DetailContent description={meetingDetail!.description} />
 
           {/* 댓글 영역 */}
-          <CommentSection
+          <DynamicCommentSectionWrapper
             commentsList={commentsList}
             status={meetingDetail!.status}
             isAuthor={isAuthor}

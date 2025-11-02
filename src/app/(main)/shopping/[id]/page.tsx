@@ -6,8 +6,8 @@ import { cookies } from 'next/headers';
 import { UserInfoType } from '@/types/authType';
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
-import { DynamicDetailAsideWrapper } from './components/DynamicDetailAsideWrapper';
-import { DynamicCommentSectionWrapper } from './components/DynamicCommentSectionWrapper';
+import { DynamicDetailAsideWrapper } from '@/components/marketplace/wrapper/DynamicDetailAsideWrapper';
+import { DynamicCommentSectionWrapper } from '@/components/marketplace/wrapper/DynamicCommentSectionWrapper';
 
 export async function generateMetadata({
   params,
