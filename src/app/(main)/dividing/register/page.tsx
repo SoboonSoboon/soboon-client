@@ -165,6 +165,7 @@ export default function DividingRegisterPage() {
                 >
                   <button
                     type="button"
+                    aria-label={option.label}
                     onClick={() => {
                       setValue('productType', option.value);
                       clearErrors('productType');
@@ -357,6 +358,7 @@ export default function DividingRegisterPage() {
 
           <Button
             label="확인"
+            aria-label="확인"
             type="submit"
             className="w-full sm:w-auto sm:min-w-[120px]"
           />

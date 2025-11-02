@@ -125,6 +125,7 @@ export const ApplicantsList = ({
                     </div>
                     <Button
                       label="강퇴"
+                      aria-label="강퇴 버튼"
                       size="small"
                       className="!border-text-sub2 !text-text-sub2"
                       variant="outline"
@@ -140,6 +141,7 @@ export const ApplicantsList = ({
                   <div className="flex gap-2">
                     <Button
                       label="수락"
+                      aria-label="수락 버튼"
                       size="small"
                       variant="outline"
                       onClick={() =>
@@ -148,6 +150,7 @@ export const ApplicantsList = ({
                     />
                     <Button
                       label="거절"
+                      aria-label="거절 버튼"
                       className="!border-text-sub2 !text-text-sub2"
                       variant="outline"
                       size="small"

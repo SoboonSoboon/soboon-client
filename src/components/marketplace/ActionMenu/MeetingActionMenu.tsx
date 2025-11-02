@@ -149,6 +149,7 @@ export const MeetingActionMenu = ({
               }}
               className="w-full"
               label="취소"
+              aria-label="취소 버튼"
             />
             <Button
               type="button"
@@ -156,6 +157,7 @@ export const MeetingActionMenu = ({
               disabled={isDeleting}
               label={isDeleting ? '삭제 중...' : '삭제'}
               className="w-full"
+              aria-label="삭제 버튼"
             />
           </div>
         </div>

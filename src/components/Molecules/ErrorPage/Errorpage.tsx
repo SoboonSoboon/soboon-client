@@ -19,7 +19,12 @@ export const ErrorPage = () => {
         <br />
         입력하신 주소가 올바른지 확인해 주세요.
       </p>
-      <Button label="홈으로" onClick={onButtonClick} variant="outline" />
+      <Button
+        label="홈으로"
+        aria-label="홈으로 버튼"
+        onClick={onButtonClick}
+        variant="outline"
+      />
     </div>
   );
 };

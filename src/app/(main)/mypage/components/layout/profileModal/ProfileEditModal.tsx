@@ -194,6 +194,7 @@ export const ProfileEditModal = ({
             type="submit"
             variant="filled"
             label="수정하기"
+            aria-label="수정하기 버튼"
             className="w-full"
             disabled={isSubmitting}
           />

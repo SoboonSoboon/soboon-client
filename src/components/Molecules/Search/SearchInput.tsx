@@ -62,6 +62,7 @@ export const SearchInput = ({
       <button
         type="submit"
         className="absolute top-1/2 right-4 z-10 -translate-y-1/2 cursor-pointer text-center"
+        aria-label="검색 창 버튼"
       >
         <SearchIcon className="text-Green-50" />
       </button>

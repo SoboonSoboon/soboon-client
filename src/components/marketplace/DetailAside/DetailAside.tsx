@@ -204,12 +204,14 @@ export const DetailAside = ({
               }}
               className="w-full"
               label="취소"
+              aria-label="취소 버튼"
             />
             <Button
               variant="filled"
               label="로그인"
               onClick={handleLoginButtonClick}
               className="w-full"
+              aria-label="로그인 버튼"
             />
           </div>
         </div>
