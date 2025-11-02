@@ -84,7 +84,7 @@ export const ProfilePopover = ({
               {/* 프로필 영역 */}
               <div className="flex flex-col items-center justify-center gap-2.5">
                 <ProfileImg profileImageUrl={profileImage} size={120} />
-                <span className="text-memomentKkukkkuk text-gray-95 text-2xl">
+                <span className="font-memomentKkukkkuk text-gray-95 text-2xl">
                   {nickname}
                 </span>
               </div>

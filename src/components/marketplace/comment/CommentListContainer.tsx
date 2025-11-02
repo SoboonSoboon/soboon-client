@@ -158,7 +158,7 @@ export const CommentListContainer = ({
                     >
                       <div className="relative flex-1">
                         <TextInput
-                          placeholder="대댓글을 입력해주세요."
+                          placeholder="대댓글을 입력해 주세요."
                           name="reply"
                           className="!border-text-line1 !border bg-white pr-[90px]"
                         />

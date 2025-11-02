@@ -2,7 +2,6 @@ import { Carousel } from '@/components/Atoms/Carousel/Carousel';
 import {
   DetailHeader,
   DetailContent,
-  DetailContentFooter,
   CommentSection,
   DetailAside,
 } from '@/components/marketplace';
@@ -285,7 +284,6 @@ export default async function SharingDetailPage({
         <article className="flex-1 lg:order-1">
           <Carousel carouselImages={meetingDetail!.images} className="mb-8" />
           <DetailContent description={meetingDetail!.description} />
-          <DetailContentFooter createdAt={meetingDetail!.createdAt} />
 
           {/* 댓글 영역 */}
           <CommentSection

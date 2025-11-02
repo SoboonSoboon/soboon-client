@@ -131,20 +131,22 @@ export const DetailAside = ({
 
   return (
     <aside className="flex flex-col gap-5">
-      <AsideMoreInfo
-        status={meetingDetail?.status}
-        isBookmarked={isBookmarked}
-        handleBookmarkClick={handleBookmarkClick}
-        meetingId={meetingId}
-        isAuthor={isAuthor}
-      />
-
-      <AsideHeader
-        title={meetingDetail?.title}
-        profileImageUrl={meetingDetail?.user.profile}
-        userName={meetingDetail?.user.userName}
-        tags={meetingDetail?.tags}
-      />
+      <div className="flex flex-col gap-3.5">
+        <AsideMoreInfo
+          status={meetingDetail?.status}
+          isBookmarked={isBookmarked}
+          handleBookmarkClick={handleBookmarkClick}
+          meetingId={meetingId}
+          isAuthor={isAuthor}
+        />
+        <AsideHeader
+          title={meetingDetail?.title}
+          profileImageUrl={meetingDetail?.user.profile}
+          userName={meetingDetail?.user.userName}
+          createdAt={meetingDetail?.createdAt}
+          tags={meetingDetail?.tags}
+        />
+      </div>
 
       <div className="bg-gray-10 h-[1px] w-full"></div>
 

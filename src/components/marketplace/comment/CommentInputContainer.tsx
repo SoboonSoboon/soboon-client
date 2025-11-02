@@ -63,7 +63,7 @@ export const CommentInputContainer = ({
                 ? '모집이 종료된 모임입니다.'
                 : !isLoggedIn
                   ? '로그인이 필요합니다.'
-                  : '댓글을 입력해주세요.'
+                  : '댓글을 입력해 주세요.'
             }
             name="comment"
             className="!border-text-line1 !border bg-white pr-[90px]"
