@@ -1,7 +1,6 @@
 import {
   DetailHeader,
   DetailContent,
-  DetailContentFooter,
   CommentSection,
   DetailAside,
 } from '@/components/marketplace';
@@ -250,7 +249,6 @@ export default async function ShoppingDetailPage({
 
         <article className="flex-1 lg:order-1">
           <DetailContent description={shoppingMeetingDetail!.description} />
-          <DetailContentFooter createdAt={shoppingMeetingDetail!.createdAt} />
 
           {/* 댓글 영역 */}
           <CommentSection

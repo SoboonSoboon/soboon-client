@@ -143,6 +143,7 @@ export const DetailAside = ({
         title={meetingDetail?.title}
         profileImageUrl={meetingDetail?.user.profile}
         userName={meetingDetail?.user.userName}
+        createdAt={meetingDetail?.createdAt}
         tags={meetingDetail?.tags}
       />
 
