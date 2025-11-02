@@ -265,7 +265,7 @@ export function UpdateDividingForm({
 
       <div className="flex flex-col gap-3">
         <Label htmlFor="province" className="font-semibold" required>
-          어디서 만날까요??
+          어디서 만날까요?
         </Label>
         <div className="flex flex-col gap-3 sm:items-center">
           <div className="flex w-full flex-col gap-3 sm:flex-row sm:items-center sm:gap-2.5">

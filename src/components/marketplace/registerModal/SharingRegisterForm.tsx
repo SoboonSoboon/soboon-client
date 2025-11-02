@@ -147,7 +147,7 @@ export function SharingRegisterForm({ handleClose }: SharingRegisterFormProps) {
 
           <div className="flex flex-col gap-3">
             <Label htmlFor="province" required>
-              어디서 만날까요??
+              어디서 만날까요?
             </Label>
             <div className="flex flex-col items-center gap-3">
               <div className="flex w-full items-center gap-2.5">
