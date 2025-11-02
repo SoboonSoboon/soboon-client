@@ -323,18 +323,15 @@ export default function DividingRegisterPage() {
 
           <div className="flex flex-col gap-3">
             <Label htmlFor="description" className="font-semibold" required>
-              상세 설명
+              상세 설명을 작성해 주세요.
             </Label>
             <Textarea
               className="min-h-[120px] sm:min-h-[150px] lg:min-h-[173px]"
               id="description"
               {...register('description')}
-              placeholder={`모집 내용을 작성해주세요.
-
-ex)
+              placeholder={`ex) 언제 구매한 제품이예요.
 이런 식으로 나누고 싶어요.
-언제 구매했어요.
-언제 어디서 만나고 싶어요`}
+언제 어디서 만나고 싶어요.`}
             />
             {errors.description && (
               <p className="text-sm text-red-500">

@@ -221,7 +221,7 @@ export function SharingRegisterForm({ handleClose }: SharingRegisterFormProps) {
 
           <div className="flex flex-col gap-3">
             <Label htmlFor="description" required>
-              상세 설명
+              상세 설명을 작성해 주세요.
             </Label>
             <Textarea
               className="min-h-[173px]"
@@ -229,12 +229,9 @@ export function SharingRegisterForm({ handleClose }: SharingRegisterFormProps) {
               id="description"
               required
               value={formData.description}
-              placeholder={`모집 내용을 작성해주세요.
-
-ex)
+              placeholder={`ex) 언제 구매한 제품이예요.
 이런 식으로 나누고 싶어요.
-언제 구매했어요.
-언제 어디서 만나고 싶어요`}
+언제 어디서 만나고 싶어요.`}
               onChange={(e) =>
                 setFormData({ ...formData, description: e.target.value })
               }
