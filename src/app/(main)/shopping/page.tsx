@@ -8,7 +8,7 @@ import {
   ShoppingListSection,
   ShoppingTagsSection,
 } from './components';
-import { SideButtonSection } from '@/components';
+import { DynamicSideButtonSectionWrapper } from './components/DynamicSideButtonSectionWrapper';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
@@ -110,7 +110,7 @@ export default async function ShoppingPage({
         <FilterSection />
         <ShoppingListSection initialShoppingList={initialShoppingList} />
       </section>
-      <SideButtonSection />
+      <DynamicSideButtonSectionWrapper />
     </main>
   );
 }
