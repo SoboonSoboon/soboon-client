@@ -9,6 +9,10 @@ import {
   ErrorPage,
   ServerErrorPage,
 } from '@/components/Molecules';
+import {
+  DividingCardSkeleton,
+  ShoppingCardSkeleton,
+} from './components/Card/CardSkeleton';
 
 import { useMyPageData } from './hook/components/page/useMypageData';
 
@@ -85,11 +89,14 @@ function MyPageContent() {
 
         <div className="flex-1 pt-4 sm:pt-6">
           {currentData.loading ? (
-            <div className="flex items-center justify-center py-12 sm:py-20">
-              <div className="text-center">
-                <div className="border-gray-90 mx-auto mb-4 h-8 w-8 animate-spin rounded-full border-b-2"></div>
-                <p className="text-gray-60">로딩 중...</p>
-              </div>
+            <div className="grid grid-cols-1 gap-4 sm:gap-6 lg:grid-cols-2 lg:gap-8">
+              {Array.from({ length: 6 }).map((_, index) =>
+                activeSubTab === 'SHOPPING' ? (
+                  <ShoppingCardSkeleton key={index} />
+                ) : (
+                  <DividingCardSkeleton key={index} />
+                ),
+              )}
             </div>
           ) : currentData.error ? (
             isAxiosError(currentData.error) &&
@@ -138,7 +145,7 @@ function MyPageContent() {
 
 export default function MyPage() {
   return (
-    <Suspense fallback={<div className="min-h-screen w-full bg-white" />}>
+    <Suspense fallback={null}>
       <MyPageContent />
     </Suspense>
   );
