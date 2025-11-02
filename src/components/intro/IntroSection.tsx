@@ -26,6 +26,8 @@ export const IntroSection = () => {
             width={250}
             height={250}
             priority
+            fetchPriority="high"
+            decoding="sync"
             className="h-auto w-auto"
           />
         </div>
