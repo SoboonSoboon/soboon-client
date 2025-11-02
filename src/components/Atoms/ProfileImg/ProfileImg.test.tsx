@@ -85,7 +85,7 @@ describe('ProfileImg', () => {
   });
 
   test('기본 profileImageUrl 경로가 제공될 때 올바르게 렌더링되어야 한다', () => {
-    const defaultProfile = '/images/dummy_profile.png';
+    const defaultProfile = '/images/profile_default.svg';
     render(<ProfileImg profileImageUrl={defaultProfile} />);
 
     const image = screen.getByRole('img', { name: /profileImage/i });

@@ -1,5 +1,5 @@
 import type { ToastType } from './types';
-import { AlertTriangle, Check, Info, X } from 'lucide-react';
+import { AlertTriangle, Check, Info, X } from '@/components/Atoms/icons';
 
 interface ToastProps {
   toast: ToastType;

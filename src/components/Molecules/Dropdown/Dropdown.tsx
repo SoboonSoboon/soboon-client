@@ -2,7 +2,7 @@
 
 import { useState, useRef, useEffect } from 'react';
 import { cn } from '@/utils/cn';
-import { ChevronDown } from 'lucide-react';
+import { ChevronDown } from '@/components/Atoms/icons';
 
 export interface DropdownOption {
   value: string | number;

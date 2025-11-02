@@ -1,5 +1,5 @@
 import { Button, ProfileImg, StatusTag } from '@/components/Atoms';
-import { ChevronDown, ChevronUp } from 'lucide-react';
+import { ChevronDown, ChevronUp } from '@/components/Atoms/icons';
 import { useState } from 'react';
 import {
   ReviewerListData,

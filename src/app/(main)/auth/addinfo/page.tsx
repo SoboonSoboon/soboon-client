@@ -7,10 +7,9 @@ import { profileDataType } from '@/types/authType';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import ProfileForm from '../components/ProfileForm';
-import SoboonLogo from '../components/SoboonLogo';
+import Image from 'next/image';
 
-const defaultImage =
-  'https://github.com/SoboonSoboon/soboon-client/blob/53fc79821c2d3598dabd6e0d5b21df0da774dd48/public/images/profile_default.svg';
+const defaultImage = '/images/profile_default.svg';
 
 export default function AddInfoPage() {
   const router = useRouter();
@@ -46,7 +45,6 @@ export default function AddInfoPage() {
         router.push('/dividing');
       }
     } catch (error) {
-      console.log('저장 실패!');
       console.error('저장 오류:', error);
     }
   };
@@ -64,7 +62,6 @@ export default function AddInfoPage() {
         detail: profileData.detail || '',
       });
     }
-    console.log('프로필 데이터:', profileData);
   }, [profileData]);
 
   if (isLoading) return <div>로딩 중...</div>;
@@ -76,7 +73,13 @@ export default function AddInfoPage() {
       <div className="bg-Green-5 absolute top-0 right-0 left-0 flex h-[347px] items-center justify-center">
         <div className="flex flex-col justify-center">
           <div className="mb-5">
-            <SoboonLogo color="#00b460" gap={5.65} />
+            <Image
+              src="/images/green_logo.png"
+              alt="로고이미지"
+              width={200}
+              height={200}
+              className="h-auto w-auto"
+            />
           </div>
           <p className="text-center text-base font-normal text-gray-800">
             소분소분의 원활한 이용을 위해

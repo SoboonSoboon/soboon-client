@@ -1,6 +1,6 @@
 'use client';
 
-import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { ChevronLeft, ChevronRight } from '@/components/Atoms/icons';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
 
@@ -81,12 +81,12 @@ export const Carousel = ({
         style={{ aspectRatio: `${width} / ${height}`, maxWidth: `${width}px` }}
       >
         <Image
-          src={'/images/notFound_image.png'}
+          src="/images/notFound_image.png"
           alt="캐러셀 이미지"
           width={width}
           height={height}
           className="h-full w-full rounded-lg object-cover"
-          sizes="100vw"
+          sizes={`(max-width: 768px) 100vw, ${width}px`}
         />
       </div>
     );
@@ -105,7 +105,7 @@ export const Carousel = ({
           width={width}
           height={height}
           className="h-full w-full rounded-lg object-cover"
-          sizes="100vw"
+          sizes={`(max-width: 768px) 100vw, ${width}px`}
         />
       </div>
     );
@@ -135,7 +135,7 @@ export const Carousel = ({
                 width={imageWidth}
                 height={imageHeight}
                 className="h-full w-full object-contain"
-                sizes="100vw"
+                sizes={`(max-width: 768px) 100vw, ${width}px`}
                 property={index === 1 ? 'true' : 'false'}
               />
             </div>
