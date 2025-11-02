@@ -1,8 +1,7 @@
 'use client';
 
-import { Dropdown } from '@/components/Molecules/Dropdown';
-import { Checkbox, Label } from '@/components';
-import { KeywordChip } from '@/components/Atoms';
+import { Dropdown } from '@/components/Molecules';
+import { KeywordChip, Checkbox, Label } from '@/components/Atoms';
 import { PROVINCE_OPTIONS, GET_CITY_OPTIONS } from '@/constants';
 import categories from '@/constants/categories';
 import { useFilterParams } from '@/hooks/useFilterParams';

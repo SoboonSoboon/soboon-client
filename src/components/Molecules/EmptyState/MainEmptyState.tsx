@@ -1,6 +1,6 @@
 'use client';
 
-import { Button } from '@/components';
+import { Button } from '@/components/Atoms';
 import Image from 'next/image';
 
 export interface MainEmptyStateProps {

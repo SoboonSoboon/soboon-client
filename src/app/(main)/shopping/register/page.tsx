@@ -1,8 +1,15 @@
 'use client';
 
 import { shoppingRegisterApi } from '@/apis';
-import { Button, Dropdown, Label, Textarea, TextInput } from '@/components';
-import { useToast, KeywordChip } from '@/components/Atoms';
+import {
+  Button,
+  Label,
+  Textarea,
+  TextInput,
+  useToast,
+  KeywordChip,
+} from '@/components/Atoms';
+import { Dropdown } from '@/components/Molecules';
 import { MODEL_PROVINCE_OPTIONS, SHOPPING_TAGS } from '@/constants';
 import { ShoppingTagType } from '@/types/common';
 import {

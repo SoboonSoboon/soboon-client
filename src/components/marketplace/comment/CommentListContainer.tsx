@@ -3,10 +3,9 @@
 import { CommentsType, ReplyType } from '@/types/commentType';
 import { CommentItem } from './CommentItem';
 import { useEffect, useState } from 'react';
-import { Button, TextInput } from '@/components';
+import { Button, TextInput, useToast } from '@/components/Atoms';
 import { createReplyApi } from '@/apis/comment/createReply';
 import { useParams, useSearchParams } from 'next/navigation';
-import { useToast } from '@/components/Atoms';
 import { CornerDownRight } from 'lucide-react';
 import {
   useInfiniteQuery,

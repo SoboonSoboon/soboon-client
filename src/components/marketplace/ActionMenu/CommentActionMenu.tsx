@@ -5,7 +5,7 @@ import {
   Button,
   useToast,
 } from '@/components/Atoms';
-import { Modal, useModal } from '@/components/Molecules/modal';
+import { Modal, useModal } from '@/components/Molecules';
 import {
   MODAL_CONTENT,
   MODAL_TITLE,

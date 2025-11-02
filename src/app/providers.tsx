@@ -1,6 +1,6 @@
 'use client';
 
-import { ToastProvider } from '@/components/Atoms/Toast';
+import { ToastProvider } from '@/components/Atoms';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { useState } from 'react';
 

@@ -1,4 +1,5 @@
-import { Button, Dropdown } from '@/components';
+import { Button } from '@/components/Atoms';
+import { Dropdown } from '@/components/Molecules';
 import {
   MODEL_PROVINCE_OPTIONS,
   GET_MODEL_CITY_OPTIONS,

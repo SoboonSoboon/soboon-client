@@ -1,4 +1,4 @@
-import { Button } from '@/components';
+import { Button } from '@/components/Atoms';
 import { MeetingItem } from '../../../utils/mypageType';
 
 interface MeetingCardReviewButtonProps {

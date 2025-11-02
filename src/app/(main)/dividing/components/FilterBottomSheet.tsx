@@ -1,15 +1,13 @@
 'use client';
 
-import { Checkbox, Label } from '@/components';
-import { Button, KeywordChip } from '@/components/Atoms';
-import { Dropdown } from '@/components/Molecules/Dropdown';
-import { Modal } from '@/components/Molecules/modal';
-import { PROVINCE_OPTIONS, GET_CITY_OPTIONS } from '@/constants';
-import categories from '@/constants/categories';
+import { Button, KeywordChip, Checkbox, Label } from '@/components/Atoms';
+import { Dropdown, Modal } from '@/components/Molecules';
 import { useFilterParams } from '@/hooks/useFilterParams';
 import { useMemo, useState, useEffect } from 'react';
 import { X } from 'lucide-react';
 import { createPortal } from 'react-dom';
+import { PROVINCE_OPTIONS, GET_CITY_OPTIONS } from '@/constants';
+import categories from '@/constants/categories';
 
 interface FilterBottomSheetProps {
   isOpen: boolean;

@@ -1,7 +1,7 @@
 'use client';
 
-import { DateFilter } from '@/components';
-import { SearchInput } from '@/components/Molecules/Search/SearchInput';
+import { DateFilter } from '@/components/Atoms';
+import { SearchInput } from '@/components/Molecules';
 import { useFilterParams } from '@/hooks/useFilterParams';
 
 export const SearchSection = () => {

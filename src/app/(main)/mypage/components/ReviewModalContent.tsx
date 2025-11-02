@@ -1,4 +1,4 @@
-import { Button, ProfileImg, StatusTag } from '@/components';
+import { Button, ProfileImg, StatusTag } from '@/components/Atoms';
 import { ChevronDown, ChevronUp } from 'lucide-react';
 import { useState } from 'react';
 import {

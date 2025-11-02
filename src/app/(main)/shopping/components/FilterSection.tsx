@@ -1,13 +1,12 @@
 'use client';
 
-import { Dropdown } from '@/components/Molecules/Dropdown';
-import { DateFilter } from '@/components';
+import { DateFilter } from '@/components/Atoms';
+import { Dropdown, SearchInput } from '@/components/Molecules';
 import { PROVINCE_OPTIONS, GET_CITY_OPTIONS } from '@/constants';
 import { statusOptions } from '@/constants/status';
 import { useFilterParams } from '@/hooks/useFilterParams';
 import { useEffect, useMemo, useRef } from 'react';
 import { useSearchParams } from 'next/navigation';
-import { SearchInput } from '@/components/Molecules/Search/SearchInput';
 
 export const FilterSection = () => {
   const { activeProvince, activeCity, activeStatus, updateParams } =

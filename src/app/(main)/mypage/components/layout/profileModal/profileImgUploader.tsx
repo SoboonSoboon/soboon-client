@@ -1,5 +1,5 @@
 import { useRef } from 'react';
-import { ProfileImg } from '@/components';
+import { ProfileImg } from '@/components/Atoms';
 
 interface ProfileImageUploader {
   imageUrl: string;

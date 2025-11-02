@@ -1,6 +1,6 @@
-import { Modal } from '@/components/Molecules/modal';
+import { useToast } from '@/components/Atoms';
+import { Modal } from '@/components/Molecules';
 import { ReviewModalContent } from './ReviewModalContent';
-import { useToast } from '@/components/Atoms/Toast/useToast';
 import { ReviewKeyword } from '@/types/common';
 import { ReviewerListData } from '../utils/review';
 
