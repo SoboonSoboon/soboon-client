@@ -3,10 +3,7 @@
 import dynamic from 'next/dynamic';
 
 const DynamicSideButtonSection = dynamic(
-  () =>
-    import('@/components/Molecules/SideButtonSection').then(
-      (mod) => mod.SideButtonSection,
-    ),
+  () => import('@/components/Molecules').then((mod) => mod.SideButtonSection),
   {
     ssr: false,
   },

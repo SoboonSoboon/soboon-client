@@ -3,8 +3,6 @@
 import { Button, ProfileImg, ReviewItemBar } from '@/components/Atoms';
 import { useModal } from '@/components/Molecules';
 import { useAuthStore } from '@/apis/auth/hooks/authStore';
-import { ProfileEditModal } from './profileModal/ProfileEditModal';
-import { useModal } from '@/components/Molecules/modal';
 import { REVIEW_KEYWORD_LABELS } from '@/constants';
 import { useReviewStats } from '@/hooks';
 import { useReceivedReview } from '../../hook/api/useReceivedReview';
