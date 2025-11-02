@@ -216,7 +216,7 @@ export default function DividingRegisterPage() {
 
           <div className="flex flex-col gap-3">
             <Label htmlFor="capacity" className="font-semibold" required>
-              몇 명이 함께하면 좋을까요?
+              몇 명이 함께 하면 좋을까요?
             </Label>
             <Dropdown
               name="capacity"
