@@ -6,7 +6,7 @@ import { Header } from '@/components/Molecules';
 import HeaderContainer from './Headercontainer';
 import AlertHandler from './AlertHandler';
 import type { Metadata } from 'next';
-
+import { memomentKkukkkuk, pretendard } from './fonts';
 export const metadata: Metadata = {
   title: {
     default: '소분소분',
@@ -27,13 +27,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="ko">
-      <head>
-        <link
-          rel="stylesheet"
-          href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css"
-        />
-      </head>
+    <html
+      lang="ko"
+      className={`${pretendard.variable} ${memomentKkukkkuk.variable}`}
+    >
       <body className="pt-15">
         <Providers>
           <HeaderContainer>

@@ -1,13 +1,5 @@
 @import 'tailwindcss';
 
-@font-face {
-  font-family: 'memomentKkukkkuk';
-  src: url('/font/memomentKkukkkuk.woff2') format('woff2');
-  font-weight: normal;
-  font-style: normal;
-  font-display: swap;
-}
-
 @theme {
   --color-primary: var(--GreenScale-Green50);
   --color-secondary: #ffd6cc;
@@ -114,7 +106,7 @@ body {
 }
 @layer utilities {
   .font-memomentKkukkkuk {
-    font-family: 'memomentKkukkkuk', sans-serif !important;
+    font-family: var(--font-memoment-kkukkkuk), sans-serif !important;
   }
 
   /* 체크박스 커스텀 스타일 */
@@ -156,7 +148,7 @@ body {
 }
 
 * {
-  font-family: 'pretendard', sans-serif;
+  font-family: var(--font-pretendard), sans-serif;
 }
 h1,
 h2,
@@ -164,7 +156,7 @@ h3,
 h4,
 h5,
 h6 {
-  font-family: 'memomentKkukkkuk', sans-serif;
+  font-family: var(--font-memoment-kkukkkuk), sans-serif;
 }
 
 /* 드롭다운 스크롤바 스타일 */
