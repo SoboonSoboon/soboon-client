@@ -9,6 +9,7 @@ import {
   UserActionMenu,
   Icon,
   type IconType,
+  SpeechBubble,
 } from '@/components/Atoms';
 import { redirectToKakao } from '@/apis/auth/authApi';
 import { useAuthStore } from '@/apis/auth/hooks/authStore';
@@ -16,7 +17,6 @@ import { useState, useEffect } from 'react';
 import { HEADER_MENU } from '@/constants';
 import { cn } from '@/utils/cn';
 import { logoutAction } from '@/action/logoutAction';
-import SpeechBubble from '@/components/Atoms/SpeechBubble/SpeechBubble';
 
 export const Header = () => {
   const pathname = usePathname() || '/';

@@ -1,6 +1,6 @@
 'use client';
 
-import { Button } from '@/components';
+import { Button } from '@/components/Atoms';
 import { StatusString } from '@/types/common';
 
 export const AuthorStatusButtonSection = ({

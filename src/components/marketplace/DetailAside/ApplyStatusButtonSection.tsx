@@ -1,7 +1,7 @@
 'use client';
 
 import { UserApplyStatusType } from '@/apis/meetings/userApplyStatusApi';
-import { Button } from '@/components';
+import { Button } from '@/components/Atoms';
 import { StatusString } from '@/types/common';
 
 export const ApplyStatusButtonSection = ({

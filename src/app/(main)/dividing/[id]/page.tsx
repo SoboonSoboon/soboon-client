@@ -1,4 +1,4 @@
-import { Carousel } from '@/components/Atoms/Carousel/Carousel';
+import { Carousel } from '@/components/Atoms';
 import {
   DetailHeader,
   DetailContent,

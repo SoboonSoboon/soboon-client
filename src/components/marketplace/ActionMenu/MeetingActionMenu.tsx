@@ -6,7 +6,7 @@ import {
   Button,
   useToast,
 } from '@/components/Atoms';
-import { Modal, useModal } from '@/components/Molecules/modal';
+import { Modal, useModal } from '@/components/Molecules';
 import { deleteMeetingsApi } from '@/apis/meetings/deleteMeetingsApi';
 import {
   MODAL_CONTENT,

@@ -9,8 +9,7 @@ import { getUserApplyStatus } from '@/apis';
 import { useAuthStore } from '@/apis/auth/hooks/authStore';
 import { axiosInstance } from '@/apis/axiosInstance';
 
-import { Button, ProfileImg } from '@/components';
-import { useToast } from '@/components/Atoms';
+import { Button, ProfileImg, useToast } from '@/components/Atoms';
 import { ApplicantsMemberType } from '@/types/applicantsType';
 import { StatusString } from '@/types/common';
 import { useQuery } from '@tanstack/react-query';

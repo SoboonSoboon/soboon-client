@@ -3,12 +3,12 @@
 import { EllipsisVertical, LockKeyhole } from 'lucide-react';
 import { timeFormatter } from '@/utils';
 import { CommentType, ReplyType } from '@/types/commentType';
-import { Button, ProfileImg, ProfilePopover, TextInput } from '@/components';
+import { Button, ProfileImg, TextInput, useToast } from '@/components/Atoms';
+import { ProfilePopover } from '@/components/Molecules';
 import { CommentActionMenu } from '@/components/marketplace/ActionMenu/CommentActionMenu';
 import { useState, useEffect } from 'react';
 import { useParams } from 'next/navigation';
 import { updateCommentApi } from '@/apis/comment/updateComment';
-import { useToast } from '@/components/Atoms';
 import { useAuthStore } from '@/apis/auth/hooks/authStore';
 import { usePopoverReview } from '@/hooks/usePopoverReview';
 import { useMutation, useQueryClient } from '@tanstack/react-query';

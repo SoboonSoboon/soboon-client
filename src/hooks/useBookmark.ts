@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { useToast } from '@/components/Atoms/Toast/useToast';
+import { useToast } from '@/components/Atoms';
 import { postBookmarkedMeetingApi, deleteBookmarkedMeetingApi } from '@/apis';
 import { mypageKeys } from '@/constants/queryKey';
 

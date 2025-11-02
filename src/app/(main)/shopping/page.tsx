@@ -1,3 +1,4 @@
+import { SideButtonSection } from '@/components/Molecules';
 import { Banner } from '@/components/marketplace';
 import {
   meetingSearchParamsType,
@@ -8,7 +9,6 @@ import {
   ShoppingListSection,
   ShoppingTagsSection,
 } from './components';
-import { SideButtonSection } from '@/components';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {

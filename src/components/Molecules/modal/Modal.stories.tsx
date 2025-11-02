@@ -2,7 +2,8 @@ import type { Meta, StoryObj } from '@storybook/nextjs-vite';
 import { useState, useEffect } from 'react';
 import { fn } from 'storybook/test';
 
-import { Modal, useModal } from './index';
+import { Modal } from './modal';
+import { useModal } from './hooks/useModal';
 
 // 1. Meta 객체 정의
 const meta = {

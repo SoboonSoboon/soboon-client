@@ -1,6 +1,6 @@
 'use client';
 
-import { Checkbox, Label } from '@/components';
+import { Checkbox, Label } from '@/components/Atoms';
 import { cn } from '@/utils/cn';
 
 interface ReviewToggleButton {

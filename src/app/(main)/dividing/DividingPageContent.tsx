@@ -9,7 +9,7 @@ import {
   SearchSection,
   FilterBottomSheet,
 } from '@/app/(main)/dividing/components';
-import { SideButtonSection } from '@/components';
+import { SideButtonSection } from '@/components/Molecules';
 import { Funnel } from 'lucide-react';
 
 interface DividingPageContentProps {

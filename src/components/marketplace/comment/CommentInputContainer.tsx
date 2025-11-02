@@ -1,9 +1,7 @@
 'use client';
 
-import { TextInput } from '@/components';
-import { Button } from '@/components';
+import { Button, TextInput, useToast } from '@/components/Atoms';
 import { useParams, useSearchParams } from 'next/navigation';
-import { useToast } from '@/components/Atoms';
 import { cn } from '@/utils/cn';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { createCommentApi } from '@/apis/comment/createComment';

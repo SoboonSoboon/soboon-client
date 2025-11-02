@@ -1,1 +1,0 @@
-export { StatusTag } from './StatusTag';

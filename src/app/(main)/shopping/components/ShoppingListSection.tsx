@@ -1,5 +1,6 @@
 'use client';
 
+import { StatusTag } from '@/components/Atoms';
 import {
   Card,
   CardContent,
@@ -7,8 +8,8 @@ import {
   CardSubtitle,
   CardTitle,
   Line,
-  StatusTag,
-} from '@/components';
+  MainEmptyState,
+} from '@/components/Molecules';
 import { ShoppingMeetingsType } from '@/types/meetingsType';
 import { timeFormatter } from '@/utils';
 import { MapPin } from 'lucide-react';
@@ -20,7 +21,6 @@ import { getShoppingListApi } from '@/apis/meetings/getShoppingListApi';
 import { useInfiniteScrollTrigger } from '@/hooks/useScroll';
 import { useSearchParams } from 'next/navigation';
 import { HashTag } from './HashTag';
-import { MainEmptyState } from '@/components/Molecules';
 import { useShoppingSearch } from '@/hooks/useSearch/useShoppingSearch';
 
 export const ShoppingListSection = ({
