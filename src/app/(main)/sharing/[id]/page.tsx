@@ -12,6 +12,7 @@ import { ApplicantsMemberType } from '@/types/applicantsType';
 import { cookies } from 'next/headers';
 import { UserInfoType } from '@/types/authType';
 import type { Metadata } from 'next';
+import { notFound } from 'next/navigation';
 
 export async function generateMetadata({
   params,
@@ -19,6 +20,10 @@ export async function generateMetadata({
   params: Promise<{ id: string }>;
 }): Promise<Metadata> {
   const meetingId = (await params).id;
+
+  if (Number.isNaN(Number(meetingId))) {
+    notFound();
+  }
 
   try {
     const response = await fetch(
@@ -136,6 +141,7 @@ async function getMeetingDetail({
 }): Promise<MeetingDetailType | null> {
   const cookieStore = await cookies();
   const accessToken = cookieStore.get('accessToken')?.value || '';
+
   try {
     const response = await fetch(
       `${process.env.NEXT_PUBLIC_SOBOON_API_URL}/v1/meetings/${id}`,
@@ -242,11 +248,18 @@ export default async function SharingDetailPage({
 }) {
   const meetingId = (await params).id;
   const sortType = (await searchParams).sortType || 'OLDEST';
-  // 소분하기 모임 상세 데이터 조회
+
+  if (Number.isNaN(Number(meetingId))) {
+    notFound();
+  }
+
   const meetingDetail = await getMeetingDetail({
     id: meetingId,
   });
 
+  if (!meetingDetail) {
+    notFound();
+  }
   const userInfo = await getUserInfo();
 
   const isAuthor = meetingDetail?.user.userId === userInfo?.id;

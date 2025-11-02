@@ -8,39 +8,29 @@ interface ToastProps {
 
 const icons = {
   default: (
-    <>
-      <div className="flex size-6 items-center justify-center rounded-full bg-[#46C470]">
-        <Check className="size-3.5 text-white" strokeWidth={4} />
-      </div>
-    </>
+    <div className="flex size-6 items-center justify-center rounded-full bg-[#46C470]">
+      <Check className="size-3.5 text-white" strokeWidth={4} />
+    </div>
   ),
   error: (
-    <>
-      <div className="flex size-6 items-center justify-center rounded-full bg-[#FF4040]">
-        <X className="size-3.5 text-white" strokeWidth={4} />
-      </div>
-    </>
+    <div className="flex size-6 items-center justify-center rounded-full bg-[#FF4040]">
+      <X className="size-3.5 text-white" strokeWidth={4} />
+    </div>
   ),
   success: (
-    <>
-      <div className="flex size-6 items-center justify-center rounded-full bg-[#46C470]">
-        <Check className="size-3.5 text-white" strokeWidth={4} />
-      </div>
-    </>
+    <div className="flex size-6 items-center justify-center rounded-full bg-[#46C470]">
+      <Check className="size-3.5 text-white" strokeWidth={4} />
+    </div>
   ),
   warning: (
-    <>
-      <div className="flex size-6 items-center justify-center rounded-full bg-[#FFB800]">
-        <AlertTriangle className="size-3.5 text-white" strokeWidth={3} />
-      </div>
-    </>
+    <div className="flex size-6 items-center justify-center rounded-full bg-[#FFB800]">
+      <AlertTriangle className="size-3.5 text-white" strokeWidth={3} />
+    </div>
   ),
   info: (
-    <>
-      <div className="flex size-6 items-center justify-center rounded-full bg-[#007AFF]">
-        <Info className="size-3.5 text-white" strokeWidth={3} />
-      </div>
-    </>
+    <div className="flex size-6 items-center justify-center rounded-full bg-[#007AFF]">
+      <Info className="size-3.5 text-white" strokeWidth={3} />
+    </div>
   ),
 };
 
