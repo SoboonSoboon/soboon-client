@@ -14,7 +14,7 @@ import { GET_MODEL_CITY_OPTIONS } from '@/constants/locations';
 import { GET_MODEL_DISTRICT_OPTIONS } from '@/constants/locations';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
-import z from 'zod';
+import * as z from 'zod/mini';
 import { useMutation } from '@tanstack/react-query';
 import { dividingRegisterApi } from '@/apis';
 import { ApiResponse } from '@/types/common';
@@ -34,39 +34,71 @@ const DIVIDING_PRODUCT_TYPE_OPTIONS = [
 ];
 
 const dividingFormSchema = z.object({
-  productType: z.string().min(1, { message: '제품 카테고리를 선택해주세요.' }),
-  title: z
-    .string()
-    .min(1, { message: '품목 이름을 입력해 주세요.' })
-    .refine((val: string) => !/<[^>]*>/i.test(val), {
+  productType: z.string().check(
+    z.refine((val) => val.length > 0, {
+      message: '제품 카테고리를 선택해주세요.',
+    }),
+  ),
+  title: z.string().check(
+    z.refine((val) => val.length > 0, {
+      message: '품목 이름을 입력해 주세요.',
+    }),
+    z.refine((val) => val.length <= 50, {
+      message: '품목 이름은 50자 이하로 입력해 주세요.',
+    }),
+    z.refine((val: string) => !/<[^>]*>/i.test(val), {
       message: 'HTML 태그는 사용할 수 없어요.',
     }),
-  capacity: z
-    .number()
-    .min(1, { message: '모집 인원을 선택해 주세요.' })
-    .min(2, { message: '모집 인원은 2명 이상이어야 해요.' })
-    .max(5, { message: '모집 인원은 5명 이하로 입력해 주세요.' }),
+  ),
+  capacity: z.number().check(
+    z.refine((val) => val >= 1, { message: '모집 인원을 선택해 주세요.' }),
+    z.refine((val) => val >= 2, {
+      message: '모집 인원은 2명 이상이어야 해요.',
+    }),
+    z.refine((val) => val <= 5, {
+      message: '모집 인원은 5명 이하로 입력해 주세요.',
+    }),
+  ),
   location: z.object({
-    province: z.string().min(1, { message: '주소를 선택해 주세요.' }),
-    city: z.string().min(1, { message: '주소를 선택해 주세요.' }),
-    district: z.string().min(1, { message: '주소를 선택해 주세요.' }),
-    detail: z
+    province: z
       .string()
-      .min(1, { message: '상세 주소를 입력해 주세요.' })
-      .min(3, { message: '상세 주소는 3자 이상 입력해 주세요.' })
-      .max(10, { message: '상세 주소는 10자 이하로 입력해 주세요.' })
-      .refine((val: string) => !/<[^>]*>/i.test(val), {
+      .check(
+        z.refine((val) => val.length > 0, { message: '주소를 선택해 주세요.' }),
+      ),
+    city: z
+      .string()
+      .check(
+        z.refine((val) => val.length > 0, { message: '주소를 선택해 주세요.' }),
+      ),
+    district: z
+      .string()
+      .check(
+        z.refine((val) => val.length > 0, { message: '주소를 선택해 주세요.' }),
+      ),
+    detail: z.string().check(
+      z.refine((val) => val.length > 0, {
+        message: '상세 주소를 입력해 주세요.',
+      }),
+      z.refine((val) => val.length >= 3, {
+        message: '상세 주소는 3자 이상 입력해 주세요.',
+      }),
+      z.refine((val) => val.length <= 10, {
+        message: '상세 주소는 10자 이하로 입력해 주세요.',
+      }),
+      z.refine((val: string) => !/<[^>]*>/i.test(val), {
         message: 'HTML 태그는 사용할 수 없어요.',
       }),
+    ),
   }),
-  imageUrls: z
-    .array(z.instanceof(File))
-    .max(10, { message: '이미지는 최대 10장까지만 추가할 수 있어요.' })
-    .refine(
+  imageUrls: z.array(z.instanceof(File)).check(
+    z.refine((files) => files.length <= 10, {
+      message: '이미지는 최대 10장까지만 추가할 수 있어요.',
+    }),
+    z.refine(
       (files) => files.every((file) => file.size <= 10 * 1024 * 1024), // 10MB 제한
       { message: '각 이미지 파일은 10MB 이하여야 해요.' },
-    )
-    .refine(
+    ),
+    z.refine(
       (files) =>
         files.every((file) => {
           const allowedTypes = [
@@ -80,13 +112,18 @@ const dividingFormSchema = z.object({
         }),
       { message: 'JPG, PNG, GIF, WebP 이미지 파일만 업로드 가능해요.' },
     ),
-  description: z
-    .string()
-    .min(10, { message: '상세 설명은 10자 이상 입력해 주세요.' })
-    .max(500, { message: '상세 설명은 500자 이하로 입력해 주세요.' })
-    .refine((val: string) => !/<[^>]*>/i.test(val), {
+  ),
+  description: z.string().check(
+    z.refine((val) => val.length >= 10, {
+      message: '상세 설명은 10자 이상 입력해 주세요.',
+    }),
+    z.refine((val) => val.length <= 500, {
+      message: '상세 설명은 500자 이하로 입력해 주세요.',
+    }),
+    z.refine((val: string) => !/<[^>]*>/i.test(val), {
       message: 'HTML 태그는 사용할 수 없어요.',
     }),
+  ),
 });
 
 type DividingFormData = z.infer<typeof dividingFormSchema>;

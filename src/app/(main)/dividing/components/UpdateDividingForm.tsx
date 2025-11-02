@@ -14,7 +14,7 @@ import { GET_MODEL_CITY_OPTIONS } from '@/constants/locations';
 import { GET_MODEL_DISTRICT_OPTIONS } from '@/constants/locations';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
-import z from 'zod';
+import * as z from 'zod/mini';
 import { useMutation } from '@tanstack/react-query';
 import { ApiResponse } from '@/types/common';
 import { useRouter } from 'next/navigation';
@@ -45,42 +45,66 @@ const FORM_VALIDATION = {
 } as const;
 
 const dividingFormSchema = z.object({
-  productType: z.string().min(1, { message: '제품 카테고리를 선택해주세요.' }),
-  title: z.string().min(1, { message: '품목 이름을 입력해 주세요.' }),
-  capacity: z
-    .number()
-    .min(1, { message: '모집 인원을 선택해주세요.' })
-    .min(FORM_VALIDATION.MIN_CAPACITY, {
+  productType: z.string().check(
+    z.refine((val) => val.length > 0, {
+      message: '제품 카테고리를 선택해주세요.',
+    }),
+  ),
+  title: z.string().check(
+    z.refine((val) => val.length > 0, {
+      message: '품목 이름을 입력해 주세요.',
+    }),
+  ),
+  capacity: z.number().check(
+    z.refine((val) => val >= 1, { message: '모집 인원을 선택해주세요.' }),
+    z.refine((val) => val >= FORM_VALIDATION.MIN_CAPACITY, {
       message: `모집 인원은 ${FORM_VALIDATION.MIN_CAPACITY}명 이상이어야 합니다.`,
-    })
-    .max(FORM_VALIDATION.MAX_CAPACITY, {
+    }),
+    z.refine((val) => val <= FORM_VALIDATION.MAX_CAPACITY, {
       message: `모집 인원은 ${FORM_VALIDATION.MAX_CAPACITY}명 이하로 입력해 주세요.`,
     }),
+  ),
   location: z.object({
-    province: z.string().min(1, { message: '주소를 선택해 주세요.' }),
-    city: z.string().min(1, { message: '주소를 선택해 주세요.' }),
-    district: z.string().min(1, { message: '주소를 선택해 주세요.' }),
-    detail: z
-      .string()
-      .min(1, { message: '상세 주소를 입력해 주세요.' })
-      .min(FORM_VALIDATION.MIN_LOCATION_DETAIL_LENGTH, {
-        message: `상세 주소는 ${FORM_VALIDATION.MIN_LOCATION_DETAIL_LENGTH}자 이상 입력해 주세요.`,
-      })
-      .max(FORM_VALIDATION.MAX_LOCATION_DETAIL_LENGTH, {
-        message: `상세 주소는 ${FORM_VALIDATION.MAX_LOCATION_DETAIL_LENGTH}자 이하로 입력해 주세요.`,
+    province: z.string().check(
+      z.refine((val) => val.length > 0, { message: '주소를 선택해 주세요.' }),
+    ),
+    city: z.string().check(
+      z.refine((val) => val.length > 0, { message: '주소를 선택해 주세요.' }),
+    ),
+    district: z.string().check(
+      z.refine((val) => val.length > 0, { message: '주소를 선택해 주세요.' }),
+    ),
+    detail: z.string().check(
+      z.refine((val) => val.length > 0, {
+        message: '상세 주소를 입력해 주세요.',
       }),
+      z.refine(
+        (val) => val.length >= FORM_VALIDATION.MIN_LOCATION_DETAIL_LENGTH,
+        {
+          message: `상세 주소는 ${FORM_VALIDATION.MIN_LOCATION_DETAIL_LENGTH}자 이상 입력해 주세요.`,
+        },
+      ),
+      z.refine(
+        (val) => val.length <= FORM_VALIDATION.MAX_LOCATION_DETAIL_LENGTH,
+        {
+          message: `상세 주소는 ${FORM_VALIDATION.MAX_LOCATION_DETAIL_LENGTH}자 이하로 입력해 주세요.`,
+        },
+      ),
+    ),
   }),
-  imageUrls: z.array(z.string()).max(FORM_VALIDATION.MAX_IMAGE_COUNT, {
-    message: `이미지는 최대 ${FORM_VALIDATION.MAX_IMAGE_COUNT}장까지만 추가할 수 있어요.`,
-  }),
-  description: z
-    .string()
-    .min(FORM_VALIDATION.MIN_DESCRIPTION_LENGTH, {
+  imageUrls: z.array(z.string()).check(
+    z.refine((val) => val.length <= FORM_VALIDATION.MAX_IMAGE_COUNT, {
+      message: `이미지는 최대 ${FORM_VALIDATION.MAX_IMAGE_COUNT}장까지만 추가할 수 있어요.`,
+    }),
+  ),
+  description: z.string().check(
+    z.refine((val) => val.length >= FORM_VALIDATION.MIN_DESCRIPTION_LENGTH, {
       message: `상세 설명은 ${FORM_VALIDATION.MIN_DESCRIPTION_LENGTH}자 이상 입력해 주세요.`,
-    })
-    .max(FORM_VALIDATION.MAX_DESCRIPTION_LENGTH, {
+    }),
+    z.refine((val) => val.length <= FORM_VALIDATION.MAX_DESCRIPTION_LENGTH, {
       message: `상세 설명은 ${FORM_VALIDATION.MAX_DESCRIPTION_LENGTH}자 이하로 입력해 주세요.`,
     }),
+  ),
 });
 
 type DividingFormData = z.infer<typeof dividingFormSchema>;
