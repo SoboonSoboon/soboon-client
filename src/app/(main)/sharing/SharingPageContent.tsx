@@ -24,7 +24,7 @@ export default function SharingPageContent({
   const [isFilterOpen, setIsFilterOpen] = useState(false);
 
   return (
-    <main className="flex w-full flex-col gap-4 md:gap-8">
+    <main className="flex w-full flex-col gap-3 md:gap-5">
       <Banner
         title="소분하기"
         src="/images/banner_dividing.png"
