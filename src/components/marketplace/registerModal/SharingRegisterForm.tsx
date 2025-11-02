@@ -131,7 +131,7 @@ export function SharingRegisterForm({ handleClose }: SharingRegisterFormProps) {
 
           <div className="flex flex-col gap-3">
             <Label htmlFor="capacity" required>
-              몇 명을 모을까요?
+              몇 명이 함께하면 좋을까요?
             </Label>
             <TextInput
               name="capacity"
