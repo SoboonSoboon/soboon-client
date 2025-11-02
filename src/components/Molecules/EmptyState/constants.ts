@@ -53,8 +53,8 @@ export const EMPTY_STATE_CONFIG = {
       browse: '/shopping',
     },
     dividing: {
-      create: '/sharing/register',
-      browse: '/sharing',
+      create: '/dividing/register',
+      browse: '/dividing',
     },
   },
 } as const;

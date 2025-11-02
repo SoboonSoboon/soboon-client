@@ -10,8 +10,8 @@ interface IconProps {
 }
 
 const ICON_PATHS: Record<IconType, string> = {
-  'sharing-cart': '/icons/sharing_cart.svg',
-  'sharing-cart-green': '/icons/sharing_cart_green.svg',
+  'dividing-cart': '/icons/dividing_cart.svg',
+  'dividing-cart-green': '/icons/dividing_cart_green.svg',
   'shopping-basket': '/icons/shopping_basket.svg',
   'shopping-basket-green': '/icons/shopping_basket_green.svg',
   'soboon-letters': '/icons/soboon_letters.svg',

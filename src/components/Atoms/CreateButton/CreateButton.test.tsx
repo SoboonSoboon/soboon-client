@@ -5,7 +5,7 @@ import { CreateButton } from './CreateButton';
 describe('CreateButton 컴포넌트', () => {
   const mockActionHandlers = {
     shopping: jest.fn(),
-    sharing: jest.fn(),
+    dividing: jest.fn(),
   };
 
   test('컴포넌트가 렌더링되어야 한다', () => {
@@ -57,7 +57,10 @@ describe('CreateButton 컴포넌트', () => {
 
       render(
         <CreateButton
-          actionHandlers={{ shopping: handleShoppingClick, sharing: jest.fn() }}
+          actionHandlers={{
+            shopping: handleShoppingClick,
+            dividing: jest.fn(),
+          }}
         />,
       );
 
@@ -71,24 +74,27 @@ describe('CreateButton 컴포넌트', () => {
       expect(handleShoppingClick).toHaveBeenCalledTimes(1);
     });
 
-    test('소분하기 클릭 시 sharing onClick이 호출되어야 한다', async () => {
-      const handleSharingClick = jest.fn();
+    test('소분하기 클릭 시 dividing onClick이 호출되어야 한다', async () => {
+      const handleDividingClick = jest.fn();
       const user = userEvent.setup();
 
       render(
         <CreateButton
-          actionHandlers={{ shopping: jest.fn(), sharing: handleSharingClick }}
+          actionHandlers={{
+            shopping: jest.fn(),
+            dividing: handleDividingClick,
+          }}
         />,
       );
 
       await user.click(screen.getByRole('button', { name: '메뉴 열기' }));
 
-      const sharingButton = screen.getByRole('button', {
+      const dividingButton = screen.getByRole('button', {
         name: '소분하기 만들기',
       });
-      await user.click(sharingButton);
+      await user.click(dividingButton);
 
-      expect(handleSharingClick).toHaveBeenCalledTimes(1);
+      expect(handleDividingClick).toHaveBeenCalledTimes(1);
     });
   });
 });

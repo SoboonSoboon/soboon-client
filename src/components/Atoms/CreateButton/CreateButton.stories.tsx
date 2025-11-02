@@ -24,7 +24,7 @@ export const Default: Story = {
   args: {
     actionHandlers: {
       shopping: fn(),
-      sharing: fn(),
+      dividing: fn(),
     },
   },
 };

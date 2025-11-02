@@ -23,7 +23,7 @@ import { MainEmptyState } from '@/components/Molecules';
 import { useSearchParams } from 'next/navigation';
 import { useDividingSearch } from '@/hooks/useSearch/useDividingSearch';
 
-export const SharingListSection = ({
+export const DividingListSection = ({
   initialDividingList,
   query,
 }: {
@@ -82,7 +82,7 @@ export const SharingListSection = ({
   }, [isBottom, fetchNextPage, isFetchingNextPage]);
 
   const onClickCard = (id: string) => {
-    router.push(`/sharing/${id}`);
+    router.push(`/dividing/${id}`);
   };
 
   if (!dividingList || dividingList.pages[0]?.content.length === 0) {
@@ -92,7 +92,7 @@ export const SharingListSection = ({
         description="첫 번째 소분하기 모임을 만들어보세요!"
         primaryButton={{
           text: '소분하기 모임 만들기',
-          href: '/sharing/register',
+          href: '/dividing/register',
           variant: 'filled',
         }}
         secondaryButton={{
