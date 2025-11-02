@@ -1,5 +1,5 @@
 import { useRef } from 'react';
-import { ProfileImg } from '@/components';
+import { ProfileImg } from '@/components/Atoms';
 
 interface ProfileImageUploader {
   imageUrl: string;
@@ -29,6 +29,7 @@ export const ProfileImageUploader = ({
         <div className="absolute right-1 bottom-1 h-[41px] w-[41px]">
           <button
             type="button"
+            aria-label="프로필 이미지 수정 버튼"
             className="bg-gray-5 flex h-full w-full items-center justify-center rounded-full border-2 border-white"
           >
             <svg

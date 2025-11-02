@@ -1,4 +1,9 @@
-import { IntroSection } from '@/components/intro/IntroSection';
+import {
+  IntroSection,
+  IntroScroll,
+  IntroCarousel,
+  IntroAccordion,
+} from '@/components/intro';
 import type { Metadata } from 'next';
 import { DynamicIntroSectionsWrapper } from '@/components/intro/wrapper/DynamicIntroSectionsWrapper';
 

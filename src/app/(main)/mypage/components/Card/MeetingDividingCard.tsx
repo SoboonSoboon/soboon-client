@@ -1,14 +1,14 @@
 'use client';
 
 import { MapPin } from 'lucide-react';
+import { StatusTag } from '@/components/Atoms';
 import {
   Card,
   CardContent,
   CardFooter,
   CardImage,
   CardTitle,
-} from '@/components/Molecules/Card/Card';
-import { StatusTag } from '@/components';
+} from '@/components/Molecules';
 import { cn } from '@/utils';
 import { MeetingItem } from '../../utils/mypageType';
 import { useMeetingCardActions } from '../../hook/components/card/useMeetingCardActions';

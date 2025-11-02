@@ -1,4 +1,5 @@
-import { Button, Dropdown } from '@/components';
+import { Button } from '@/components/Atoms';
+import { Dropdown } from '@/components/Molecules';
 import {
   MODEL_PROVINCE_OPTIONS,
   GET_MODEL_CITY_OPTIONS,
@@ -131,6 +132,7 @@ export default function ProfileForm({
       {/* 확인 버튼 */}
       <Button
         label="확인"
+        aria-label="확인"
         onClick={onSubmit}
         disabled={
           !newData.nickname?.trim() ||
@@ -139,9 +141,7 @@ export default function ProfileForm({
           !newData.district
         }
         className="hover:bg-Green-60 disabled:bg-gray-30 click:bg-Green-70 bg-primary mt-10 w-full rounded-lg py-3 font-semibold text-white disabled:cursor-not-allowed"
-      >
-        확인
-      </Button>
+      />
     </div>
   );
 }

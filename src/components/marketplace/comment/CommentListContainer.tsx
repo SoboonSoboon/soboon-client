@@ -3,10 +3,9 @@
 import { CommentsType, ReplyType } from '@/types/commentType';
 import { CommentItem } from './CommentItem';
 import { useEffect, useState } from 'react';
-import { Button, TextInput } from '@/components';
+import { Button, TextInput, useToast } from '@/components/Atoms';
 import { createReplyApi } from '@/apis/comment/createReply';
 import { useParams, useSearchParams } from 'next/navigation';
-import { useToast } from '@/components/Atoms';
 import { CornerDownRight } from 'lucide-react';
 import {
   useInfiniteQuery,
@@ -179,12 +178,14 @@ export const CommentListContainer = ({
                       <div className="flex gap-2">
                         <Button
                           label="작성"
+                          aria-label="작성 버튼"
                           type="submit"
                           className="text-primary border-primary w-20"
                           variant="outline"
                         />
                         <Button
                           label="취소"
+                          aria-label="취소 버튼"
                           className="w-20 !border-[var(--GrayScale-Gray20)] !text-[var(--GrayScale-Gray60)]"
                           variant="outline"
                           onClick={handleCloseReply}

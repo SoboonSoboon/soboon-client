@@ -1,6 +1,6 @@
 'use client';
 
-import { Button, TextInput } from '@/components';
+import { Button, TextInput } from '@/components/Atoms';
 import { imageUploader } from '@/utils/imageUploader';
 import { XIcon } from 'lucide-react';
 import { useRef, useState } from 'react';
@@ -143,6 +143,7 @@ export function ImageUploadUrlForm({
         <Button
           variant="outline"
           label={isUploading ? '업로드 중...' : '파일 찾기'}
+          aria-label="파일 찾기 버튼"
           onClick={() => inputRef.current?.click()}
           disabled={isUploading || imageUrls.length >= (maxFiles || 10)}
         />
@@ -164,6 +165,7 @@ export function ImageUploadUrlForm({
                   height={100}
                 />
                 <button
+                  aria-label="이미지 삭제 버튼"
                   onClick={() => handleRemoveImage(index)}
                   className="bg-primary absolute top-1.5 right-1.5 cursor-pointer rounded-full p-1 text-white"
                   disabled={isUploading}

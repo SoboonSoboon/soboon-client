@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect } from 'react';
-import { Button } from '@/components';
+import { Button } from '@/components/Atoms';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 
@@ -46,8 +46,18 @@ export default function Error({
         )}
       </div>
       <div className="flex gap-3">
-        <Button label="다시 시도" onClick={reset} variant="filled" />
-        <Button label="홈으로" onClick={handleGoHome} variant="outline" />
+        <Button
+          label="다시 시도"
+          aria-label="다시 시도"
+          onClick={reset}
+          variant="filled"
+        />
+        <Button
+          label="홈으로"
+          aria-label="홈으로"
+          onClick={handleGoHome}
+          variant="outline"
+        />
       </div>
     </div>
   );

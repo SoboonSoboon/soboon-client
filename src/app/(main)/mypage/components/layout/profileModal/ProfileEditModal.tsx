@@ -2,12 +2,11 @@
 
 import { useEffect } from 'react';
 import { createPortal } from 'react-dom';
-import { Modal } from '@/components/Molecules/modal';
-import { Button, Dropdown, TextInput } from '@/components';
+import { Button, TextInput, useToast } from '@/components/Atoms';
+import { Modal, Dropdown } from '@/components/Molecules';
 import { ProfileUpdateData } from '@/app/(main)/mypage/utils/profile';
 
 import { useAuthStore } from '@/apis/auth/hooks/authStore';
-import { useToast } from '@/components/Atoms/Toast/useToast';
 import { useProfileEdit } from '@/app/(main)/mypage/hook/api/useProfileEdit';
 import { ProfileImageUploader } from './profileImgUploader';
 import {
@@ -194,6 +193,7 @@ export const ProfileEditModal = ({
             type="submit"
             variant="filled"
             label="수정하기"
+            aria-label="수정하기 버튼"
             className="w-full"
             disabled={isSubmitting}
           />

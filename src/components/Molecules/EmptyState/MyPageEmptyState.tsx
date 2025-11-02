@@ -1,6 +1,6 @@
 'use client';
 
-import { Button } from '@/components';
+import { Button } from '@/components/Atoms';
 import {
   type MainTabType,
   type SubTabType,
@@ -57,9 +57,9 @@ export const MyPageEmptyState = (props: MyPageEmptyStateProps) => {
           onClick={() => (window.location.href = buttonRoute)}
           variant="filled"
           className="w-full"
-        >
-          {buttonText}
-        </Button>
+          aria-label={`${buttonText} 버튼`}
+          label={buttonText}
+        />
       </div>
     </div>
   );

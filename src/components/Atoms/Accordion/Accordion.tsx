@@ -46,6 +46,7 @@ export const Accordion = ({
             className="mb-3 rounded-lg border border-[#1A1A1A] sm:mb-4"
           >
             <button
+              aria-label={item.title}
               className="flex w-full cursor-pointer items-center justify-between px-4 py-4 text-left sm:px-6 sm:py-5 md:px-9 md:pt-6 md:pb-5.5"
               onClick={() => toggleItem(item.id)}
             >

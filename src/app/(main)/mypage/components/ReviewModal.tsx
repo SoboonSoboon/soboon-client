@@ -1,6 +1,6 @@
-import { Modal } from '@/components/Molecules/modal';
+import { useToast } from '@/components/Atoms';
+import { Modal } from '@/components/Molecules';
 import { ReviewModalContent } from './ReviewModalContent';
-import { useToast } from '@/components/Atoms/Toast/useToast';
 import { ReviewKeyword } from '@/types/common';
 import { ReviewerListData } from '../utils/review';
 
@@ -49,7 +49,6 @@ export const ReviewModal = ({
         md:w-[520px] md:rounded-[24px] md:p-[52px]
         flex flex-col gap-8
         ${activeMainTab === 'participate' ? 'h-[420px]' : ' md:h-[677px] h-[520px]'}
-       
       `}
       scrollable={true}
       maxHeight="90vh"

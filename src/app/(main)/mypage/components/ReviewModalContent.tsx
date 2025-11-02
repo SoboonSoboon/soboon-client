@@ -1,4 +1,4 @@
-import { Button, ProfileImg, StatusTag } from '@/components';
+import { Button, ProfileImg, StatusTag } from '@/components/Atoms';
 import { ChevronDown, ChevronUp } from 'lucide-react';
 import { useState } from 'react';
 import {
@@ -94,7 +94,10 @@ export const ReviewModalContent = ({
               />
             </div>
             {activeMainTab === 'host' && (
-              <button className="flex cursor-pointer items-center">
+              <button
+                className="flex cursor-pointer items-center"
+                aria-label="리뷰 확장 버튼"
+              >
                 {expandedIndex === index ? (
                   <ChevronUp size={24} />
                 ) : (
@@ -121,6 +124,7 @@ export const ReviewModalContent = ({
                   ) : (
                     <button
                       key={keyword}
+                      aria-label={keyword}
                       onClick={(e) => {
                         e.stopPropagation();
                         handleKeywordToggle(index, keyword);
@@ -135,6 +139,7 @@ export const ReviewModalContent = ({
               <div className="flex justify-end">
                 <Button
                   variant="filled"
+                  aria-label="리뷰 제출 버튼"
                   disabled={step.alreadyReviewed || submittedByIndex[index]}
                   className="rounded-8px w-[133px] !py-2.5"
                   onClick={() => handleSubmit(index, step.attendeeId)}

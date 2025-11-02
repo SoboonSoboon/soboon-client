@@ -6,6 +6,7 @@ import { ApplicantsMemberType } from '@/types/applicantsType';
 import { ApplicantsList } from '../applicants/ApplicantsList';
 import { applyMeeting, handleCloseMeeting } from '@/action/applicantsAction';
 import { Button, useToast } from '@/components/Atoms';
+import { Modal, useModal } from '@/components/Molecules';
 import { useParams } from 'next/navigation';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import {
@@ -23,7 +24,6 @@ import { CurrentPeople } from './CurrentPeople';
 import { AsideHeader } from './AsideHeader';
 import { AsideMoreInfo } from './AsideMoreInfo';
 import { useAuthStore } from '@/apis/auth/hooks/authStore';
-import { Modal, useModal } from '@/components/Molecules/modal';
 import { MODAL_IS_LOGIN_REQUIRED_TEXT } from '@/constants';
 
 interface DetailAsideProps {
@@ -204,12 +204,14 @@ export const DetailAside = ({
               }}
               className="w-full"
               label="취소"
+              aria-label="취소 버튼"
             />
             <Button
               variant="filled"
               label="로그인"
               onClick={handleLoginButtonClick}
               className="w-full"
+              aria-label="로그인 버튼"
             />
           </div>
         </div>
