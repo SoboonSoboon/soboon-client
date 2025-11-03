@@ -3,7 +3,7 @@ import localFont from 'next/font/local';
 export const pretendard = localFont({
   src: [
     {
-      path: '../../public/fonts/PretendardVariable.woff2',
+      path: '../../public/fonts/PretendardVariable.subset.woff2',
     },
   ],
   variable: '--font-pretendard',
@@ -16,7 +16,7 @@ export const pretendard = localFont({
 export const memomentKkukkkuk = localFont({
   src: [
     {
-      path: '../../public/fonts/memomentKkukkkuk.woff2',
+      path: '../../public/fonts/memomentKkukkkuk.subset.woff2',
     },
   ],
   variable: '--font-memoment-kkukkkuk',
