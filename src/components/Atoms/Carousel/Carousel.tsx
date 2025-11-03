@@ -81,7 +81,7 @@ export const Carousel = ({
         style={{ aspectRatio: `${width} / ${height}`, maxWidth: `${width}px` }}
       >
         <Image
-          src="/images/notFound_image.png"
+          src="/images/dividing_default_image.png"
           alt="캐러셀 이미지"
           width={width}
           height={height}
