@@ -22,7 +22,7 @@ export const IntroSection = () => {
         <div className="py-2 sm:py-4">
           <Image
             data-sequence="150"
-            src="/images/green_logo.png"
+            src="/images/logo_green.png"
             alt="로고이미지"
             width={250}
             height={250}
@@ -43,6 +43,7 @@ export const IntroSection = () => {
             width={417}
             height={334}
             sizes="(max-width: 640px) 35vw, (max-width: 1024px) 38vw, 412px"
+            priority
             className="z-2 h-auto w-[35%] max-w-[417px] object-contain sm:w-[38%] lg:w-[40%]"
           />
           <Image

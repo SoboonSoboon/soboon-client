@@ -74,10 +74,11 @@ export default function AddInfoPage() {
         <div className="flex flex-col justify-center">
           <div className="mb-5">
             <Image
-              src="/images/green_logo.png"
+              src="/images/logo_green.png"
               alt="로고이미지"
               width={200}
               height={200}
+              priority
               className="h-auto w-auto"
             />
           </div>

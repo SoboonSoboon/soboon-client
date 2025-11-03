@@ -9,6 +9,7 @@ export function Logo() {
         height={23}
         alt="Soboon Letters"
         className="h-[22px] w-[70px] sm:h-[23px] sm:w-[80px]"
+        priority
       />
       <Image
         src="/icons/soboon_logo.svg"
@@ -16,6 +17,7 @@ export function Logo() {
         height={23}
         alt="Soboon Logo"
         className="h-[17px] w-[17px] sm:h-[23px] sm:w-[23px]"
+        priority
       />
     </div>
   );
