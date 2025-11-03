@@ -21,7 +21,8 @@ export const IntroSection = () => {
         </h1>
         <div className="py-2 sm:py-4">
           <Image
-            src="/images/green_logo.png"
+            data-sequence="150"
+            src="/images/logo_green.png"
             alt="로고이미지"
             width={250}
             height={250}
@@ -39,16 +40,17 @@ export const IntroSection = () => {
         <div className="absolute bottom-[160px] left-1/2 z-2 flex w-full max-w-[1030px] -translate-x-1/2 items-center justify-center sm:bottom-[120px] md:bottom-[84px]">
           <Image
             data-sequence="450"
-            src="/images/intro_people1_180k.png"
+            src="/images/intro_people1_116k.png"
             alt="intro-section"
             width={417}
             height={334}
             sizes="(max-width: 640px) 35vw, (max-width: 1024px) 38vw, 412px"
+            priority
             className="z-2 h-auto w-[35%] max-w-[417px] object-contain sm:w-[38%] lg:w-[40%]"
           />
           <Image
             data-sequence="600"
-            src="/images/intro_people2_256k.png"
+            src="/images/intro_people2_151k.png"
             alt="intro-section"
             width={630}
             height={360}
