@@ -11,8 +11,8 @@ import {
 import { MeetingItem } from '../../utils/mypageType';
 import { useMeetingCardActions } from '../../hook/components/card/useMeetingCardActions';
 import { ReviewModal } from '../review/ReviewModal';
-import { MeetingCardInfo } from './shared/MeetingCardInfo';
 import { MeetingCardReviewButton } from './shared/MeetingCardReviewButton';
+import { MeetingCardInfo } from './shared/MeetingCardInfo';
 
 export const MeetingShoppingCard = ({
   meeting,
