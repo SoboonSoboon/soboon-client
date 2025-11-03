@@ -10,6 +10,10 @@ export {
   MainCard,
   type CardProps,
 } from './Card/Card';
+export {
+  MainDividingCardSkeleton,
+  MainShoppingCardSkeleton,
+} from './Card/CardSkeleton';
 export { Dropdown, type DropdownProps } from './Dropdown/Dropdown';
 export { ErrorPage } from './ErrorPage/Errorpage';
 export { Header } from './Header/Header';

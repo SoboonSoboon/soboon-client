@@ -10,6 +10,7 @@ import {
   CardTitle,
   Line,
   MainEmptyState,
+  MainDividingCardSkeleton,
 } from '@/components/Molecules';
 import { StatusTag } from '@/components/Atoms';
 import { useEffect } from 'react';
@@ -39,6 +40,8 @@ export const DividingListSection = ({
 
   const {
     data: dividingList,
+    isPending,
+    isFetching,
     fetchNextPage,
     isFetchingNextPage,
     hasNextPage,
@@ -84,7 +87,19 @@ export const DividingListSection = ({
     router.push(`/dividing/${id}`);
   };
 
-  if (!dividingList || dividingList.pages[0]?.content.length === 0) {
+  const items = dividingList?.pages.flatMap((page) => page.content) ?? [];
+
+  if (isPending || (isFetching && items.length === 0)) {
+    return (
+      <div className="grid grid-cols-1 gap-x-4 gap-y-6 sm:grid-cols-2 sm:gap-x-6 sm:gap-y-8 lg:grid-cols-3 lg:gap-x-8 lg:gap-y-10">
+        {Array.from({ length: 6 }).map((_, idx) => (
+          <MainDividingCardSkeleton key={idx} />
+        ))}
+      </div>
+    );
+  }
+
+  if (items.length === 0) {
     return (
       <MainEmptyState
         title="아직 소분하기 모임이 없어요"
@@ -103,62 +118,61 @@ export const DividingListSection = ({
     );
   }
 
+  // 데이터 표시
   return (
     <>
       <div className="grid grid-cols-1 gap-x-4 gap-y-6 sm:grid-cols-2 sm:gap-x-6 sm:gap-y-8 lg:grid-cols-3 lg:gap-x-8 lg:gap-y-10">
-        {dividingList.pages
-          .flatMap((page) => page.content)
-          .map((dividing) => (
-            <Card
-              key={dividing.groupId}
-              onClick={() => onClickCard(dividing.groupId.toString())}
-              className="cursor-pointer"
-            >
-              <CardContent>
-                <div className="border-gray-10 relative mb-5 overflow-hidden rounded-lg border">
-                  <StatusTag
-                    status={dividing.status}
-                    className="absolute top-3 left-3 z-10"
+        {items.map((dividing) => (
+          <Card
+            key={dividing.groupId}
+            onClick={() => onClickCard(dividing.groupId.toString())}
+            className="cursor-pointer"
+          >
+            <CardContent>
+              <div className="border-gray-10 relative mb-5 overflow-hidden rounded-lg border">
+                <StatusTag
+                  status={dividing.status}
+                  className="absolute top-3 left-3 z-10"
+                />
+                <div className="relative aspect-[3/2] w-full">
+                  <CardImage
+                    alt="기본 카드"
+                    src={
+                      !dividing.image ||
+                      (Array.isArray(dividing.image) &&
+                        dividing.image.length === 0) ||
+                      (typeof dividing.image === 'string' &&
+                        dividing.image.includes('example'))
+                        ? '/images/notFound_image.png'
+                        : dividing.image
+                    }
+                    className="absolute inset-0 h-full w-full rounded-lg object-cover transition-transform duration-300 hover:scale-110"
                   />
-                  <div className="relative aspect-[3/2] w-full">
-                    <CardImage
-                      alt="기본 카드"
-                      src={
-                        !dividing.image ||
-                        (Array.isArray(dividing.image) &&
-                          dividing.image.length === 0) ||
-                        (typeof dividing.image === 'string' &&
-                          dividing.image.includes('example'))
-                          ? '/images/notFound_image.png'
-                          : dividing.image
-                      }
-                      className="absolute inset-0 h-full w-full rounded-lg object-cover transition-transform duration-300 hover:scale-110"
-                    />
-                  </div>
                 </div>
-                <div className="flex flex-col gap-2">
-                  <CardTitle
-                    className="font-memomentKkukkkuk line-clamp-1"
-                    status={dividing.status as 'RECRUITING'}
-                  >
-                    {dividing.title}
-                  </CardTitle>
-                  <CardSubtitle className="text-text-sub2 flex items-center gap-1 text-sm">
-                    <span>{dividing.user.userName}</span>
-                    <span>・</span>
-                    <span>{timeFormatter(dividing.createdAt)}</span>
-                  </CardSubtitle>
-                </div>
-              </CardContent>
-              <Line className="mt-3 mb-3" />
-              <CardFooter>
-                <div className="flex items-center gap-1 text-sm">
-                  <MapPin className="text-gray-40 size-4" />
-                  <p>{dividing.location.district}</p>
-                </div>
-              </CardFooter>
-            </Card>
-          ))}
+              </div>
+              <div className="flex flex-col gap-2">
+                <CardTitle
+                  className="font-memomentKkukkkuk line-clamp-1"
+                  status={dividing.status as 'RECRUITING'}
+                >
+                  {dividing.title}
+                </CardTitle>
+                <CardSubtitle className="text-text-sub2 flex items-center gap-1 text-sm">
+                  <span>{dividing.user.userName}</span>
+                  <span>・</span>
+                  <span>{timeFormatter(dividing.createdAt)}</span>
+                </CardSubtitle>
+              </div>
+            </CardContent>
+            <Line className="mt-3 mb-3" />
+            <CardFooter>
+              <div className="flex items-center gap-1 text-sm">
+                <MapPin className="text-gray-40 size-4" />
+                <p>{dividing.location.district}</p>
+              </div>
+            </CardFooter>
+          </Card>
+        ))}
       </div>
       <p className="text-text-sub2 mt-6 text-center text-sm">
         {isFetchingNextPage && '로딩 중이예요 ...'}
