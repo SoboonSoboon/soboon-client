@@ -9,7 +9,7 @@ import {
   CardTitle,
 } from '@/components/Molecules';
 import { MeetingItem } from '../../utils/mypageType';
-import { useMeetingCardActions } from '../../hook/components/Card/useMeetingCardActions';
+import { useMeetingCardActions } from '../../hook/components/card/useMeetingCardActions';
 import { ReviewModal } from '../ReviewModal';
 import { MeetingCardInfo } from './shared/MeetingCardInfo';
 import { MeetingCardReviewButton } from './shared/MeetingCardReviewButton';

@@ -11,10 +11,11 @@ import {
 } from '@/components/Molecules';
 import { cn } from '@/utils';
 import { MeetingItem } from '../../utils/mypageType';
-import { useMeetingCardActions } from '../../hook/components/Card/useMeetingCardActions';
+
 import { ReviewModal } from '../ReviewModal';
 import { MeetingCardInfo } from './shared/MeetingCardInfo';
 import { MeetingCardReviewButton } from './shared/MeetingCardReviewButton';
+import { useMeetingCardActions } from '../../hook/components/card/useMeetingCardActions';
 
 // 모임 카드 컴포넌트
 export const MeetingDividingCard = ({
