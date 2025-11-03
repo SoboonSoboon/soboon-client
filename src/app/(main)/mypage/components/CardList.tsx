@@ -1,6 +1,6 @@
 import { MeetingItem } from '@/app/(main)/mypage/utils/mypageType';
-import { MeetingDividingCard } from './Card/MeetingDividingCard';
-import { MeetingShoppingCard } from './Card/MeetingShoppingCard';
+import { MeetingDividingCard } from './card/MeetingDividingCard';
+import { MeetingShoppingCard } from './card/MeetingShoppingCard';
 
 export interface CardListProps {
   data: MeetingItem[];

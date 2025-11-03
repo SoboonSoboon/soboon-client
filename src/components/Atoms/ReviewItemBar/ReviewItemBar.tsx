@@ -16,7 +16,7 @@ export const ReviewItemBar = ({
   label,
   animated = true,
 }: ReviewItemBarProps) => {
-  const targetPercentage = 6 + (count / maxCount) * 100;
+  const targetPercentage = Math.min(4 + (count / maxCount) * 96, 100);
   const animatedPercentage = useReviewAnimation(targetPercentage);
 
   // animated가 false면 애니메이션 없이 바로 최종값 표시

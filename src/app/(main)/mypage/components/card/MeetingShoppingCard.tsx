@@ -10,9 +10,9 @@ import {
 } from '@/components/Molecules';
 import { MeetingItem } from '../../utils/mypageType';
 import { useMeetingCardActions } from '../../hook/components/card/useMeetingCardActions';
-import { ReviewModal } from '../ReviewModal';
-import { MeetingCardInfo } from './shared/MeetingCardInfo';
+import { ReviewModal } from '../review/ReviewModal';
 import { MeetingCardReviewButton } from './shared/MeetingCardReviewButton';
+import { MeetingCardInfo } from './shared/MeetingCardInfo';
 
 export const MeetingShoppingCard = ({
   meeting,
