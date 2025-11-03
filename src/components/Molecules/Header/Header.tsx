@@ -4,7 +4,6 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import {
   Button,
-  Logo,
   ProfileImg,
   UserActionMenu,
   Icon,
@@ -53,7 +52,6 @@ export const Header = () => {
               alt="Soboon Logo"
               width={250}
               height={250}
-              priority
               className="h-auto w-auto"
             />
           </Link>
