@@ -39,7 +39,7 @@ export default function RootLayout({
           <Suspense fallback={null}>
             <AlertHandler />
           </Suspense>
-          {children}
+          <main>{children}</main>
           <Footer />
         </Providers>
       </body>
