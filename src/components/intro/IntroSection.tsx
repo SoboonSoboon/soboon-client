@@ -45,6 +45,9 @@ export const IntroSection = () => {
             height={334}
             sizes="(max-width: 640px) 35vw, (max-width: 1024px) 38vw, 412px"
             className="z-2 h-auto w-[35%] max-w-[417px] object-contain sm:w-[38%] lg:w-[40%]"
+            priority
+            fetchPriority="high"
+            decoding="sync"
           />
           <Image
             data-sequence="600"
@@ -54,6 +57,8 @@ export const IntroSection = () => {
             height={360}
             sizes="(max-width: 1024px) 55vw, 618px"
             priority
+            fetchPriority="high"
+            decoding="sync"
             className="z-2 h-auto w-[55%] max-w-[630px] rotate-3 object-contain lg:w-[60%]"
           />
         </div>
