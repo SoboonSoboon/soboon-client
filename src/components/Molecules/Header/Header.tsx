@@ -135,7 +135,7 @@ export const Header = () => {
                   onClick={redirectToKakao}
                   aria-label="시작하기 버튼"
                   label="시작하기"
-                  className="!h-10 !px-4 !text-sm md:!h-11 md:!px-6 md:!text-base"
+                  className="!h-10 !px-4 !text-sm !font-semibold md:!h-11 md:!px-6 md:!text-base"
                 />
                 <div className="absolute top-[140%] right-0 hidden w-[215px] sm:group-hover:block xl:left-1/2 xl:-translate-x-1/2">
                   <SpeechBubble>
