@@ -137,7 +137,7 @@ export const Header = () => {
                   label="시작하기"
                   className="!h-10 !px-4 !text-sm md:!h-11 md:!px-6 md:!text-base"
                 />
-                <div className="absolute top-[140%] right-0 hidden w-[238px] sm:group-hover:block xl:left-1/2 xl:-translate-x-1/2">
+                <div className="absolute top-[140%] right-0 hidden w-[215px] sm:group-hover:block xl:left-1/2 xl:-translate-x-1/2">
                   <SpeechBubble>
                     <div className="flex items-center gap-2">
                       <svg
