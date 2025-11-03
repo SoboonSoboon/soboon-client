@@ -143,7 +143,7 @@ export const DividingListSection = ({
                         dividing.image.length === 0) ||
                       (typeof dividing.image === 'string' &&
                         dividing.image.includes('example'))
-                        ? '/images/notFound_image.png'
+                        ? '/images/dividing_default_image.png'
                         : dividing.image
                     }
                     className="absolute inset-0 h-full w-full rounded-lg object-cover transition-transform duration-300 hover:scale-110"

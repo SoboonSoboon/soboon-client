@@ -78,7 +78,7 @@ export const Card = ({ className, children, onClick, href }: CardProps) => {
 export const CardImage = ({ className, src, alt }: cardImageProps) => {
   return (
     <Image
-      src={src || '/images/notFound_image.png'}
+      src={src || '/images/dividing_default_image.png'}
       alt={alt}
       width={276}
       height={200}

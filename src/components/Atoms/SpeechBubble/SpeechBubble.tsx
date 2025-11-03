@@ -9,11 +9,11 @@ export function SpeechBubble({ children, className = '' }: SpeechBubbleProps) {
   return (
     <div className={`relative ${className}`}>
       {/* 말풍선 본체 */}
-      <div className="bg-gray-80 text-normal relative rounded-lg px-4 py-2 text-base text-white">
+      <div className="bg-gray-80 text-normal relative rounded-lg px-4 py-2 text-sm text-white">
         {children}
 
         {/* 말풍선 꼬리 (위 중앙) */}
-        <div className="absolute top-1 left-47 -translate-y-full xl:left-1/2 xl:-translate-x-1/2">
+        <div className="absolute top-1 left-38 -translate-y-full xl:left-1/2 xl:-translate-x-1/2">
           <svg
             width="13"
             height="12"
