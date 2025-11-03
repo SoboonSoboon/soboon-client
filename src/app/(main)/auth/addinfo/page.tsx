@@ -69,19 +69,16 @@ export default function AddInfoPage() {
   if (!profileData) return <div>데이터가 없어요.</div>;
 
   return (
-    <div className="flex min-h-screen flex-col">
+    <div>
       <div className="bg-Green-5 absolute top-0 right-0 left-0 flex h-[347px] items-center justify-center">
         <div className="flex flex-col justify-center">
-          <div className="mb-5 flex justify-center">
-            <Image
-              src="/images/logo_green.png"
-              alt="로고이미지"
-              width={300}
-              height={200}
-              priority
-              className="h-auto w-auto"
-            />
-          </div>
+          <Image
+            src="/images/logo_green.png"
+            alt="로고이미지"
+            width={260}
+            height={200}
+            className="mb-5 flex h-auto w-auto justify-center"
+          />
           <p className="text-center text-base font-normal text-gray-800">
             소분소분의 원활한 이용을 위해
             <br />새 프로필을 생성해 주세요.
@@ -90,7 +87,7 @@ export default function AddInfoPage() {
       </div>
 
       {/* 프로필 입력폼 */}
-      <div className="relative top-[279px] z-10 flex-1 px-4">
+      <div className="relative top-[279px] z-10 px-4">
         <ProfileForm
           newData={newData}
           setNewData={setNewData}
