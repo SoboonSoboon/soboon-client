@@ -17,6 +17,7 @@ import { useState, useEffect } from 'react';
 import { HEADER_MENU } from '@/constants';
 import { cn } from '@/utils/cn';
 import { logoutAction } from '@/action/logoutAction';
+import Image from 'next/image';
 
 export const Header = () => {
   const pathname = usePathname() || '/';
@@ -47,7 +48,14 @@ export const Header = () => {
       <div className="text-text-main mx-auto flex h-full max-w-[1200px] items-center justify-between bg-white px-2.5 md:px-4">
         <div className="flex items-center gap-4 sm:gap-6 md:gap-8 lg:gap-10">
           <Link href="/">
-            <Logo />
+            <Image
+              src="/images/logo_black.png"
+              alt="Soboon Logo"
+              width={250}
+              height={250}
+              priority
+              className="h-auto w-auto"
+            />
           </Link>
 
           <nav className="flex items-center gap-3 text-base font-normal sm:gap-4 md:gap-5 lg:gap-6">
