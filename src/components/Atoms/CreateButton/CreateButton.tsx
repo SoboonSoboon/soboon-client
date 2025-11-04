@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { Plus } from '@/components/Atoms/icons';
 import { Icon } from '@/components/Atoms';
 
@@ -24,6 +24,10 @@ export const CreateButton = ({ actionHandlers }: CreateButtonProps) => {
   const handleAction = (key: CreateMenuKey) => {
     actionHandlers[key]?.();
   };
+
+  const iconSize = useMemo(() => {
+    return window.innerWidth < 768 ? 20 : 24;
+  }, [window.innerWidth]);
 
   return (
     <div className="flex cursor-pointer flex-col items-center gap-1.5">
@@ -51,7 +55,7 @@ export const CreateButton = ({ actionHandlers }: CreateButtonProps) => {
               <div className="h-5 w-5 sm:h-6 sm:w-6">
                 <Icon
                   type={value.icon}
-                  size={20}
+                  size={iconSize}
                   className="h-full w-full"
                   alt={value.label}
                   aria-hidden
