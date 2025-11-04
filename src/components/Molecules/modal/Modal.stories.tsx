@@ -631,6 +631,11 @@ export const FormModal: Story = {
 
 // 🔥 실제로 열리는 모달 스토리 (isOpen: true로 고정)
 export const AlwaysOpen: Story = {
+  parameters: {
+    docs: {
+      disable: true, // Docs 페이지에서 제외
+    },
+  },
   render: (args) => (
     <Modal {...args} isOpen={true} onClose={fn()} lockScroll={false}>
       <h2 className="mb-4 text-xl font-bold">항상 열린 모달</h2>
