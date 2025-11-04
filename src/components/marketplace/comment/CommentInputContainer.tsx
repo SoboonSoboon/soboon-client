@@ -18,7 +18,7 @@ export const CommentInputContainer = ({
   const searchParams = useSearchParams();
   const isLoggedIn = useAuthStore((state) => state.isLoggedIn);
 
-  const { mutate: createComment } = useMutation({
+  const { mutate: createComment, isPending } = useMutation({
     mutationFn: (data: {
       meetingId: string;
       content: string;
@@ -82,7 +82,7 @@ export const CommentInputContainer = ({
           )}
         </div>
         <Button
-          label="작성"
+          label={isPending ? '작성중...' : '작성'}
           aria-label="작성 버튼"
           type="submit"
           variant="outline"
@@ -93,7 +93,10 @@ export const CommentInputContainer = ({
               : 'border-primary text-primary',
           )}
           disabled={
-            status === 'COMPLETED' || status === 'CLOSED' || !isLoggedIn
+            status === 'COMPLETED' ||
+            status === 'CLOSED' ||
+            !isLoggedIn ||
+            isPending
           }
         />
       </form>
