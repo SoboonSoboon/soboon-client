@@ -136,7 +136,7 @@ export default function ShoppingRegisterPage() {
     }
   }, [hasLocation, userLocation, setValue]);
 
-  const { mutate: shoppingRegister } = useMutation({
+  const { mutate: shoppingRegister, isPending } = useMutation({
     mutationFn: async (formData: ShoppingFormData) => {
       const response = await shoppingRegisterApi(formData);
       return response;
@@ -344,10 +344,11 @@ export default function ShoppingRegisterPage() {
           </div>
 
           <Button
-            label="확인"
+            label={isPending ? '등록중이에요...' : '확인'}
             aria-label="확인 버튼"
             type="submit"
             className="w-full sm:w-auto sm:min-w-[120px]"
+            disabled={isPending}
           />
         </form>
       </div>

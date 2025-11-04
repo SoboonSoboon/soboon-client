@@ -166,7 +166,7 @@ export default function DividingRegisterPage() {
     }
   }, [hasLocation, userLocation, setValue]);
 
-  const { mutate: dividingRegister } = useMutation({
+  const { mutate: dividingRegister, isPending } = useMutation({
     mutationFn: async (formatData: DividingFormData) => {
       const response = await dividingRegisterApi(formatData);
       return response;
@@ -399,10 +399,11 @@ export default function DividingRegisterPage() {
           </div>
 
           <Button
-            label="확인"
+            label={isPending ? '등록중이에요...' : '확인'}
             aria-label="확인"
             type="submit"
             className="w-full sm:w-auto sm:min-w-[120px]"
+            disabled={isPending}
           />
         </form>
       </div>
