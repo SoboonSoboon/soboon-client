@@ -1,12 +1,12 @@
 'use client';
 
+import Image from 'next/image';
 import { MapPin } from '@/components/Atoms/icons';
 import { StatusTag } from '@/components/Atoms';
 import {
   Card,
   CardContent,
   CardFooter,
-  CardImage,
   CardTitle,
 } from '@/components/Molecules';
 import { cn } from '@/utils';
@@ -50,11 +50,36 @@ export const MeetingDividingCard = ({
               </div>
             </div>
             {/* 이미지 영역 */}
-            <div className="border-gray-10 relative aspect-[3/2] w-full overflow-hidden rounded-lg border">
-              <CardImage
-                src={meeting.thumbnailUrl}
+            <div
+              className="border-gray-10 bg-gray-10 relative w-full overflow-hidden rounded-lg border"
+              style={{
+                contain: 'layout',
+                aspectRatio: '3/2',
+                minHeight: 0,
+              }}
+            >
+              <Image
+                src={meeting.thumbnailUrl || '/images/notFound_image.png'}
                 alt={meeting.title}
-                className="absolute inset-0 h-full w-full object-cover transition-transform duration-300 hover:scale-110"
+                fill
+                sizes="(max-width: 1024px) 100vw, 50vw"
+                className="object-cover opacity-0 transition-opacity duration-300"
+                style={{
+                  objectFit: 'cover',
+                  transition: 'transform 0.3s ease, opacity 0.3s ease',
+                }}
+                onLoadingComplete={(img) => {
+                  img.style.opacity = '1';
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.transform = 'scale(1.1)';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.transform = 'scale(1)';
+                }}
+                loading="lazy"
+                quality={75}
+                placeholder="empty"
               />
             </div>
           </div>

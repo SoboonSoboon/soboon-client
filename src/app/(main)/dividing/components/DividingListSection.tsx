@@ -1,11 +1,11 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
+import Image from 'next/image';
 import {
   Card,
   CardContent,
   CardFooter,
-  CardImage,
   CardSubtitle,
   CardTitle,
   Line,
@@ -21,6 +21,7 @@ import { getDividingListApi } from '@/apis/meetings/getDividingListApi';
 import { MapPin } from '@/components/Atoms/icons';
 import { DividingMeetingsType } from '@/types/meetingsType';
 import { timeFormatter } from '@/utils';
+import { DividingCardSkeleton } from '@/components/Atoms';
 
 export const DividingListSection = ({
   initialDividingList,
@@ -42,6 +43,7 @@ export const DividingListSection = ({
     fetchNextPage,
     isFetchingNextPage,
     hasNextPage,
+    isPending,
   } = useInfiniteQuery<DividingMeetingsType>({
     queryKey: ['dividingList', query.toString()],
     queryFn: async ({ pageParam }) => {
@@ -84,6 +86,17 @@ export const DividingListSection = ({
     router.push(`/dividing/${id}`);
   };
 
+  // 로딩 상태 - 검색 모드이거나 initialData가 없을 때만 skeleton 표시
+  if (isPending && (isSearchMode || !initialDividingList)) {
+    return (
+      <div className="grid grid-cols-1 gap-x-4 gap-y-6 sm:grid-cols-2 sm:gap-x-6 sm:gap-y-8 lg:grid-cols-3 lg:gap-x-8 lg:gap-y-10">
+        {Array.from({ length: 9 }).map((_, index) => (
+          <DividingCardSkeleton key={index} />
+        ))}
+      </div>
+    );
+  }
+
   if (!dividingList || dividingList.pages[0]?.content.length === 0) {
     return (
       <MainEmptyState
@@ -120,8 +133,15 @@ export const DividingListSection = ({
                     status={dividing.status}
                     className="absolute top-3 left-3 z-10"
                   />
-                  <div className="relative aspect-[3/2] w-full">
-                    <CardImage
+                  <div
+                    className="bg-gray-10 relative w-full"
+                    style={{
+                      contain: 'layout',
+                      aspectRatio: '3/2',
+                      minHeight: 0,
+                    }}
+                  >
+                    <Image
                       alt="기본 카드"
                       src={
                         !dividing.image ||
@@ -132,7 +152,25 @@ export const DividingListSection = ({
                           ? '/images/notFound_image.png'
                           : dividing.image
                       }
-                      className="absolute inset-0 h-full w-full rounded-lg object-cover transition-transform duration-300 hover:scale-110"
+                      fill
+                      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                      className="rounded-lg object-cover opacity-0 transition-opacity duration-300"
+                      style={{
+                        objectFit: 'cover',
+                        transition: 'transform 0.3s ease, opacity 0.3s ease',
+                      }}
+                      onLoadingComplete={(img) => {
+                        img.style.opacity = '1';
+                      }}
+                      onMouseEnter={(e) => {
+                        e.currentTarget.style.transform = 'scale(1.1)';
+                      }}
+                      onMouseLeave={(e) => {
+                        e.currentTarget.style.transform = 'scale(1)';
+                      }}
+                      loading="lazy"
+                      quality={75}
+                      placeholder="empty"
                     />
                   </div>
                 </div>

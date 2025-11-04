@@ -9,10 +9,7 @@ import {
   ErrorPage,
   ServerErrorPage,
 } from '@/components/Molecules';
-import {
-  DividingCardSkeleton,
-  ShoppingCardSkeleton,
-} from './components/Card/CardSkeleton';
+import { DividingCardSkeleton, ShoppingCardSkeleton } from '@/components/Atoms';
 
 import { useMyPageData } from './hook/components/page/useMypageData';
 

@@ -22,6 +22,7 @@ import { useInfiniteScrollTrigger } from '@/hooks/useScroll';
 import { useSearchParams } from 'next/navigation';
 import { HashTag } from './HashTag';
 import { useShoppingSearch } from '@/hooks/useSearch/useShoppingSearch';
+import { ShoppingCardSkeleton } from '@/components/Atoms';
 
 export const ShoppingListSection = ({
   initialShoppingList,
@@ -53,6 +54,7 @@ export const ShoppingListSection = ({
     fetchNextPage,
     isFetchingNextPage,
     hasNextPage,
+    isPending,
   } = useInfiniteQuery<ShoppingMeetingsType>({
     queryKey: ['shoppingList', query.toString()],
     queryFn: async ({ pageParam }) => {
@@ -130,6 +132,21 @@ export const ShoppingListSection = ({
     });
     return cols;
   }, [items, columnCount]);
+
+  // 로딩 상태 - 검색 모드이거나 initialData가 없을 때만 skeleton 표시
+  if (isPending && (isSearchMode || !initialShoppingList)) {
+    return (
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 md:gap-5 xl:grid-cols-4">
+        {Array.from({ length: columnCount }).map((_, colIdx) => (
+          <div key={colIdx} className="flex flex-col gap-4 md:gap-5">
+            {Array.from({ length: 3 }).map((_, idx) => (
+              <ShoppingCardSkeleton key={idx} />
+            ))}
+          </div>
+        ))}
+      </div>
+    );
+  }
 
   return (
     <>
