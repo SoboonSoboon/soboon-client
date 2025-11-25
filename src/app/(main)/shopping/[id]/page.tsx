@@ -1,13 +1,15 @@
 import { DetailHeader, DetailContent } from '@/components/marketplace';
 import { MeetingDetailType } from '@/types/meetingsType';
-import { CommentsListType } from '@/types/commentType';
-import { ApplicantsMemberType } from '@/types/applicantsType';
-import { cookies } from 'next/headers';
-import { UserInfoType } from '@/types/authType';
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { DynamicDetailAsideWrapper } from '@/components/marketplace/wrapper/DynamicDetailAsideWrapper';
 import { DynamicCommentSectionWrapper } from '@/components/marketplace/wrapper/DynamicCommentSectionWrapper';
+import {
+  getUserInfo,
+  getMeetingDetail,
+  getComments,
+  getParticipants,
+} from '@/apis/server';
 
 export async function generateMetadata({
   params,
@@ -87,135 +89,6 @@ export async function generateMetadata({
       description: '대용량 제품을 함께 구매할 사람을 찾아보세요',
     };
   }
-}
-
-async function getMeetingDetail({
-  id,
-}: {
-  id: string;
-}): Promise<MeetingDetailType | null> {
-  try {
-    const response = await fetch(
-      `${process.env.NEXT_PUBLIC_SOBOON_API_URL}/v1/meetings/${id}`,
-      {
-        cache: 'no-store',
-        next: {
-          tags: [`meeting-${id}`],
-        },
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      },
-    );
-
-    if (!response.ok) {
-      throw new Error('소분하기 모임 상세 데이터 조회 실패');
-    }
-
-    const responseData = await response.json();
-    return responseData.data;
-  } catch (error) {
-    console.error('소분하기 모임 상세 데이터 조회 실패', error);
-    return null;
-  }
-}
-
-async function getUserInfo(): Promise<UserInfoType | null> {
-  const cookieStore = await cookies();
-  const accessToken = cookieStore.get('accessToken')?.value || '';
-  if (accessToken) {
-    try {
-      const response = await fetch(
-        `${process.env.NEXT_PUBLIC_SOBOON_API_URL}/v1/auth/me`,
-        {
-          cache: 'no-store',
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${accessToken}`,
-          },
-        },
-      );
-      if (!response.ok) {
-        throw new Error('사용자 정보 조회 실패');
-      }
-      const responseData = await response.json();
-      return responseData;
-    } catch (error) {
-      console.error('사용자 정보 조회 실패', error);
-      return null;
-    }
-  }
-  return null;
-}
-
-// 댓글 조회
-async function getComments({
-  id,
-  sortType = 'OLDEST',
-}: {
-  id: string;
-  sortType?: 'RECENT' | 'OLDEST';
-}): Promise<CommentsListType | null> {
-  try {
-    const response = await fetch(
-      `${process.env.NEXT_PUBLIC_SOBOON_API_URL}/v1/meetings/${id}/comments?page=0&size=10&sort=${sortType}`,
-      {
-        cache: 'force-cache',
-        next: {
-          revalidate: 30,
-          tags: [`comments-${id}`],
-        },
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      },
-    );
-    if (!response.ok) {
-      throw new Error('댓글 조회 실패');
-    }
-    const responseData = await response.json();
-    return responseData.data;
-  } catch (error) {
-    console.error('댓글 조회 실패', error);
-    return null;
-  }
-}
-
-// 참여 신청자 목록 조회
-async function getParticipants({
-  meetingId,
-}: {
-  meetingId: string;
-}): Promise<ApplicantsMemberType['data'][]> {
-  const cookieStore = await cookies();
-  const accessToken = cookieStore.get('accessToken')?.value || '';
-  if (accessToken) {
-    try {
-      const response = await fetch(
-        `${process.env.NEXT_PUBLIC_SOBOON_API_URL}/v1/meetings/${meetingId}/applicants`,
-        {
-          cache: 'force-cache',
-          next: {
-            revalidate: 10,
-            tags: [`participants-${meetingId}`],
-          },
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${accessToken}`,
-          },
-        },
-      );
-      if (!response.ok) {
-        throw new Error('참여 신청자 목록 조회 실패');
-      }
-      const responseData = await response.json();
-      return responseData.data;
-    } catch (error) {
-      console.error('참여 신청자 목록 조회 실패', error);
-      return [];
-    }
-  }
-  return [];
 }
 
 export default async function ShoppingDetailPage({
