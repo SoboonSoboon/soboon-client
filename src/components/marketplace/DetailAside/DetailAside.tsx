@@ -1,22 +1,16 @@
 'use client';
 
 import { MapPin } from '@/components/Atoms/icons';
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import { ApplicantsMemberType } from '@/types/applicantsType';
 import { ApplicantsList } from '../applicants/ApplicantsList';
 import { applyMeeting, handleCloseMeeting } from '@/action/applicantsAction';
-import { Button, useToast } from '@/components/Atoms';
-import { Modal, useModal } from '@/components/Molecules';
+import { useToast } from '@/components/Atoms';
+import { LoginRequiredModal } from '@/components/Molecules';
 import { useParams } from 'next/navigation';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
-import {
-  cancelApplyMeeting,
-  getUserApplyStatus,
-  redirectToKakao,
-} from '@/apis';
-import { useMemo } from 'react';
-import { useQuery } from '@tanstack/react-query';
-import { useBookmark } from '@/hooks';
+import { useMutation, useQueryClient, useQuery } from '@tanstack/react-query';
+import { cancelApplyMeeting, getUserApplyStatus } from '@/apis';
+import { useBookmark, useLoginModal } from '@/hooks';
 import { ApplyStatusButtonSection } from './ApplyStatusButtonSection';
 import { AuthorStatusButtonSection } from './AuthorStatusButtonSection';
 import { MeetingDetailType } from '@/types/meetingsType';
@@ -24,7 +18,6 @@ import { CurrentPeople } from './CurrentPeople';
 import { AsideHeader } from './AsideHeader';
 import { AsideMoreInfo } from './AsideMoreInfo';
 import { useAuthStore } from '@/apis/auth/hooks/authStore';
-import { MODAL_IS_LOGIN_REQUIRED_TEXT } from '@/constants';
 
 interface DetailAsideProps {
   meetingDetail: MeetingDetailType;
@@ -43,44 +36,38 @@ export const DetailAside = ({
   const queryClient = useQueryClient();
   const { handleBookmark } = useBookmark();
   const userId = useAuthStore((state) => state.userId);
-  const deleteModal = useModal();
   const isLoggedIn = useAuthStore((state) => state.isLoggedIn);
+  const {
+    isOpen: isLoginModalOpen,
+    openLoginModal,
+    closeLoginModal,
+    handleLogin,
+  } = useLoginModal();
 
   const handleBookmarkClick = () => {
     if (!isLoggedIn) {
-      handleOpenLoginModal();
+      openLoginModal();
       return;
-    } else {
-      setIsBookmarked(!isBookmarked);
-      handleBookmark(meetingId.toString(), isBookmarked);
     }
+    setIsBookmarked(!isBookmarked);
+    handleBookmark(meetingId.toString(), isBookmarked);
   };
 
   // todo: 모임 신청 로직 수정
   const handleApplyMeeting = async (applicationId: string) => {
     if (!isLoggedIn) {
-      handleOpenLoginModal();
+      openLoginModal();
       return;
-    } else {
-      try {
-        const response = await applyMeeting(null, applicationId);
-        success(response.message || '모임을 신청했어요.');
-        queryClient.invalidateQueries({ queryKey: ['userApplyStatus'] });
-        return response;
-      } catch (err) {
-        error('모임 신청을 실패했어요.');
-        throw err;
-      }
     }
-  };
-
-  const handleOpenLoginModal = () => {
-    deleteModal.open();
-  };
-
-  const handleLoginButtonClick = () => {
-    redirectToKakao();
-    deleteModal.close();
+    try {
+      const response = await applyMeeting(null, applicationId);
+      success(response.message || '모임을 신청했어요.');
+      queryClient.invalidateQueries({ queryKey: ['userApplyStatus'] });
+      return response;
+    } catch (err) {
+      error('모임 신청을 실패했어요.');
+      throw err;
+    }
   };
 
   const { mutate: handleCloseMeetingAction } = useMutation({
@@ -117,7 +104,6 @@ export const DetailAside = ({
     return null;
   }, [userApplyStatus, meetingId]);
 
-  // todo: 중복 실행에 대해 생각해보기.
   const { mutate: handleCancelApplyMeeting } = useMutation({
     mutationFn: (meetingId: string) => cancelApplyMeeting({ id: meetingId }),
     onSuccess: () => {
@@ -185,37 +171,11 @@ export const DetailAside = ({
         />
       )}
 
-      <Modal isOpen={deleteModal.isOpen} onClose={deleteModal.close} size="sm">
-        <div
-          className="flex flex-col items-center p-7 pb-5"
-          onPointerDown={(e) => e.stopPropagation()}
-        >
-          <h2 className="mb-2 text-[22px] font-semibold">
-            {MODAL_IS_LOGIN_REQUIRED_TEXT.LOGIN_COMMENT_TITLE}
-          </h2>
-          <p className="text-text-main mb-8 text-center">
-            {MODAL_IS_LOGIN_REQUIRED_TEXT.LOGIN_COMMENT_LIST}
-          </p>
-          <div className="flex w-full gap-2">
-            <Button
-              variant="outline"
-              onClick={() => {
-                deleteModal.close();
-              }}
-              className="w-full"
-              label="취소"
-              aria-label="취소 버튼"
-            />
-            <Button
-              variant="filled"
-              label="로그인"
-              onClick={handleLoginButtonClick}
-              className="w-full"
-              aria-label="로그인 버튼"
-            />
-          </div>
-        </div>
-      </Modal>
+      <LoginRequiredModal
+        isOpen={isLoginModalOpen}
+        onClose={closeLoginModal}
+        onLogin={handleLogin}
+      />
     </aside>
   );
 };

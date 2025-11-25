@@ -25,6 +25,7 @@ export { SideButtonSection } from './SideButtonSection/SideButtonSection';
 export { ProfilePopover } from './ProfilePopover/ProfilePopover';
 export { Modal } from './modal/modal';
 export { useModal } from './modal/hooks/useModal';
+export { LoginRequiredModal } from './modal/LoginRequiredModal';
 export { SearchInput } from './Search/SearchInput';
 export { MyPageEmptyState } from './EmptyState/MyPageEmptyState';
 export { ServerErrorPage } from './ErrorPage/ServerErrorPage';
