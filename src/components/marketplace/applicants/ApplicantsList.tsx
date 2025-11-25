@@ -1,20 +1,10 @@
 'use client';
 
-import {
-  approveApplicants,
-  kickApplicants,
-  rejectApplicants,
-} from '@/action/applicantsAction';
-import { getUserApplyStatus } from '@/apis';
-import { useAuthStore } from '@/apis/auth/hooks/authStore';
-import { axiosInstance } from '@/apis/axiosInstance';
-
-import { Button, ProfileImg, useToast } from '@/components/Atoms';
 import { ApplicantsMemberType } from '@/types/applicantsType';
 import { StatusString } from '@/types/common';
-import { useQuery } from '@tanstack/react-query';
 import { useParams } from 'next/navigation';
-import { useMemo } from 'react';
+import { ParticipantItem } from './components';
+import { useApplicants } from './hooks/useApplicants';
 
 interface ApplicantsListProps {
   isAuthor: boolean;
@@ -22,224 +12,123 @@ interface ApplicantsListProps {
   status: StatusString;
 }
 
+// 뷰 타입 정의
+type ViewType =
+  | 'author_active' // 작성자 + 진행중인 모임
+  | 'author_closed' // 작성자 + 완료/종료된 모임
+  | 'participant_approved_closed' // 신청자 + 승인됨 + 완료/종료
+  | 'participant_not_approved_closed'; // 신청자 + 미승인 + 완료/종료
+
+// 뷰 타입 결정 함수
+const getViewType = (
+  isAuthor: boolean,
+  isCompletedOrClosed: boolean,
+  isApproved: boolean,
+): ViewType => {
+  if (isAuthor && isCompletedOrClosed) return 'author_closed';
+  if (isAuthor) return 'author_active';
+  if (isCompletedOrClosed && isApproved) return 'participant_approved_closed';
+  return 'participant_not_approved_closed';
+};
+
+// 빈 상태 메시지 컴포넌트
+const EmptyState = ({ message }: { message: React.ReactNode }) => (
+  <div className="text-text-sub2 flex min-h-[143px] items-center justify-center">
+    {typeof message === 'string' ? <p>{message}</p> : message}
+  </div>
+);
+
+// 참여자 목록 래퍼 컴포넌트
+const ParticipantListWrapper = ({
+  children,
+}: {
+  children: React.ReactNode;
+}) => (
+  <div className="border-gray-10 mb-5 w-full rounded-xl border bg-white">
+    {children}
+  </div>
+);
+
 export const ApplicantsList = ({
   isAuthor,
   participants,
   status,
 }: ApplicantsListProps) => {
   const { id: meetingId } = useParams<{ id: string }>();
-  const { success, error } = useToast();
 
-  const isLoggedIn = useAuthStore((state) => state.isLoggedIn);
-  const handleApproveApplicants = async (applicationId: number) => {
-    const response = await approveApplicants(null, applicationId, meetingId);
-    if (response) {
-      success(response.message || '모임 신청을 수락했어요.');
-    } else {
-      error(response.message || '모임 신청을 수락하지 못했어요.');
-    }
-  };
+  const { isCompletedOrClosed, myApplyStatus, filteredParticipants, actions } =
+    useApplicants({ meetingId, status });
 
-  const handleKickApplicants = async (applicationId: number) => {
-    const response = await kickApplicants(null, applicationId, meetingId);
-    if (response) {
-      success(response.message || '참여자를 강퇴했어요.');
-    } else {
-      error(response.message || '참여자를 강퇴하지 못했어요.');
-    }
-  };
+  const isApproved = myApplyStatus?.participationStatus === 'APPROVED';
+  const viewType = getViewType(isAuthor, isCompletedOrClosed, isApproved);
 
-  const handleRejectApplicants = async (applicationId: number) => {
-    const response = await rejectApplicants(null, applicationId, meetingId);
-    if (response) {
-      success(response.message || '모임 신청을 거절했어요.');
-    } else {
-      error(response.message || '모임 신청을 거절하지 못했어요.');
-    }
-  };
-
-  const isCompletedOrClosed = status === 'COMPLETED' || status === 'CLOSED';
-
-  // 내가 이 모임에 신청한 상태를 조회
-  const { data: myApplyStatus } = useQuery({
-    queryKey: ['myApplyStatus', meetingId],
-    queryFn: async () => {
-      const response = await getUserApplyStatus();
-      return response.find((status) => status.meetingId === +meetingId) || null;
-    },
-    enabled: isLoggedIn,
-  });
-
-  // 이 모임에 신청한 사람들을 조회
-  const { data: approvedParticipants } = useQuery<
-    ApplicantsMemberType['data'][]
-  >({
-    queryKey: ['approvedParticipants', meetingId],
-    queryFn: async () => {
-      const response = await axiosInstance.get(
-        `/v1/meetings/${meetingId}/applicants`,
-      );
-      return response.data.data || [];
-    },
-    enabled:
-      isCompletedOrClosed && myApplyStatus?.participationStatus === 'APPROVED',
-  });
-
-  // 이 모임에 신청한 사람들 중 참여 확정된 사람들만 필터링
-  const filteredParticipants = useMemo(() => {
-    return approvedParticipants?.filter(
-      (participant) => participant.status === 'APPROVED',
-    );
-  }, [approvedParticipants]);
-
-  return (
-    <>
-      {isAuthor && !isCompletedOrClosed && (
-        <div className="border-gray-10 mb-5 w-full rounded-xl border bg-white">
-          {participants.length === 0 && (
-            <div className="text-text-sub2 flex min-h-[143px] items-center justify-center">
-              <p>아직 참여 신청한 사람이 없어요 ... !</p>
-            </div>
-          )}
-
-          {participants.length > 0 &&
-            participants.map((participant) => (
-              <div
-                key={participant.participantId}
-                className="flex items-center justify-between px-6 py-3"
-              >
-                <div className="flex items-center gap-2 py-2">
-                  <ProfileImg
-                    profileImageUrl={participant.profileImageUrl}
-                    size={32}
-                  />
-                  <p>{participant.userNickname}</p>
-                </div>
-
-                {/* 참여자 수락 상태 */}
-                {participant.status === 'APPROVED' && (
-                  <div className="flex items-center gap-2.5">
-                    <div className="text-primary text-sm font-semibold">
-                      참여 확정
-                    </div>
-                    <Button
-                      label="강퇴"
-                      aria-label="강퇴 버튼"
-                      size="small"
-                      className="!border-text-sub2 !text-text-sub2"
-                      variant="outline"
-                      onClick={() =>
-                        handleKickApplicants(participant.participantId)
-                      }
-                    />
-                  </div>
-                )}
-
-                {/* 참여자 신청 대기 상태 */}
-                {participant.status === 'APPLIED' && (
-                  <div className="flex gap-2">
-                    <Button
-                      label="수락"
-                      aria-label="수락 버튼"
-                      size="small"
-                      variant="outline"
-                      onClick={() =>
-                        handleApproveApplicants(participant.participantId)
-                      }
-                    />
-                    <Button
-                      label="거절"
-                      aria-label="거절 버튼"
-                      className="!border-text-sub2 !text-text-sub2"
-                      variant="outline"
-                      size="small"
-                      onClick={() =>
-                        handleRejectApplicants(participant.participantId)
-                      }
-                    />
-                  </div>
-                )}
-
-                {/* 참여자 강퇴 상태 */}
-                {participant.status === 'KICKED' && (
-                  <div className="text-text-sub2 text-sm font-semibold">
-                    강퇴된 참여자
-                  </div>
-                )}
-
-                {/* 참여자 거절 상태 */}
-                {participant.status === 'REJECTED' && (
-                  <div className="text-text-sub2 text-sm font-semibold">
-                    거절된 참여자
-                  </div>
-                )}
-              </div>
-            ))}
-        </div>
-      )}
-
-      {isAuthor && isCompletedOrClosed && (
-        <div className="border-gray-10 mb-5 w-full rounded-xl border bg-white">
-          {filteredParticipants?.map((participant) => (
-            <div
+  // 뷰 타입별 렌더링 로직을 객체로 관리
+  const viewRenderers: Record<ViewType, () => React.ReactNode> = {
+    // 작성자 + 진행중인 모임: 모든 신청자 표시 (액션 버튼 포함)
+    author_active: () => (
+      <ParticipantListWrapper>
+        {participants.length === 0 ? (
+          <EmptyState message="아직 참여 신청한 사람이 없어요 ... !" />
+        ) : (
+          participants.map((participant) => (
+            <ParticipantItem
               key={participant.participantId}
-              className="flex items-center justify-between px-6 py-3"
-            >
-              <div className="flex items-center gap-2 py-2">
-                <ProfileImg
-                  profileImageUrl={participant.profileImageUrl}
-                  size={32}
-                />
-                <p>{participant.userNickname}</p>
-              </div>
-              <div className="flex items-center gap-2.5">
-                <div className="text-primary text-sm font-semibold">
-                  참여 확정
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
-      )}
-
-      {!isAuthor &&
-        myApplyStatus?.participationStatus === 'APPROVED' &&
-        isCompletedOrClosed && (
-          <div className="border-gray-10 mb-5 w-full rounded-xl border bg-white">
-            {filteredParticipants?.map((participant) => (
-              <div
-                key={participant.participantId}
-                className="flex items-center justify-between px-6 py-3"
-              >
-                <div className="flex items-center gap-2 py-2">
-                  <ProfileImg
-                    profileImageUrl={participant.profileImageUrl}
-                    size={32}
-                  />
-                  <p>{participant.userNickname}</p>
-                </div>
-                <div className="flex items-center gap-2.5">
-                  <div className="text-primary text-sm font-semibold">
-                    참여 확정
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
+              participant={participant}
+              onApprove={actions.approve}
+              onKick={actions.kick}
+              onReject={actions.reject}
+            />
+          ))
         )}
+      </ParticipantListWrapper>
+    ),
 
-      {!isAuthor &&
-        myApplyStatus?.participationStatus !== 'APPROVED' &&
-        isCompletedOrClosed && (
-          <div className="border-gray-10 mb-5 w-full rounded-xl border bg-white">
-            <div className="text-text-sub2 flex min-h-[143px] items-center justify-center">
+    // 작성자 + 완료/종료된 모임: 확정된 참여자만 표시 (읽기 전용)
+    author_closed: () => (
+      <ParticipantListWrapper>
+        {filteredParticipants?.map((participant) => (
+          <ParticipantItem
+            key={participant.participantId}
+            participant={participant}
+            isReadOnly
+          />
+        ))}
+      </ParticipantListWrapper>
+    ),
+
+    // 신청자 + 승인됨 + 완료/종료: 확정된 참여자 목록 표시
+    participant_approved_closed: () => (
+      <ParticipantListWrapper>
+        {filteredParticipants?.map((participant) => (
+          <ParticipantItem
+            key={participant.participantId}
+            participant={participant}
+            isReadOnly
+          />
+        ))}
+      </ParticipantListWrapper>
+    ),
+
+    // 신청자 + 미승인 + 완료/종료: 접근 불가 메시지
+    participant_not_approved_closed: () => {
+      if (!isCompletedOrClosed) {
+        return null;
+      }
+
+      return (
+        <ParticipantListWrapper>
+          <EmptyState
+            message={
               <div>
                 <p>모집이 종료되었어요.</p>
                 <p>참여가 확정된 사람만 볼 수 있어요.</p>
               </div>
-            </div>
-          </div>
-        )}
-    </>
-  );
+            }
+          />
+        </ParticipantListWrapper>
+      );
+    },
+  };
+
+  return <>{viewRenderers[viewType]()}</>;
 };
