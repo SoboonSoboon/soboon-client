@@ -89,10 +89,8 @@ export const useApplicants = ({ meetingId, status }: UseApplicantsParams) => {
     isCompletedOrClosed,
     myApplyStatus,
     filteredParticipants,
-    actions: {
-      approve: handleApprove,
-      kick: handleKick,
-      reject: handleReject,
-    },
+    handleApprove,
+    handleKick,
+    handleReject,
   };
 };

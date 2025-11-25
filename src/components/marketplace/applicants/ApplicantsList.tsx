@@ -56,8 +56,14 @@ export const ApplicantsList = ({
 }: ApplicantsListProps) => {
   const { id: meetingId } = useParams<{ id: string }>();
 
-  const { isCompletedOrClosed, myApplyStatus, filteredParticipants, actions } =
-    useApplicants({ meetingId, status });
+  const {
+    isCompletedOrClosed,
+    myApplyStatus,
+    filteredParticipants,
+    handleApprove,
+    handleKick,
+    handleReject,
+  } = useApplicants({ meetingId, status });
 
   const isApproved = myApplyStatus?.participationStatus === 'APPROVED';
   const viewType = getViewType(isAuthor, isCompletedOrClosed, isApproved);
@@ -74,9 +80,9 @@ export const ApplicantsList = ({
             <ParticipantItem
               key={participant.participantId}
               participant={participant}
-              onApprove={actions.approve}
-              onKick={actions.kick}
-              onReject={actions.reject}
+              onApprove={handleApprove}
+              onKick={handleKick}
+              onReject={handleReject}
             />
           ))
         )}
