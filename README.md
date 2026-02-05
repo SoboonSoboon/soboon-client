@@ -24,9 +24,10 @@
 함께 사서 나누는 소비 방식을 통해 개인의 비용 부담을 완화하고, 자원 낭비를 줄이는 효율적 소비를 할 수 있는 서비스를 제공한다.
 
 🔗 [서비스 바로가기](https://soboon-client-seven.vercel.app)<br>
-🎨 [Storybook 바로가기](https://68eda0866f99441886bc2330-tmjtfcyxaq.chromatic.com)<br>
+🎨 [Storybook 바로가기](https://698440ee98f72e58e3274401-eqgtshgquz.chromatic.com)<br>
 📄 [최종 발표 자료 바로가기](https://www.canva.com/design/DAG3haIPqI8/9ahNJvvufzcwZtLiJcx--w/view?utm_content=DAG3haIPqI8&utm_campaign=designshare&utm_medium=link2&utm_source=uniquelinks&utlId=h4f0cfd3e28)<br>
 📼 [풀버전 시연 영상 바로가기](https://drive.google.com/file/d/10wD9fj59rG9utvhE2Yk2I08CSVpc0zJG/view?usp=sharing)
+
 <br />
 
 <div id="2"></div>
