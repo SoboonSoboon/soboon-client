@@ -1,19 +1,19 @@
 # Workflow name
-name: 'Chromatic Deployment'
+name: "Chromatic Deployment"
 
 # Event for the workflow
 on:
   pull_request:
     branches: [dev]
     paths:
-      - '**.stories.tsx'
-      - '.storybook/**'
-      - 'package.json'
+      - "**.stories.tsx"
+      - ".storybook/**"
+      - "package.json"
   push:
     branches: [dev]
     paths:
-      - '**.stories.tsx'
-      - '.storybook/**'
+      - "**.stories.tsx"
+      - ".storybook/**"
 
 permissions:
   contents: read
@@ -64,4 +64,4 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          message: '🚀 **storybook**: ${{ steps.publish_chromatic.outputs.storybookUrl }}'
+          message: "🚀 **storybook**: ${{ steps.publish_chromatic.outputs.storybookUrl }}"
