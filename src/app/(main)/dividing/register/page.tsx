@@ -7,7 +7,8 @@ import {
   TextInput,
   useToast,
 } from '@/components/Atoms';
-import { Dropdown } from '@/components/Molecules';
+// [LEGACY] import { Dropdown } from '@/components/Molecules';
+import { HeadlessSelect } from '@/components/Molecules';
 import ImageUploadForm from '@/components/marketplace/registerModal/imageLoader';
 import { CAPACITY_OPTIONS, MODEL_PROVINCE_OPTIONS } from '@/constants';
 import { GET_MODEL_CITY_OPTIONS } from '@/constants/locations';
@@ -276,6 +277,7 @@ export default function DividingRegisterPage() {
               몇 명이 함께 하면 좋을까요?
             </Label>
             <div className="flex flex-col gap-1">
+              {/* [LEGACY]
               <Dropdown
                 name="capacity"
                 id="capacity"
@@ -283,6 +285,16 @@ export default function DividingRegisterPage() {
                 value={watch('capacity')}
                 onChange={(value) => {
                   setValue('capacity', +value);
+                  clearErrors('capacity');
+                }}
+              /> */}
+              <HeadlessSelect
+                name="capacity"
+                id="capacity"
+                options={CAPACITY_OPTIONS}
+                value={watch('capacity')}
+                onChange={(val) => {
+                  setValue('capacity', +val);
                   clearErrors('capacity');
                 }}
               />
@@ -302,6 +314,7 @@ export default function DividingRegisterPage() {
               <div className="flex flex-col gap-3 sm:items-center">
                 <div className="flex w-full flex-col gap-3 sm:flex-row sm:items-center sm:gap-2.5">
                   <div className="flex-1">
+                    {/* [LEGACY]
                     <Dropdown
                       name="location.province"
                       id="location.province"
@@ -311,32 +324,63 @@ export default function DividingRegisterPage() {
                         setValue('location.province', value);
                         clearErrors('location.province');
                       }}
+                    /> */}
+                    <HeadlessSelect
+                      name="location.province"
+                      id="location.province"
+                      options={MODEL_PROVINCE_OPTIONS}
+                      value={watch('location.province')}
+                      onChange={(val) => {
+                        setValue('location.province', val);
+                        setValue('location.city', '');
+                        setValue('location.district', '');
+                        clearErrors('location.province');
+                      }}
                     />
                   </div>
                   <div className="flex-1">
+                    {/* [LEGACY]
                     <Dropdown
                       name="location.city"
                       id="location.city"
-                      options={GET_MODEL_CITY_OPTIONS(
-                        watch('location.province'),
-                      )}
+                      options={GET_MODEL_CITY_OPTIONS(watch('location.province'))}
                       value={watch('location.city')}
                       onChange={(value) => {
                         setValue('location.city', value);
                         clearErrors('location.city');
                       }}
+                    /> */}
+                    <HeadlessSelect
+                      name="location.city"
+                      id="location.city"
+                      options={GET_MODEL_CITY_OPTIONS(watch('location.province'))}
+                      value={watch('location.city')}
+                      onChange={(val) => {
+                        setValue('location.city', val);
+                        setValue('location.district', '');
+                        clearErrors('location.city');
+                      }}
                     />
                   </div>
                   <div className="flex-1">
+                    {/* [LEGACY]
                     <Dropdown
                       name="location.district"
                       id="location.district"
-                      options={GET_MODEL_DISTRICT_OPTIONS(
-                        watch('location.city'),
-                      )}
+                      options={GET_MODEL_DISTRICT_OPTIONS(watch('location.city'))}
                       value={watch('location.district')}
                       onChange={(value) => {
                         setValue('location.district', value);
+                        clearErrors('location.district');
+                      }}
+                    /> */}
+                    <HeadlessSelect
+                      name="location.district"
+                      id="location.district"
+                      options={GET_MODEL_DISTRICT_OPTIONS(watch('location.city'))}
+                      value={watch('location.district')}
+                      onChange={(val) => {
+                        setValue('location.district', val);
                         clearErrors('location.district');
                       }}
                     />
