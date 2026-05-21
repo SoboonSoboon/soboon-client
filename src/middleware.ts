@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 
-const protectedRoutes = ['/mypage', '/shopping/register', '/dividing/register'];
+// [DEMO] /dividing/register를 임시로 제외 — 시연 영상 촬영 후 원복 필요
+const protectedRoutes = ['/mypage', '/shopping/register' /* '/dividing/register' */];
 
 export function middleware(request: NextRequest) {
   const accessToken = request.cookies.get('accessToken')?.value;
