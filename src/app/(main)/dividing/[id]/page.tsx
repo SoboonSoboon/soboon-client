@@ -25,7 +25,7 @@ const MOCK_MEETING_DETAIL: MeetingDetailType = {
   location_dep1: '강남구',
   location_dep2: '역삼동',
   detail_address: '스타벅스앞',
-  images: ['/images/intro_people1.png'],
+  images: ['/images/demo_egg.png'],
   status: 'RECRUITING',
   location: {
     province: '서울특별시',
