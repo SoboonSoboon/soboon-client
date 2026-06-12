@@ -15,6 +15,11 @@ export {
   MainShoppingCardSkeleton,
 } from './Card/CardSkeleton';
 export { Dropdown, type DropdownProps } from './Dropdown/Dropdown';
+export {
+  HeadlessSelect,
+  type HeadlessSelectProps,
+  type HeadlessSelectOption,
+} from './HeadlessSelect/HeadlessSelect';
 export { ErrorPage } from './ErrorPage/Errorpage';
 export { Header } from './Header/Header';
 export {

@@ -51,6 +51,9 @@ export const metadata: Metadata = {
 async function getDividingMeeting(
   query: URLSearchParams,
 ): Promise<DividingMeetingsType | null> {
+  // [DEMO] 백엔드 없이 시연 가능하도록 API 호출 차단 — 촬영 후 이 줄을 제거하세요
+  return { content: [], sliceInfo: { currentPage: 0, size: 10, hasNext: false } };
+
   try {
     const response = await fetch(
       `${process.env.NEXT_PUBLIC_SOBOON_API_URL}/v1/meetings/dividing?${query.toString()}`,

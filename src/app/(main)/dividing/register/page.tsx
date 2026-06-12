@@ -7,7 +7,8 @@ import {
   TextInput,
   useToast,
 } from '@/components/Atoms';
-import { Dropdown } from '@/components/Molecules';
+// [LEGACY] import { Dropdown } from '@/components/Molecules';
+import { HeadlessSelect } from '@/components/Molecules';
 import ImageUploadForm from '@/components/marketplace/registerModal/imageLoader';
 import { CAPACITY_OPTIONS, MODEL_PROVINCE_OPTIONS } from '@/constants';
 import { GET_MODEL_CITY_OPTIONS } from '@/constants/locations';
@@ -15,13 +16,28 @@ import { GET_MODEL_DISTRICT_OPTIONS } from '@/constants/locations';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import * as z from 'zod/mini';
-import { useMutation } from '@tanstack/react-query';
-import { dividingRegisterApi } from '@/apis';
-import { ApiResponse } from '@/types/common';
+// [DEMO] useMutation / dividingRegisterApi / ApiResponse 주석 처리
+// import { useMutation } from '@tanstack/react-query';
+// import { dividingRegisterApi } from '@/apis';
+// import { ApiResponse } from '@/types/common';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
-import { useUserLocation } from '@/hooks';
+// [DEMO] useUserLocation 주석 처리 — 목 세션으로 대체
+// import { useUserLocation } from '@/hooks';
 import { useEffect } from 'react';
+
+// [DEMO] 가짜 유저 세션 — 항상 로그인된 것으로 처리
+const MOCK_USER = {
+  userId: 1,
+  userName: '소분소분',
+  userNickname: '소분왕',
+  userLocation: {
+    province: '서울특별시',
+    city: '강남구',
+    district: '역삼동',
+    detail: '',
+  },
+};
 
 const DIVIDING_PRODUCT_TYPE_OPTIONS = [
   { value: 'FRESH', label: '신선식품' },
@@ -129,7 +145,11 @@ const dividingFormSchema = z.object({
 type DividingFormData = z.infer<typeof dividingFormSchema>;
 
 export default function DividingRegisterPage() {
-  const { userLocation, hasLocation } = useUserLocation();
+  // [DEMO] useUserLocation 대신 목 세션의 위치 정보 사용
+  // const { userLocation, hasLocation } = useUserLocation();
+  const userLocation = MOCK_USER.userLocation;
+  const hasLocation = true;
+
   const {
     register,
     handleSubmit,
@@ -154,7 +174,7 @@ export default function DividingRegisterPage() {
     },
     mode: 'onChange',
   });
-  const { success, error } = useToast();
+  const { success } = useToast();
   const router = useRouter();
 
   useEffect(() => {
@@ -166,22 +186,14 @@ export default function DividingRegisterPage() {
     }
   }, [hasLocation, userLocation, setValue]);
 
-  const { mutate: dividingRegister, isPending } = useMutation({
-    mutationFn: async (formatData: DividingFormData) => {
-      const response = await dividingRegisterApi(formatData);
-      return response;
-    },
-    onSuccess: (data: ApiResponse<{ meetingId: number }>) => {
-      success(data.message!);
-      router.replace(`/dividing/${data.data.meetingId}`);
-    },
-    onError: (data: ApiResponse<string>) => {
-      error(data.message!);
-    },
-  });
+  // [DEMO] isPending 상태를 로컬 state로 대체
+  const isPending = false;
 
+  // [DEMO] 실제 API 호출 대신 console.log + 상세 페이지로 리다이렉트
   const onSubmit = (data: DividingFormData) => {
-    dividingRegister(data);
+    console.log('[DEMO] 등록 폼 제출 데이터:', data);
+    success('모임이 성공적으로 등록되었어요!');
+    router.push('/dividing/demo');
   };
 
   return (
@@ -265,6 +277,7 @@ export default function DividingRegisterPage() {
               몇 명이 함께 하면 좋을까요?
             </Label>
             <div className="flex flex-col gap-1">
+              {/* [LEGACY]
               <Dropdown
                 name="capacity"
                 id="capacity"
@@ -272,6 +285,16 @@ export default function DividingRegisterPage() {
                 value={watch('capacity')}
                 onChange={(value) => {
                   setValue('capacity', +value);
+                  clearErrors('capacity');
+                }}
+              /> */}
+              <HeadlessSelect
+                name="capacity"
+                id="capacity"
+                options={CAPACITY_OPTIONS}
+                value={watch('capacity')}
+                onChange={(val) => {
+                  setValue('capacity', +val);
                   clearErrors('capacity');
                 }}
               />
@@ -291,6 +314,7 @@ export default function DividingRegisterPage() {
               <div className="flex flex-col gap-3 sm:items-center">
                 <div className="flex w-full flex-col gap-3 sm:flex-row sm:items-center sm:gap-2.5">
                   <div className="flex-1">
+                    {/* [LEGACY]
                     <Dropdown
                       name="location.province"
                       id="location.province"
@@ -300,32 +324,63 @@ export default function DividingRegisterPage() {
                         setValue('location.province', value);
                         clearErrors('location.province');
                       }}
+                    /> */}
+                    <HeadlessSelect
+                      name="location.province"
+                      id="location.province"
+                      options={MODEL_PROVINCE_OPTIONS}
+                      value={watch('location.province')}
+                      onChange={(val) => {
+                        setValue('location.province', val);
+                        setValue('location.city', '');
+                        setValue('location.district', '');
+                        clearErrors('location.province');
+                      }}
                     />
                   </div>
                   <div className="flex-1">
+                    {/* [LEGACY]
                     <Dropdown
                       name="location.city"
                       id="location.city"
-                      options={GET_MODEL_CITY_OPTIONS(
-                        watch('location.province'),
-                      )}
+                      options={GET_MODEL_CITY_OPTIONS(watch('location.province'))}
                       value={watch('location.city')}
                       onChange={(value) => {
                         setValue('location.city', value);
                         clearErrors('location.city');
                       }}
+                    /> */}
+                    <HeadlessSelect
+                      name="location.city"
+                      id="location.city"
+                      options={GET_MODEL_CITY_OPTIONS(watch('location.province'))}
+                      value={watch('location.city')}
+                      onChange={(val) => {
+                        setValue('location.city', val);
+                        setValue('location.district', '');
+                        clearErrors('location.city');
+                      }}
                     />
                   </div>
                   <div className="flex-1">
+                    {/* [LEGACY]
                     <Dropdown
                       name="location.district"
                       id="location.district"
-                      options={GET_MODEL_DISTRICT_OPTIONS(
-                        watch('location.city'),
-                      )}
+                      options={GET_MODEL_DISTRICT_OPTIONS(watch('location.city'))}
                       value={watch('location.district')}
                       onChange={(value) => {
                         setValue('location.district', value);
+                        clearErrors('location.district');
+                      }}
+                    /> */}
+                    <HeadlessSelect
+                      name="location.district"
+                      id="location.district"
+                      options={GET_MODEL_DISTRICT_OPTIONS(watch('location.city'))}
+                      value={watch('location.district')}
+                      onChange={(val) => {
+                        setValue('location.district', val);
                         clearErrors('location.district');
                       }}
                     />
